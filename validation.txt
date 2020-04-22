@@ -1,0 +1,53 @@
+
+"title" => "cbfdb"
+  "leader_ids" => array:2 [▼
+      0 => "6"
+      1 => "7"
+    ]
+  "date_start" => "2020-04-16"
+  "date_end" => "2020-04-30"
+  "price_base" => "4545"
+  "photo_variant" => array:1 [▼
+    0 => "127285.jpg"
+  ]
+  "text_variant" => array:1 [▼
+    0 => "fxdvdf"
+  ]
+  "price_variant" => array:1 [▼
+    0 => "4524"
+  ]
+  "amount-variant" => array:1 [▼
+    0 => "1 человек"
+  ]
+
+  "photogallery" => "vim.png"
+
+  "address" => "Fethiye, Fatih Sultan Mehmet Bulvarı, Нилюфер/Бурса, Турция"
+  "street" => "Fatih Sultan Mehmet Bulvarı"
+  "house" => null
+  "region" => "Bursa"
+  "city" => null
+  "country" => "Турция"
+  "latitude" => "40.22817730000001"
+  "longitude" => "28.9806167"
+  "adress_desk" => "dfbdff"
+  "video_url" => "fgbgfdx"
+  "tags" => "тег2"
+  "info_excerpt" => null
+  "info_description" => null
+  "count_person" => "1 человек"
+  "timetable" => null
+    "included" => null
+    "no_included" => null
+    "first_aid" => null
+    "drinking_water" => null
+    "communication" => null
+    "accommodation_photo" => array:1 [▼
+      0 => null
+    ]
+    "accommodation_description" => null
+    "gallery_meals" => array:1 [▼
+      0 => null
+    ]
+    "meals_desc" => null
+

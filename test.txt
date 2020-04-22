@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<template>
+    <div class="block-panel-sub">
+        <p class="create-subtitle">Вариативность цены:</p>
+        <p class="create-text-min">Укажите цены для данного мероприятия в зависимости от колличества участников. При добавлении фотографии, оно также отрабразиться в общем списке фото.</p>
+        <div class="block-variants">
+            <div class="choose-file">
+                <div class="upload-demo">
+                    <div class="upload-demo-wrap"><img class="img-fluid portimg" src="images/wide.jpg"></div>
+                </div>
+                <span class="btn_upload">
+													        	<input type="file" name="photo-variant" class="inputfile photo-variant">
+													        	Загрузить фото
+													      	</span>
+            </div>
+            <div class="block-variant-desk">
+                <p>Краткое описание (проживание, питание и т.д.)</p>
+                <input class="text-variant" type="text" name="text-variant" value="">
+            </div>
+            <div class="block-variant-price">
+                <p>Цена (RUB)</p>
+                <input class="price-variant" type="text" name="price-variant" value="">
+            </div>
+            <div class="block-variant-amount">
+                <p>Кол. человек</p>
+                <select name="amount-variant" class="amount-variant">
+                    <option value="1 человек">1 человек</option>
+                    <option value="2 человека">2 человек</option>
+                    <option value="3 человека">3 человека</option>
+                    <option value="4 человека">4 человека</option>
+                    <option value="5 человек">5 человек</option>
+                </select>
+            </div>
+            <div class="delete"><i class="fa fa-times" aria-hidden="true"></i></div>
+        </div>
+        <button class="click_to_add_block" type="button">Добавить вариант</button>
+    </div>
+</template>
+
+
+<div id="my-fields"></div>
+
+
+<script>
+    if (event.click.my_button){
+        div = document.querySelector('#my-fields')
+        div.insert('template')
+    }
+</script>
+
+
+
+
+
+
+</body>
+</html>

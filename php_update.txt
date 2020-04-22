@@ -1,0 +1,19 @@
+php7.2-cgi/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен, автоматически]
+php7.2-cli/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен]
+php7.2-common/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен]
+php7.2-curl/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен, автоматически]
+php7.2-dev/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен]
+php7.2-fpm/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен, автоматически]
+php7.2-gd/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен, автоматически]
+php7.2-intl/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен, автоматически]
+php7.2-json/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен]
+php7.2-mbstring/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен, автоматически]
+php7.2-mysql/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен]
+php7.2-opcache/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен]
+php7.2-readline/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен]
+php7.2-xml/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен, автоматически]
+php7.2-zip/bionic-updates,bionic-security,now 7.2.24-0ubuntu0.18.04.4 amd64 [установлен, автоматически]
+
+sudo apt install php-pear php7.3 php7.3-common php7.3-cli php7.3-fpm php7.3-gd php7.3-mysql php7.3-mbstring php7.3-curl php7.3-xml php7.3-zip php7.3-json php7.3-imagick php7.3-xmlrpc php7.3-bz2 php7.3-dev php7.3-opcache php-memcached
+
+sudo apt install php7.3-cgi php7.3-cli php7.3-common php7.3-curl php7.3-dev php7.3-fpm php7.3-gd php7.3-intl php7.3-json php7.3-mbstring php7.3-mysql php7.3-opcache php7.3-readline php7.3-xml php7.3-zip
