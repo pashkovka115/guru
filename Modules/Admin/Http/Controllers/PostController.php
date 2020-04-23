@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category')->paginate();
+        $posts = Post::paginate();
         return view('admin::pages.posts.index', ['posts' => $posts, 'title' => $this->title, 'title_page' => 'Список записей']);
     }
 
@@ -60,7 +60,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with(['category', 'user'])->where('id', $id)->first();
+        $post = Post::with(['user'])->where('id', $id)->first();
         return view('admin::pages.posts.show', ['post' => $post, 'title' => $this->title, 'title_page' => 'Просмотр записи']);
     }
 
@@ -71,12 +71,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::with(['category', 'user'])->where('id', $id)->first();
-        $categories = CategoryPost::all();
+        $post = Post::with(['user'])->where('id', $id)->first();
         $users = User::all();
+
         return view('admin::pages.posts.edit', [
             'post' => $post,
-            'categories' => $categories,
             'users' => $users,
             'title' => $this->title,
             'title_page' => 'Редактирование записи'
@@ -93,7 +92,6 @@ class PostController extends Controller
     {
         Post::where('id', $id)->update([
             'user_id' => (int)$request->input('user_id'),
-            'category_post_id' => (int)$request->input('category_post_id'),
             'title' => $request->input('title'),
             'excerpt' => $request->input('excerpt'),
             'content' => $request->input('content'),

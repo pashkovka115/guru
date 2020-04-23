@@ -12,7 +12,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Заголовок</th>
-                                <th>Категория</th>
+{{--                                <th>Категория</th>--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -20,7 +20,7 @@
                             <tr>
                                 <td>{{ $post->id }}</td>
                                 <td>{{ $post->title }}</td>
-                                <td>{{ $post->category->title }}</td>
+{{--                                <td>{{ $post->category->title }}</td>--}}
 
                                 <td>
                                     <div class="btn-group btn-group-sm">

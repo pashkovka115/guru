@@ -12,12 +12,12 @@
                                 <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}" disabled>
                             </div>
 
-                            <div class="form-group">
-                                <label>Категория</label>
-                                <select class="form-control" name="category_post_id" disabled>
-                                    <option>{{ $post->category->title }}</option>
-                                </select>
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label>Категория</label>--}}
+{{--                                <select class="form-control" name="category_post_id" disabled>--}}
+{{--                                    <option>{{ $post->category->title }}</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
 
                             <div class="form-group">
                                 <label>Пользователь</label>

@@ -16,7 +16,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="img">Текущее изображение</label>
-                                <img id="img" src="{{ $category->img }}" alt="">
+                                <img id="img" src="{{ $category->img }}" alt="" style="max-height: 200px; width: auto;">
                             </div>
 
                             <div class="form-group">

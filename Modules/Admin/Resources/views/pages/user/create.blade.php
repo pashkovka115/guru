@@ -24,18 +24,6 @@
                                 <label for="password2">Повторите пароль</label>
                                 <input type="password" class="form-control" id="password2" name="password_confirmation" required>
                             </div>
-                            <div class="form-group">
-                                <label for="birth_date">День рождения</label>
-                                <input type="date" class="form-control" id="birth_date" name="birth_date" value="{{ old('birth_date') }}">
-                            </div>
-                            <div class="form-group">
-                                <label>Пол</label>
-                                <select class="form-control" name="gender">
-                                    <option value=""></option>
-                                    <option value="m">Мужчина</option>
-                                    <option value="w">Женщина</option>
-                                </select>
-                            </div>
 
                         </div>
                         <div class="card-footer">

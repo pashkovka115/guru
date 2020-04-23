@@ -41,9 +41,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'birth_date' => 'date',
             'password' => 'required|min:6|confirmed',
-            'gender' => 'string'
         ]);
 
         mkdir(get_image_path_to_profile($request->all()), 0755, true);
@@ -51,11 +49,10 @@ class UserController extends Controller
         User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'birth_date' => $request->input('birth_date', "NULL"),
             'password' => Hash::make($request->input('password')),
-            'gender' => $request->input('gender', "NULL")
         ]);
 
+        session()->flash('message', 'Сохранил');
         return redirect()->back();
     }
 
@@ -96,8 +93,6 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'birth_date' => 'date',
-            'gender' => 'string'
         ]);
         $data = [
             'name' => $request->input('name'),
@@ -107,11 +102,10 @@ class UserController extends Controller
         if (!empty($arr['password']) and $arr['password'] == $arr['password_confirmation']) {
             $data['password'] = Hash::make($arr['password']);
         }
-        if (!empty($arr['birth_date'])) $data['birth_date'] = $arr['birth_date'];
-        if (!empty($arr['gender'])) $data['gender'] = $arr['gender'];
 
         User::where('id', $id)->update($data);
 
+        session()->flash('message', 'Сохранил');
         return redirect()->back();
     }
 
@@ -125,6 +119,8 @@ class UserController extends Controller
         $user = User::where('id', $id)->first();
         delDir(dirname(get_image_path_to_profile($user)));
         $user->delete();
+
+        session()->flash('message', 'Удалил');
         return redirect()->route('admin.user.index');
     }
 }

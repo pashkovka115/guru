@@ -14,7 +14,7 @@
                                 <th>Тур</th>
                                 <th>Одобрен/Опубликован</th>
                                 <th>Цена</th>
-                                <th>Категория</th>
+{{--                                <th>Категория</th>--}}
                                 <th>Дата проведения</th>
                                 <th>Краткое описание</th>
                                 <th>Actions</th>
@@ -31,14 +31,14 @@
                                     @if($tour->active == '1') Да @else Нет @endif
                                 </td>
                                 <td>{{ $tour->price }}</td>
-                                <td>
+                                {{--<td>
                                     @foreach($tour->categories as $category)
                                         <div style="display: inline-block; margin-right: 30px;">
                                             <h5><span class="badge badge-primary">{{ $category->title }}</span></h5>
 
                                         </div>
                                     @endforeach
-                                </td>
+                                </td>--}}
                                 <td><b>{{ \Carbon\Carbon::parse($tour->date_start)->format('d.m.Y') }}</b> - <b>{{ \Carbon\Carbon::parse($tour->date_end)->format('d.m.Y') }}</b></td>
                                 <td>{{ $tour->excerpt }}</td>
                                 <td>

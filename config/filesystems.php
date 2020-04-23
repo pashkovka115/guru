@@ -58,14 +58,14 @@ return [
         'file_manager_cabinet' => [
             'driver' => 'local',
             'root' => storage_path('app/public/users'),
-            'url' => env('APP_URL').'/public/storage/users',
+            'url' => env('APP_URL').'/storage/users',
             'visibility' => 'public',
         ],
 
         'file_manager_admin' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/public/storage',
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 

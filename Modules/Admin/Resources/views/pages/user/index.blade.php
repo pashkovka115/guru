@@ -5,19 +5,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                   {{-- <div class="card-header">
-                        <h3 class="card-title">Responsive Hover Table</h3>
-
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>--}}
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover text-nowrap">
@@ -27,7 +14,6 @@
                                 <th>User</th>
                                 <th>Date</th>
                                 <th>Email</th>
-                                <th>Birth Date</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -38,16 +24,10 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->birth_date }}</td>
                                 <td>
-                                    {{--<form id="form_delete" action="{{ route('admin.user.destroy', ['user'=>$user->id]) }}" method="post" style="display: none">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit">Go</button>
-                                    </form>--}}
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{{ route('admin.user.show', ['user'=>$user->id]) }}" class="btn btn-info" style="max-height: 30px"><i class="fas fa-eye"></i></a>
-                                        <form id="form_delete" action="{{ route('admin.user.destroy', ['user'=>$user->id]) }}" method="post">
+                                        <a href="{{ route('admin.user.show', ['user'=>$user->id]) }}" title="Просмотреть" class="btn btn-info" style="max-height: 30px"><i class="fas fa-eye"></i></a>
+                                        <form id="form_delete" title="Удалить" action="{{ route('admin.user.destroy', ['user'=>$user->id]) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger" style="margin-left: -2px;"><i class="fas fa-trash"></i></button>

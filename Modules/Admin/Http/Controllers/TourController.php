@@ -19,7 +19,7 @@ class TourController extends Controller
      */
     public function index()
     {
-        $tours = Tour::with('categories')->paginate();
+        $tours = Tour::paginate();
         return view('admin::pages.tour.index', ['tours' => $tours, 'title_page' => 'Список туров', 'title' => $this->title]);
     }
 

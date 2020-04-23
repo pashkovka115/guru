@@ -13,9 +13,9 @@ function generate_google_map_link(array $data){
 
 function get_image_url_to_profile($user){
     if (is_object($user)){
-        return asset('public/storage/users/' . md5($user->email));
+        return asset('storage/users/' . md5($user->email));
     }elseif (is_array($user)){
-        return asset('public/storage/users/' . md5($user['email']) );
+        return asset('storage/users/' . md5($user['email']) );
     }
     return false;
 }

@@ -13,14 +13,14 @@
                                 <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required>
                             </div>
 
-                            <div class="form-group">
+                            {{--<div class="form-group">
                                 <label>Категория</label>
                                 <select class="form-control" name="category_post_id">
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->title }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div>--}}
 
                             <div class="form-group">
                                 <label>Пользователь</label>
