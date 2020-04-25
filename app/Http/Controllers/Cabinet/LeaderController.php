@@ -87,7 +87,7 @@ class LeaderController extends Controller
         $ids_my_leaders = $organizer->leaders->keyBy('id')->toArray();
 
         if (isset($ids_my_leaders[$id])) {
-            \DB::transaction(function () {
+            \DB::transaction(function () use ($id, $request){
                 $user = User::with('profile')->where('id', $id)->first();
                 $user->name = $request->input('name');
                 $user->save();

@@ -10,7 +10,7 @@
                         <h1 class="user-title">{{ auth()->user()->name }}</h1>
                         <div class="user-status">
                             <span>Статус авторизации:</span>
-                            @if(auth()->user()->profile->auth)
+                            @if(auth()->user()->profile->auth ?? false)
                             <span class="confirm">Подтвержден</span>
                             @else
                             <span class="not-confirm">Не подтвержден</span>
@@ -18,13 +18,13 @@
                         </div>
                         <div class="user-email"><span>Email:</span> {{ auth()->user()->email }}</div>
                     </div>
-                    @if(!auth()->user()->profile->auth)
+                    @if(!(auth()->user()->profile->auth ?? false))
                     <div class="personal_status">
                         <p class="text-normal">Спасибо за регистрацию!</p>
                         <p class="text-normal">Чтобы получить возможность создания своих мероприятия, авторов и организаций на нашем сервисе, запросите авторизацию у администрации, нажав кнопку ниже.</p>
                         <div class="user-editing"><a href="" class="btn-personal">Запросить авторизацию</a></div>
                     </div>
-                    @elseif(auth()->user()->profile->auth and $count_tour == 0)
+                    @elseif((auth()->user()->profile->auth ?? false) and $count_tour == 0)
                         <div class="personal_status">
                             <p class="text-normal">Ваш профиль авторизован!</p>
                             <p class="text-normal">Ваш профиль подтвержден, и вы можете начать добавления мероприятий.</p>

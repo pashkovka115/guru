@@ -48,12 +48,12 @@
                                     </div>
                                     <div class="country-autor">
                                         <i class="fa fa-home"></i>
-                                        <span>{{ $user->profile->country }}, {{ $user->profile->city }}</span>
+                                        <span>{{ $user->profile->country ?? null }}, {{ $user->profile->city ?? null }}</span>
                                         <a href="#" class="link-location"><i class="fa fa-location-arrow"></i></a>
                                     </div>
                                     <div class="about-autor">
                                         <h2 class="event-subtitle">Об авторе</h2>
-                                        <p class="text-normal">{{ $user->profile->description }}</p>
+                                        <p class="text-normal">{{ $user->profile->description ?? null }}</p>
                                     </div>
                                     <div class="tags-autor">
                                         @php
@@ -179,7 +179,7 @@
                     <p class="form-autor_name">{{ $user->name }}</p>
                     <div class="country-autor">
                         <i class="fa fa-home"></i>
-                        <span>{{ $user->profile->country }}, {{ $user->profile->city }}</span>
+                        <span>{{ $user->profile->country ?? null }}, {{ $user->profile->city ?? null }}</span>
                         <a href="#" class="link-location"><i class="fa fa-location-arrow"></i></a>
                     </div>
                 </div>

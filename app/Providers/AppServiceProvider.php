@@ -27,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         setlocale(LC_TIME, 'ru_RU.UTF-8');
         Carbon::setLocale(config('app.locale'));
-        \View::share('pages_menu', Page::all(['id', 'title']));
+        \View::share('pages_menu', Page::all(['id', 'title']) ?? null);
     }
 }

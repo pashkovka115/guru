@@ -43,7 +43,7 @@ class TourController extends Controller
     {
         $request->validate([
             'category_tour_id' => 'required|numeric',
-            'title' => 'nullable|alpha_dash',
+            'title' => 'regex:/[\w\s\d\_\-\.]*/i',
             'leader_ids' => 'array|required',
             'leader_ids.*' => 'integer|required',
             'date_start' => 'sometimes|nullable|date',
@@ -98,7 +98,7 @@ class TourController extends Controller
             'gallery_meals.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
             'meals_desc' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
         ]);
-
+//dd($request->input('gallery'));
 
         \DB::transaction(function () use ($request) {
             $tour = Tour::with('tags')->create([

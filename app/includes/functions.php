@@ -38,26 +38,24 @@ function get_image_path_storage_to_profile($user){
     return false;
 }
 
-function get_url_to_uploaded_files($user, $uploading_files, $debug_info = false){
+function get_url_to_uploaded_files($user, $uploading_files){
     if (is_array($uploading_files)){
         $images = [];
         foreach ($uploading_files as $img){
+            if ($img == null) continue;
+
             if (! $img instanceof \Illuminate\Http\UploadedFile){
-                if ($debug_info){
                     print_r($img);
-                    print_r($debug_info);
-                }
                 throw new Exception('Неправильный объект файла');
             }
             $path = $img->store(get_image_path_storage_to_profile($user) . '/img');
             $images[] = asset(str_replace('public', 'storage', $path));
         }
     }else{
+        if ($uploading_files == null) return null;
+
         if (! $uploading_files instanceof \Illuminate\Http\UploadedFile){
-            if ($debug_info){
                 print_r($uploading_files);
-                print_r($debug_info);
-            }
             throw new Exception('Неправильный объект файла');
         }
         $path = $uploading_files->store(get_image_path_storage_to_profile($user) . '/img');
