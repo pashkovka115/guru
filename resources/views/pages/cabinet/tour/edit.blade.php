@@ -47,7 +47,7 @@
                                     <div class="block-panel">
                                         <div class="block-selection">
 
-                                            <div class="block-panel-sub date-start-end">
+                                            <!-- <div class="block-panel-sub date-start-end">
                                                 <p class="create-subtitle">Когда начинается и заканчивается ваше мероприятие?</p>
                                                 <div class="create-date">
                                                     <div><p>Дата начала</p><input id="date-start" type="date" name="date_start" value="{{ $tour->date_start }}"></div>
@@ -69,30 +69,30 @@
                                                     <input id="price-base" type="text" name="price_base" value="{{ $tour->price_base }}" required>
                                                     <span>RUB</span>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="block-panel-sub">
-                                                <p class="create-subtitle">Вариативность цены:</p>
-                                                <p class="create-text-min">Укажите цены для данного мероприятия в зависимости от колличества участников. При добавлении фотографии, оно также отрабразиться в общем списке фото.</p>
+                                                <p class="create-subtitle">Вариативность:</p>
+                                                <p class="create-text-min">Укажите цену, даты, краткое описание для данного мероприятия в зависимости от колличества участников. При добавлении фотографии, оно также отрабразиться в общем списке фото.</p>
 
                                                 @foreach($tour->variants as $variant)
-                                                <div class="saved_block-variants">
+                                                <div class="block-variants">
                                                     <div class="choose-file">
                                                         <div class="upload-demo">
                                                             <div class="upload-demo-wrap"><img class="img-fluid portimg" src="{{ $variant->photo_variant }}"></div>
                                                         </div>
 
                                                         <span class="btn_upload">
-													        	<input type="text" name="saved_photo_variant[]" class="inputfile photo-variant" value="{{ $variant->photo_variant }}">
-													        	Загрузить фото
-													      	</span>
+                                                                <input type="text" name="saved_photo_variant[]" class="inputfile photo-variant" value="{{ $variant->photo_variant }}">
+                                                                Загрузить фото
+                                                            </span>
                                                     </div>
                                                     <div class="block-variant-date">
                                                         <p>Дата начала</p>
-                                                        <input class="text-variant" type="text" name="saved_date_start_variant[]" value="{{ $variant->date_start_variant }}">
+                                                        <input class="text-variant" type="date" name="saved_date_start_variant[]" value="{{ $variant->date_start_variant }}">
                                                     </div>
                                                     <div class="block-variant-date">
                                                         <p>Дата окончания</p>
-                                                        <input class="text-variant" type="text" name="saved_date_end_variant[]" value="{{ $variant->date_end_variant }}">
+                                                        <input class="text-variant" type="date" name="saved_date_end_variant[]" value="{{ $variant->date_end_variant }}">
                                                     </div>
                                                     <div class="block-variant-desk">
                                                         <p>Краткое описание (проживание, питание и т.д.)</p>
@@ -137,9 +137,9 @@
                                                         </div>
                                {{--    TODO: эта панель должна появляться только при клике по "добавить вариант", иначе её не должно быть в форме      --}}
                                                         <span class="btn_upload">
-													        	<input type="file" name="photo_variant[]" class="inputfile photo-variant">
-													        	Загрузить фото
-													      	</span>
+                                                                <input type="file" name="photo_variant[]" class="inputfile photo-variant">
+                                                                Загрузить фото
+                                                            </span>
                                                     </div>
                                                     <div class="block-variant-date">
                                                         <p>Дата начала</p>
@@ -183,11 +183,14 @@
                                                     echo "<img src='' alt='заглушка изображения'>";
                                                 }
                                             @endphp
-												<span class="btn_upload">
-										        	<input id="photogallery" type="file" name="photogallery[]" multiple class="photogallery">
-										        	Загрузить фото
-										      	</span>
+                                                <span class="btn_upload">
+                                                    <input id="photogallery" type="file" name="photogallery[]" multiple class="photogallery">
+                                                    Загрузить фото
+                                                </span>
                                             <div class="photogallery-container"></div>
+                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://www.tvr.by/upload/iblock/42d/42d1898756e574fcaf9b7519c354ce9c.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://cdn24.img.ria.ru/images/151546/28/1515462835_0:0:1036:587_600x0_80_0_0_a75f922e8b052d966122e1c9dc40feb4.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://avatars.mds.yandex.net/get-vh/1528766/17938558859946010694-8Om2usjIWnMGFo-u6w3VfA-1551431625/936x524" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
                                             <p>Объявления имеющее как минимум 5 высококачественных фотографии получают больший интересно со стороны клиентов, чем те, у которых нету фото. Максимальное колличество фото не более 20. <span>Изображнея не пройдут процесс проверки, если они включают в себя: текст, водяные знаки, коллажи, фильтры или размытости.</span></p>
                                         </div>
                                     </div>
@@ -322,10 +325,12 @@
                                             }
                                             @endphp
                                             <span class="btn_upload">
-										        	<input id="accommodation-photo" type="file" name="accommodation_photo[]" multiple="">
-										        	Загрузить фото
-										      	</span>
+                                                    <input id="accommodation-photo" type="file" name="accommodation_photo[]" multiple="">
+                                                    Загрузить фото
+                                                </span>
                                             <div class="accommodation-container"></div>
+                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://www.tvr.by/upload/iblock/42d/42d1898756e574fcaf9b7519c354ce9c.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://cdn24.img.ria.ru/images/151546/28/1515462835_0:0:1036:587_600x0_80_0_0_a75f922e8b052d966122e1c9dc40feb4.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
                                             <textarea placeholder="Подробное описание" id="accommodation-event" name="accommodation_description"></textarea>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, какие удобства доступны:</p>
@@ -401,10 +406,12 @@
                                         <div class="block-panel-sub">
                                             <p>Добавьте 1-2 фотографии, опишите подробнее о питании. Выберите варианты питания, которые будуте доступны в вашем мероприятии.</p>
                                             <span class="btn_upload">
-										        	<input id="meals-photo" type="file" name="gallery_meals[]" multiple="">
-										        	Загрузить фото
-										      	</span>
+                                                    <input id="meals-photo" type="file" name="gallery_meals[]" multiple="">
+                                                    Загрузить фото
+                                                </span>
                                             <div class="meals-container"></div>
+                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://www.tvr.by/upload/iblock/42d/42d1898756e574fcaf9b7519c354ce9c.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://cdn24.img.ria.ru/images/151546/28/1515462835_0:0:1036:587_600x0_80_0_0_a75f922e8b052d966122e1c9dc40feb4.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
                                             <textarea placeholder="Подробное описание" id="meals-event" name="meals_desc">{{ old('meals_desc') }}</textarea>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, варианты меню:</p>
@@ -763,6 +770,11 @@
             alert("Ваш браузер устарел и не поддерживает загрузку!")
         }
     });
+</script>
+<script>
+    $(".removebtn").click(function(){
+        $(this).parent(".photogallery-demo").remove();
+      });
 </script>
 {{--<script>
     $('.login-list').click( function(){
