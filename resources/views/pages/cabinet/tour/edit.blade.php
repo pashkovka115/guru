@@ -82,7 +82,7 @@
                                                         </div>
 
                                                         <span class="btn_upload">
-                                                                <input type="text" name="saved_photo_variant[]" class="inputfile photo-variant" value="{{ $variant->photo_variant }}">
+                                                                <input type="file" name="saved_photo_variant[]" class="inputfile photo-variant" value="{{ $variant->photo_variant }}">
                                                                 Загрузить фото
                                                             </span>
                                                     </div>
