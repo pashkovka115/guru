@@ -188,6 +188,8 @@ class TourController extends Controller
 
         $tour = Tour::with(['tags', 'leaders', 'category', 'variants'])->where('id', $id)->firstOrFail();
 
+//        dd($tour);
+
 
         return view('pages.cabinet.tour.edit', [
             'organizator' => $organizator,

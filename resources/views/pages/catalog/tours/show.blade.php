@@ -531,3 +531,6 @@
     </div>
     @endauth
 @endsection
+@section('scripts_footer')
+
+@endsection
