@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             @foreach($posts as $post)
-                @if($loop->first)
+                @if($loop->index % 5 == 0)
             <div class="col-lg-8 col-md-12">
                 @else
                     <div class="col-lg-4 col-md-12">

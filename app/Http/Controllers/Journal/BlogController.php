@@ -10,7 +10,8 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
-        $posts = Post::paginate(14);
+        // из за HTML выводить кратное пяти
+        $posts = Post::paginate(5);
 
         if ($request->ajax()){
             return view('pages.journal.ajax_response', ['posts' => $posts]);
