@@ -33,4 +33,6 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
 
     Route::resource('post', 'PostController')
         ->names('admin.post');
+
+    Route::resource('landing', 'LandingController')->only(['index', 'update'])->names('admin.landing');
 });

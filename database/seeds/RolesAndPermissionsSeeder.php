@@ -13,9 +13,9 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // create permissions
         Permission::create(['name' => 'dashboard_view', 'description' => 'Просматривать главную панель']);
-//        Permission::create(['name' => 'dashboard_edit', 'description' => 'Редактировать ']);
-//        Permission::create(['name' => 'dashboard_add', 'description' => 'Добавлять ']);
-//        Permission::create(['name' => 'dashboard_delete', 'description' => 'Удалять ']);
+//        Permission::create(['name' => 'dashboard_edit', 'description' => 'Редактировать ']); - не имеет смысла
+//        Permission::create(['name' => 'dashboard_add', 'description' => 'Добавлять ']); - не имеет смысла
+//        Permission::create(['name' => 'dashboard_delete', 'description' => 'Удалять ']); - не имеет смысла
 
         Permission::create(['name' => 'user_view', 'description' => 'Просматривать пользователей']);
         Permission::create(['name' => 'user_edit', 'description' => 'Редактировать пользователя']);
@@ -24,8 +24,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         Permission::create(['name' => 'permission_view', 'description' => 'Просматривать разрешения']);
         Permission::create(['name' => 'permission_edit', 'description' => 'Редактировать разрешение']);
-//        Permission::create(['name' => 'permission_add', 'description' => 'Добавлять разрешение']);
-//        Permission::create(['name' => 'permission_delete', 'description' => 'Удалять разрешение']);
+//        Permission::create(['name' => 'permission_add', 'description' => 'Добавлять разрешение']); - не имеет смысла
+//        Permission::create(['name' => 'permission_delete', 'description' => 'Удалять разрешение']); - не имеет смысла
 
         Permission::create(['name' => 'role_view', 'description' => 'Просматривать роли']);
         Permission::create(['name' => 'role_edit', 'description' => 'Редактировать роль']);
@@ -34,8 +34,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         Permission::create(['name' => 'user-role_view', 'description' => 'Просматривать роли пользователей']);
         Permission::create(['name' => 'user-role_edit', 'description' => 'Синхронизировать пользователей и роли']);
-//        Permission::create(['name' => 'user-role_add', 'description' => 'Добавлять роль']);
-//        Permission::create(['name' => 'user-role_delete', 'description' => 'Удалять роль']);
+//        Permission::create(['name' => 'user-role_add', 'description' => 'Добавлять роль']); - не имеет смысла
+//        Permission::create(['name' => 'user-role_delete', 'description' => 'Удалять роль']); - не имеет смысла
 
         Permission::create(['name' => 'category-tour_view', 'description' => 'Просматривать категории туров']);
         Permission::create(['name' => 'category-tour_edit', 'description' => 'Редактировать категории туров']);
@@ -63,6 +63,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'post_edit', 'description' => 'Редактировать записи']);
         Permission::create(['name' => 'post_add', 'description' => 'Добавлять записи']);
         Permission::create(['name' => 'post_delete', 'description' => 'Удалять записи']);
+
+        Permission::create(['name' => 'landing_view', 'description' => 'Просматривать лендинг']);
+        Permission::create(['name' => 'landing_edit', 'description' => 'Редактировать лендинг']);
+        Permission::create(['name' => 'landing_add', 'description' => 'Добавлять в лендинг']);
+        Permission::create(['name' => 'landing_delete', 'description' => 'Удалять из лендинга']);
 
 
 

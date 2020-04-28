@@ -116,7 +116,7 @@
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="{{ route('site.cabinet.tour.create') }}">Добавить объявление</a></li>
+                        <li><a href="{{ route('site.landing') }}">Добавить объявление</a></li>
                         @guest
                         <li>
                             <a href="{{ route('login') }}">Вход</a>

@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MessagesTableSeeder::class);
         $this->call(PostTableSeeder::class);
         $this->call(PageTableSeeder::class);
+        $this->call(LandingBloksTableSeeder::class);
+        $this->call(LandingTableSeeder::class);
 
 //        $this->call(CategoryPostTableSeeder::class);
 //        $this->call(TourUserTableSeeder::class);

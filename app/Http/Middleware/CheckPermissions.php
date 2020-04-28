@@ -7,6 +7,7 @@ use Closure;
 use Modules\Admin\Http\Controllers\CategoryPostController;
 use Modules\Admin\Http\Controllers\CategoryTourController;
 use Modules\Admin\Http\Controllers\DashboardController;
+use Modules\Admin\Http\Controllers\LandingController;
 use Modules\Admin\Http\Controllers\PageController;
 use Modules\Admin\Http\Controllers\PermissionController;
 use Modules\Admin\Http\Controllers\PostController;
@@ -91,6 +92,7 @@ class CheckPermissions
         PageController::class => 'page',
         CategoryPostController::class => 'category-post',
         PostController::class => 'post',
+        LandingController::class => 'landing',
 
 //        File Mager
         FileManagerController::class => 'file-mager'

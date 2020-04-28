@@ -21,6 +21,8 @@ Route::resource('/journal', 'Journal\BlogController')->only(['index', 'show'])->
 
 Route::resource('/page', 'Pages\PageController')->only('show')->names('site.pages.official');
 
+Route::get('add-advert', 'Landing\LandingPageController@index')->name('site.landing');
+
 Route::prefix('cabinet')->middleware('auth')->group(function (){
     Route::get('', function (){ return redirect()->route('site.cabinet.user.index'); });
     Route::resource('/user', 'Cabinet\HomeController')->only(['index', 'edit', 'update'])->names('site.cabinet.user');
