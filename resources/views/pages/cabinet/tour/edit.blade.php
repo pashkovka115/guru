@@ -19,11 +19,9 @@
                                     <div class="block-panel">
                                         @php
                                             $tour_leaders = $tour->leaders;
-//dd($organizator->leaders->toArray(), $tour_leaders->toArray()); exit();
                                         @endphp
                                         <label for="autor" class="create-subtitle">Ведущий:</label>
                                         <select class="chosen-select" id="autor" name="leader_ids[]" multiple="multiple">
-{{--   TODO:  foreach ещё буду тестить    --}}
                                             @foreach($organizator->leaders as $leader)
                                                 @php
                                                 foreach($tour_leaders as $t_lead){
@@ -47,29 +45,6 @@
                                     <div class="block-panel">
                                         <div class="block-selection">
 
-                                            <!-- <div class="block-panel-sub date-start-end">
-                                                <p class="create-subtitle">Когда начинается и заканчивается ваше мероприятие?</p>
-                                                <div class="create-date">
-                                                    <div><p>Дата начала</p><input id="date-start" type="date" name="date_start" value="{{ $tour->date_start }}"></div>
-                                                    <div><p>Дата окончания</p><input id="date-end" type="date" name="date_end" value="{{ $tour->date_end }}"></div>
-                                                </div>
-                                            </div>
-                                            <div class="block-panel-sub">
-                                                <p class="create-subtitle">Установить цену*</p>
-                                                {{--<div class="create-price">
-                                                    <p>Выбор цены:</p>
-                                                    <select name="price" id="price">
-                                                        <option value="Фиксированная цена">Фиксированная цена</option>
-                                                        <option value="Бесплатно">Бесплатно</option>
-                                                    </select>
-                                                </div>--}}
-                                                <div class="create-price specify-price">
-                                                    {{--    TODO: необходимо в интерфейсе форматировать цену т.к. в базе цена хранится в копейках    --}}
-                                                    <p>Укажите цену:</p>
-                                                    <input id="price-base" type="text" name="price_base" value="{{ $tour->price_base }}" required>
-                                                    <span>RUB</span>
-                                                </div>
-                                            </div> -->
                                             <div class="block-panel-sub">
                                                 <p class="create-subtitle">Вариативность:</p>
                                                 <p class="create-text-min">Укажите цену, даты, краткое описание для данного мероприятия в зависимости от колличества участников. При добавлении фотографии, оно также отрабразиться в общем списке фото.</p>
@@ -88,11 +63,11 @@
                                                     </div>
                                                     <div class="block-variant-date">
                                                         <p>Дата начала</p>
-                                                        <input class="text-variant" type="date" name="saved_date_start_variant[]" value="{{ $variant->date_start_variant }}">
+                                                        <input class="text-variant" type="date" name="saved_date_start_variant[]" value="{{ explode(' ', $variant->date_start_variant)[0] }}">
                                                     </div>
                                                     <div class="block-variant-date">
                                                         <p>Дата окончания</p>
-                                                        <input class="text-variant" type="date" name="saved_date_end_variant[]" value="{{ $variant->date_end_variant }}">
+                                                        <input class="text-variant" type="date" name="saved_date_end_variant[]" value="{{ explode(' ', $variant->date_end_variant)[0] }}">
                                                     </div>
                                                     <div class="block-variant-desk">
                                                         <p>Краткое описание (проживание, питание и т.д.)</p>
@@ -129,46 +104,6 @@
                                                     <div class="delete"><i class="fa fa-times" aria-hidden="true"></i></div>
                                                 </div>
                                                 @endforeach
-
-                                                <div class="block-variants">
-                                                    <div class="choose-file">
-                                                        <div class="upload-demo">
-                                                            <div class="upload-demo-wrap"><img class="img-fluid portimg" src="{{ asset('assets/site/images/wide.jpg') }}"></div>
-                                                        </div>
-                               {{--    TODO: эта панель должна появляться только при клике по "добавить вариант", иначе её не должно быть в форме      --}}
-                                                        <span class="btn_upload">
-                                                                <input type="file" name="photo_variant[]" class="inputfile photo-variant">
-                                                                Загрузить фото
-                                                            </span>
-                                                    </div>
-                                                    <div class="block-variant-date">
-                                                        <p>Дата начала</p>
-                                                        <input class="text-variant" type="text" name="date_start_variant[]" value="">
-                                                    </div>
-                                                    <div class="block-variant-date">
-                                                        <p>Дата окончания</p>
-                                                        <input class="text-variant" type="text" name="date_end_variant[]" value="">
-                                                    </div>
-                                                    <div class="block-variant-desk">
-                                                        <p>Краткое описание (проживание, питание и т.д.)</p>
-                                                        <input class="text-variant" type="text" name="text_variant[]" value="">
-                                                    </div>
-                                                    <div class="block-variant-price">
-                                                        <p>Цена (RUB)</p>
-                                                        <input class="price-variant" type="text" name="price_variant[]" value="">
-                                                    </div>
-                                                    <div class="block-variant-amount">
-                                                        <p>Кол. человек</p>
-                                                        <select name="amount_variant[]" class="amount-variant">
-                                                            <option value="1 человек">1 человек</option>
-                                                            <option value="2 человека">2 человек</option>
-                                                            <option value="3 человека">3 человека</option>
-                                                            <option value="4 человека">4 человека</option>
-                                                            <option value="5 человек">5 человек</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="delete"><i class="fa fa-times" aria-hidden="true"></i></div>
-                                                </div>
                                                 <button class="click_to_add_block" type="button">Добавить вариант</button>
                                             </div>
                                         </div>
@@ -177,7 +112,6 @@
                                         <label for="photogallery" class="create-subtitle">Фотогалерея:</label>
                                         <div class="block-panel-sub">
                                             @php
-                                            // TODO: галерея изображений. Нужен шаблон для редактирования фото.
                                                 foreach (json_decode($tour->gallery) as $src){
                                                  //   echo "<img src='$src'>";
                                                     echo "<img src='' alt='заглушка изображения'>";
@@ -318,7 +252,6 @@
                                         <div class="block-panel-sub">
                                             <p>Добавьте 1-2 фотографии, опишите подробнее о проживании. Выберите варианты удоств, которые будуте доступны в вашем мероприятии.</p>
                                             @php
-                                            // TODO: шаблон для редактирования этой галереи
                                             $acc_photo = json_decode($tour->accommodation_photo);
                                             foreach ($acc_photo as $item) {
                                                 echo " <img src='' alt='$item'> ";
@@ -496,7 +429,6 @@
                                     </div>
                                     <div class="block-publication">
                                         <button type="submit" class="btn-public">Опубликовать</button>
-{{--                                        <a class="no-btn-public" href="javascript:window.history.back();" title="Отмена">Отмена</a>--}}
                                     </div>
                                 </form>
                             </div>
@@ -547,11 +479,11 @@ $('.click_to_add_block').click(function() {
             </div>
             <div class="block-variant-date">
                 <p>Дата начала</p>
-                <input class="text-variant" type="text" name="date_start_variant[]" value="">
+                <input class="text-variant" type="date" name="date_start_variant[]" value="">
             </div>
             <div class="block-variant-date">
                 <p>Дата окончания</p>
-                <input class="text-variant" type="text" name="date_end_variant[]" value="">
+                <input class="text-variant" type="date" name="date_end_variant[]" value="">
             </div>
             <div class="block-variant-desk">
                 <p>Краткое описание (проживание, питание и т.д.)</p>
@@ -575,7 +507,7 @@ $('.click_to_add_block').click(function() {
             </div>
         `);
     });
-    
+
     $(document).on('click', '.delete', function() {
       $(this).parent().remove();
     });
