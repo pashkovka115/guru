@@ -20,9 +20,9 @@ class CreateToursTable extends Migration
             $table->unsignedBigInteger('category_tour_id');
             $table->enum('active', ["1", "0"])->comment('опубликовано');
             $table->enum('good', ["0", "1"])->comment('одобрен администратором');
-            $table->decimal('rating', 2, 1)->nullable();
+            $table->decimal('rating', 2, 1)->default(0)->nullable();
             $table->string('title')->comment('название');
-            $table->unsignedInteger('price_base')->comment('основная цена в копейках');
+//            $table->unsignedInteger('price_base')->comment('основная цена в копейках');
 
             $table->text('gallery')->nullable()->comment('галерея');
             $table->string('address')->nullable();

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Modules\Admin\Models\CategoryTour;
 use Modules\Admin\Models\Tour;
 use Modules\Admin\Models\ToursTags;
+use Modules\Admin\Models\TourVariant;
 
 
 /**
@@ -48,7 +49,7 @@ class TourController extends Controller
             'leader_ids.*' => 'integer|required',
             'date_start' => 'sometimes|nullable|date',
             'date_end' => 'sometimes|nullable|date',
-            'price_base' => 'required|numeric',
+//            'price_base' => 'required|numeric',
 
             'tags' => 'sometimes|nullable|array',
             'tags.*' => 'sometimes|nullable|numeric',
@@ -98,7 +99,7 @@ class TourController extends Controller
             'gallery_meals.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
             'meals_desc' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
         ]);
-//dd($request->input('gallery'));
+//dd($request->file('accommodation_photo'));
 
         \DB::transaction(function () use ($request) {
             $tour = Tour::with('tags')->create([
@@ -107,7 +108,7 @@ class TourController extends Controller
                 'user_id' => \Auth::id(),
                 'date_start' => $request->input('date_start'),
                 'date_end' => $request->input('date_end'),
-                'price_base' => $request->input('price_base'),
+//                'price_base' => $request->input('price_base'),
 
                 'gallery' => json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('photogallery'))),
 
@@ -131,13 +132,13 @@ class TourController extends Controller
                 'first_aid' => $request->input('first_aid'),
                 'drinking_water' => $request->input('drinking_water'),
                 'communication' => $request->input('communication'),
-                'accommodation_photo' => (is_array($request->file('accommodation_photo'))) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('accommodation_photo'))) : null,
+                'accommodation_photo' => ($request->has('accommodation_photo')) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('accommodation_photo'))) : null,
                 'accommodation_description' => $request->input('accommodation_description'),
-                'gallery_meals' => (is_array($request->file('gallery_meals'))) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery_meals'))) : null,
+                'gallery_meals' => ($request->has('gallery_meals')) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery_meals'))) : null,
                 'meals_desc' => $request->input('meals_desc'),
             ]);
 
-            if ($request->has('tags') and is_array($request->input('tags')) and count($request->input('tags')) > 0){
+            if ($request->has('tags') and is_array($request->input('tags')) and count($request->input('tags')) > 0) {
                 $tour->tags()->attach($request->input('tags'));
             }
 
@@ -176,8 +177,6 @@ class TourController extends Controller
 
     public function edit($id)
     {
-//        \DB::table('tours_variants')->insert($variants);
-
         // организатор с его ведущими
         $organizator = User::with('leaders')->where('id', auth()->id())->firstOrFail();
         // все теги
@@ -185,11 +184,7 @@ class TourController extends Controller
         // все категории туров
         $tour_categpries = CategoryTour::all();
 
-
         $tour = Tour::with(['tags', 'leaders', 'category', 'variants'])->where('id', $id)->firstOrFail();
-
-//        dd($tour);
-
 
         return view('pages.cabinet.tour.edit', [
             'organizator' => $organizator,
@@ -201,7 +196,174 @@ class TourController extends Controller
 
     public function update(Request $request, $id)
     {
+//        dd($request->all());
+        $request->validate([
+            'category_tour_id' => 'required|numeric',
+            'title' => 'regex:/[\w\s\d\_\-\.]*/i',
+            'leader_ids' => 'array|required',
+            'leader_ids.*' => 'integer|required',
+            'date_start' => 'sometimes|nullable|date',
+            'date_end' => 'sometimes|nullable|date',
+//            'price_base' => 'required|numeric',
 
+            'tags' => 'sometimes|nullable|array',
+            'tags.*' => 'sometimes|nullable|numeric',
+
+            'photo_variant' => 'sometimes|nullable|array',
+            'photo_variant.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
+
+            'date_variant' => 'sometimes|nullable|array',
+            'date_variant.*' => 'sometimes|nullable|date',
+
+            'text_variant' => 'sometimes|nullable|array',
+            'text_variant.*' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.]*/i',
+
+            'price_variant' => 'sometimes|nullable|array',
+            'price_variant.*' => 'sometimes|nullable|regex:/[\d]*/i',
+
+            'amount_variant' => 'sometimes|nullable|array',
+            'amount_variant.*' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.]*/i',
+
+            'photogallery' => 'sometimes|nullable|array',
+            'photogallery.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
+
+            'address' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'street' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'house' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'region' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'city' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'country' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+
+            'latitude' => 'sometimes|nullable|regex:/[\d\.]*/i',
+            'longitude' => 'sometimes|nullable|regex:/[\d\.]*/i',
+            'adress_desk' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'video_url' => 'sometimes|nullable|url',
+            'info_excerpt' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'info_description' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'count_person' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'timetable' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'included' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'no_included' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'first_aid' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'drinking_water' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'communication' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'accommodation_photo' => 'array',
+            'accommodation_photo.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
+            'accommodation_description' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+            'gallery_meals' => 'array',
+            'gallery_meals.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
+            'meals_desc' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
+        ]);
+
+//        dd($request->all());
+
+        \DB::transaction(function () use ($id, $request) {
+            // синхронизация тура с ведущими
+            $leaders_ids = array_map(function ($n) use ($id) {
+                return ['leader_id' => $n * 1, 'tour_id' => $id * 1];
+            }, $request->input('leader_ids'));
+            \DB::table('tour_leader')->where('tour_id', $id)->delete();
+            \DB::table('tour_leader')->insert($leaders_ids);
+
+            // синхронизация с вариантами
+            // если существуют варианты
+            if ($request->has('date_start_variant')) {
+                $cnt_elems = count($request->input('date_start_variant')) ?? 0;
+                function get_photo_if_exists($request, $i)
+                {
+                    if ($request->has('photo_variant') and isset($request->file('photo_variant')["$i"])) {
+                        $files = get_url_to_uploaded_files(auth()->user(), $request->file('photo_variant')["$i"]);
+                        return json_encode($files);
+                    }
+                    return '';
+                }
+
+                for ($i = 0; $i < $cnt_elems; $i++) {
+                    $variant = [
+                        'variant_id' => $request->input('variant_id')[$i] ?? false,
+                        'tour_id' => $id,
+                        'price_variant' => $request->input('price_variant')[$i],
+                        'date_start_variant' => $request->input('date_start_variant')[$i],
+                        'date_end_variant' => $request->input('date_end_variant')[$i],
+                        'text_variant' => $request->input('text_variant')[$i],
+                        'amount_variant' => $request->input('amount_variant')[$i],
+                    ];
+
+                    if ($request->has('photo_variant') and isset($request->file('photo_variant')["$i"])) {
+                        $variant['photo_variant'] = get_photo_if_exists($request, $i);
+                    }
+
+                    // Обновляем вариант если существует, иначе добавляем новый
+                    if ($variant['variant_id']) {
+                        $id_var = $variant['variant_id'];
+                        unset($variant['variant_id']);
+                        \DB::table('tours_variants')->where('tour_id', $id)->where('id', $id_var)->update($variant);
+                    } else {
+                        unset($variant['variant_id']);
+                        \DB::table('tours_variants')->insert($variant);
+                    }
+                }
+            } // END variants
+
+            // Tags
+            $tour = Tour::with(['tags', 'leaders', 'category', 'variants'])->where('id', $id)->firstOrFail();
+            $tour->tags()->sync(array_map(function ($n) {
+                return $n * 1;
+            }, $request->input('tags', []))); // END Tags
+
+            // ***
+            $tour->update([
+                "title" => $request->input('title'),
+                "category_tour_id" => $request->input('category_tour_id'),
+                "address" => $request->input('address'),
+                "street" => $request->input('street'),
+                "house" => $request->input('house'),
+                "region" => $request->input('region'),
+                "city" => $request->input('city'),
+                "country" => $request->input('country'),
+                "latitude" => $request->input('latitude'),
+                "longitude" => $request->input('longitude'),
+                "adress_desk" => $request->input('adress_desk'),
+                "video_url" => $request->input('video_url'),
+                "info_excerpt" => $request->input('info_excerpt'),
+                "info_description" => $request->input('info_description'),
+                "count_person" => $request->input('count_person'),
+                "timetable" => $request->input('timetable'),
+                "included" => $request->input('included'),
+                "no_included" => $request->input('no_included'),
+                "first_aid" => $request->input('first_aid'),
+                "drinking_water" => $request->input('drinking_water'),
+                "communication" => $request->input('communication'),
+                'accommodation_photo' => ($request->has('accommodation_photo')) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('accommodation_photo'))) : null,
+                "accommodation_description" => $request->input('accommodation_description'),
+                "conditioner" => $request->has('conditioner') ? '1' : '0',
+                "wifi" => $request->has('wifi') ? '1' : '0',
+                "pool" => $request->has('pool') ? '1' : '0',
+                "towel" => $request->has('towel') ? '1' : '0',
+                "private_room" => $request->has('private_room') ? '1' : '0',
+                "transfer_fee" => $request->has('transfer_fee') ? '1' : '0',
+                'gallery_meals' => ($request->has('gallery_meals')) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery_meals'))) : null,
+                "meals_desc" => $request->input('meals_desc'),
+                "fish" => $request->has('fish') ? '1' : '0',
+                "meat" => $request->has('meat') ? '1' : '0',
+                "gluten_free" => $request->has('gluten_free') ? '1' : '0',
+                "milk_free" => $request->has('milk_free') ? '1' : '0',
+                "kitchen" => $request->has('kitchen') ? '1' : '0',
+                "dormitory_room" => $request->has('dormitory_room') ? '1' : '0',
+                "separate_house" => $request->has('separate_house') ? '1' : '0',
+                "transfer_free" => $request->has('transfer_free') ? '1' : '0',
+                "not_transfer" => $request->has('not_transfer') ? '1' : '0',
+                "vegan" => $request->has('vegan') ? '1' : '0',
+                "ayurveda" => $request->has('ayurveda') ? '1' : '0',
+                "vegetarianism" => $request->has('vegetarianism') ? '1' : '0',
+                "organic" => $request->has('organic') ? '1' : '0',
+                "nuts_free" => $request->has('nuts_free') ? '1' : '0',
+                "coffee_tea" => $request->has('coffee_tea') ? '1' : '0',
+                "count_meals" => $request->input('count_meals'),
+            ]);
+        });
+
+        return redirect()->back();
     }
 }
 

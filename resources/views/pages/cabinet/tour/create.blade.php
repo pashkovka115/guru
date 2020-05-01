@@ -7,14 +7,26 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
+                        @include('parts.cabinet.menu')
                         <div class="information-create">
-                            <h1 class="create-title">Создать мероприятие</h1>
+                            <h1 class="create-title">Новое мероприятие</h1>
                             <div class="panel-create">
                                 <form enctype="multipart/form-data" action="{{ route('site.cabinet.tour.store') }}" autocomplete="off" method="post">
                                     @csrf
                                     <div class="block-panel">
-                                        <label for="name" class="create-subtitle">Название мероприятия*</label>
+                                        <label for="name" class="create-subtitle">Название мероприятия:</label>
                                         <input id="name" type="text" name="title" value="{{ old('title') }}" required placeholder="Введите название вашего мероприятия">
+                                    </div>
+                                    <div class="block-panel">
+                                        <label for="category-event-variants" class="create-subtitle">Выбрать категорию мероприятия:</label>
+                                        <div class="block-panel-sub">
+                                            <p>Выбрать подходящий вариант</p>
+                                            <select name="category_tour_id" id="category-event-variants">
+                                                @foreach($tour_categpries as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="block-panel">
                                         <label for="autor" class="create-subtitle">Ведущий:</label>
@@ -29,84 +41,12 @@
                                         <input id="organization" value="{{ auth()->user()->name }}" disabled>
                                     </div>
                                     <div class="block-panel">
-{{--                                        <label class="create-subtitle">Дата и цена:</label>--}}
                                         <div class="block-selection">
-                                            {{--  TODO: этот блок переизбыточен, зачем он?   --}}
-                                            {{--<div class="block-panel-sub">
-                                                <p class="create-subtitle">Бронирование мероприятия:</p>
-                                                <p class="create-checkbox">
-                                                    <input checked name="date_type" type="radio" value="Определенная дата начала и окончания">Определенная дата начала и окончания
-                                                </p>
-                                                <p class="create-checkbox">
-                                                    <input name="date_type" type="radio" value="Опция для онлайн-курсов">Опция для онлайн-курсов (нету даты начала и окончания)
-                                                </p>
-                                            </div>--}}
-                                            <div class="block-panel-sub date-start-end">
-                                                <p class="create-subtitle">Когда начинается и заканчивается ваше мероприятие?</p>
-                                                <div class="create-date">
-                                                    <div><p>Дата начала</p><input id="date-start" type="date" name="date_start" value="{{ old('date_start') }}"></div>
-                                                    <div><p>Дата окончания</p><input id="date-end" type="date" name="date_end" value="{{ old('date_end') }}"></div>
-                                                </div>
-                                            </div>
+
                                             <div class="block-panel-sub">
-                                                <p class="create-subtitle">Установить цену*</p>
-                                                {{--  TODO: этот блок переизбыточен, зачем он?   --}}
-                                                {{--<div class="create-price">
-                                                    <p>Выбор цены:</p>
-                                                    <select name="price" id="price">
-                                                        <option value="Фиксированная цена">Фиксированная цена</option>
-                                                        <option value="Бесплатно">Бесплатно</option>
-                                                    </select>
-                                                </div>--}}
-                                                <div class="create-price specify-price">
-{{--    TODO: необходимо в интерфейсе форматировать цену т.к. в базе цена хранится в копейках    --}}
-                                                    <p>Укажите цену:</p>
-                                                    <input id="price-base" type="text" name="price_base" value="{{ old('price_base') }}" required>
-                                                    <span>RUB</span>
-                                                </div>
-                                            </div>
-                                            <div class="block-panel-sub">
-                                                <p class="create-subtitle">Вариативность цены:</p>
-                                                <p class="create-text-min">Укажите цены для данного мероприятия в зависимости от колличества участников. При добавлении фотографии, оно также отрабразиться в общем списке фото.</p>
-                                                <div class="block-variants">
-                                                    <div class="choose-file">
-                                                        <div class="upload-demo">
-                                                            <div class="upload-demo-wrap"><img class="img-fluid portimg" src="{{ asset('assets/site/images/wide.jpg') }}"></div>
-                                                        </div>
-{{--    TODO: эта панель должна появляться только при клике по "добавить вариант", иначе её не должно быть в форме      --}}
-                                                        <span class="btn_upload">
-													        	<input type="file" name="photo_variant[]" class="inputfile photo-variant">
-													        	Загрузить фото
-													      	</span>
-                                                    </div>
-                                                    <div class="block-variant-date">
-                                                        <p>Дата начала</p>
-                                                        <input class="text-variant" type="text" name="date_start_variant[]" value="">
-                                                    </div>
-                                                    <div class="block-variant-date">
-                                                        <p>Дата окончания</p>
-                                                        <input class="text-variant" type="text" name="date_end_variant[]" value="">
-                                                    </div>
-                                                    <div class="block-variant-desk">
-                                                        <p>Краткое описание (проживание, питание и т.д.)</p>
-                                                        <input class="text-variant" type="text" name="text_variant[]" value="">
-                                                    </div>
-                                                    <div class="block-variant-price">
-                                                        <p>Цена (RUB)</p>
-                                                        <input class="price-variant" type="text" name="price_variant[]" value="">
-                                                    </div>
-                                                    <div class="block-variant-amount">
-                                                        <p>Кол. человек</p>
-                                                        <select name="amount_variant[]" class="amount-variant">
-                                                            <option value="1 человек">1 человек</option>
-                                                            <option value="2 человека">2 человек</option>
-                                                            <option value="3 человека">3 человека</option>
-                                                            <option value="4 человека">4 человека</option>
-                                                            <option value="5 человек">5 человек</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="delete"><i class="fa fa-times" aria-hidden="true"></i></div>
-                                                </div>
+                                                <p class="create-subtitle">Вариативность:</p>
+                                                <p class="create-text-min">Укажите цену, даты, краткое описание для данного мероприятия в зависимости от колличества участников. При добавлении фотографии, оно также отрабразиться в общем списке фото.</p>
+
                                                 <button class="click_to_add_block" type="button">Добавить вариант</button>
                                             </div>
                                         </div>
@@ -114,11 +54,12 @@
                                     <div class="block-panel">
                                         <label for="photogallery" class="create-subtitle">Фотогалерея:</label>
                                         <div class="block-panel-sub">
-												<span class="btn_upload">
-										        	<input id="photogallery" type="file" name="photogallery[]" multiple class="photogallery" >
-										        	Загрузить фото
-										      	</span>
+                                                <span class="btn_upload">
+                                                    <input id="photogallery" type="file" name="photogallery[]" multiple class="photogallery">
+                                                    Загрузить фото
+                                                </span>
                                             <div class="photogallery-container"></div>
+
                                             <p>Объявления имеющее как минимум 5 высококачественных фотографии получают больший интересно со стороны клиентов, чем те, у которых нету фото. Максимальное колличество фото не более 20. <span>Изображнея не пройдут процесс проверки, если они включают в себя: текст, водяные знаки, коллажи, фильтры или размытости.</span></p>
                                         </div>
                                     </div>
@@ -147,6 +88,9 @@
                                     </div>
                                     <div class="block-panel">
                                         <label for="tags" class="create-subtitle">Теги темы(максимум 5):</label>
+                                        @php
+                                        //dd($tour->tags)
+                                        @endphp
                                         <select class="chosen-select" id="tags" name="tags[]" multiple="multiple">
                                             @foreach($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->tag }}</option>
@@ -164,16 +108,23 @@
                                     <div class="block-panel">
                                         <label for="group-event" class="create-subtitle">Размер группы:</label>
                                         <div class="block-panel-sub">
+                                            @php
+                                            $peop = [
+                                                "1 человек",
+                                                "2 человека",
+                                                "3 человека",
+                                                "4 человека",
+                                                "5 человек",
+                                                "от 5 до 10  человек",
+                                                "от 10 до 20  человек",
+                                                "от 20 до 50  человек",
+                                            ];
+                                            @endphp
                                             <p>Выберите максимальный размер группы</p>
                                             <select name="count_person" id="group-event">
-                                                <option value="1 человек">1 человек</option>
-                                                <option value="2 человека">2 человек</option>
-                                                <option value="3 человека">3 человека</option>
-                                                <option value="4 человека">4 человека</option>
-                                                <option value="5 человек">5 человек</option>
-                                                <option value="от 5 до 10  человек">от 5 до 10</option>
-                                                <option value="от 10 до 20  человек">от 10 до 20</option>
-                                                <option value="от 20 до 50  человек">от 20 до 50</option>
+                                                @foreach($peop as $pers)
+                                                <option value="{{ $pers }}">{{ $pers }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -181,7 +132,7 @@
                                         <label for="timetable-event" class="create-subtitle">Расписание мероприятия:</label>
                                         <div class="block-panel-sub">
                                             <p>Опишите в форме ниже, детальное расписание мероприятия по дням. Оно не должно быть 100% точным. Дайте участникам понять, что будет происходить каждый день и как все организовано.</p>
-                                            <textarea placeholder="Опишите, что участникам стоит ожидать в течении дня" id="timetable-event" name="timetable">{{old('timetable')}}</textarea>
+                                            <textarea placeholder="Опишите, что участникам стоит ожидать в течении дня" id="timetable-event" name="timetable">{{ old('timetable') }}</textarea>
                                         </div>
                                     </div>
                                     <div class="block-panel">
@@ -223,35 +174,36 @@
                                         <div class="block-panel-sub">
                                             <p>Добавьте 1-2 фотографии, опишите подробнее о проживании. Выберите варианты удоств, которые будуте доступны в вашем мероприятии.</p>
                                             <span class="btn_upload">
-										        	<input id="accommodation-photo" type="file" name="accommodation_photo[]" multiple="">
-										        	Загрузить фото
-										      	</span>
+                                                    <input id="accommodation-photo" type="file" name="accommodation_photo[]" multiple="">
+                                                    Загрузить фото
+                                                </span>
                                             <div class="accommodation-container"></div>
+
                                             <textarea placeholder="Подробное описание" id="accommodation-event" name="accommodation_description"></textarea>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, какие удобства доступны:</p>
                                                 <label for="conditioner">
-                                                    <input type="checkbox" id="conditioner" name="conditioner" value="Кондиционер">
+                                                    <input type="checkbox" id="conditioner" name="conditioner" value="Кондиционер" @if(old('conditioner')) checked @endif>
                                                     <span>Кондиционер</span>
                                                 </label>
                                                 <label for="wifi">
-                                                    <input type="checkbox" id="wifi" name="wifi" value="Беплатный Wifi">
+                                                    <input type="checkbox" id="wifi" name="wifi" value="Беплатный Wifi" @if(old('wifi')) checked @endif>
                                                     <span>Беплатный Wifi</span>
                                                 </label>
                                                 <label for="pool">
-                                                    <input type="checkbox" id="pool" name="pool" value="Бассейн">
+                                                    <input type="checkbox" id="pool" name="pool" value="Бассейн" @if(old('pool')) checked @endif>
                                                     <span>Бассейн</span>
                                                 </label>
                                                 <label for="towel">
-                                                    <input type="checkbox" id="towel" name="towel" value="Полотенца">
+                                                    <input type="checkbox" id="towel" name="towel" value="Полотенца" @if(old('towel')) checked @endif>
                                                     <span>Полотенца</span>
                                                 </label>
                                                 <label for="kitchen">
-                                                    <input type="checkbox" id="kitchen" name="kitchen" value="Кухня">
+                                                    <input type="checkbox" id="kitchen" name="kitchen" value="Кухня" @if(old('kitchen')) checked @endif>
                                                     <span>Кухня</span>
                                                 </label>
                                                 <label for="coffee-tea">
-                                                    <input type="checkbox" id="coffee-tea" name="coffee_tea" value="Кофе / Чай">
+                                                    <input type="checkbox" id="coffee-tea" name="coffee_tea" value="Кофе / Чай" @if(old('coffee_tea')) checked @endif>
                                                     <span>Кофе / Чай</span>
                                                 </label>
                                             </div>
@@ -263,15 +215,15 @@
                                             <p>Укажите подходящии варианты</p>
                                             <div class="block-security-event">
                                                 <label class="accommodation-event-variants">
-                                                    <input type="checkbox" name="private_room" value="Отдельный номер">
+                                                    <input type="checkbox" name="private_room" value="Отдельный номер" @if(old('private_room')) checked @endif>
                                                     <span>Отдельный номер</span>
                                                 </label>
                                                 <label class="accommodation-event-variants">
-                                                    <input type="checkbox" name="dormitory_room" value="Общий номер">
+                                                    <input type="checkbox" name="dormitory_room" value="Общий номер" @if(old('dormitory_room')) checked @endif>
                                                     <span>Общий номер</span>
                                                 </label>
                                                 <label class="accommodation-event-variants">
-                                                    <input type="checkbox" name="separate_house" value="Отдельный домик">
+                                                    <input type="checkbox" name="separate_house" value="Отдельный домик" @if(old('separate_house')) checked @endif>
                                                     <span>Отдельный домик</span>
                                                 </label>
                                             </div>
@@ -283,15 +235,15 @@
                                             <p>Укажите подходящии варианты трасфера</p>
                                             <div class="block-security-event">
                                                 <label class="accommodation-event-variants">
-                                                    <input type="checkbox" name="transfer_free" value="Встреча в аэропорту и траснфер (бесплатно)">
+                                                    <input type="checkbox" name="transfer_free" value="Встреча в аэропорту и траснфер (бесплатно)" @if(old('transfer_free')) checked @endif>
                                                     <span>Встреча в аэропорту и траснфер (бесплатно)</span>
                                                 </label>
                                                 <label class="accommodation-event-variants">
-                                                    <input type="checkbox" name="transfer_fee" value="Встреча в аэропорту и траснфер (за доп.плату)">
+                                                    <input type="checkbox" name="transfer_fee" value="Встреча в аэропорту и траснфер (за доп.плату)" @if(old('transfer_fee')) checked @endif>
                                                     <span>Встреча в аэропорту и траснфер (за доп.плату)</span>
                                                 </label>
                                                 <label class="accommodation-event-variants">
-                                                    <input type="checkbox" name="not_transfer" value="Добираетесь сами">
+                                                    <input type="checkbox" name="not_transfer" value="Добираетесь сами" @if(old('not_transfer')) checked @endif>
                                                     <span>Добираетесь сами</span>
                                                 </label>
                                             </div>
@@ -302,47 +254,48 @@
                                         <div class="block-panel-sub">
                                             <p>Добавьте 1-2 фотографии, опишите подробнее о питании. Выберите варианты питания, которые будуте доступны в вашем мероприятии.</p>
                                             <span class="btn_upload">
-										        	<input id="meals-photo" type="file" name="gallery_meals[]" multiple="">
-										        	Загрузить фото
-										      	</span>
+                                                    <input id="meals-photo" type="file" name="gallery_meals[]" multiple="">
+                                                    Загрузить фото
+                                                </span>
                                             <div class="meals-container"></div>
+
                                             <textarea placeholder="Подробное описание" id="meals-event" name="meals_desc">{{ old('meals_desc') }}</textarea>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, варианты меню:</p>
                                                 <label for="vegan">
-                                                    <input type="checkbox" id="vegan" name="vegan" value="Веган">
+                                                    <input type="checkbox" id="vegan" name="vegan" value="Веган" @if(old('vegan')) checked @endif>
                                                     <span>Веган</span>
                                                 </label>
                                                 <label for="vegetarianism">
-                                                    <input type="checkbox" id="vegetarianism" name="vegetarianism" value="Вегетарианство">
+                                                    <input type="checkbox" id="vegetarianism" name="vegetarianism" value="Вегетарианство" @if(old('vegetarianism')) checked @endif>
                                                     <span>Вегетарианство</span>
                                                 </label>
                                                 <label for="fish">
-                                                    <input type="checkbox" id="fish" name="fish" value="Рыба">
+                                                    <input type="checkbox" id="fish" name="fish" value="Рыба" @if(old('fish')) checked @endif>
                                                     <span>Рыба</span>
                                                 </label>
                                                 <label for="ayurveda">
-                                                    <input type="checkbox" id="ayurveda" name="ayurveda" value="Аюрведа">
+                                                    <input type="checkbox" id="ayurveda" name="ayurveda" value="Аюрведа" @if(old('ayurveda')) checked @endif>
                                                     <span>Аюрведа</span>
                                                 </label>
                                                 <label for="meat">
-                                                    <input type="checkbox" id="meat" name="meat" value="Мясо">
+                                                    <input type="checkbox" id="meat" name="meat" value="Мясо" @if(old('meat')) checked @endif>
                                                     <span>Мясо</span>
                                                 </label>
                                                 <label for="organic">
-                                                    <input type="checkbox" id="organic" name="organic" value="Органическая">
+                                                    <input type="checkbox" id="organic" name="organic" value="Органическая" @if(old('organic')) checked @endif>
                                                     <span>Органическая</span>
                                                 </label>
                                                 <label for="gluten-free">
-                                                    <input type="checkbox" id="gluten-free" name="gluten_free" value="Без глютена">
+                                                    <input type="checkbox" id="gluten-free" name="gluten_free" value="Без глютена" @if(old('gluten_free')) checked @endif>
                                                     <span>Без глютена</span>
                                                 </label>
                                                 <label for="milk-free">
-                                                    <input type="checkbox" id="milk-free" name="milk_free" value="Без молока">
+                                                    <input type="checkbox" id="milk-free" name="milk_free" value="Без молока" @if(old('milk_free')) checked @endif>
                                                     <span>Без молока</span>
                                                 </label>
                                                 <label for="nuts-free">
-                                                    <input type="checkbox" id="nuts-free" name="nuts_free" value="Без орехов">
+                                                    <input type="checkbox" id="nuts-free" name="nuts_free" value="Без орехов" @if(old('nuts_free')) checked @endif>
                                                     <span>Без орехов</span>
                                                 </label>
                                             </div>
@@ -352,30 +305,24 @@
                                         <label for="meals-event-variants" class="create-subtitle">Варианты питания:</label>
                                         <div class="block-panel-sub">
                                             <p>Выбрать подходящий вариант</p>
+                                            @php
+                                            $meats = [
+                                                "3 раза в день",
+                                                "2 раза в день",
+                                                "1 раз в день",
+                                                "Без питания",
+                                            ];
+                                            @endphp
                                             <select name="count_meals" id="meals-event-variants">
-                                                <option disabled="Выбрать вариант" selected>Выбрать вариант</option>
-                                                <option value="3 раза в день">3 раза в день</option>
-                                                <option value="2 раза в день">2 раза в день</option>
-                                                <option value="1 раз в день">1 раз в день</option>
-                                                <option value="Без питания">Без питания</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="block-panel">
-                                        <label for="category-event-variants" class="create-subtitle">Выбрать категорию мероприятия:</label>
-                                        <div class="block-panel-sub">
-                                            <p>Выбрать подходящий вариант</p>
-                                            <select name="category_tour_id" id="category-event-variants">
-                                                <option disabled="Выбрать вариант" selected>Выбрать категорию</option>
-                                                @foreach($tour_categpries as $category)
-                                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                                @foreach($meats as $meat)
+                                                <option value="{{ $meat }}">{{ $meat }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="block-publication">
                                         <button type="submit" class="btn-public">Опубликовать</button>
-{{--                                        <a class="no-btn-public" href="javascript:window.history.back();" title="Отмена">Отмена</a>--}}
                                     </div>
                                 </form>
                             </div>
@@ -412,14 +359,71 @@
     });
 </script>
 <script>
-    let $block = $('.block-variants').clone();
-
-    $('.click_to_add_block').click(function() {
-        $(this).before($block.clone());
+$('.click_to_add_block').click(function() {
+      $(this).before(`
+        <div class="block-variants">
+            <div class="choose-file">
+                <div class="upload-demo">
+                    <div class="upload-demo-wrap"><img class="img-fluid portimg" src="{{ asset('assets/site/images/wide.jpg') }}"></div>
+                </div>
+                <span class="btn_upload">
+                        <input type="file" name="photo_variant[]" class="inputfile photo-variant">
+                        Загрузить фото
+                    </span>
+            </div>
+            <div class="block-variant-date">
+                <p>Дата начала</p>
+                <input class="text-variant" type="date" name="date_start_variant[]" value="">
+            </div>
+            <div class="block-variant-date">
+                <p>Дата окончания</p>
+                <input class="text-variant" type="date" name="date_end_variant[]" value="">
+            </div>
+            <div class="block-variant-desk">
+                <p>Краткое описание (проживание, питание и т.д.)</p>
+                <input class="text-variant" type="text" name="text_variant[]" value="">
+            </div>
+            <div class="block-variant-price">
+                <p>Цена (RUB)</p>
+                <input class="price-variant" type="text" name="price_variant[]" value="" required>
+            </div>
+            <div class="block-variant-amount">
+                <p>Кол. человек</p>
+                <select name="amount_variant[]" class="amount-variant">
+                    <option value="1 человек">1 человек</option>
+                    <option value="2 человека">2 человек</option>
+                    <option value="3 человека">3 человека</option>
+                    <option value="4 человека">4 человека</option>
+                    <option value="5 человек">5 человек</option>
+                </select>
+            </div>
+            <div class="delete" data-id="0"><i class="fa fa-times" aria-hidden="true"></i></div>
+            </div>
+        `);
     });
 
-    $(document).on('click', '.delete', function() {
-        $(this).parent().remove();
+    $(document).on('click', '.delete', function(e) {
+        // e.stopPropagation();
+        // console.log(e.target.parentElement)
+        $.ajax({
+            type: "GET",
+            url: "{{ url('delete-variant-tour') }}/" + e.target.parentElement.dataset.id,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                //'id': e.target.parentElement.dataset.id
+            },
+            success: function(msg){
+                console.log(msg, 'удаление ' + e.target.parentElement.dataset.id);
+                $(e.target).parent().parent().remove();
+                // $(this).parent().remove();
+            },
+            error: function (msg, textStatus) {
+                console.log('Неудача. ' + textStatus);
+            }
+        });
+
     });
 </script>
 <script>
@@ -649,6 +653,11 @@
             alert("Ваш браузер устарел и не поддерживает загрузку!")
         }
     });
+</script>
+<script>
+    $(".removebtn").click(function(){
+        $(this).parent(".photogallery-demo").remove();
+      });
 </script>
 {{--<script>
     $('.login-list').click( function(){

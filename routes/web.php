@@ -34,7 +34,7 @@ Route::prefix('cabinet')->middleware('auth')->group(function (){
 });
 
 Route::post('/tour-rating-estimate', 'Catalog\TourRatingController@estimate')->name('site.tour.rating.estimate');
-
+Route::get('/delete-variant-tour/{id}', 'Cabinet\AjaxController@remove_variant_tour')->middleware('auth');
 Route::post('/send-message', 'Cabinet\MessageController@store')->name('site.send-message-to-leader');
 
 

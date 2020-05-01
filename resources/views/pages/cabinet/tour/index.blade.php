@@ -50,7 +50,7 @@
                             </div>
                             <div class="personal_events_btn">
                                 <a href="{{ route('site.cabinet.tour.edit', ['tour' => $tour->id]) }}" class="btn-edit">Редактировать</a>
-                                <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}" class="btn-edit btn-view">Посмотреть</a>
+                                <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}" target="_blank" class="btn-edit btn-view">Посмотреть</a>
                             </div>
                         </div>
                     @endforeach

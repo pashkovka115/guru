@@ -7,14 +7,32 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
+                        @include('parts.cabinet.menu')
                         <div class="information-create">
                             <h1 class="create-title">Редактировать мероприятие</h1>
                             <div class="panel-create">
-                                <form enctype="multipart/form-data" action="{{ route('site.cabinet.tour.store') }}" autocomplete="off" method="post">
+                                <form enctype="multipart/form-data" action="{{ route('site.cabinet.tour.update', ['tour' => $tour->id]) }}" autocomplete="off" method="post">
+                                    @method('PUT')
                                     @csrf
                                     <div class="block-panel">
                                         <label for="name" class="create-subtitle">Название мероприятия:</label>
                                         <input id="name" type="text" name="title" value="{{ $tour->title }}" required placeholder="Введите название вашего мероприятия">
+                                    </div>
+                                    <div class="block-panel">
+                                        <label for="category-event-variants" class="create-subtitle">Выбрать категорию мероприятия:</label>
+                                        <div class="block-panel-sub">
+                                            <p>Выбрать подходящий вариант</p>
+                                            <select name="category_tour_id" id="category-event-variants">
+                                                @foreach($tour_categpries as $category)
+                                                    @php
+                                                        if ($tour->category_tour_id == $category->id){
+                                                            $selected = ' selected';
+                                                        }else{ $selected = ''; }
+                                                    @endphp
+                                                    <option value="{{ $category->id }}"{{ $selected }}>{{ $category->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="block-panel">
                                         @php
@@ -50,32 +68,33 @@
                                                 <p class="create-text-min">Укажите цену, даты, краткое описание для данного мероприятия в зависимости от колличества участников. При добавлении фотографии, оно также отрабразиться в общем списке фото.</p>
 
                                                 @foreach($tour->variants as $variant)
+                                                    <input type="hidden" name="variant_id[]" value="{{ $variant->id }}">
                                                 <div class="block-variants">
                                                     <div class="choose-file">
                                                         <div class="upload-demo">
-                                                            <div class="upload-demo-wrap"><img class="img-fluid portimg" src="{{ $variant->photo_variant }}"></div>
+                                                            <div class="upload-demo-wrap"><img class="img-fluid portimg" src="{{ json_decode($variant->photo_variant)[0] ?? '' }}"></div>
                                                         </div>
 
                                                         <span class="btn_upload">
-                                                                <input type="file" name="saved_photo_variant[]" class="inputfile photo-variant" value="{{ $variant->photo_variant }}">
+                                                                <input type="file" name="photo_variant[]" class="inputfile photo-variant" value="{{ json_decode($variant->photo_variant)[0] ?? '' }}">
                                                                 Загрузить фото
                                                             </span>
                                                     </div>
                                                     <div class="block-variant-date">
                                                         <p>Дата начала</p>
-                                                        <input class="text-variant" type="date" name="saved_date_start_variant[]" value="{{ explode(' ', $variant->date_start_variant)[0] }}">
+                                                        <input class="text-variant" type="date" name="date_start_variant[]" value="{{ explode(' ', $variant->date_start_variant)[0] }}">
                                                     </div>
                                                     <div class="block-variant-date">
                                                         <p>Дата окончания</p>
-                                                        <input class="text-variant" type="date" name="saved_date_end_variant[]" value="{{ explode(' ', $variant->date_end_variant)[0] }}">
+                                                        <input class="text-variant" type="date" name="date_end_variant[]" value="{{ explode(' ', $variant->date_end_variant)[0] }}">
                                                     </div>
                                                     <div class="block-variant-desk">
                                                         <p>Краткое описание (проживание, питание и т.д.)</p>
-                                                        <input class="text-variant" type="text" name="saved_text_variant[]" value="{{ $variant->text_variant }}">
+                                                        <input class="text-variant" type="text" name="text_variant[]" value="{{ $variant->text_variant }}">
                                                     </div>
                                                     <div class="block-variant-price">
                                                         <p>Цена (RUB)</p>
-                                                        <input class="price-variant" type="text" name="saved_price_variant[]" value="{{ $variant->price_variant }}">
+                                                        <input class="price-variant" type="text" name="price_variant[]" value="{{ $variant->price_variant }}" required>
                                                     </div>
                                                     <div class="block-variant-amount">
                                                         <p>Кол. человек</p>
@@ -89,7 +108,7 @@
                                                         ];
 
                                                         @endphp
-                                                        <select name="saved_amount_variant[]" class="amount-variant">
+                                                        <select name="amount_variant[]" class="amount-variant">
                                                             <option>Не выбрано</option>
                                                             @foreach($people as $cnt)
                                                                 @php
@@ -101,7 +120,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="delete"><i class="fa fa-times" aria-hidden="true"></i></div>
+                                                    <div class="delete" data-id="{{ $variant->id }}"><i class="fa fa-times" aria-hidden="true"></i></div>
                                                 </div>
                                                 @endforeach
                                                 <button class="click_to_add_block" type="button">Добавить вариант</button>
@@ -111,20 +130,19 @@
                                     <div class="block-panel">
                                         <label for="photogallery" class="create-subtitle">Фотогалерея:</label>
                                         <div class="block-panel-sub">
-                                            @php
-                                                foreach (json_decode($tour->gallery) as $src){
-                                                 //   echo "<img src='$src'>";
-                                                    echo "<img src='' alt='заглушка изображения'>";
-                                                }
-                                            @endphp
                                                 <span class="btn_upload">
                                                     <input id="photogallery" type="file" name="photogallery[]" multiple class="photogallery">
                                                     Загрузить фото
                                                 </span>
                                             <div class="photogallery-container"></div>
-                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://www.tvr.by/upload/iblock/42d/42d1898756e574fcaf9b7519c354ce9c.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
-                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://cdn24.img.ria.ru/images/151546/28/1515462835_0:0:1036:587_600x0_80_0_0_a75f922e8b052d966122e1c9dc40feb4.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
-                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://avatars.mds.yandex.net/get-vh/1528766/17938558859946010694-8Om2usjIWnMGFo-u6w3VfA-1551431625/936x524" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                            <?php
+                                            $gallery = json_decode($tour->gallery) ?? [];
+                                            foreach ($gallery as $src): ?>
+                                            <span class="photogallery-demo">
+                                                <img class="photogallery-elem" src="<?= $src ?>" title="undefined">
+                                                <span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                            </span>
+                                            <?php endforeach; ?>
                                             <p>Объявления имеющее как минимум 5 высококачественных фотографии получают больший интересно со стороны клиентов, чем те, у которых нету фото. Максимальное колличество фото не более 20. <span>Изображнея не пройдут процесс проверки, если они включают в себя: текст, водяные знаки, коллажи, фильтры или размытости.</span></p>
                                         </div>
                                     </div>
@@ -251,19 +269,21 @@
                                         <label for="accommodation-event" class="create-subtitle">Проживание и удобства:</label>
                                         <div class="block-panel-sub">
                                             <p>Добавьте 1-2 фотографии, опишите подробнее о проживании. Выберите варианты удоств, которые будуте доступны в вашем мероприятии.</p>
-                                            @php
-                                            $acc_photo = json_decode($tour->accommodation_photo);
-                                            foreach ($acc_photo as $item) {
-                                                echo " <img src='' alt='$item'> ";
-                                            }
-                                            @endphp
                                             <span class="btn_upload">
                                                     <input id="accommodation-photo" type="file" name="accommodation_photo[]" multiple="">
                                                     Загрузить фото
                                                 </span>
                                             <div class="accommodation-container"></div>
-                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://www.tvr.by/upload/iblock/42d/42d1898756e574fcaf9b7519c354ce9c.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
-                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://cdn24.img.ria.ru/images/151546/28/1515462835_0:0:1036:587_600x0_80_0_0_a75f922e8b052d966122e1c9dc40feb4.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                            <?php
+                                            $accommodation_photo = json_decode($tour->accommodation_photo) ?? [];
+                                            foreach($accommodation_photo as $src): ?>
+                                            <span class="photogallery-demo">
+                                                <img class="photogallery-elem" src="<?= $src ?>" title="undefined">
+                                                <span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                            </span>
+                                            <?php endforeach; ?>
+                                            {{--<span class="photogallery-demo"><img class="photogallery-elem" src="https://www.tvr.by/upload/iblock/42d/42d1898756e574fcaf9b7519c354ce9c.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://cdn24.img.ria.ru/images/151546/28/1515462835_0:0:1036:587_600x0_80_0_0_a75f922e8b052d966122e1c9dc40feb4.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>--}}
                                             <textarea placeholder="Подробное описание" id="accommodation-event" name="accommodation_description"></textarea>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, какие удобства доступны:</p>
@@ -343,8 +363,13 @@
                                                     Загрузить фото
                                                 </span>
                                             <div class="meals-container"></div>
-                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://www.tvr.by/upload/iblock/42d/42d1898756e574fcaf9b7519c354ce9c.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
-                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://cdn24.img.ria.ru/images/151546/28/1515462835_0:0:1036:587_600x0_80_0_0_a75f922e8b052d966122e1c9dc40feb4.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                            <?php
+                                            $gallery_meals = json_decode($tour->gallery_meals) ?? [];
+                                            foreach($gallery_meals as $src): ?>
+                                            <span class="photogallery-demo">
+                                                <img class="photogallery-elem" src="<?= $src ?>" title="undefined">
+                                                <span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                            <?php endforeach; ?>
                                             <textarea placeholder="Подробное описание" id="meals-event" name="meals_desc">{{ old('meals_desc') }}</textarea>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, варианты меню:</p>
@@ -411,22 +436,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="block-panel">
-                                        <label for="category-event-variants" class="create-subtitle">Выбрать категорию мероприятия:</label>
-                                        <div class="block-panel-sub">
-                                            <p>Выбрать подходящий вариант</p>
-                                            <select name="category_tour_id" id="category-event-variants">
-                                                @foreach($tour_categpries as $category)
-                                                    @php
-                                                    if ($tour->category_tour_id == $category->id){
-                                                        $selected = ' selected';
-                                                    }else{ $selected = ''; }
-                                                    @endphp
-                                                <option value="{{ $category->id }}"{{ $selected }}>{{ $category->title }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+
                                     <div class="block-publication">
                                         <button type="submit" class="btn-public">Опубликовать</button>
                                     </div>
@@ -491,7 +501,7 @@ $('.click_to_add_block').click(function() {
             </div>
             <div class="block-variant-price">
                 <p>Цена (RUB)</p>
-                <input class="price-variant" type="text" name="price_variant[]" value="">
+                <input class="price-variant" type="text" name="price_variant[]" value="" required>
             </div>
             <div class="block-variant-amount">
                 <p>Кол. человек</p>
@@ -503,13 +513,33 @@ $('.click_to_add_block').click(function() {
                     <option value="5 человек">5 человек</option>
                 </select>
             </div>
-            <div class="delete"><i class="fa fa-times" aria-hidden="true"></i></div>
+            <div class="delete" data-id="0"><i class="fa fa-times" aria-hidden="true"></i></div>
             </div>
         `);
     });
 
-    $(document).on('click', '.delete', function() {
-      $(this).parent().remove();
+    $(document).on('click', '.delete', function(e) {
+        // e.stopPropagation();
+        // console.log(e.target.parentElement)
+        $.ajax({
+            type: "GET",
+            url: "{{ url('delete-variant-tour') }}/" + e.target.parentElement.dataset.id,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                //'id': e.target.parentElement.dataset.id
+            },
+            success: function(msg){
+                console.log(msg, 'удаление ' + e.target.parentElement.dataset.id);
+                $(e.target).parent().parent().remove();
+                // $(this).parent().remove();
+            },
+            error: function (msg, textStatus) {
+                console.log('Неудача. ' + textStatus);
+            }
+        });
+
     });
 </script>
 <script>
