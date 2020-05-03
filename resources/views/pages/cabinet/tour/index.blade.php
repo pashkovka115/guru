@@ -26,7 +26,12 @@
                     @foreach($tours as $tour)
                         <div class="personal_status_events">
                             <div class="personal_events-public">
-                                <img src="{{ $tour->img }}" alt="" class="img-fluid">
+                                <?php
+                                $gallary = json_decode($tour->gallery);
+                                ?>
+                                @isset($gallary[0])
+                                <img src="{{ $gallary[0] }}" alt="" class="img-fluid">
+                                @endisset
                                 <div class="block-public">
                                     <p class="public-title">{{ $tour->title }}</p>
                                     @php

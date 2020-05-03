@@ -171,9 +171,6 @@
                                     </div>
                                     <div class="block-panel">
                                         <label for="tags" class="create-subtitle">Теги темы(максимум 5):</label>
-                                        @php
-                                        //dd($tour->tags)
-                                        @endphp
                                         <select class="chosen-select" id="tags" name="tags[]" multiple="multiple">
                                             @foreach($tags as $tag)
                                                 @php

@@ -84,7 +84,7 @@ class User extends Authenticatable
             'leader_id',
             'id',
             'id'
-        );
+        )->with('profile');
     }
 
     /*

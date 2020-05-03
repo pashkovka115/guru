@@ -27,10 +27,15 @@ class ProfileTableSeeder extends Seeder
             $user->profile()->create([
                 'user_id'=> $user->id,
                 'auth' => ($i % 2 == 0 or $i == 1) ? '1' : '0',
-                'type_user'=>$type_user,
+//                'type_user'=>$type_user,
                 'raiting'=> $raiting,
                 'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum fugit incidunt quasi deserunt, libero placeat.',
                 'description'=> $faker->paragraph(10),
+                'gallery' => json_encode([
+                    asset('assets/site/images/home_bg.jpg'),
+                    asset('assets/site/images/home_bg.png'),
+                    asset('assets/site/images/home_bg_new.jpg'),
+                ]),
                 'country'=> $faker->country,
                 'city'=> $faker->city,
             ]);

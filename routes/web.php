@@ -33,8 +33,10 @@ Route::prefix('cabinet')->middleware('auth')->group(function (){
     Route::resource('/purchases', 'Cabinet\PurchasesController')->only('index')->names('site.cabinet.purchases');
 });
 
-Route::post('/tour-rating-estimate', 'Catalog\TourRatingController@estimate')->name('site.tour.rating.estimate');
 Route::get('/delete-variant-tour/{id}', 'Cabinet\AjaxController@remove_variant_tour')->middleware('auth');
+Route::post('/delete-img-gallery-author', 'Cabinet\AjaxController@remove_img_gallery_author')->middleware('auth');
+
+Route::post('/tour-rating-estimate', 'Catalog\TourRatingController@estimate')->name('site.tour.rating.estimate');
 Route::post('/send-message', 'Cabinet\MessageController@store')->name('site.send-message-to-leader');
 
 
