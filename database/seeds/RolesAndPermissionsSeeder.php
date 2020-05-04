@@ -69,6 +69,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'landing_add', 'description' => 'Добавлять в лендинг']);
         Permission::create(['name' => 'landing_delete', 'description' => 'Удалять из лендинга']);
 
+        Permission::create(['name' => 'about_view', 'description' => 'Просматривать страницу о нас']);
+        Permission::create(['name' => 'about_edit', 'description' => 'Редактировать страницу о нас']);
+        Permission::create(['name' => 'about_add', 'description' => 'Добавлять в страницу о нас']);
+        Permission::create(['name' => 'about_delete', 'description' => 'Удалять из страницы о нас']);
+
 
 
 

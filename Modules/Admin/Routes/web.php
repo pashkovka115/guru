@@ -35,4 +35,12 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
         ->names('admin.post');
 
     Route::resource('landing', 'LandingController')->only(['index', 'update'])->names('admin.landing');
+
+    Route::prefix('about-us')->group(function (){
+        Route::get('show', 'AboutController@show')->name('admin.about.show');
+        Route::get('edit', 'AboutController@edit')->name('admin.about.edit');
+        Route::post('add-field', 'AboutController@add_field')->name('admin.about.add_field');
+        Route::post('update', 'AboutController@update')->name('admin.about.update');
+        Route::get('destroy/{id}', 'AboutController@destroy')->name('admin.about.destroy');
+    });
 });

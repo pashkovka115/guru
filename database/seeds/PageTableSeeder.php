@@ -24,10 +24,6 @@ class PageTableSeeder extends Seeder
                 'title' => 'Оплата и отмена',
                 'content' => $faker->paragraphs(30, true)
             ],
-            [
-                'title' => 'О нас',
-                'content' => $faker->paragraphs(30, true)
-            ],
         ];
 
         DB::table('pages')->insert($pages);

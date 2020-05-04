@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Alexusmai\LaravelFileManager\Controllers\FileManagerController;
 use Closure;
+use Modules\Admin\Http\Controllers\AboutController;
 use Modules\Admin\Http\Controllers\CategoryPostController;
 use Modules\Admin\Http\Controllers\CategoryTourController;
 use Modules\Admin\Http\Controllers\DashboardController;
@@ -34,6 +35,7 @@ class CheckPermissions
         'update'  => 'edit',
         'create'  => 'add',
         'store'   => 'add',
+        'add_field' => 'add', // на странице о нас
         'destroy' => 'delete',
 
 //        File Manager
@@ -93,6 +95,7 @@ class CheckPermissions
         CategoryPostController::class => 'category-post',
         PostController::class => 'post',
         LandingController::class => 'landing',
+        AboutController::class => 'about',
 
 //        File Mager
         FileManagerController::class => 'file-mager'

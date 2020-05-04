@@ -9,6 +9,7 @@
                     @foreach($pages_menu as $item)
                     <li><a href="{{ route('site.pages.official.show', ['page' => $item->id]) }}">{{ $item->title }}</a></li>
                     @endforeach
+                    <li><a href="{{ route('site.about') }}">О нас</a></li>
                 </ul>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6">

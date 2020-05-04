@@ -233,6 +233,12 @@
                         <p>Разрешения</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.about.show') }}" class="nav-link">
+                        <i class="far fa-address-card"></i>
+                        <p>О нас</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
