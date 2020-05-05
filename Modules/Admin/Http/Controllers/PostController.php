@@ -30,8 +30,8 @@ class PostController extends Controller
     public function create()
     {
         $users = User::all();
-        $categories = CategoryPost::all();
-        return view('admin::pages.posts.create', ['users' => $users, 'categories' => $categories, 'title' => $this->title, 'title_page' => 'Новая запись']);
+
+        return view('admin::pages.posts.create', ['users' => $users, 'title' => $this->title, 'title_page' => 'Новая запись']);
     }
 
     /**
