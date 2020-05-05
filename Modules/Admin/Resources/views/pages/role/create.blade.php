@@ -26,8 +26,8 @@
                                             <input class="custom-control-input" type="checkbox"
                                                    id="Checkbox{{$loop->index}}" name="permission_{{ $permission->id }}"
                                                    value="{{ $permission->name }}">
-                                            <label for="Checkbox{{$loop->index}}" title="{{ $permission->description }}"
-                                                   class="custom-control-label">{{ $permission->name }}</label>
+                                            <label for="Checkbox{{$loop->index}}" title="{{ $permission->name }}"
+                                                   class="custom-control-label">{{ $permission->description }}</label>
                                         </div>
                                     @endforeach
                                 </div>
