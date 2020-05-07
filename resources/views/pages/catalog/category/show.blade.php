@@ -90,7 +90,9 @@
                                 - {{ $end->formatLocalized('%e %B %Y') }}
                                 ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
                                             </span>
+                                            @if($tour->variants->count() > 0)
                                             <a class="toggle-dates-event">Другие даты</a>
+                                            @endif
                                         </p>
                                         <ul class="event-highlights">
                                             @if($tour->info_excerpt)
@@ -148,6 +150,7 @@
 
                                     </div>
                                 </div>
+                                @if($tour->variants->count() > 0)
                                 <div class="event_list_more">
                                     <p class="text-normal">Другие даты:</p>
                                     <ul class="list_more_events">
@@ -175,6 +178,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
+                                @endif
                             </div>
                             @endforeach
 
