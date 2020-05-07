@@ -67,53 +67,23 @@
                                     <li class="menu__sub_title">
                                         <span>Страны</span>
                                     </li>
+                                    @foreach($popular_country as $tour)
                                     <li>
-                                        <a href="#">Мексика</a>
+                                        <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}">{{ $tour->country }}</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Мексика</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Мексика</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Мексика</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Мексика</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Мексика</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Мексика</a>
-                                    </li>
+                                    @endforeach
+
                                 </ul>
                                 <ul class="menu__sub">
                                     <li class="menu__sub_title">
                                         <span>Категории</span>
                                     </li>
+                                    @foreach($popular_cats as $cat)
                                     <li>
-                                        <a href="#">Ссылка</a>
+                                        <a href="{{ route('site.catalog.category.name', ['id' => $cat->id]) }}">{{ $cat->title }}</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Ссылка</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Ссылка</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Ссылка</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Ссылка</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Ссылка</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Ссылка</a>
-                                    </li>
+                                    @endforeach
+
                                 </ul>
                             </div>
                         </li>

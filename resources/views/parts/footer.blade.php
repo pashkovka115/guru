@@ -15,25 +15,19 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <p class="title-footer">Популярные мероприятия:</p>
                 <ul class="footer_menu">
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
+                    @foreach($popular_tour as $tour)
+                    <li><a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}">{{ $tour->title }}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <p class="title-footer">Популярные Стран:</p>
                 <ul class="footer_menu">
-                    <li><a href="#">Мексика</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
-                    <li><a href="#">Ссылка</a></li>
+                    @foreach($popular_country as $tour)
+                        <li>
+                            <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}">{{ $tour->country }}</a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-lg-3 col-md-12 col-sm-6">
@@ -41,7 +35,7 @@
                     <div class="col-lg-12 col-md-4 col-sm-12 menu_dop">
                         <p class="title-footer">Для организаторов:</p>
                         <ul class="footer_menu">
-                            <li><a href="{{ route('site.cabinet.tour.create') }}">Добавить объявление (бесплатно)</a></li>
+                            <li><a href="{{ route('site.landing') }}">Добавить объявление (бесплатно)</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-12 col-md-4 col-sm-12 menu_dop">
@@ -62,7 +56,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="copyright">© 2020 Новый сайт</div>
+                <div class="copyright">© <?= date('Y') ?> Новый сайт</div>
             </div>
         </div>
     </div>

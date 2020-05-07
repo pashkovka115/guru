@@ -17,6 +17,8 @@ class TourController extends Controller
     public function show($id)
     {
         $tour = Tour::with(['variants', 'leaders'])->where('id', $id)->firstOrFail();
+        $tour->views++;
+        $tour->save();
         $comments = TourRating::with('user')->where('tour_id', $tour->id)->get();
         $similar_tours = Tour::where('country', $tour->country)->limit(4)->get(['id', 'title', 'rating', 'gallery']);
 
