@@ -21,7 +21,7 @@
                                         <a href="javascript:void(0);" class="location-event">
                                             {{ $profile->city }}, {{ $profile->country }}
                                         </a>
-                                        <a href="{{ route('site.user.show', ['id'=>$user->id]) }}" class="name-autor">{{$user->name}}</a>
+                                        <a href="{{ route('site.author.show', ['id'=>$user->id]) }}" class="name-autor">{{$user->name}}</a>
                                         <p class="text-autor">
                                             @if($profile)
                                                 {{$profile->excerpt}}
