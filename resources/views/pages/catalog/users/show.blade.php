@@ -108,6 +108,7 @@
                         <div class="event-accordion accordion-reviews">
                             <div class="accordion-btn">Отзывы клиентов:</div>
                             <div class="panel reviews-read">
+                                @if($rating_leader > 0)
                                 <div class="rating-accordion-block">
                                     <div class="rating-accordion">
                                         <div class="rating">
@@ -117,7 +118,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                @endif
                                 <p class="title-shedule">Отзывов - {{ $comments->count() }}</p>
                                 <div class="block-reviews">
                                     @foreach($comments as $comment)

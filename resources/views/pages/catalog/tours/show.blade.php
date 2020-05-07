@@ -330,7 +330,9 @@
                                     <div class="rating-accordion">
                                         <div class="rating">
                                             {!! get_raiting_template($tour->rating, false) !!}
+                                            @if($tour->rating > 0)
                                             <span class="review-text">Средний рейтинг {{ $tour->rating }} из 5.0</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="rating-feedback">
