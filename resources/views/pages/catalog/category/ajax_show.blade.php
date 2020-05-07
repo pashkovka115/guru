@@ -17,7 +17,7 @@
                 <div class="event_list__autor">
                     @foreach($tour->leaders as $leader)
                         @if($leader->avatar)
-                            <a href="{{ route('site.user.show', ['id' => $leader->id]) }}"
+                            <a href="{{ route('site.author.show', ['id' => $leader->id]) }}"
                                title="{{ $leader->name }}">
                                 <img src="{{ $leader->avatar }}" alt="аватар" class="img-fluid">
                             </a>
