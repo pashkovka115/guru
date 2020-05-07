@@ -16,7 +16,7 @@ class UserController extends Controller
     /*
      * Список ведущих
      */
-    public function index()
+    public function index(Request $request)
     {
         $leaders_ids = \DB::table('tour_leader')
             ->selectRaw('leader_id')->distinct()->get();
@@ -24,7 +24,11 @@ class UserController extends Controller
             ->whereIn('id', array_keys($leaders_ids->keyBy('leader_id')->toArray()))
             ->paginate();
 
-        return view('pages.catalog.users.index', ['leaders' => $leaders, 'title'=>'Ведущие мероприятий']);
+        if ($request->ajax()){
+            return view('pages.catalog.users.ajax_index', ['leaders' => $leaders]);
+        }else{
+            return view('pages.catalog.users.index', ['leaders' => $leaders, 'title'=>'Ведущие мероприятий']);
+        }
     }
 
 

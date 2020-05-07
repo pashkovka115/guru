@@ -60,11 +60,55 @@ if ($tours){
                                 </div>
                             </div>
                             @endforeach
+                                <script> var next_url_page = '{{ $leaders->nextPageUrl() }}'</script>
+
+                                <div class="col-lg-12 after-posts">
+                                    <button type="button" class="btn-load-more">
+                                        Показать еще
+                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                    </button>
+                                </div>
                         </div>
-                        {{ $leaders->links() }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('scripts_footer')
+
+    <script>
+        $(function() {
+            $('.btn-load-more').on('click', function(){
+                // $('.after-posts').hide();
+                const btn = $(this);
+                const loader = btn.find('span');
+                if(next_url_page === ''){
+                    $('.after-posts').hide();
+                    return;
+                }
+                $.ajax({
+                    url: next_url_page,
+                    type: 'GET',
+                    beforeSend: function(){
+                        btn.attr('disabled', true);
+                        loader.addClass('d-inline-block');
+                    },
+                    success: function(response){
+                        setTimeout(function(){
+                            loader.removeClass('d-inline-block');
+                            btn.attr('disabled', false);
+                            console.log(response);
+                            $('.after-posts').before(response);
+                        }, 1000);
+                    },
+                    error: function(){
+                        alert('Ошибка!');
+                        loader.removeClass('d-inline-block');
+                        btn.attr('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
