@@ -52,8 +52,9 @@
                     <span>{{ config('app.name', 'gurufor.com') }}</span>
                 </a>
                 <div class="form_search_new">
-                    <form action="" method="get">
-                        <input name="s" placeholder="Введите запрос..." type="search">
+                    <form action="{{ route('site.catalog.search') }}" method="post">
+                        @csrf
+                        <input name="q" placeholder="Введите запрос..." type="search">
                         <button type="submit"><img src="{{asset('assets/site/images/icon_search.png')}}" alt="" class="img-fluid"></button>
                     </form>
                 </div>
