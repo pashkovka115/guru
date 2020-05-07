@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="{{asset('assets/site/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/site/css/owl.theme.default.min.css')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap&subset=cyrillic">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     @yield('styles')
     <link rel="stylesheet" href="{{asset('assets/site/css/style.css')}}">
 </head>
