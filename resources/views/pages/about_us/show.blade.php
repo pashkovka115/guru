@@ -15,7 +15,7 @@
     <div class="block_about_info">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">{!! $content->content !!}</div>
+                {!! $content->content !!}
             </div>
         </div>
     </div>
