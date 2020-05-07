@@ -9,8 +9,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/author', 'Catalog\UserController@index')->name('site.author.list'); // site.user.list
-Route::get('/author/{id}', 'Catalog\UserController@show')->name('site.author.show'); // site.user.show
+Route::get('/author', 'Catalog\UserController@index')->name('site.author.list');
+Route::get('/author/{id}', 'Catalog\UserController@show')->name('site.author.show');
 
 Route::resource('tour', 'Catalog\TourController')->only('show')->names('site.catalog.tour');
 
