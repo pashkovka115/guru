@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+    @include('parts.filter_panel')
     <div class="block_category">
         <div class="container">
             <div class="row">
