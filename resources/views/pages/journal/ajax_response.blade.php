@@ -7,7 +7,7 @@
         <div class="elem__news elems_journal">
             <img src="{{ $post->img }}" alt="" class="img-fluid">
             <a href="{{ route('site.journal.blog.show', ['journal' => $post->id]) }}" class="title-news">{{ $post->title }}</a>
-            <p class="description-news">{{ $post->excerpt }}</p>
+            <p class="description-news">{{ mb_strimwidth($post->excerpt, 0, 100, '...') }}</p>
         </div>
     </div>
 @endforeach
