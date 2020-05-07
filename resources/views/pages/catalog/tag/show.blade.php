@@ -7,29 +7,19 @@
                     <h1>Каталог</h1>
                 </div>
                 <div class="col-lg-12">
-                    <div class="block_seo_cat">
-                        <img src="{{ $category->img }}" alt="" class="img-fluid img-cat-seo">
-                        {{ $category->description }}
-                    </div>
-                </div>
-                <div class="col-lg-12">
                     @include('parts.category_nav')
                     <div class="cat_container">
                         <div class="row">
-                            @foreach($category->tours_with_variants as $tour)
+                            @foreach($tag->tours as $tour)
                             <div class="col-lg-12">
                                 <div class="event_list">
                                     <div class="owl-carousel owl-theme slide-cat event_list_photo">
                                         @php
                                         $gallery = json_decode($tour->gallery);
-                                        //var_dump($gallery, '===========');
                                         @endphp
                                         @foreach($gallery as $src)
                                         <div class="item">
                                             <a href="" class="event_list__link">
-                                                @php
-                                                    //var_dump($src);
-                                                @endphp
                                                 <img src="{{ $src }}" alt="" class="img-fluid event_list_img">
                                             </a>
                                         </div>

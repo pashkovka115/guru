@@ -1,7 +1,7 @@
 <div class="cat_nav">
     <ul class="cat_nav__menu">
-        <li><a href="#">Мероприятия (777)</a></li>
-        <li><a href="#" class="active">Учителя и Авторы (888)</a></li>
+        <li><a href="{{ route('site.catalog.category.list') }}"{!! Route::currentRouteName() == 'site.catalog.category.list' ? '  class="active"' : null  !!}>Мероприятия (777)</a></li>
+        <li><a href="{{ route('site.user.list') }}"{!! Route::currentRouteName() == 'site.user.list' ? '  class="active"' : null  !!}>Учителя и Авторы (888)</a></li>
         <li><a href="#">Организации (999)</a></li>
     </ul>
     <div class="sort">

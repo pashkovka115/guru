@@ -14,8 +14,10 @@ Route::get('/user/{id}', 'Catalog\UserController@show')->name('site.user.show');
 
 Route::resource('tour', 'Catalog\TourController')->only('show')->names('site.catalog.tour');
 
-Route::get('/category', function (){ return redirect()->to('/'); });
+Route::get('/category', 'Catalog\CategoryTourController@index')->name('site.catalog.category.list');
 Route::get('/category/{id}', 'Catalog\CategoryTourController@show')->name('site.catalog.category.name');
+
+Route::resource('/tag', 'Catalog\TagController')->only('show')->names('site.catalog.tag');
 
 Route::resource('/journal', 'Journal\BlogController')->only(['index', 'show'])->names('site.journal.blog');
 

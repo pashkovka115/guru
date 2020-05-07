@@ -12,13 +12,11 @@ class CategoryTour extends Model
 
     public function tours()
     {
-        //todo: тестить
         return $this->hasMany(Tour::class, 'category_tour_id', 'id');
     }
 
     public function tours_with_variants()
     {
-        //todo: тестить
-        return $this->hasMany(Tour::class, 'category_tour_id', 'id')->with('variants');
+        return $this->hasMany(Tour::class, 'category_tour_id', 'id')->with(['variants', 'tags']);
     }
 }

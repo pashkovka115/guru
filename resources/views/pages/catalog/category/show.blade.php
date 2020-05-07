@@ -13,22 +13,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <div class="cat_nav">
-                        <ul class="cat_nav__menu">
-                            <li><a href="#" class="active">Мероприятия (777)</a></li>
-                            <li><a href="#">Учителя и Авторы (888)</a></li>
-                            <li><a href="#">Организации (999)</a></li>
-                        </ul>
-                        <div class="sort">
-                            <span>Сортировать по:</span>
-                            <select id="sortby">
-                                <option value="popular">Популярности</option>
-                                <option value="date-start">Дате начала</option>
-                                <option value="price-low">Цена(по возрастанию)</option>
-                                <option value="price-high">Цена(по убыванию)</option>
-                            </select>
-                        </div>
-                    </div>
+                    @include('parts.category_nav')
                     <div class="cat_container">
                         <div class="row">
                             @foreach($category->tours_with_variants as $tour)
@@ -141,7 +126,13 @@
                                         </div>
                                         <div class="event-footer">
                                             <div class="event-tags">
-                                                <a href="#">Категория1</a>
+                                                <?php
+                                                if ($tour->tags){
+                                                    foreach ($tour->tags as $tag){
+                                                        echo "<a href=\"".route('site.catalog.tag.show', ['tag'=>$tag->id])."\">{$tag->tag}</a>";
+                                                    }
+                                                }
+                                                ?>
                                             </div>
                                             <div class="event-cost">
                                                 {{ number_format($tour->price_base / 100) }} RUB
