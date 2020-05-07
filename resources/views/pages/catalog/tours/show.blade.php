@@ -371,78 +371,29 @@
                             <div class="accordion-btn">Похожие мероприятие:</div>
                             <div class="panel article">
                                 <ul class="list_similar_events">
+                                    @foreach($similar_tours as $item)
+                                        @if($item->id != $tour->id)
                                     <li class="similar_events_elem">
-                                        <a href="#" class="similar-link">
-                                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid">
-                                            <p>Пляж Санта-Роза, Апрель 2020</p>
+                                        <a href="{{ route('site.catalog.tour.show', ['tour' => $item->id]) }}" class="similar-link">
+                                            <?php
+                                            $gal = json_decode($item->gallery) ?? [];
+                                            ?>
+                                            @isset($gal[0])
+                                            <img src="{{ $gal[0] }}" alt="" class="img-fluid">
+                                            @endisset
+                                            <p>{{ $item->title }}</p>
                                             <div class="rating-accordion">
                                                 <div class="rating">
-															<span class="rating-star-display">
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-half"></span>
-															</span>
-                                                    <span class="review-text">4.5</span>
+                                                    {!! get_raiting_template($item->rating, false) !!}
+                                                    @if($item->rating > 0)
+                                                    <span class="review-text">{{ $item->rating }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="similar_events_elem">
-                                        <a href="#" class="similar-link">
-                                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid">
-                                            <p>Пляж Санта-Роза, Апрель 2020</p>
-                                            <div class="rating-accordion">
-                                                <div class="rating">
-															<span class="rating-star-display">
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-half"></span>
-															</span>
-                                                    <span class="review-text">4.5</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="similar_events_elem">
-                                        <a href="#" class="similar-link">
-                                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid">
-                                            <p>Пляж Санта-Роза, Апрель 2020</p>
-                                            <div class="rating-accordion">
-                                                <div class="rating">
-															<span class="rating-star-display">
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-half"></span>
-															</span>
-                                                    <span class="review-text">4.5</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="similar_events_elem">
-                                        <a href="#" class="similar-link">
-                                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid">
-                                            <p>Пляж Санта-Роза, Апрель 2020</p>
-                                            <div class="rating-accordion">
-                                                <div class="rating">
-															<span class="rating-star-display">
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-solid"></span>
-																<span class="rating-star-half"></span>
-															</span>
-                                                    <span class="review-text">4.5</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
