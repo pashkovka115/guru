@@ -6,17 +6,19 @@
                 <div class="col-lg-12">
                     <h1>Каталог</h1>
                 </div>
+                @isset($tours[0]->category)
                 <div class="col-lg-12">
                     <div class="block_seo_cat">
-                        <img src="{{ $category->img }}" alt="" class="img-fluid img-cat-seo">
-                        {{ $category->description }}
+                        <img src="{{ $tours[0]->category->img }}" alt="" class="img-fluid img-cat-seo">
+                        {{ $tours[0]->category->description }}
                     </div>
                 </div>
+                @endisset
                 <div class="col-lg-12">
                     @include('parts.category_nav')
                     <div class="cat_container">
                         <div class="row">
-                            @foreach($category->tours_with_variants as $tour)
+                            @foreach($tours as $tour)
                             <div class="col-lg-12">
                                 <div class="event_list">
                                     <div class="owl-carousel owl-theme slide-cat event_list_photo">
@@ -27,14 +29,11 @@
                                         @foreach($gallery as $src)
                                         <div class="item">
                                             <a href="" class="event_list__link">
-                                                @php
-                                                    //var_dump($src);
-                                                @endphp
                                                 <img src="{{ $src }}" alt="" class="img-fluid event_list_img">
                                             </a>
                                         </div>
                                         @endforeach
-                                        <div class="item">
+                                        {{--<div class="item">
                                             <a href="" class="event_list__link">
                                                 <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid event_list_img">
                                             </a>
@@ -43,20 +42,20 @@
                                             <a href="" class="event_list__link">
                                                 <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid event_list_img">
                                             </a>
-                                        </div>
+                                        </div>--}}
                                     </div>
+                                    @if($tour->leaders)
                                     <div class="event_list__autor">
-                                        <a href="#" title="Имя автора">
-                                            <img src="{{ asset('assets/site/images/slider_img_autor.jpg') }}" alt="аватар" class="img-fluid">
-                                        </a>
-                                        <a href="#" title="Имя автора">
-                                            <img src="{{ asset('assets/site/images/slider_img_autor.jpg') }}" alt="аватар" class="img-fluid">
-                                        </a>
-                                        <a href="#" title="Имя автора">
-                                            <img src="{{ asset('assets/site/images/slider_img_autor.jpg') }}" alt="аватар" class="img-fluid">
-                                        </a>
+                                        @foreach($tour->leaders as $leader)
+                                            @if($leader->avatar)
+                                                <a href="#" title="Имя автора">
+                                                    <img src="{{ $leader->avatar }}" alt="аватар" class="img-fluid">
+                                                </a>
+                                            @endif
+                                        @endforeach
                                         <em>Ваш гиды</em>
                                     </div>
+                                    @endif
                                     <div class="event__list_block">
                                         <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}" class="title-event">
                                             @php
@@ -172,8 +171,16 @@
                                 @endif
                             </div>
                             @endforeach
-
                         </div>
+                        <script> var next_url_page = '{{ $tours->nextPageUrl() }}'</script>
+
+                        <div class="col-lg-12 after-posts">
+                            <button type="button" class="btn-load-more">
+                                Показать еще
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -183,5 +190,39 @@
 @section('scripts_footer')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+{{--    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />--}}
+    <script>
+        $(function() {
+            $('.btn-load-more').on('click', function(){
+                // $('.after-posts').hide();
+                const btn = $(this);
+                const loader = btn.find('span');
+                if(next_url_page === ''){
+                    $('.after-posts').hide();
+                    return;
+                }
+                $.ajax({
+                    url: next_url_page,
+                    type: 'GET',
+                    beforeSend: function(){
+                        btn.attr('disabled', true);
+                        loader.addClass('d-inline-block');
+                    },
+                    success: function(response){
+                        setTimeout(function(){
+                            loader.removeClass('d-inline-block');
+                            btn.attr('disabled', false);
+                            console.log(response);
+                            $('.after-posts').before(response);
+                        }, 1000);
+                    },
+                    error: function(){
+                        alert('Ошибка!');
+                        loader.removeClass('d-inline-block');
+                        btn.attr('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

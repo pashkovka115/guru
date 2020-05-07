@@ -112,6 +112,11 @@ class Tour extends Model
         return $this->belongsTo(CategoryTour::class, 'category_tour_id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(TourRating::class, 'tour_id');
+    }
+
 
     /*
         public function users()
