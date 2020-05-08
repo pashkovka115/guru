@@ -50,7 +50,7 @@
                     <div class="col-lg-12 col-md-4 col-sm-12 menu_dop">
                         <p class="title-footer">Контакты:</p>
                         <ul>
-                            <li><a href="help.html" class="help_link">Помощь и поддержка</a></li>
+                            <li><a href="{{ route('site.help.show') }}" class="help_link">Помощь и поддержка</a></li>
                         </ul>
                     </div>
                 </div>

@@ -22,6 +22,7 @@ Route::resource('/journal', 'Journal\BlogController')->only(['index', 'show'])->
 Route::resource('/page', 'Pages\PageController')->only('show')->names('site.pages.official');
 
 Route::post('/search', 'Catalog\SearchController@index')->name('site.catalog.search');
+Route::get('/help', 'HelpController@show')->name('site.help.show');
 
 Route::get('add-advert', 'Landing\LandingPageController@index')->name('site.landing');
 Route::get('about-us', 'Pages\AboutController@show')->name('site.about');
