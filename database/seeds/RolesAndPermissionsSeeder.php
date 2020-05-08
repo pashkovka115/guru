@@ -74,6 +74,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'about_add', 'description' => 'Добавлять в страницу о нас']);
         Permission::create(['name' => 'about_delete', 'description' => 'Удалять из страницы о нас']);
 
+        Permission::create(['name' => 'home_view', 'description' => 'Просматривать главную']);
+        Permission::create(['name' => 'home_edit', 'description' => 'Редактировать главную']);
+        Permission::create(['name' => 'home_add', 'description' => 'Добавлять на главную']);
+        Permission::create(['name' => 'home_delete', 'description' => 'Удалять из главной']);
+
 
 
 

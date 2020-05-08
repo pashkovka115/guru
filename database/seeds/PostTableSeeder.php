@@ -22,7 +22,7 @@ class PostTableSeeder extends Seeder
                 'excerpt' => $faker->paragraph(),
                 'content' => $faker->paragraphs(10, true),
                 'img' => asset('assets/site/images/home_bg_new.jpg'),
-                'created_at' => now(),
+                'created_at' => $faker->dateTimeInInterval('-1 year', '+20 days'),
                 'updated_at' => now()
             ];
             $posts[] = $post;

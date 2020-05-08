@@ -31,6 +31,7 @@ class TourTableSeeder extends Seeder
                 'category_tour_id' => random_int(1, $category_tours),
                 'active' => ($i % 2 == 0) ? '1' : '0',
                 'good' => ($i % 2 == 0) ? '1' : '0',
+                'recommended' => ($i < 10) ? '1' : '0',
 //                'price_base' => random_int(100, 600000),
                 'rating' => random_int(0, 5),
                 'title' => implode(' ', $faker->words()),

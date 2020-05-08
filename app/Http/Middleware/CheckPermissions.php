@@ -8,6 +8,7 @@ use Modules\Admin\Http\Controllers\AboutController;
 use Modules\Admin\Http\Controllers\CategoryPostController;
 use Modules\Admin\Http\Controllers\CategoryTourController;
 use Modules\Admin\Http\Controllers\DashboardController;
+use Modules\Admin\Http\Controllers\HomeController;
 use Modules\Admin\Http\Controllers\LandingController;
 use Modules\Admin\Http\Controllers\PageController;
 use Modules\Admin\Http\Controllers\PermissionController;
@@ -96,6 +97,7 @@ class CheckPermissions
         PostController::class => 'post',
         LandingController::class => 'landing',
         AboutController::class => 'about',
+        HomeController::class => 'home',
 
 //        File Mager
         FileManagerController::class => 'file-mager'

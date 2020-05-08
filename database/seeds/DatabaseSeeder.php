@@ -28,9 +28,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PageTableSeeder::class);
         $this->call(LandingBloksTableSeeder::class);
         $this->call(LandingTableSeeder::class);
-
-//        $this->call(CategoryPostTableSeeder::class);
-//        $this->call(TourUserTableSeeder::class);
-//        $this->call(OrganizerLeaderTableSeeder::class);
+        $this->call(HomeTableSeeder::class);
     }
 }

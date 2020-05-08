@@ -8,11 +8,11 @@ class CategoryToursTableSeeder extends Seeder
     public function run(Faker $faker)
     {
         $categories = [
-            [
+            /*[
                 'title' => 'Без категории',
                 'description' => $faker->paragraph,
                 'img' => env('APP_URL') . '/assets/site/images/home_bg_new.jpg',
-            ],
+            ],*/
             [
                 'title' => 'Растительная медицина',
                 'description' => $faker->paragraph,

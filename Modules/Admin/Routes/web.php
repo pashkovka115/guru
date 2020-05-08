@@ -43,4 +43,12 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
         Route::post('update', 'AboutController@update')->name('admin.about.update');
         Route::get('destroy/{id}', 'AboutController@destroy')->name('admin.about.destroy');
     });
+
+    Route::prefix('home')->group(function (){
+        Route::get('show', 'HomeController@show')->name('admin.home.show');
+        Route::get('edit', 'HomeController@edit')->name('admin.home.edit');
+        Route::post('add-field', 'HomeController@add_field')->name('admin.home.add_field');
+        Route::post('update', 'HomeController@update')->name('admin.home.update');
+        Route::get('destroy/{id}', 'HomeController@destroy')->name('admin.home.destroy');
+    });
 });

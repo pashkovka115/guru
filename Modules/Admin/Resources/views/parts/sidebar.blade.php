@@ -234,6 +234,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.home.show') }}" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <p>Главная</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.landing.index') }}" class="nav-link">
+                        <i class="fab fa-asymmetrik"></i>
+                        <p>Лендинг</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.about.show') }}" class="nav-link">
                         <i class="far fa-address-card"></i>
                         <p>О нас</p>

@@ -31,7 +31,9 @@ class AppServiceProvider extends ServiceProvider
         Carbon::setLocale(config('app.locale'));
         if (Schema::hasTable('pages')) {
             \View::share('pages_menu', Page::all(['id', 'title']) ?? null);
-            \View::share('popular_country', \DB::table('tours')->orderByDesc('views')->limit(10)->get(['id', 'country']) ?? null);
+            \View::share('popular_country', \DB::table('tours')->orderByDesc('views')->limit(10)->get(
+                ['id', 'category_tour_id', 'country', 'gallery']
+                ) ?? null);
 
             $tours = \DB::table('tours')->orderByDesc('views')->limit(10)->get();
             \View::share('popular_tour', $tours);

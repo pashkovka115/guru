@@ -10,7 +10,7 @@
 {{--                    @include('parts.category_nav')--}}
                     <div class="cat_container">
                         <div class="row">
-                            @foreach($tours as $tour)
+                            @forelse($tours as $tour)
                             <div class="col-lg-12">
                                 <div class="event_list">
                                     <div class="owl-carousel owl-theme slide-cat event_list_photo">
@@ -165,7 +165,9 @@
                                 </div>
                                 @endif
                             </div>
-                            @endforeach
+                            @empty
+                                <p>Нет результата поиска. Попробуйте изменить запрос.</p>
+                            @endforelse
 
                         </div>
                     </div>

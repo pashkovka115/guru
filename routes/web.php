@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Home\MainController@index')->name('site.main');
 
 Auth::routes();
 
