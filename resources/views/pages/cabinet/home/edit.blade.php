@@ -18,8 +18,13 @@
                                     <p style="padding: 10px">{{ $user->email }}</p>
                                 </div>
                                 <div class="block-panel">
-                                <h3>Изменить аватарку</h3>
-                                    <p><img src="{{ $user->profile->avatar ?? '' }}" alt="аватар"></p>
+                                    <div class="form-group">
+                                        <label for="avatar">Изменить аватар</label>
+                                        <input type="file" class="form-control-file" id="avatar" name="avatar">
+                                        @if($user->profile->avatar)
+                                            <img src="{{ json_decode($user->profile->avatar)[0] ?? '' }}" alt="аватар">
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="block-panel">
                                     <label for="name-excerpt" class="create-subtitle">Информация об авторе (преподавателе):</label>

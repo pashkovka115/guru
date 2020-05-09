@@ -41,7 +41,7 @@ class HomeController extends Controller
         $request->validate([
             "name" => "required|regex:/[\w\s\-]*/i",
             "excerpt" => "sometimes|nullable|regex:/[\w\s\-]*/i",
-//            'avatar' => 'dimensions:min_width=100,min_height=200',
+            'avatar' => 'dimensions:min_width=50,min_height=50|mimes:jpeg,jpg,png',
             "gallery" => "sometimes|nullable|array",
             "gallery.*" => "sometimes|nullable|mimes:jpeg,jpg,png",
             "description" => "sometimes|nullable|regex:/[\w\s\-]*/i",
@@ -65,7 +65,7 @@ class HomeController extends Controller
             $user->profile->excerpt = $request->input('excerpt');
             $user->profile->description = $request->input('description');
             $user->profile->url = $request->input('url');
-
+            $user->profile->avatar = get_url_to_uploaded_files(auth()->user(), $request->file('avatar'));
             $user->profile->country = $request->input('country');
             $user->profile->city = $request->input('city');
             $user->profile->address = $request->input('address');

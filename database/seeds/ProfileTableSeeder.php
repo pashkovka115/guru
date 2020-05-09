@@ -28,6 +28,7 @@ class ProfileTableSeeder extends Seeder
                 'user_id'=> $user->id,
                 'auth' => ($i % 2 == 0 or $i == 1) ? '1' : '0',
 //                'type_user'=>$type_user,
+                'avatar' => '['.json_encode(asset('assets/site/images/avatar.jpg')).']',
                 'raiting'=> $raiting,
                 'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum fugit incidunt quasi deserunt, libero placeat.',
                 'description'=> $faker->paragraph(10),
