@@ -22,7 +22,7 @@ for (let i = 0; i < linkNav.length; i++) {
             }
         }
     }, false);
-}
+} 
 
 $(function() {
     $(document).on("click", ".mobile_menu_container span", function(e) {
@@ -52,7 +52,33 @@ $(function() {
     });
 });
 
-
+$(function() {
+    $('.btn-load-more').on('click', function(){
+        const btn = $(this);
+        const loader = btn.find('span');
+        $.ajax({
+            url: '/test.html',
+            type: 'GET',
+            beforeSend: function(){
+                btn.attr('disabled', true);
+                loader.addClass('d-inline-block');
+            },
+            success: function(response){
+                setTimeout(function(){
+                    loader.removeClass('d-inline-block');
+                    btn.attr('disabled', false);
+                    console.log(response);
+                    $('.after-posts').before(response);
+                }, 1000);
+            },
+            error: function(){
+                alert('Ошибка!');
+                loader.removeClass('d-inline-block');
+                btn.attr('disabled', false);
+            }
+        }); 
+    });
+});
 
 $('.article').readmore({
     maxHeight: 400,
@@ -76,7 +102,7 @@ for (let i = 0; i < acc.length; i++) {
       panel.style.maxHeight = null;
     } else {
       panel.style.maxHeight = panel.scrollHeight + "px";
-    }
+    } 
   });
 }
 
@@ -132,6 +158,12 @@ $(".filter-category > li > a").click(function(e) {
     $(".filter-category > li > a").not(this).removeClass('active');
     $(this).toggleClass('active');
 });
+$(document).on('click', function(e) {
+    if (!$(e.target).closest(".filter-category > li").length) {
+        $(".filter-category > li > a").not(this).removeClass('active');
+    }
+    e.stopPropagation();
+});
 
 $('#demo').daterangepicker({
     "locale": {
@@ -178,27 +210,27 @@ $('#demo').daterangepicker({
 
 $('select').each(function(){
     let $this = $(this), numberOfOptions = $(this).children('option').length;
-
-    $this.addClass('select-hidden');
+  
+    $this.addClass('select-hidden'); 
     $this.wrap('<div class="select"></div>');
     $this.after('<div class="select-styled"></div>');
 
     let $styledSelect = $this.next('div.select-styled');
     $styledSelect.text($this.children('option').eq(0).text());
-
+  
     let $list = $('<ul />', {
         'class': 'select-options'
     }).insertAfter($styledSelect);
-
+  
     for (let i = 0; i < numberOfOptions; i++) {
         $('<li />', {
             text: $this.children('option').eq(i).text(),
             rel: $this.children('option').eq(i).val()
         }).appendTo($list);
     }
-
+  
     let $listItems = $list.children('li');
-
+  
     $styledSelect.click(function(e) {
         e.stopPropagation();
         $('div.select-styled.active').not(this).each(function(){
@@ -206,14 +238,14 @@ $('select').each(function(){
         });
         $(this).toggleClass('active').next('ul.select-options').toggle();
     });
-
+  
     $listItems.click(function(e) {
         e.stopPropagation();
         $styledSelect.text($(this).text()).removeClass('active');
         $this.val($(this).attr('rel'));
         $list.hide();
     });
-
+  
     $(document).click(function() {
         $styledSelect.removeClass('active');
         $list.hide();
