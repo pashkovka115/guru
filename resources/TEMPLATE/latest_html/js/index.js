@@ -11,3 +11,13 @@ $(document).scroll(function() {
         $("header").removeClass('fixed');
     }   
 });
+
+$('.search-input').click( function(){
+    $('.search-category').toggle();
+});
+$(document).on('click', function(e) {
+    if (!$(e.target).closest(".search-input").length) {
+        $('.search-category').hide();
+    }
+    e.stopPropagation();
+});

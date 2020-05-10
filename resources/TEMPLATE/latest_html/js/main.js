@@ -158,6 +158,12 @@ $(".filter-category > li > a").click(function(e) {
     $(".filter-category > li > a").not(this).removeClass('active');
     $(this).toggleClass('active');
 });
+$(document).on('click', function(e) {
+    if (!$(e.target).closest(".filter-category > li").length) {
+        $(".filter-category > li > a").not(this).removeClass('active');
+    }
+    e.stopPropagation();
+});
 
 $('#demo').daterangepicker({
     "locale": {
