@@ -1,28 +1,10 @@
 'use strict';
 
-let linkNav = document.querySelectorAll('[href^="#"]'),
-    V = 0.5;
-for (let i = 0; i < linkNav.length; i++) {
-    linkNav[i].addEventListener('click', function(e) {
-        e.preventDefault();
-        let w = window.pageYOffset,
-            hash = this.href.replace(/[^#]*(.*)/, '$1');
-        let t = document.querySelector(hash).getBoundingClientRect().top,
-            start = null;
-        requestAnimationFrame(step);
-        function step(time) {
-            if (start === null) start = time;
-            let progress = time - start,
-                r = (t < 0 ? Math.max(w - progress/V, w + t) : Math.min(w + progress/V, w + t));
-            window.scrollTo(0,r);
-            if (r != w + t) {
-                requestAnimationFrame(step)
-            } else {
-                location.hash = hash
-            }
-        }
-    }, false);
-} 
+$("body").on('click', '.scroll-to', function(e){
+  var fixed_offset = 100;
+  $('html,body').stop().animate({ scrollTop: $(this.hash).offset().top - fixed_offset }, 1000);
+  e.preventDefault();
+});
 
 $(function() {
     $(document).on("click", ".mobile_menu_container span", function(e) {
@@ -49,34 +31,6 @@ $(function() {
         $(".mobile_menu_container").removeClass("loaded");
         $(".mobile_menu_overlay").fadeOut();;
         $("body").removeClass("no-overlay");
-    });
-});
-
-$(function() {
-    $('.btn-load-more').on('click', function(){
-        const btn = $(this);
-        const loader = btn.find('span');
-        $.ajax({
-            url: '/test.html',
-            type: 'GET',
-            beforeSend: function(){
-                btn.attr('disabled', true);
-                loader.addClass('d-inline-block');
-            },
-            success: function(response){
-                setTimeout(function(){
-                    loader.removeClass('d-inline-block');
-                    btn.attr('disabled', false);
-                    console.log(response);
-                    $('.after-posts').before(response);
-                }, 1000);
-            },
-            error: function(){
-                alert('Ошибка!');
-                loader.removeClass('d-inline-block');
-                btn.attr('disabled', false);
-            }
-        }); 
     });
 });
 
@@ -110,28 +64,6 @@ $("input[name=booking]").change(function() {
     $(".booking__select").removeClass("selected")
     $(this).parents().addClass("selected")
 })
-
-/*let radio = document.getElementsByName('booking');
-
-for(let i = 0; i < radio.length; i++) {
-    radio[i].onchange = testRadio;
-}
-
-function testRadio() {
-    console.log(this.value);
-};
-
-document.getElementsByClassName('btn-booking').onclick = checkRadio;
-
-function checkRadio() {
-    let m = document.getElementsByName('booking');
-    for (let i = 0; i < m.length; i++) {
-        if (m[i].checked) {
-            alert(m[i].value);
-            break;
-        }
-    }
-}*/
 
 $('.slide-autor').owlCarousel({
     loop:false,
