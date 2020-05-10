@@ -85,13 +85,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script src="{{asset('assets/site/js/readmore.min.js')}}"></script>
 <script src="{{asset('assets/site/js/owl.carousel.min.js')}}"></script>
-<script src="{{asset('assets/site/js/index.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-@yield('scripts_footer')
 
 <script src="{{asset('assets/site/js/main.js')}}"></script>
+@yield('scripts_footer')
+
 <script>
     $('.login-list').click( function(){
         $('.login-sub').toggle();

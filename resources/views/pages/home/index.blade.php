@@ -159,47 +159,11 @@
                 </div>
                     @if($loop->iteration == 6) @break @endif
                 @endforeach
-                {{--<div class="col-lg-4 col-md-6">
-                    <a href="#" class="elem__tour">
-                        <img src="images/home_bg_new.jpg" alt="" class="img-fluid">
-                        <p class="title__tour">
-                            Мексика
-                        </p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <a href="#" class="elem__tour">
-                        <img src="images/home_bg_new.jpg" alt="" class="img-fluid">
-                        <p class="title__tour">
-                            Мексика
-                        </p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <a href="#" class="elem__tour">
-                        <img src="images/home_bg_new.jpg" alt="" class="img-fluid">
-                        <p class="title__tour">
-                            Мексика
-                        </p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <a href="#" class="elem__tour">
-                        <img src="images/home_bg_new.jpg" alt="" class="img-fluid">
-                        <p class="title__tour">
-                            Мексика
-                        </p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <a href="#" class="elem__tour">
-                        <img src="images/home_bg_new.jpg" alt="" class="img-fluid">
-                        <p class="title__tour">
-                            Мексика
-                        </p>
-                    </a>
-                </div>--}}
+
             </div>
         </div>
     </div>
+@endsection
+@section('scripts_footer')
+    <script src="{{asset('assets/site/js/index.js')}}"></script>
 @endsection

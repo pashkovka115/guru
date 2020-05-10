@@ -102,15 +102,13 @@ class TourController extends Controller
 //dd($request->file('accommodation_photo'));
 
         \DB::transaction(function () use ($request) {
-            $tour = Tour::with('tags')->create([
+            $data = [
                 'category_tour_id' => $request->input('category_tour_id'),
                 'title' => $request->input('title'),
                 'user_id' => \Auth::id(),
                 'date_start' => $request->input('date_start'),
                 'date_end' => $request->input('date_end'),
 //                'price_base' => $request->input('price_base'),
-
-                'gallery' => json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('photogallery'))),
 
                 'address' => $request->input('address'),
                 'street' => $request->input('street'),
@@ -132,11 +130,23 @@ class TourController extends Controller
                 'first_aid' => $request->input('first_aid'),
                 'drinking_water' => $request->input('drinking_water'),
                 'communication' => $request->input('communication'),
-                'accommodation_photo' => ($request->has('accommodation_photo')) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('accommodation_photo'))) : null,
                 'accommodation_description' => $request->input('accommodation_description'),
-                'gallery_meals' => ($request->has('gallery_meals')) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery_meals'))) : null,
                 'meals_desc' => $request->input('meals_desc'),
-            ]);
+            ];
+
+            if ($request->has('accommodation_photo')){
+                $data['accommodation_photo'] = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('accommodation_photo')));
+            }
+
+            if ($request->has('gallery_meals')){
+                $data['gallery_meals'] = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery_meals')));
+            }
+
+            if ($request->has('photogallery')){
+                $data['gallery'] = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('photogallery')));
+            }
+
+            $tour = Tour::with('tags')->create($data);
 
             if ($request->has('tags') and is_array($request->input('tags')) and count($request->input('tags')) > 0) {
                 $tour->tags()->attach($request->input('tags'));
@@ -312,7 +322,7 @@ class TourController extends Controller
             }, $request->input('tags', []))); // END Tags
 
             // ***
-            $tour->update([
+            $data = [
                 "title" => $request->input('title'),
                 "category_tour_id" => $request->input('category_tour_id'),
                 "address" => $request->input('address'),
@@ -334,7 +344,6 @@ class TourController extends Controller
                 "first_aid" => $request->input('first_aid'),
                 "drinking_water" => $request->input('drinking_water'),
                 "communication" => $request->input('communication'),
-                'accommodation_photo' => ($request->has('accommodation_photo')) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('accommodation_photo'))) : null,
                 "accommodation_description" => $request->input('accommodation_description'),
                 "conditioner" => $request->has('conditioner') ? '1' : '0',
                 "wifi" => $request->has('wifi') ? '1' : '0',
@@ -342,7 +351,6 @@ class TourController extends Controller
                 "towel" => $request->has('towel') ? '1' : '0',
                 "private_room" => $request->has('private_room') ? '1' : '0',
                 "transfer_fee" => $request->has('transfer_fee') ? '1' : '0',
-                'gallery_meals' => ($request->has('gallery_meals')) ? json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery_meals'))) : null,
                 "meals_desc" => $request->input('meals_desc'),
                 "fish" => $request->has('fish') ? '1' : '0',
                 "meat" => $request->has('meat') ? '1' : '0',
@@ -360,7 +368,21 @@ class TourController extends Controller
                 "nuts_free" => $request->has('nuts_free') ? '1' : '0',
                 "coffee_tea" => $request->has('coffee_tea') ? '1' : '0',
                 "count_meals" => $request->input('count_meals'),
-            ]);
+            ];
+
+            if ($request->has('accommodation_photo')){
+                $data['accommodation_photo'] = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('accommodation_photo')));
+            }
+
+            if ($request->has('gallery_meals')){
+                $data['gallery_meals'] = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery_meals')));
+            }
+
+            if ($request->has('photogallery')){
+                $data['gallery'] = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('photogallery')));
+            }
+
+            $tour->update($data);
         });
 
         return redirect()->back();

@@ -200,8 +200,8 @@
                                 <div class="img-accordion-block">
                                     @php
                                     if ($tour->accommodation_photo){
-                                            $acc_gall = json_decode($tour->accommodation_photo);
-                                    }else{$acc_gall = false;}
+                                            $acc_gall = json_decode($tour->accommodation_photo) ?? [];
+                                    }else{$acc_gall = [];}
                                     @endphp
                                     @foreach($acc_gall as $img)
                                     <div class="img-accordion-double">
@@ -254,7 +254,7 @@
                                     @php
                                         if ($tour->gallery_meals){
                                                 $mea_gall = json_decode($tour->gallery_meals);
-                                        }else{$mea_gall = false;}
+                                        }else{$mea_gall = [];}
                                     @endphp
                                     @foreach($mea_gall as $img)
                                     <div class="img-accordion-double">
