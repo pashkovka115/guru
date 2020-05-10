@@ -6,10 +6,10 @@
                 <ul class="footer_menu">
                     <li><a href="/">Главная</a></li>
                     <li><a href="{{ route('site.journal.blog.index') }}">Журнал</a></li>
-                    @foreach($pages_menu as $item)
-                    <li><a href="{{ route('site.pages.official.show', ['page' => $item->id]) }}">{{ $item->title }}</a></li>
-                    @endforeach
                     <li><a href="{{ route('site.about') }}">О нас</a></li>
+                    @foreach($pages_menu as $item)
+                    <li><a href="{{ route('site.pages.official.show', ['page' => $item->slug]) }}">{{ $item->title }}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6">

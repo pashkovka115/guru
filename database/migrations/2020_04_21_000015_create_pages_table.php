@@ -14,7 +14,9 @@ class CreatePagesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('id');
+            $table->unsignedInteger('sort')->default(0);
             $table->string('title');
+            $table->string('slug');
             $table->longText('content')->nullable();
             $table->nullableTimestamps();
         });

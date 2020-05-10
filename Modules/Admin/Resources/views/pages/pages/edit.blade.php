@@ -9,10 +9,29 @@
                         @csrf
                         @method('PATCH')
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="title">Заголовок</label>
-                                <input type="text" class="form-control" id="title" name="title"
-                                       value="{{ $page->title }}" required>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label for="title">Заголовок</label>
+                                        <input type="text" class="form-control" id="title" name="title"
+                                               value="{{ $page->title }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <!-- select -->
+                                    <div class="form-group">
+                                        <label>Сортировка</label>
+                                        <select name="sort" class="form-control">
+                                            @for($i = 0; $i < $page->count(); $i++)
+                                                <?php if ($page->sort == $i) $selected = ' selected';
+                                                        else
+                                                            $selected = '';
+                                                ?>
+                                            <option value="{{ $i }}"{{ $selected }}>{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="content">Статья</label>

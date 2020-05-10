@@ -8,9 +8,9 @@ use Modules\Admin\Models\Page;
 
 class PageController extends Controller
 {
-    public function show($id)
+    public function show($slug)
     {
-        $page = Page::where('id', $id)->firstOrFail();
+        $page = Page::where('slug', $slug)->firstOrFail();
         return view('pages.official.show', ['page' => $page]);
     }
 }

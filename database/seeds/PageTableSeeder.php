@@ -10,18 +10,22 @@ class PageTableSeeder extends Seeder
         $pages = [
             [
                 'title' => 'Пользовательское соглашение',
+                'slug' => Str::slug('Пользовательское соглашение'),
                 'content' => $faker->paragraphs(30, true)
             ],
             [
                 'title' => 'Политика публикации',
+                'slug' => Str::slug('Политика публикации'),
                 'content' => $faker->paragraphs(30, true)
             ],
             [
                 'title' => 'Политика конфиденциальности',
+                'slug' => Str::slug('Политика конфиденциальности'),
                 'content' => $faker->paragraphs(30, true)
             ],
             [
                 'title' => 'Оплата и отмена',
+                'slug' => Str::slug('Оплата и отмена'),
                 'content' => $faker->paragraphs(30, true)
             ],
         ];

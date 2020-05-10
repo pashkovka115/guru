@@ -30,7 +30,8 @@ class AppServiceProvider extends ServiceProvider
         setlocale(LC_TIME, 'ru_RU.UTF-8');
         Carbon::setLocale(config('app.locale'));
         if (Schema::hasTable('pages')) {
-            \View::share('pages_menu', Page::all(['id', 'title']) ?? null);
+
+            \View::share('pages_menu', Page::where('id', '>', 0)->orderBy('sort')->get(['id', 'title', 'slug']) ?? null);
             \View::share('popular_country', \DB::table('tours')->orderByDesc('views')->limit(10)->get(
                 ['id', 'category_tour_id', 'country', 'gallery']
                 ) ?? null);

@@ -78,7 +78,8 @@ class PageController extends Controller
     {
         Page::where('id', $id)->update([
             'title' => $request->input('title'),
-            'content' => $request->input('content')
+            'content' => $request->input('content'),
+            'sort' => $request->input('sort'),
         ]);
         session()->flash('message', 'Обновил');
         return redirect()->back();
