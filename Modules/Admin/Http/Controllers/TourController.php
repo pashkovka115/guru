@@ -73,7 +73,7 @@ class TourController extends Controller
      */
     public function show($id)
     {
-        $tour = Tour::with('categories')->where('id', $id)->first();
+        $tour = Tour::with('category')->where('id', $id)->first();
         return view('admin::pages.tour.show', ['title_page' => 'Просмотр тура', 'title' => $this->title, 'tour' => $tour]);
     }
 
@@ -84,7 +84,7 @@ class TourController extends Controller
      */
     public function edit($id)
     {
-        $tour = Tour::with('categories')->where('id', $id)->first();
+        $tour = Tour::with('category')->where('id', $id)->first();
         $categories = CategoryTour::all();
         return view('admin::pages.tour.edit', [
             'tour' => $tour,
