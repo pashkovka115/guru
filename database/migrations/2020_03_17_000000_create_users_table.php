@@ -6,18 +6,9 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUsersTable extends Migration
 {
-    /**
-     * Schema table name to migrate
-     * @var string
-     */
     public $tableName = 'users';
 
-    /**
-     * Run the migrations.
-     * @table users
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create($this->tableName, function (Blueprint $table) {
@@ -31,13 +22,13 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::table($this->tableName, function () {
+            \Illuminate\Support\Facades\DB::statement('ALTER TABLE ' . $this->tableName . ' ADD FULLTEXT search(name)');
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         if (is_dir(base_path('storage/app/public/users/'))){

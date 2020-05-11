@@ -93,7 +93,7 @@ class CreateToursTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            \Illuminate\Support\Facades\DB::statement('ALTER TABLE '. $this->tableName .' ADD FULLTEXT search(title, info_excerpt, info_description)');
+            \Illuminate\Support\Facades\DB::statement('ALTER TABLE '. $this->tableName .' ADD FULLTEXT search(title, info_excerpt, info_description, country)');
         });
     }
 

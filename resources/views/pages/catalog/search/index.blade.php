@@ -166,8 +166,23 @@
                                 @endif
                             </div>
                             @empty
-                                <p>Нет результата поиска. Попробуйте изменить запрос.</p>
+
                             @endforelse
+
+                            @foreach($users as $user)
+                                @if($user->profile)
+                                    <div class="user mb-3">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <a href="{{ route('site.author.show', ['id' => $user->id]) }}" target="_blank">{{ $user->name }}</a>
+                                            </div>
+                                            <div class="card-body">
+                                                {{ $user->profile->description }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
 
                         </div>
                     </div>
