@@ -16,7 +16,7 @@
                 <p class="title-footer">Популярные мероприятия:</p>
                 <ul class="footer_menu">
                     @foreach($popular_tour as $tour)
-                    <li><a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}">{{ $tour->title }}</a></li>
+                    <li><a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->title }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -25,7 +25,7 @@
                 <ul class="footer_menu">
                     @foreach($popular_country as $tour)
                         <li>
-                            <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}">{{ $tour->country }}</a>
+                            <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country }}</a>
                         </li>
                     @endforeach
                 </ul>

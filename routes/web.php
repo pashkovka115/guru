@@ -10,7 +10,7 @@ Auth::routes();
 Route::get('/author', 'Catalog\UserController@index')->name('site.author.list');
 Route::get('/author/{id}', 'Catalog\UserController@show')->name('site.author.show');
 
-Route::resource('tour', 'Catalog\TourController')->only('show')->names('site.catalog.tour');
+Route::resource('events', 'Catalog\TourController')->only('show')->names('site.catalog.tour');
 
 Route::get('/category', 'Catalog\CategoryTourController@index')->name('site.catalog.category.list');
 Route::get('/category/{id}', 'Catalog\CategoryTourController@show')->name('site.catalog.category.name');

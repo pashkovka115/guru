@@ -86,7 +86,7 @@
                                             $diff = $start->diffInDays($end);
                                         @endphp
                                     <li class="similar_events_elem">
-                                        <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}" class="similar-link">
+                                        <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="similar-link">
                                             <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid">
                                             <p>{{ $tour->title }}</p>
                                             <p class="dates-event">

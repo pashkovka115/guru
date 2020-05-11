@@ -69,7 +69,7 @@
                                     </li>
                                     @foreach($popular_country as $tour)
                                     <li>
-                                        <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}">{{ $tour->country }}</a>
+                                        <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country }}</a>
                                     </li>
                                     @endforeach
 
