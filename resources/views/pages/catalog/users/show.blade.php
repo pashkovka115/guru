@@ -7,34 +7,29 @@
                     <div class="block_autor_info">
                         <div class="row">
                             <div class="col-lg-5">
+                                <?php
+                                $gallery = [];
+                                if (isset(json_decode($user->profile->avatar)[0])){
+                                    $gallery[] =  json_decode($user->profile->avatar)[0];
+                                }
+                                $gallery = array_merge($gallery, json_decode($user->profile->gallery) ?? []);
+                                ?>
                                 <div class="owl-carousel owl-theme slide-autor">
+                                    @foreach($gallery as $photo)
                                     <div class="item">
                                         <div class="event-gallery-small__block">
-                                            <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg_new.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg_new.jpg') }}');"></div>
+                                            <div data-fancybox="gallery" href="{{ $photo }}" style="background-image: url('{{ $photo }}');"></div>
                                         </div>
                                     </div>
-                                    <div class="item">
-                                        <div class="event-gallery-small__block">
-                                            <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg.png') }}');"></div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="event-gallery-small__block">
-                                            <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg_new.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg_new.jpg') }}');"></div>
-                                        </div>
-                                    </div>
+                                        @break($loop->iteration == 3)
+                                    @endforeach
                                 </div>
                                 <div class="event-gallery-none">
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg_new.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg_new.jpg') }}');">Другие фото</div>
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg.png') }}');"></div>
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg_new.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg_new.jpg') }}');"></div>
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg.png') }}');"></div>
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg_new.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg_new.jpg') }}');"></div>
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg.png') }}');"></div>
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg_new.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg_new.jpg') }}');"></div>
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg.png') }}');"></div>
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg_new.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg_new.jpg') }}');"></div>
-                                    <div data-fancybox="gallery" href="{{ asset('assets/site/images/home_bg.jpg') }}" style="background-image: url('{{ asset('assets/site/images/home_bg.png') }}');"></div>
+                                    @foreach($gallery as $photo)
+                                        @if($loop->iteration > 3)
+                                    <div data-fancybox="gallery" href="{{ $photo }}" style="background-image: url('{{ $photo }}');">@if($loop->iteration == 4) Другие фото @endif</div>
+                                        @endif
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="col-lg-7">

@@ -56,7 +56,7 @@
                         <a href="#" class="location-tour">
                             {{ $tour->city }}, {{ $tour->country }}
                         </a>
-                        <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}" class="title-tour">
+                        <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-tour">
                             {{ $tour->title }}
                         </a>
                         <p class="dates-tour">

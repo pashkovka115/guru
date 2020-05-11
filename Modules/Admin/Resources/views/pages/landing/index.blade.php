@@ -48,7 +48,7 @@
                                     </div>
                             @endisset
                             @isset($landing[2])
-                                    <div class="card-header" style="background-color: #00b3ff"><h3 class="card-title">Декаративный блок</h3></div>
+                                    <div class="card-header" style="background-color: #00b3ff"><h3 class="card-title">Декоративный блок</h3></div>
                                     <div class="card-body">
                                         <?php
                                         $block = $landing[2]->parts[0] ?? false;
