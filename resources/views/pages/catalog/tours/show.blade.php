@@ -425,7 +425,7 @@
                                 <div class="price-info">
                                     <p class="cost-tour">{{ number_format($tour->price_base / 100) }} <span>RUB</span></p>
                                     <p>{{ $tour->count_person }}</p>
-                                    {{ $tour->info_excerpt }}
+                                    <p>{{ $tour->info_excerpt }}</p>
                                 </div>
                             </label>
                         </div>
@@ -440,7 +440,7 @@
                                 <div class="price-info">
                                     <p class="cost-tour">{{ number_format($variant->price_variant / 100) }} <span>RUB</span></p>
                                     <p>{{ $variant->amount_variant }}</p>
-                                    {{ $variant->text_variant }}
+                                    <p>{{ $variant->text_variant }}</p>
                                 </div>
                             </label>
                         </div>
