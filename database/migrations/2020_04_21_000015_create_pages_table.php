@@ -16,7 +16,7 @@ class CreatePagesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('sort')->default(0);
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->longText('content')->nullable();
             $table->nullableTimestamps();
         });
