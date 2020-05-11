@@ -80,6 +80,7 @@ class PageController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'sort' => $request->input('sort'),
+            'slug' => $request->input('slug')
         ]);
         session()->flash('message', 'Обновил');
         return redirect()->back();

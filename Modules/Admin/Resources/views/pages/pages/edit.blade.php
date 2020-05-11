@@ -10,14 +10,21 @@
                         @method('PATCH')
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-8">
+                                <div class="col-sm-5">
                                     <div class="form-group">
                                         <label for="title">Заголовок</label>
                                         <input type="text" class="form-control" id="title" name="title"
                                                value="{{ $page->title }}" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label for="title">Псевдоним</label>
+                                        <input type="text" class="form-control" id="title" name="slug"
+                                               value="{{ $page->slug }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
                                     <!-- select -->
                                     <div class="form-group">
                                         <label>Сортировка</label>
