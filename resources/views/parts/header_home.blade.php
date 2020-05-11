@@ -54,34 +54,17 @@
                         <button type="submit">Поиск</button>
                         <div class="search-category">
                             <div class="search-category__events">
-                                <a href="#">
+                                <a href="{{ route('site.catalog.category.list') }}">
                                     <img src="{{ asset('assets/site/images/all-events.svg') }}" alt="" class="img-fluid">
                                     <span>Все мероприятия</span>
                                 </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/plant-medicine.svg') }}" alt="" class="img-fluid">
-                                    <span>Растительная медицина</span>
+                                @foreach($categories as $category)
+                                <a href="{{ route('site.catalog.category.name', ['id' => $category->id]) }}">
+                                    <img src="{{ $category->icon }}" alt="" class="img-fluid">
+                                    <span>{{ $category->title }}</span>
                                 </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/yoga.svg') }}" alt="" class="img-fluid">
-                                    <span>Йога</span>
-                                </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/meditation.svg') }}" alt="" class="img-fluid">
-                                    <span>Медитация и духовность</span>
-                                </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/nutrition.svg') }}" alt="" class="img-fluid">
-                                    <span>Здоровье и здоровое питание</span>
-                                </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/art.svg') }}" alt="" class="img-fluid">
-                                    <span>Икусство и творчество</span>
-                                </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/outdoors.svg') }}" alt="" class="img-fluid">
-                                    <span>Активный отдых</span>
-                                </a>
+                                @endforeach
+
                             </div>
                             <div class="search-category__country">
                                 <div class="search-category__title">
@@ -142,48 +125,25 @@
                         <button type="submit">Поиск</button>
                         <div class="search-category">
                             <div class="search-category__events">
-                                <a href="#">
+                                <a href="{{ route('site.catalog.category.list') }}">
                                     <img src="{{ asset('assets/site/images/all-events.svg') }}" alt="" class="img-fluid">
                                     <span>Все мероприятия</span>
                                 </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/plant-medicine.svg') }}" alt="" class="img-fluid">
-                                    <span>Растительная медицина</span>
-                                </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/yoga.svg') }}" alt="" class="img-fluid">
-                                    <span>Йога</span>
-                                </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/meditation.svg') }}" alt="" class="img-fluid">
-                                    <span>Медитация и духовность</span>
-                                </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/nutrition.svg') }}" alt="" class="img-fluid">
-                                    <span>Здоровье и здоровое питание</span>
-                                </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/art.svg') }}" alt="" class="img-fluid">
-                                    <span>Икусство и творчество</span>
-                                </a>
-                                <a href="#">
-                                    <img src="{{ asset('assets/site/images/outdoors.svg') }}" alt="" class="img-fluid">
-                                    <span>Активный отдых</span>
-                                </a>
+                                @foreach($categories as $category)
+                                    <a href="{{ route('site.catalog.category.name', ['id' => $category->id]) }}">
+                                        <img src="{{ $category->icon }}" alt="" class="img-fluid">
+                                        <span>{{ $category->title }}</span>
+                                    </a>
+                                @endforeach
+
                             </div>
                             <div class="search-category__country">
                                 <div class="search-category__title">
                                     Популярные направления
                                 </div>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
+                                @foreach($popular_country as $tour)
+                                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country ?? $tour->title }}</a>
+                                @endforeach
                             </div>
                         </div>
                     </form>

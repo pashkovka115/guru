@@ -17,31 +17,37 @@ class CategoryToursTableSeeder extends Seeder
                 'title' => 'Растительная медицина',
                 'description' => $faker->paragraph,
                 'img' => env('APP_URL') . '/assets/site/images/home_bg_new.jpg',
+                'icon' => asset('assets/site/images/all-events.svg')
             ],
             [
                 'title' => 'Йога',
                 'description' => $faker->paragraph,
                 'img' => env('APP_URL') . '/assets/site/images/home_bg_new.jpg',
+                'icon' => asset('assets/site/images/all-events.svg')
             ],
             [
                 'title' => 'Медитация и духовность',
                 'description' => $faker->paragraph,
                 'img' => env('APP_URL') . '/assets/site/images/home_bg_new.jpg',
+                'icon' => asset('assets/site/images/all-events.svg')
             ],
             [
                 'title' => 'Здоровье и здоровое питание',
                 'description' => $faker->paragraph,
                 'img' => env('APP_URL') . '/assets/site/images/home_bg_new.jpg',
+                'icon' => asset('assets/site/images/all-events.svg')
             ],
             [
                 'title' => 'Искусство и творчество',
                 'description' => $faker->paragraph,
                 'img' => env('APP_URL') . '/assets/site/images/home_bg_new.jpg',
+                'icon' => asset('assets/site/images/all-events.svg')
             ],
             [
                 'title' => 'Активный отдых',
                 'description' => $faker->paragraph,
                 'img' => env('APP_URL') . '/assets/site/images/home_bg_new.jpg',
+                'icon' => asset('assets/site/images/all-events.svg')
             ],
         ];
 

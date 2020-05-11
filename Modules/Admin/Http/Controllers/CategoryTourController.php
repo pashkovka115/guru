@@ -92,6 +92,9 @@ class CategoryTourController extends Controller
         if ($request->input('img') != '' and mb_strlen($request->input('img')) > 1) {
             $data['img'] = $request->input('img');
         }
+        if ($request->input('icon') != '' and mb_strlen($request->input('icon')) > 1) {
+            $data['icon'] = $request->input('icon');
+        }
         CategoryTour::where('id', $id)->update($data);
 
         session()->flash('message', 'Сохранено');

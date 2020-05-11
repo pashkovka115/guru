@@ -19,6 +19,7 @@ class CategoryTours extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('img')->nullable();
+            $table->string('icon')->nullable();
         });
     }
 
