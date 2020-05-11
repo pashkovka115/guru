@@ -83,16 +83,24 @@ function delDir($dir)
 
 function get_raiting_template($num, $echo_num = true)
 {
+    $count_star = 0;
     $num = (float)$num;
     if ($num < 0) $num = 0.0;
     $fl = $num - floor($num);
+//    dd($fl);
     if ($num > 0) {
         $str = '<span class="rating-star-display">';
         for ($i = 0; $i < (int)$num; $i++) {
             $str .= '<span class="rating-star-solid"></span>';
+            $count_star++;
         }
-        if ($fl > 0)
+        if ($fl > 0) {
             $str .= '<span class="rating-star-half"></span>';
+            $count_star++;
+        }
+        for ($a = 1, $i = 5 - $count_star; $a <= $i; $a++){
+            $str .= '<span class="rating-star-empty"></span>';
+        }
         if ($echo_num)
             $str .= '<span class="rating-value">' . ((string)$num) . '</span>';
         $str .= '</span>';

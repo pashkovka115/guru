@@ -38,7 +38,7 @@ class UserController extends Controller
         $comments = UserComment::with('user')->where('author_id', $id)->get();
         $my_tours_ids = TourLeader::where('leader_id', $id)->get('tour_id');
         $ids = array_keys($my_tours_ids->keyBy('tour_id')->toArray());
-        $ratings = TourRating::whereIn('tour_id', $ids)->get('rating');
+        /*$ratings = TourRating::whereIn('tour_id', $ids)->get('rating');
 
         $arr_ratings = array_keys($ratings->keyBy('rating')->toArray());
 
@@ -46,12 +46,12 @@ class UserController extends Controller
             $rating = array_sum($arr_ratings) / count($arr_ratings);
         }else{
             $rating = 0;
-        }
+        }*/
 
         return view('pages.catalog.users.show', [
             'user' => $user,
             'comments'=>$comments,
-            'rating_leader' => $rating, // средний рейтинг по мероприятиям
+            //'rating_leader' => $rating, // средний рейтинг по мероприятиям
             'title'=>'Профиль пользователя'
         ]);
     }

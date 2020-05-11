@@ -42,7 +42,7 @@
                                     <h1 class="title-autor">{{ $user->name }}</h1>
                                     <div class="rating-autor">
                                         <div class="rating">
-                                            {!! get_raiting_template($rating_leader, false) !!}
+                                            {!! get_raiting_template($user->profile->raiting, false) !!}
                                             <a href="#reviews" class="review-count">{{ Lang::choice('Отзыв|Отзыва|Отзывов', $comments->count()) }} - <span>{{ $comments->count() }}</span></a>
                                         </div>
                                     </div>
@@ -108,13 +108,14 @@
                         <div class="event-accordion accordion-reviews">
                             <div class="accordion-btn">Отзывы клиентов:</div>
                             <div class="panel reviews-read">
-                                @if($rating_leader > 0)
+                                <?php //dd($user->profile->raiting); ?>
+                                @if($user->profile->raiting > 0)
                                 <div class="rating-accordion-block">
                                     <div class="rating-accordion">
                                         <div class="rating">
 
-                                            {!! get_raiting_template($rating_leader) !!}
-                                            <span class="review-text">Средний рейтинг {{ $rating_leader }} из 5.0</span>
+                                            {!! get_raiting_template($user->profile->raiting, false) !!}
+                                            <span class="review-text">Средний рейтинг {{ $user->profile->raiting }} из 5.0</span>
                                         </div>
                                     </div>
                                 </div>
