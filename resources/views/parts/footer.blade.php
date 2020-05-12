@@ -21,7 +21,7 @@
                 </ul>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <p class="title-footer">Популярные Стран:</p>
+                <p class="title-footer">Популярные Страны:</p>
                 <ul class="footer_menu">
                     @foreach($popular_country as $tour)
                         <li>
