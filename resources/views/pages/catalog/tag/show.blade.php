@@ -48,7 +48,7 @@
                                         <em>Ваш гиды</em>
                                     </div>
                                     <div class="event__list_block">
-                                        <a href="{{ route('site.catalog.tour.show', ['tour' => $tour->id]) }}" class="title-event">
+                                        <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-event">
                                             @php
                                                 $start = \Carbon\Carbon::create($tour->date_start);
                                                 $end = \Carbon\Carbon::create($tour->date_end);

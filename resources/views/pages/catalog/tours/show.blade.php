@@ -375,7 +375,7 @@
                                     @foreach($similar_tours as $item)
                                         @if($item->id != $tour->id)
                                     <li class="similar_events_elem">
-                                        <a href="{{ route('site.catalog.tour.show', ['tour' => $item->id]) }}" class="similar-link">
+                                        <a href="{{ route('site.catalog.tour.show', ['event' => $item->id]) }}" class="similar-link">
                                             <?php
                                             $gal = json_decode($item->gallery) ?? [];
                                             ?>

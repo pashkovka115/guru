@@ -40,7 +40,7 @@
                 @foreach($recommended_tours as $tour)
                 <div class="col-lg-3 col-md-6">
                     <div class="elem__featured_tour">
-                        <a href="#" class="elem__featured_more">
+                        <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="elem__featured_more">
                             <?php
                             $gal = json_decode($tour->gallery) ?? [];
                             ?>
@@ -154,7 +154,7 @@
                         @isset($gal[0])
                         <img src="{{ $gal[0] }}" alt="" class="img-fluid">
                         @endisset
-                        <p class="title__tour">{{ $tour->country }}</p>
+                        <p class="title__tour">{{ $tour->country ?? $tour->title }}</p>
                     </a>
                 </div>
                     @if($loop->iteration == 6) @break @endif
