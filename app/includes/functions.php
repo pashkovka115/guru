@@ -1,5 +1,12 @@
 <?php
 
+function is_admin(){
+    if (auth()->check()) {
+        return (boolean) DB::table('model_has_roles')->select('model_id')->where('model_id', auth()->id());
+    }
+    return false;
+}
+
 function generate_google_map_link(array $data)
 {
     $url = '';

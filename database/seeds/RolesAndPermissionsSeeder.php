@@ -47,7 +47,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'tour_add', 'description' => 'Добавлять тур']);
         Permission::create(['name' => 'tour_delete', 'description' => 'Удалять тур']);
 
-        Permission::create(['name' => 'file-mager_*', 'description' => 'Использовать файловый менеджер']);
+        Permission::create(['name' => 'file-manager_*', 'description' => 'Использовать файловый менеджер']);
 
         Permission::create(['name' => 'page_view', 'description' => 'Просматривать страницы']);
         Permission::create(['name' => 'page_edit', 'description' => 'Редактировать страницы']);

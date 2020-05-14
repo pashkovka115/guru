@@ -22,8 +22,12 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
     Route::resource('category_tour', 'CategoryTourController')
         ->names('admin.category_tour');
 
-    Route::resource('tour', 'TourController')
-        ->names('admin.tour');
+    Route::prefix('tour')->group(function (){
+        Route::get('', 'Tour\IndexController@index')->name('admin.tour.index');
+        //Route::get('destroy/{id}', 'Tour\IndexController@destroy')->name('admin.tour.destroy');
+        Route::resource('general', 'Tour\GeneralController')->except('index')
+            ->names('admin.tour.general');
+    });
 
     Route::resource('page', 'PageController')
         ->names('admin.page');

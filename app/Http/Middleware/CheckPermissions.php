@@ -14,6 +14,8 @@ use Modules\Admin\Http\Controllers\PageController;
 use Modules\Admin\Http\Controllers\PermissionController;
 use Modules\Admin\Http\Controllers\PostController;
 use Modules\Admin\Http\Controllers\RoleController;
+use Modules\Admin\Http\Controllers\Tour\GeneralController;
+use Modules\Admin\Http\Controllers\Tour\IndexController;
 use Modules\Admin\Http\Controllers\TourController;
 use Modules\Admin\Http\Controllers\UserController;
 use Modules\Admin\Http\Controllers\UserRoleController;
@@ -91,7 +93,7 @@ class CheckPermissions
         RoleController::class => 'role',
         UserRoleController::class => 'user-role',
         CategoryTourController::class => 'category-tour',
-        TourController::class => 'tour',
+//        TourController::class => 'tour',
         PageController::class => 'page',
         CategoryPostController::class => 'category-post',
         PostController::class => 'post',
@@ -99,8 +101,11 @@ class CheckPermissions
         AboutController::class => 'about',
         HomeController::class => 'home',
 
+        IndexController::class => 'tour',
+        GeneralController::class => 'tour',
+
 //        File Mager
-        FileManagerController::class => 'file-mager'
+        FileManagerController::class => 'file-manager'
     ];
 
 
@@ -114,7 +119,6 @@ class CheckPermissions
     public function handle($request, Closure $next)
     {
         $action = \Route::currentRouteAction();
-//        dd($request->url());
 
         $sp = explode('@', $action);
         $controller = isset($this->types[$sp[0]]) ? $this->types[$sp[0]] : '';

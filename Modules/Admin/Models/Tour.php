@@ -4,8 +4,10 @@ namespace Modules\Admin\Models;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+//use Illuminate\Database\Query\Builder;
 
 class Tour extends Model
 {
@@ -72,6 +74,22 @@ class Tour extends Model
         'deleted_at',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        // Для не админа не выводим не активные объекты
+        if (!is_admin()) {
+            static::addGlobalScope('active', function (Builder $builder) {
+                $builder->where('active', '1');
+            });
+
+            static::addGlobalScope('good', function (Builder $builder) {
+                return $builder->where('good', '1');
+            });
+        }
+
+    }
+
     /*
     * у туров много тегов
     */
@@ -118,9 +136,8 @@ class Tour extends Model
     }
 
 
-    /*
-        public function users()
-        {
-            return $this->belongsToMany(User::class);
-        }*/
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

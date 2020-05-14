@@ -36,28 +36,28 @@
                     <a href="#" class="nav-link">
                         <i class="fas fa-globe"></i>
                         <p>
-                            Туры
+                            Мероприятия
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.tour.index') }}"
-                               class="nav-link{{ request()->is('admin/tour') ? ' active' : null }}">
+                            <a href="{{ route('admin.tour.index') }}" class="nav-link{{ request()->is('admin/tour/create') ? ' active' : null }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Все туры</p>
+                                <p>Все</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.tour.create') }}"
-                               class="nav-link{{ request()->is('admin/tour/create') ? ' active' : null }}">
+                            <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Добавить тур</p>
+                                <p>Создать</p>
                             </a>
                         </li>
+
                     </ul>
                 </li>
+
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fas fa-globe"></i>
@@ -173,34 +173,6 @@
                         </li>
                     </ul>
                 </li>
-
-                {{--<li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-blog"></i> <i class="fas fa-blog"></i>
-                        <p>
-                            Категории записей
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.category_post.index') }}"
-                               class="nav-link{{ request()->is('admin/category_post') ? ' active' : null }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Все категории</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('admin.category_post.create') }}"
-                               class="nav-link{{ request()->is('admin/category_post/create') ? ' active' : null }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Добавить категорию</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>--}}
-
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fas fa-project-diagram"></i>

@@ -12,8 +12,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Заголовок</th>
-                                <th>Категория</th>
                                 <th>Одобрен/Опубликован</th>
+                                <th>Категория</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -22,17 +22,17 @@
                             <tr>
                                 <td>{{ $tour->id }}</td>
                                 <td>{{ $tour->title }}</td>
-                                <td>{{ $tour->category->title }}</td>
                                 <td>
                                     @if($tour->good == '1')  <span class="badge badge-success">Да</span> @else <span class="badge badge-danger">Нет</span> @endif
                                     /
                                         @if($tour->active == '1') <span class="badge badge-success">Да</span> @else <span class="badge badge-danger">Нет</span> @endif
                                 </td>
+                                <td>{{ $tour->category->title }}</td>
 {{--                                <td><b>{{ \Carbon\Carbon::parse($tour->date_start)->format('d.m.Y') }}</b> - <b>{{ \Carbon\Carbon::parse($tour->date_end)->format('d.m.Y') }}</b></td>--}}
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{{ route('admin.tour.general.show', ['general' => $tour->id]) }}" class="btn btn-info" style="max-height: 30px"><i class="fas fa-eye"></i></a>
-                                        <form id="form_delete" action="{{ route('admin.tour.general.destroy', ['general' => $tour->id]) }}" method="post">
+                                        <a href="{{ route('admin.tour.show', ['tour'=>$tour->id]) }}" class="btn btn-info" style="max-height: 30px"><i class="fas fa-eye"></i></a>
+                                        <form id="form_delete" action="{{ route('admin.tour.destroy', ['tour'=>$tour->id]) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger" style="margin-left: -2px;"><i class="fas fa-trash"></i></button>

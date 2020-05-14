@@ -73,8 +73,8 @@ class CreateToursTable extends Migration
             $table->enum('nuts_free', ['0', '1']);
             $table->string('count_meals')->nullable()->comment('количество приемов пищи');
 
-            $table->date('date_start')->nullable();
-            $table->date('date_end')->nullable();
+//            $table->date('date_start')->nullable();
+//            $table->date('date_end')->nullable();
             $table->nullableTimestamps();
             $table->softDeletes();
         });
