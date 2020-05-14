@@ -38,7 +38,9 @@
                                     <div class="rating-autor">
                                         <div class="rating">
                                             {!! get_raiting_template($user->profile->raiting, false) !!}
+                                            @if($comments->count() > 0)
                                             <a href="#reviews" class="review-count">{{ Lang::choice('Отзыв|Отзыва|Отзывов', $comments->count()) }} - <span>{{ $comments->count() }}</span></a>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="country-autor">
@@ -68,6 +70,7 @@
                             </div>
                         </div>
                     </div>
+                    @if($user->tours_with_category->count() > 0)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-autor-retreat">
                             <div class="accordion-btn">Мероприятия:</div>
@@ -88,7 +91,7 @@
                                                 <span>
                                                     {{ $start->formatLocalized('%e %B') }}
                                                     - {{ $end->formatLocalized('%e %B %Y') }}
-                                                    ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
+                                                    ({{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }})
                                                 </span>
                                             </p>
                                         </a>
@@ -99,11 +102,11 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="event-details-accordion" id="reviews">
                         <div class="event-accordion accordion-reviews">
                             <div class="accordion-btn">Отзывы клиентов:</div>
                             <div class="panel reviews-read">
-                                <?php //dd($user->profile->raiting); ?>
                                 @if($user->profile->raiting > 0)
                                 <div class="rating-accordion-block">
                                     <div class="rating-accordion">
@@ -115,7 +118,9 @@
                                     </div>
                                 </div>
                                 @endif
+                                @if($comments->count() > 0)
                                 <p class="title-shedule">Отзывов - {{ $comments->count() }}</p>
+                                @endif
                                 <div class="block-reviews">
                                     @foreach($comments as $comment)
                                     <article class="block-reviews_elem article">

@@ -3,140 +3,94 @@
 @section('content')
     <form role="form">
         <div class="container-fluid">
+
             <div class="row">
-                <div class="col">
-                    <div class="card card-primary">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-text-width"></i>
+                                Информация о мероприятии
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>Категория</label>
-                                <h5><span class="badge badge-secondary">{{$tour->category->title}}</span></h5>
-                            </div>
+                            <dl class="row">
+                                <dt class="col-sm-4">Название</dt>
+                                <dd class="col-sm-8">{{ $tour->title }}</dd>
 
-                            <div class="form-group">
-                                <label for="title">Заголовок</label>
-                                <input type="text" class="form-control" id="title" name="title"
-                                       value="{{ $tour->title }}" disabled>
-                            </div>
+                                <dt class="col-sm-4">Категория</dt>
+                                <dd class="col-sm-8">{{ $tour->category->title }}</dd>
 
-                            <div class="form-group">
-                                <label for="ceremony">
-                                    <img alt="experiences"
-                                         src="{{asset('assets/admin/icons/event-highlights-icon-01.svg')}}">
-                                    Церемонии
-                                </label>
-                                <input type="text" class="form-control" id="ceremony" name="ceremony"
-                                       value="{{ $tour->ceremony }}" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="transfer">
-                                    <img alt="transport"
-                                         src="{{asset('assets/admin/icons/event-highlights-icon-02.svg')}}">
-                                    Трансфер
-                                </label>
-                                <input type="text" class="form-control" id="transfer" name="transfer"
-                                       value="{{ $tour->transfer }}" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="number_of_people">
-                                    <img alt="people"
-                                         src="{{asset('assets/admin/icons/event-highlights-icon-03.svg')}}">
-                                    Группа людей
-                                </label>
-                                <input type="text" class="form-control" id="number_of_people" name="number_of_people"
-                                       value="{{ $tour->number_of_people }}" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="nutrition">
-                                    <img alt="people"
-                                         src="{{asset('assets/admin/icons/event-highlights-icon-04.svg')}}">
-                                    Питание
-                                </label>
-                                <input type="text" class="form-control" id="nutrition" name="nutrition"
-                                       value="{{ $tour->nutrition }}" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="hostel">
-                                    <img alt="people"
-                                         src="{{asset('assets/admin/icons/event-highlights-icon-05.svg')}}">
-                                    Проживание
-                                </label>
-                                <input type="text" class="form-control" id="hostel" name="hostel"
-                                       value="{{ $tour->hostel }}" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="some_text">Произвольный текст событий</label>
-                                <textarea rows="3" class="form-control" id="some_text"
-                                          name="some_text" disabled>{{$tour->some_text}}</textarea>
-                            </div>
+                                <dt class="col-sm-4">Организатор</dt>
+                                <dd class="col-sm-8"><a target="_blank"
+                                                        href="{{ route('site.author.show', ['id'=>$tour->user->id]) }}">{{ $tour->user->name }}</a></dd>
 
+                                <dt class="col-sm-4">Email</dt>
+                                <dd class="col-sm-8">{{ $tour->user->email }}</dd>
+
+                                <dt class="col-sm-4">Адрес на сайте</dt>
+                                <dd class="col-sm-8">
+                                    <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" target="_blank">{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}</a>
+                                </dd>
+                            </dl>
                         </div>
-                        <div class="card-footer">
-                            <a href="{{route('admin.tour.general.edit', ['general'=>$tour->id])}}" class="btn btn-primary">Редактировать</a>
-                        </div>
+                        <!-- /.card-body -->
                     </div>
+                    <!-- /.card -->
                 </div>
-                <div class="col">
-                    <div class="card card-primary">
-                        <div class="card-body">
 
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-check">
-                                            @php
-                                                if ($tour->active){
-                                                    $checked = ' checked';
-                                                }else{$checked = '';}
-                                            @endphp
-                                            <input class="form-check-input" type="checkbox" id="active"
-                                                   name="active" {{$checked}} disabled>
-                                            <label for="active" class="form-check-label">Опубликовано</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-check">
-                                            @php
-                                                if ($tour->good){
-                                                    $checked = ' checked';
-                                                }else{$checked = '';}
-                                            @endphp
-                                            <input class="form-check-input" type="checkbox" id="good"
-                                                   name="good" {{$checked}} disabled>
-                                            <label for="good" class="form-check-label">Одобрен администратором</label>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="excerpt">Краткое описание</label>
-                                <textarea rows="3" class="form-control" id="excerpt"
-                                          name="excerpt" disabled>{{$tour->excerpt}}</textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="image_label">Текущее изображение</label>
-                                <div class="input-group">
-                                    <img src="{{ $tour->img }}" alt="">
-                                </div>
-                            </div>
-
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-text-width"></i>
+                                Действия
+                            </h3>
                         </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-4">Опубликовано</dt>
+                                <dd class="col-sm-8">
+                                    @php
+                                        if ($tour->active){
+                                            $checked = ' checked';
+                                        }else{$checked = '';}
+                                    @endphp
+                                    <input class="form-check-input" type="checkbox" id="active"
+                                           name="active"{{$checked}} disabled>
+                                </dd>
+                                <dt class="col-sm-4">Одобрен администратором</dt>
+                                <dd class="col-sm-8">
+                                    @php
+                                        if ($tour->good){
+                                            $checked = ' checked';
+                                        }else{$checked = '';}
+                                    @endphp
+                                    <input class="form-check-input" type="checkbox" id="good"
+                                           name="good"{{$checked}} disabled>
+                                </dd>
+
+                                <dt class="col-sm-4">Удалить это мероприятие</dt>
+                                <dd class="col-sm-8">
+                                    <input class="form-check-input" type="checkbox" id="delete_event" disabled>
+                                </dd>
+
+                            </dl>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
+                    <!-- /.card -->
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="description">Полное описание</label>
-                        <textarea rows="5" style="width: 100%" id="description" name="description"
-                                  disabled>{{$tour->description}}</textarea>
-                    </div>
-                </div>
+
+            <div class="card-footer">
+                <a href="{{ route('admin.tour.general.edit', ['general' => $tour->id]) }}" class="btn btn-primary">Редактировать</a>
             </div>
         </div>
+
+
     </form>
 @endsection
 

@@ -92,8 +92,8 @@ class TourTableSeeder extends Seeder
                 'nuts_free' => (string)random_int(0, 1),
                 'count_meals' => $count_meals[array_rand($count_meals)],
 
-                'date_start' => \Carbon\Carbon::now()->subDays(random_int(1, 10)),
-                'date_end' => \Carbon\Carbon::now()->addDays(random_int(2, 20)),
+//                'date_start' => \Carbon\Carbon::now()->subDays(random_int(1, 10)),
+//                'date_end' => \Carbon\Carbon::now()->addDays(random_int(2, 20)),
 
                 'created_at' => now(),
                 'updated_at' => now(),

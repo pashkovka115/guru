@@ -62,7 +62,9 @@
                             <div class="rating-tour">
                                 <div class="rating">
                                     {!! get_raiting_template($tour->rating) !!}
+                                    @if($comments->count() > 0)
                                     <a href="#reviews" class="review-count">Отзывов - <span>{{ $comments->count() }}</span></a>
+                                    @endif
                                 </div>
                             </div>
                             <div class="event-date">
@@ -325,7 +327,9 @@
                     </div>
                     <div class="event-details-accordion" id="reviews">
                         <div class="event-accordion accordion-reviews">
-                            <div class="accordion-btn">Отзывы клиентов:</div>
+                            <div class="accordion-btn">
+                                @if($comments->count() > 0) Отзывы клиентов: @else Отзывов пока нет @endif
+                            </div>
                             <div class="panel reviews-read">
                                 <div class="rating-accordion-block">
                                     <div class="rating-accordion">
@@ -344,7 +348,9 @@
                                         @endauth
                                     </div>
                                 </div>
+                                @if($comments->count() > 0)
                                 <p class="title-shedule">Отзывов - {{ $comments->count() }}</p>
+                                @endif
                                 <div class="block-reviews">
                                     @foreach($comments as $comment)
                                     <article class="block-reviews_elem article">
@@ -367,12 +373,15 @@
                             </div>
                         </div>
                     </div>
+                    <?php //dd($similar_tours); ?>
+                    @if($similar_tours->count() > 1)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-similar">
                             <div class="accordion-btn">Похожие мероприятие:</div>
                             <div class="panel article">
                                 <ul class="list_similar_events">
                                     @foreach($similar_tours as $item)
+                               {{--      если не это мероприятие    --}}
                                         @if($item->id != $tour->id)
                                     <li class="similar_events_elem">
                                         <a href="{{ route('site.catalog.tour.show', ['event' => $item->id]) }}" class="similar-link">
@@ -399,6 +408,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
                 <div class="col-lg-4">
                     <div class="block-booking">

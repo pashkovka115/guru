@@ -65,7 +65,7 @@ class GeneralController extends Controller
             $data['good'] = '0';
         }
 
-        $tour = Tour::where('id', $id)->update($data);
+        Tour::where('id', $id)->update($data);
 
         return redirect()->back();
     }

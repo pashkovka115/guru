@@ -63,7 +63,7 @@
                         <i class="fas fa-globe"></i>
                         <i class="fas fa-globe"></i>
                         <p>
-                            Категории туров
+                            Категории
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>

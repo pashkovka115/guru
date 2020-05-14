@@ -1,8 +1,8 @@
 @extends('admin::layouts.master')
 
-@section('navbar')
+{{--@section('navbar')
     @include('admin::parts.navbar_tour', ['id' => $tour->id])
-@endsection
+@endsection--}}
 
 @section('content')
     <form role="form" action="{{ route('admin.tour.general.update', ['general' => $tour->id]) }}" method="post">

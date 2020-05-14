@@ -12,7 +12,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Имя</th>
-                                <th>Изображение</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -21,9 +20,7 @@
                             <tr>
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->title }}</td>
-                                <td>{{ $category->img }}</td>
                                 <td>
-
                                     <div class="btn-group btn-group-sm">
                                         <a href="{{ route('admin.category_tour.show', ['category_tour'=>$category->id]) }}" class="btn btn-info" style="max-height: 30px"><i class="fas fa-eye"></i></a>
                                         @if($category->title != 'Без категории')
