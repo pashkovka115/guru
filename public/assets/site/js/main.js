@@ -97,49 +97,6 @@ $(document).on('click', function(e) {
     e.stopPropagation();
 });
 
-$('#demo').daterangepicker({
-    "locale": {
-        "format": "MM/DD/YYYY",
-        "separator": " - ",
-        "applyLabel": "Применить",
-        "cancelLabel": "Закрыть",
-        "fromLabel": "От",
-        "toLabel": "До",
-        "customRangeLabel": "Custom",
-        "weekLabel": "Г",
-        "daysOfWeek": [
-            "Вс",
-            "Пн",
-            "Вт",
-            "Ср",
-            "Чт",
-            "Пт",
-            "Сб"
-        ],
-        "monthNames": [
-            "Январь",
-            "Февраль",
-            "Март",
-            "Апрель",
-            "Мая",
-            "Июнь",
-            "Июль",
-            "Август",
-            "Сентябрь",
-            "Октябрь",
-            "Ноябрь",
-            "Декабрь"
-        ],
-        "firstDay": 1
-    },
-
-    "startDate": moment(),
-    "endDate": moment(),
-    "opens": "center"
-}, function cb(start, end) {
-        $('#demo').html(start.format('MM.DD.YY') + ' - ' + end.format('MM.DD.YY'));
-});
-
 $('select').each(function(){
     let $this = $(this), numberOfOptions = $(this).children('option').length;
   
@@ -212,3 +169,46 @@ $('.slide-cat').owlCarousel({
         }
     }
 })
+
+$('#demo').daterangepicker({
+    "locale": {
+        "format": "MM/DD/YYYY",
+        "separator": " - ",
+        "applyLabel": "Применить",
+        "cancelLabel": "Закрыть",
+        "fromLabel": "От",
+        "toLabel": "До",
+        "customRangeLabel": "Custom",
+        "weekLabel": "Г",
+        "daysOfWeek": [
+            "Вс",
+            "Пн",
+            "Вт",
+            "Ср",
+            "Чт",
+            "Пт",
+            "Сб"
+        ],
+        "monthNames": [
+            "Январь",
+            "Февраль",
+            "Март",
+            "Апрель",
+            "Мая",
+            "Июнь",
+            "Июль",
+            "Август",
+            "Сентябрь",
+            "Октябрь",
+            "Ноябрь",
+            "Декабрь"
+        ],
+        "firstDay": 1
+    },
+
+    "startDate": moment(),
+    "endDate": moment(),
+    "opens": "center"
+}, function cb(start, end) {
+        $('#demo').html(start.format('MM.DD.YY') + ' - ' + end.format('MM.DD.YY'));
+});
