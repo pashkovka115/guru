@@ -20,9 +20,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'remember_token' => \Illuminate\Support\Str::random(),
                 'password' => bcrypt('12345678'),
-                'gender' => 'm',
-                'birth_date' => '1973-09-16',
-                'created_at' => now()
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ];
         mkdir(base_path('storage/app/public/users/' . md5($email_root) . '/img'), 0755, true);
@@ -36,9 +35,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'remember_token' => \Illuminate\Support\Str::random(),
                 'password' => bcrypt('12345678'),
-                'gender' => ($i % 3 == 0 ? 'w' : 'm'),
-                'birth_date' => $faker->date('Y-m-d'),
-                'created_at' => now()
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
             $users[] = $user;
             mkdir(base_path('storage/app/public/users/' . md5($email) . '/img'), 0755, true);

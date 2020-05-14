@@ -103,10 +103,6 @@ class RolesAndPermissionsSeeder extends Seeder
         if ($users){
             $admin = $users[0];
             $admin->assignRole('super_admin');
-            if (isset($users[1])){
-                $moderator = $users[1];
-                $moderator->assignRole('moderator');
-            }
         }
     }
 }
