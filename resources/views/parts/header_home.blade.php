@@ -94,7 +94,11 @@
                             </li>
                         @else
                             <li class="login-list">
+                                <span class="login-link">И</span>
                                 <ul class="login-sub">
+                                    <li>
+                                        <a href="{{ route('site.cabinet.user.index')}}">Личный кабинет</a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> Выйти
