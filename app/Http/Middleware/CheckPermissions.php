@@ -38,7 +38,7 @@ class CheckPermissions
         'update'  => 'edit',
         'create'  => 'add',
         'store'   => 'add',
-        'add_field' => 'add', // на странице о нас
+        'add_field' => 'add', // на странице о нас, лендинг
         'destroy' => 'delete',
 
 //        File Manager

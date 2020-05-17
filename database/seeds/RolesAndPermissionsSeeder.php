@@ -97,7 +97,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $role = Role::create(['name' => 'super_admin', 'description' => 'Можно всё']);
         $role->givePermissionTo(Permission::all());
 
-        Role::create(['name' => 'moderator', 'description' => 'Просматривает главную'])->givePermissionTo(['dashboard_view']);
+//        Role::create(['name' => 'moderator', 'description' => 'Просматривает главную'])->givePermissionTo(['dashboard_view']);
 
         $users = \App\Models\User::all();
         if ($users){

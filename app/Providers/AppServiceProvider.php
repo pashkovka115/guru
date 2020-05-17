@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
 
             \View::share('pages_menu', Page::where('id', '>', 0)->orderBy('sort')->get(['id', 'title', 'slug']) ?? null);
             \View::share('popular_country', \DB::table('tours')->orderByDesc('views')->limit(10)->get(
-                ['id', 'category_tour_id', 'country', 'gallery']
+                ['id', 'title', 'category_tour_id', 'country', 'gallery']
                 ) ?? null);
 
             $tours = \DB::table('tours')->orderByDesc('views')->limit(10)->get();

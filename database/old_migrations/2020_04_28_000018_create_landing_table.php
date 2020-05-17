@@ -11,14 +11,20 @@ class CreateLandingTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id();
-            $table->enum('post_type', ['header', 'post', 'decorative', 'progress', 'content']);
-            $table->integer('sort')->default(0);
-//            $table->integer('sort_block')->default(0);
+            $table->unsignedBigInteger('block_id');
+            $table->unsignedInteger('sort')->default(1);
             $table->string('title')->nullable();
-            $table->text('excerpt')->nullable();
-            $table->longText('content')->nullable();
             $table->string('img')->nullable();
-            $table->string('button_text')->nullable();
+            $table->longText('content')->nullable();
+        });
+
+        Schema::table($this->tableName, function (Blueprint $table) {
+            $table->index(["block_id"], 'fk_landing_block_idx');
+
+            $table->foreign('block_id', 'fk_landing_block_idx')
+                ->references('id')->on('landing_blocks')
+                ->onDelete('no action')
+                ->onUpdate('no action');
         });
     }
 

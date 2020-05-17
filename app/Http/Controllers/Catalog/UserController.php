@@ -36,8 +36,8 @@ class UserController extends Controller
     {
         $user = User::with(['tours_with_category', 'profile'])->where('id', $id)->firstOrFail();
         $comments = UserComment::with('user')->where('author_id', $id)->get();
-        $my_tours_ids = TourLeader::where('leader_id', $id)->get('tour_id');
-        $ids = array_keys($my_tours_ids->keyBy('tour_id')->toArray());
+        // $my_tours_ids = TourLeader::where('leader_id', $id)->get('tour_id');
+        // $ids = array_keys($my_tours_ids->keyBy('tour_id')->toArray());
         /*$ratings = TourRating::whereIn('tour_id', $ids)->get('rating');
 
         $arr_ratings = array_keys($ratings->keyBy('rating')->toArray());

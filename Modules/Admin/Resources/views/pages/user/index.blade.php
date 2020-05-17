@@ -11,10 +11,11 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>User</th>
-                                <th>Date</th>
+                                <th>Имя</th>
+                                <th>Создан</th>
+                                <th>Подтверждён</th>
                                 <th>Email</th>
-                                <th>Actions</th>
+                                <th>Действия</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -23,6 +24,13 @@
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->created_at }}</td>
+                                <td>
+                                    @if($user->profile)
+                                    @if($user->profile->auth) <span class="badge badge-success">Да</span> @else <span class="badge badge-danger">Нет</span> @endif
+                                    @else
+                                        <span class="badge badge-danger">Нет</span>
+                                    @endif
+                                </td>
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">

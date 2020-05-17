@@ -24,7 +24,7 @@
                                 <div class="event_list">
                                     <div class="owl-carousel owl-theme slide-cat event_list_photo">
                                         @php
-                                        $gallery = json_decode($tour->gallery);
+                                        $gallery = json_decode($tour->gallery) ?? [];
                                         //var_dump($gallery, '===========');
                                         @endphp
                                         @foreach($gallery as $src)
@@ -34,16 +34,7 @@
                                             </a>
                                         </div>
                                         @endforeach
-                                        {{--<div class="item">
-                                            <a href="" class="event_list__link">
-                                                <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid event_list_img">
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <a href="" class="event_list__link">
-                                                <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid event_list_img">
-                                            </a>
-                                        </div>--}}
+
                                     </div>
                                     @if($tour->leaders)
                                     <div class="event_list__autor">
@@ -60,25 +51,30 @@
                                     <div class="event__list_block">
                                         <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-event">
                                             @php
-                                                $start = \Carbon\Carbon::create($tour->date_start);
-                                                $end = \Carbon\Carbon::create($tour->date_end);
+                                            $variants = $tour->variants;
+                                            if (isset($variants[0])) {
+                                                $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
+                                                $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
                                                 $diff = $start->diffInDays($end);
+                                            }
                                             @endphp
                                             {{ $tour->title }}, {{ $start->formatLocalized('%e %B %Y') }}
                                         </a>
                                         <a href="#" class="location-event">
                                             {{ $tour->city }}, {{ $tour->country }}
                                         </a>
+                                        @if(isset($variants[0]))
                                         <p class="dates-event">
                                             <span>
                                 {{ $start->formatLocalized('%e %B') }}
                                 - {{ $end->formatLocalized('%e %B %Y') }}
                                 ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
                                             </span>
-                                            @if($tour->variants->count() > 0)
+                                            @if($tour->variants->count() > 1)
                                             <a class="toggle-dates-event">Другие даты</a>
                                             @endif
                                         </p>
+                                        @endif
                                         <ul class="event-highlights">
                                             @if($tour->info_excerpt)
                                             <li class="event-highlights-icon">
@@ -134,9 +130,9 @@
                                                 }
                                                 ?>
                                             </div>
-                                            <div class="event-cost">
+                                            {{-- <div class="event-cost">
                                                 {{ number_format($tour->price_base / 100) }} RUB
-                                            </div>
+                                            </div> --}}
                                         </div>
 
                                     </div>

@@ -49,7 +49,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('site.cabinet.tour.create') }}" target="_blank" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Создать</p>
                             </a>
@@ -212,7 +212,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.landing.index') }}" class="nav-link">
+                    <a href="{{ route('admin.landing.show') }}" class="nav-link">
                         <i class="fab fa-asymmetrik"></i>
                         <p>Лендинг</p>
                     </a>
