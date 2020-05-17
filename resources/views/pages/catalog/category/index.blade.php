@@ -162,14 +162,14 @@
                     </div>
                 </div>
             </div>
-            <script> var next_url_page = '{{ $tours->nextPageUrl() }}'</script>
 
             <div class="col-lg-12 after-posts">
-                <button type="button" class="btn-load-more">
+                <button type="button" class="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
                     Показать еще
                     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                 </button>
             </div>
+
         </div>
     </div>
 @endsection
@@ -180,26 +180,31 @@
     <script>
         $(function() {
             $('.btn-load-more').on('click', function(){
-                // $('.after-posts').hide();
+                //$('.after-posts').hide();
                 const btn = $(this);
                 const loader = btn.find('span');
-                if(next_url_page === ''){
+                /*if(next_url_page === ''){
                     $('.after-posts').hide();
                     return;
-                }
+                }*/
+
                 $.ajax({
-                    url: next_url_page,
+                    url: $('.btn-load-more').data('next-url'), // TODO: надо реализовать подгрузку контента
                     type: 'GET',
                     beforeSend: function(){
                         btn.attr('disabled', true);
                         loader.addClass('d-inline-block');
                     },
                     success: function(response){
+                        $('.after-posts').hide();
                         setTimeout(function(){
                             loader.removeClass('d-inline-block');
                             btn.attr('disabled', false);
-                            //console.log(response);
-                            $('.after-posts').before(response);
+                            console.log(response);
+                            // $('.after-posts').before(response);
+                            var $after_posts = $('.after-posts');
+                            $after_posts.before(response);
+                            $after_posts.remove();
                         }, 1000);
                     },
                     error: function(){

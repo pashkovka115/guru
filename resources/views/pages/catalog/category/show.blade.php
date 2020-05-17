@@ -36,7 +36,7 @@
                                         @endforeach
 
                                     </div>
-                                    @if($tour->leaders)
+                                    @if($tour->leaders->count() > 0)
                                     <div class="event_list__autor">
                                         @foreach($tour->leaders as $leader)
                                             @if($leader->avatar)
@@ -45,7 +45,7 @@
                                                 </a>
                                             @endif
                                         @endforeach
-                                        <em>Ваш гиды</em>
+                                        <em>Ваши гиды</em>
                                     </div>
                                     @endif
                                     <div class="event__list_block">
@@ -56,9 +56,10 @@
                                                 $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
                                                 $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
                                                 $diff = $start->diffInDays($end);
+
+                                                echo $tour->title . ', ' . $start->formatLocalized('%e %B %Y');
                                             }
                                             @endphp
-                                            {{ $tour->title }}, {{ $start->formatLocalized('%e %B %Y') }}
                                         </a>
                                         <a href="#" class="location-event">
                                             {{ $tour->city }}, {{ $tour->country }}
@@ -169,10 +170,9 @@
                             </div>
                             @endforeach
                         </div>
-                        <script> var next_url_page = '{{ $tours->nextPageUrl() }}'</script>
 
                         <div class="col-lg-12 after-posts">
-                            <button type="button" class="btn-load-more">
+                            <button type="button" class="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
                                 Показать еще
                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                             </button>
@@ -185,32 +185,37 @@
     </div>
 @endsection
 @section('scripts_footer')
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+{{--    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>--}}
+{{--    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>--}}
 {{--    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />--}}
     <script>
         $(function() {
             $('.btn-load-more').on('click', function(){
-                // $('.after-posts').hide();
+                 //$('.after-posts').hide();
                 const btn = $(this);
                 const loader = btn.find('span');
-                if(next_url_page === ''){
+                /*if(next_url_page === ''){
                     $('.after-posts').hide();
                     return;
-                }
+                }*/
+
                 $.ajax({
-                    url: next_url_page,
+                    url: $('.btn-load-more').data('next-url'), // TODO: надо реализовать подгрузку контента
                     type: 'GET',
                     beforeSend: function(){
                         btn.attr('disabled', true);
                         loader.addClass('d-inline-block');
                     },
                     success: function(response){
+                        $('.after-posts').hide();
                         setTimeout(function(){
                             loader.removeClass('d-inline-block');
                             btn.attr('disabled', false);
                             console.log(response);
-                            $('.after-posts').before(response);
+                            // $('.after-posts').before(response);
+                            var $after_posts = $('.after-posts');
+                            $after_posts.before(response);
+                            $after_posts.remove();
                         }, 1000);
                     },
                     error: function(){

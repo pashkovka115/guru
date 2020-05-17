@@ -1,0 +1,17 @@
+<div class="col-lg-4">
+    <p class="text-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo veniam esse temporibus nobis delectus fuga explicabo exercitationem consequuntur libero ea eveniet laudantium, culpa animi accusantium dolore, neque optio reprehenderit sunt!</p>
+</div>
+<div class="col-lg-8">
+    <p class="text-normal">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, porro modi recusandae iste deserunt nobis molestias sit error totam, excepturi rem commodi earum fuga saepe!
+    </p>
+    <p class="text-normal">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, vitae quia sapiente beatae architecto laborum.
+    </p>
+    <p class="desk_about">
+        <p class="about_contact">
+            Контакты для связи:
+        </p>
+        <a href="mailto:mysite@gmail.com">mysite@gmail.com</a>
+        <p>Наш адрес: <a href="#">Будет указан адрес</a></p>
+</div>
