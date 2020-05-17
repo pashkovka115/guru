@@ -35,26 +35,32 @@
                                                 </a>
                                             @endif
                                         @endforeach
-                                        <em>Ваш гиды</em>
+                                        <em>Вашы гиды</em>
                                     </div>
                                     @endif
                                     <div class="event__list_block">
                                         <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-event">
-                                            @php
+                                        <?php
+                                            $variants = $tour->variants;
+                                            if (isset($variants[0])) {
                                                 $start = \Carbon\Carbon::create($tour->date_start);
                                                 $end = \Carbon\Carbon::create($tour->date_end);
                                                 $diff = $start->diffInDays($end);
-                                            @endphp
-                                            {{ $tour->title }}, {{ $start->formatLocalized('%e %B %Y') }}
+
+                                            echo $tour->title .', '. $start->formatLocalized('%e %B %Y');
+                                                }
+                                            ?>
                                         </a>
                                         <a href="#" class="location-event">
                                             {{ $tour->city }}, {{ $tour->country }}
                                         </a>
                                         <p class="dates-event">
                                             <span>
-                                {{ $start->formatLocalized('%e %B') }}
-                                - {{ $end->formatLocalized('%e %B %Y') }}
-                                ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
+                                                @isset($variants[0])
+                                                {{ $start->formatLocalized('%e %B') }}
+                                                - {{ $end->formatLocalized('%e %B %Y') }}
+                                                ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
+                                                @endisset
                                             </span>
                                             @if($tour->variants->count() > 0)
                                             <a class="toggle-dates-event">Другие даты</a>

@@ -112,11 +112,10 @@
                                     $start = \Carbon\Carbon::create($tour->date_start);
                                     $end = \Carbon\Carbon::create($tour->date_end);
                                     $diff = $start->diffInDays($end);
+
+                                 echo $start->formatLocalized('%e %B') .' - '. $end->formatLocalized('%e %B %Y') .' ('. $diff . Lang::choice('День|Дня|Дней', $diff) . ')';
                                 }
                                 ?>
-                                 {{ $start->formatLocalized('%e %B') }}
-                                - {{ $end->formatLocalized('%e %B %Y') }}
-                                ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
                             </span>
                         </div>
                         <a href="#" class="note-schedule">Другие мероприятия организации</a>
@@ -457,16 +456,14 @@
                             <span>
                                 <?php
                                 $variants = $tour->variants;
-                                //dd($variants);
                                 if (isset($variants[0])) {
                                     $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
                                     $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
                                     $diff = $start->diffInDays($end);
+
+                                    echo $start->formatLocalized('%e %B') .' - '. $end->formatLocalized('%e %B %Y') .' ('. $diff . Lang::choice('День|Дня|Дней', $diff) . ')';
                                 }
                                 ?>
-                                 {{ $start->formatLocalized('%e %B') }}
-                                - {{ $end->formatLocalized('%e %B %Y') }}
-                                ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
                             </span>
                         </div>
                         <a href="#" class="note-schedule">Другие мероприятия организации</a>
