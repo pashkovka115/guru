@@ -9,8 +9,10 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-            <img src="http://a0437878.xsph.ru/assets/site/images/home_bg_new.jpg" alt="" class="img-fluid img-journal">
-            <p>{{ $post->content }}</p>
+                @if($post->img)
+            <img src="{{ $post->img }}" alt="" class="img-fluid img-journal">
+                @endif
+            {!! $post->content !!}
             </div>
         </div>
     </div>
