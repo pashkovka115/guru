@@ -15,14 +15,17 @@ class CategoryTourController extends Controller
     public function index(Request $request)
     {
         $ids = CategoryTour::all('id')->keyBy('id')->toArray();
-        $rand_id = $ids[array_rand($ids)];
-        $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])->where('category_tour_id', $rand_id)->paginate(2);
+        if (count($ids) > 0) {
+            $rand_id = $ids[array_rand($ids)];
+            $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])->where('category_tour_id', $rand_id)->paginate(2);
 
-        if ($request->ajax()) {
-            return view('pages.catalog.category.ajax_index', ['tours' => $tours]);
-        } else {
-            return view('pages.catalog.category.index', ['tours' => $tours]);
+            if ($request->ajax()) {
+                return view('pages.catalog.category.ajax_index', ['tours' => $tours]);
+            } else {
+                return view('pages.catalog.category.index', ['tours' => $tours]);
+            }
         }
+        return 'Нет категорий для отображения';
     }
 
     /*
