@@ -58,6 +58,8 @@
                                                 $diff = $start->diffInDays($end);
 
                                                 echo $tour->title . ', ' . $start->formatLocalized('%e %B %Y');
+                                            }else{
+                                                echo $tour->title;
                                             }
                                             @endphp
                                         </a>
