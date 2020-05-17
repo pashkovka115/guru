@@ -574,6 +574,8 @@ width: 100%;
   transform: rotate(90deg);
 }
 .nav.login-list {
+  position:relative;
+  cursor:pointer;
   width: 32px;
   height: 32px;
 }
@@ -2310,6 +2312,15 @@ display: block;
   background:  #ffffff;
 }
 /* Мобильное меню */
+.mobile-nav {
+  display: none;
+}
+.mobile_search {
+  display:none;
+  width: 24px;
+  margin-right: 20px;
+  cursor: pointer;
+}
 .mobile_menu{
   display: none;
   align-items: center;
@@ -2914,6 +2925,16 @@ input[name="photogallery"] {
   }
 }
 @media(max-width: 767px) {
+  header.fixed>.container>.header>.form_search_header {
+    display: none;
+  }
+  .mobile-nav {
+    display: flex;
+    align-items: center;
+  }
+  header.fixed .mobile_search {
+    display:block;
+  }
   .personal_status_events {
     flex-wrap: wrap;
   }
@@ -3029,6 +3050,7 @@ input[name="photogallery"] {
 }
 @media (max-width: 991px) {
   header.fixed>.container>.header {
+    position: relative;
     justify-content: space-between;
   }
   header.fixed>.container>.header>.nav {
@@ -3124,14 +3146,22 @@ input[name="photogallery"] {
   letter-spacing: 1px;
   font-size: .8rem;
 }
+.form_search_header {
+  display: none;
+  top: 50px;
+  position: absolute;
+  right: 15px;
+  background: #fafafa;
+  padding: 10px;
+}
 .form_search_header form {
-      height: 40px;
-    line-height: 40px;
+  height: 40px;
+  line-height: 40px;
 }
 .form_search_header input {
   max-width: 180px;
-    min-width: 180px;
-    height: 40px;
+  min-width: 180px;
+  height: 40px;
 }
 .form_search_header button {
   height: 40px;
@@ -3207,6 +3237,9 @@ input[name="photogallery"] {
 }
 .list-accommodation, .list-meals {
   font-size: .8rem;
+}
+.search-category {
+  visibility: hidden;
 }
 }
 @media (max-width: 575px) {

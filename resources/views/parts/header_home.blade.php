@@ -112,7 +112,10 @@
                         @endguest
                     </ul>
                 </div>
-                <div class="mobile_menu"></div>
+                <div class="mobile-nav">
+                    <div class="mobile_search"><img src="{{ asset('assets/site/images/search-icon.svg') }}" alt="Поиск"></div>
+                    <div class="mobile_menu"></div>
+                </div>
             </div>
         </div>
     </header>

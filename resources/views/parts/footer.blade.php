@@ -74,6 +74,9 @@
             <li><a class="parent" href="{{ route('site.cabinet.tour.create') }}">Добавить мероприятие</a></li>
             <li><a class="parent" href="{{ route('register') }}">Регистрация</a></li>
             <li><a class="parent" href="{{ route('login') }}">Войти</a></li>
+            <!-- Если вход выполнен в личный кабинет убираем Регистрацию и Войти и на их место -->
+            <li><a class="parent" href="">Личный кабинет</a></li>
+            <li><a class="parent" href="">Выйти</a></li>
             <hr>
         </ul>
     </div>
