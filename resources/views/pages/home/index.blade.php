@@ -137,6 +137,7 @@
             </div>
         </div>
     </div>
+    @if ($popular_country->count() > 0)
     <div class="block_country_tour">
         <div class="container">
             <div class="row">
@@ -154,7 +155,13 @@
                         @isset($gal[0])
                         <img src="{{ $gal[0] }}" alt="" class="img-fluid">
                         @endisset
-                        <p class="title__tour">{{ $tour->country ?? $tour->title }}</p>
+                        <p class="title__tour">
+                            @if ($tour->country)
+                                {{ $tour->country }}
+                            @elseif($tour->title)
+                                {{ $tour->title }}
+                            @endif
+                        </p>
                     </a>
                 </div>
                     @if($loop->iteration == 6) @break @endif
@@ -163,6 +170,7 @@
             </div>
         </div>
     </div>
+    @endif
 @endsection
 @section('scripts_footer')
     <script src="{{asset('assets/site/js/index.js')}}"></script>

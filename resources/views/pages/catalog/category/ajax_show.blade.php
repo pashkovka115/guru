@@ -151,4 +151,10 @@
         @endif
     </div>
 @endforeach
-<script> var next_url_page = '{{ $tours->nextPageUrl() }}'</script>
+
+<div class="col-lg-12 after-posts">
+    <button type="button" class="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
+        Показать еще
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+    </button>
+</div>

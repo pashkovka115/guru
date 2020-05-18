@@ -17,6 +17,7 @@
                                     <input id="name" type="text" name="name" value="{{ $user->name }}" required>
                                     <p style="padding: 10px">{{ $user->email }}</p>
                                 </div>
+                                @if($user->profile)
                                 <div class="block-panel">
                                     <div class="form-group">
                                         <label for="avatar">Изменить аватар</label>
@@ -72,14 +73,14 @@
                                     <input id="longitude" type="hidden" name="longitude">
                                     <div id="map"></div>
                                 </div>
-                                {{--<div class="block-panel">
-                                    <label for="organization" class="create-subtitle">Организация автора (преподавателя):</label>
-                                    <input id="organization" name="organization">
-                                </div>--}}
+
                                 <div class="block-panel">
                                     <label for="video-url" class="create-subtitle">Видео YouTube:</label>
                                     <input id="video-url" type="text" name="url" value="{{ $user->profile->url ?? '' }}">
                                 </div>
+                                @else
+                                    <p>Сохраните для создания профиля</p>
+                                @endif
                                 {{--<div class="block-panel">
                                     <label for="tags" class="create-subtitle">Теги (максимум 5):</label>
                                     <select class="chosen-select" id="tags" name="tags[]" multiple="multiple">

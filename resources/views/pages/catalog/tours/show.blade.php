@@ -67,22 +67,31 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="event-date">
+                             <div class="event-date">
                                 @php
-                                    $start = \Carbon\Carbon::create($tour->date_start);
-                                    $end = \Carbon\Carbon::create($tour->date_end);
+                                $variants = $tour->variants;
+                                if (isset($variants[0])){
+                                    $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
+                                    $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
                                     $diff = $start->diffInDays($end);
+                                }
                                 @endphp
+                                 @if(isset($variants[0]))
                                 <span class="event-date-icon"></span>
                                 {{ $start->formatLocalized('%e %B') }}
                                 - {{ $end->formatLocalized('%e %B %Y') }}
                                 ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
+                                 @endif
                             </div>
                         </div>
                         <div class="event-dateils_block">
                             <div class="event-pin">
                                 <span class="event-pin-icon"></span>
+                                @if($tour->country or $tour->city)
                                 <span>{{ $tour->country }}, {{ $tour->city }}</span>
+                                @elseif($tour->address)
+                                    <span>{{ $tour->address }}</span>
+                                @endif
                             </div>
                             <div class="event-group">
                                 <div class="event-group-icon"></div>
@@ -97,9 +106,16 @@
                         <div class="event-date">
                             <span class="event-date-icon"></span>
                             <span>
-                                {{ $start->formatLocalized('%e %B') }}
-                                - {{ $end->formatLocalized('%e %B %Y') }}
-                                ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
+                                <?php
+                                $variants = $tour->variants;
+                                if (isset($variants[0])) {
+                                    $start = \Carbon\Carbon::create($tour->date_start);
+                                    $end = \Carbon\Carbon::create($tour->date_end);
+                                    $diff = $start->diffInDays($end);
+
+                                 echo $start->formatLocalized('%e %B') .' - '. $end->formatLocalized('%e %B %Y') .' ('. $diff . Lang::choice('День|Дня|Дней', $diff) . ')';
+                                }
+                                ?>
                             </span>
                         </div>
                         <a href="#" class="note-schedule">Другие мероприятия организации</a>
@@ -124,7 +140,7 @@
                                     <input type="radio" name="booking" value="2">
                                     <span class="radio"></span>
                                     <div class="price-img">
-                                        <img src="{{ $variant->photo_variant }}" alt="" class="img-fluid">
+                                        <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
                                     </div>
                                     <div class="price-info">
                                         <p class="cost-tour">{{ number_format($variant->price_variant / 100) }} <span>RUB</span></p>
@@ -135,10 +151,12 @@
                             </div>
                         @endforeach
                     </div>
+                    @if($tour->info_excerpt)
                     <div class="event-list">
                         <h2 class="event-subtitle">Информация о мероприятии</h2>
                         {!! $tour->info_excerpt !!}
                     </div>
+                    @endif
                     <div class="event-details-text">
                         <h2 class="event-subtitle">Подробнее о мероприятии</h2>
                         <p class="event-detailt-autor">Ваши гиды:</p>
@@ -155,6 +173,7 @@
                         {{ $tour->info_description }}
                         </div>
                     </div>
+                    @if($tour->timetable)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-schedule">
                             <div class="accordion-btn">График мероприятия:</div>
@@ -163,29 +182,37 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+                    @if($tour->communication or $tour->drinking_water or $tour->first_aid)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-security">
                             <div class="accordion-btn">Безопастность:</div>
                             <div class="panel article">
                                 <ul class="list-security">
                                     <li>@if($tour->first_aid != '' and $tour->first_aid != null) {{ $tour->first_aid }} @endif</li>
-                                    <li>@if($tour->first_aid != '' and $tour->first_aid != null) {{ $tour->drinking_water }} @endif</li>
-                                    <li>@if($tour->first_aid != '' and $tour->first_aid != null) {{ $tour->communication }} @endif</li>
+                                    <li>@if($tour->drinking_water != '' and $tour->drinking_water != null) {{ $tour->drinking_water }} @endif</li>
+                                    <li>@if($tour->communication != '' and $tour->communication != null) {{ $tour->communication }} @endif</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+                    @endif
+
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-place">
                             <div class="accordion-btn">Место проведения:</div>
                             <div class="panel article">
                                 <div class="event-pin">
                                     <span class="event-pin-icon"></span>
-                                    <span>{{ $tour->country }}, {{ $tour->city }}</span>
+                                    @if($tour->country or $tour->city)
+                                        <span>{{ $tour->country }}, {{ $tour->city }}</span>
+                                    @elseif($tour->address)
+                                        <span>{{ $tour->address }}</span>
+                                    @endif
                                 </div>
                                 <div class="block_place">
                                     @php
-                                    $link = generate_google_map_link([$tour->street, $tour->house, $tour->city, $tour->country]);
+                                    $link = generate_google_map_link([$tour->address]);
                                     @endphp
                                     <iframe width="100%" height="350" frameborder="0" style="border:0" src="{{ $link }}" allowfullscreen></iframe>
                                 </div>
@@ -195,10 +222,12 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-accommodation">
                             <div class="accordion-btn">Проживание и удобства:</div>
                             <div class="panel article">
+                                @if($tour->accommodation_photo)
                                 <div class="img-accordion-block">
                                     @php
                                     if ($tour->accommodation_photo){
@@ -212,6 +241,7 @@
                                         @php if($loop->index == 2) break; @endphp
                                     @endforeach
                                 </div>
+                                @endif
                                 <ul class="list-accommodation">
                                     @if($tour->conditioner)
                                     <li><span class="icon-accommodation"></span>Кондиционер</li>
@@ -252,6 +282,7 @@
                         <div class="event-accordion accordion-meals">
                             <div class="accordion-btn">Питание:</div>
                             <div class="panel article">
+                                @if($tour->gallery_meals)
                                 <div class="img-accordion-block">
                                     @php
                                         if ($tour->gallery_meals){
@@ -264,6 +295,7 @@
                                     </div>
                                     @endforeach
                                 </div>
+                                @endif
                                 <ul class="list-meals">
                                     @if($tour->vegan)
                                         <li><span class="icon-meals"></span>Веган</li>
@@ -315,16 +347,20 @@
                             </div>
                         </div>
                     </div>
+                    @if($tour->included)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-included">
                             <div class="accordion-btn">Включено в мероприятие:</div>
                             <div class="panel article">
                                 {{ $tour->included }}
+                                @if($tour->no_included)
                                 <p class="title-place">Не включено:</p>
                                 {{ $tour->no_included }}
+                                @endif
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="event-details-accordion" id="reviews">
                         <div class="event-accordion accordion-reviews">
                             <div class="accordion-btn">
@@ -418,19 +454,28 @@
                         <div class="event-date">
                             <span class="event-date-icon"></span>
                             <span>
-                                {{ $start->formatLocalized('%e %B') }}
-                                - {{ $end->formatLocalized('%e %B %Y') }}
-                                ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
+                                <?php
+                                $variants = $tour->variants;
+                                if (isset($variants[0])) {
+                                    $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
+                                    $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
+                                    $diff = $start->diffInDays($end);
+
+                                    echo $start->formatLocalized('%e %B') .' - '. $end->formatLocalized('%e %B %Y') .' ('. $diff . Lang::choice('День|Дня|Дней', $diff) . ')';
+                                }
+                                ?>
                             </span>
                         </div>
                         <a href="#" class="note-schedule">Другие мероприятия организации</a>
-                        <div class="booking__select selected">
+                        {{-- <div class="booking__select selected">
                             <label class="booking__variant">
                                 <input type="radio" name="booking" value="1" checked>
                                 <span class="radio"></span>
                                 <div class="price-img">
                                     @php $images = json_decode($tour->gallery)  @endphp
-                                    <img src="{{ $images[0] ?? null }}" alt="" class="img-fluid">
+                                    @if($images[0])
+                                    <img src="{{ $images[0] }}" alt="" class="img-fluid">
+                                    @endif
                                 </div>
                                 <div class="price-info">
                                     <p class="cost-tour">{{ number_format($tour->price_base / 100) }} <span>RUB</span></p>
@@ -438,14 +483,14 @@
                                     <p>{{ $tour->info_excerpt }}</p>
                                 </div>
                             </label>
-                        </div>
+                        </div> --}}
                         @foreach($tour->variants as $variant)
                         <div class="booking__select">
                             <label class="booking__variant">
                                 <input type="radio" name="booking" value="2">
                                 <span class="radio"></span>
                                 <div class="price-img">
-                                    <img src="{{ $variant->photo_variant }}" alt="" class="img-fluid">
+                                    <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
                                 </div>
                                 <div class="price-info">
                                     <p class="cost-tour">{{ number_format($variant->price_variant / 100) }} <span>RUB</span></p>

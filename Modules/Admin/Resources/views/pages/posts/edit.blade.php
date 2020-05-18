@@ -41,9 +41,44 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="excerpt">Краткое описание</label>
-                                <textarea rows="5" style="width: 100%" id="excerpt" name="excerpt">{{ $post->excerpt }}</textarea>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="excerpt">Краткое описание</label>
+                                        <textarea rows="5" style="width: 100%" id="excerpt" name="excerpt">{{ $post->excerpt }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="image_label">Выбрать изображение</label>
+                                        <div class="input-group">
+                                            <input type="text" id="image_label" class="form-control" name="img"
+                                                   aria-label="Image" aria-describedby="button-image" value="{{ $post->img }}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="button" id="button-image">
+                                                    Выбрать
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"><img src="{{ $post->img }}" alt="" style="max-height: 100px"></div>
+                                    @verbatim
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", function () {
+                                                document.getElementById('button-image').addEventListener('click', (event) => {
+                                                    event.preventDefault();
+                                                    window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+                                                });
+                                            });
+
+                                            // set file link
+                                            function fmSetLink($url) {
+                                                document.getElementById('image_label').value = $url;
+                                            }
+                                        </script>
+                                    @endverbatim
+                                </div>
                             </div>
 
                             <div class="form-group">

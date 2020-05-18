@@ -93,6 +93,7 @@ class PostController extends Controller
         Post::where('id', $id)->update([
             'user_id' => (int)$request->input('user_id'),
             'title' => $request->input('title'),
+            'img' => $request->input('img'),
             'excerpt' => $request->input('excerpt'),
             'content' => $request->input('content'),
         ]);

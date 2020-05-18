@@ -38,7 +38,15 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
     Route::resource('post', 'PostController')
         ->names('admin.post');
 
-    Route::resource('landing', 'LandingController')->only(['index', 'update'])->names('admin.landing');
+//    Route::resource('landing', 'LandingController')->only(['index', 'update'])->names('admin.landing');
+
+    Route::prefix('landing')->group(function (){
+        Route::get('show', 'LandingController@show')->name('admin.landing.show');
+        Route::get('edit', 'LandingController@edit')->name('admin.landing.edit');
+        Route::post('add-field', 'LandingController@add_field')->name('admin.landing.add_field');
+        Route::post('update', 'LandingController@update')->name('admin.landing.update');
+        Route::get('destroy/{id}', 'LandingController@destroy')->name('admin.landing.destroy');
+    });
 
     Route::prefix('about-us')->group(function (){
         Route::get('show', 'AboutController@show')->name('admin.about.show');

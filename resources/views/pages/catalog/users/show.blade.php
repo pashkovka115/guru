@@ -79,14 +79,22 @@
 
                                     @foreach($user->tours_with_category as $tour)
                                         @php
-                                            $start = \Carbon\Carbon::create($tour->date_start);
-                                            $end = \Carbon\Carbon::create($tour->date_end);
+                                        $variants = $tour->variants;
+                                        if (isset($variants[0])) {
+                                            $date_start = $variants[0]->date_start_variant;
+                                            $date_end = $variants[0]->date_end_variant;
+
+                                            $start = \Carbon\Carbon::create($date_start);
+                                            $end = \Carbon\Carbon::create($date_end);
                                             $diff = $start->diffInDays($end);
+                                        }
+
                                         @endphp
                                     <li class="similar_events_elem">
                                         <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="similar-link">
                                             <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid">
                                             <p>{{ $tour->title }}</p>
+                                            @if(isset($variants[0]))
                                             <p class="dates-event">
                                                 <span>
                                                     {{ $start->formatLocalized('%e %B') }}
@@ -94,6 +102,7 @@
                                                     ({{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }})
                                                 </span>
                                             </p>
+                                            @endif
                                         </a>
                                     </li>
                                     @endforeach
@@ -103,6 +112,7 @@
                         </div>
                     </div>
                     @endif
+                    @if($user->profile->raiting > 0 or $comments->count() > 0)
                     <div class="event-details-accordion" id="reviews">
                         <div class="event-accordion accordion-reviews">
                             <div class="accordion-btn">Отзывы клиентов:</div>
@@ -144,6 +154,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
 
                 <div class="col-lg-3">
@@ -177,7 +188,7 @@
             </div>
             <div class="form-autor-block">
                 <div class="form-autor_photo">
-                    <img src="{{ asset('assets/site/images/slider_img_autor.jpg') }}" alt="" class="img-fluid">
+                    <img src="{{ json_decode($user->profile->avatar)[0] ?? '' }}" alt="" class="img-fluid">
                     <p class="form-autor_name">{{ $user->name }}</p>
                     <div class="country-autor">
                         <i class="fa fa-home"></i>

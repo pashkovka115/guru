@@ -47,8 +47,8 @@ class TourController extends Controller
             'title' => 'regex:/[\w\s\d\_\-\.]*/i',
             'leader_ids' => 'array|required',
             'leader_ids.*' => 'integer|required',
-            'date_start' => 'sometimes|nullable|date',
-            'date_end' => 'sometimes|nullable|date',
+//            'date_start' => 'sometimes|nullable|date',
+//            'date_end' => 'sometimes|nullable|date',
 //            'price_base' => 'required|numeric',
 
             'tags' => 'sometimes|nullable|array',
@@ -106,8 +106,8 @@ class TourController extends Controller
                 'category_tour_id' => $request->input('category_tour_id'),
                 'title' => $request->input('title'),
                 'user_id' => \Auth::id(),
-                'date_start' => $request->input('date_start'),
-                'date_end' => $request->input('date_end'),
+//                'date_start' => $request->input('date_start'),
+//                'date_end' => $request->input('date_end'),
 //                'price_base' => $request->input('price_base'),
 
                 'address' => $request->input('address'),

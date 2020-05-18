@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,30 +13,20 @@ class UserController extends Controller
 {
     public $title = 'Пользователи';
 
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
+
     public function index()
     {
-        $users = User::paginate();
+        $users = User::with('profile')->paginate();
         return view('admin::pages.user.index', ['users' => $users, 'title' => $this->title, 'title_page' => 'Список пользователей']);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
+
     public function create()
     {
         return view('admin::pages.user.create', ['title' => $this->title, 'title_page' => 'Новый пользователь']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -56,11 +47,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
+
     public function show($id)
     {
         $user = User::where('id', $id)->first();
@@ -68,26 +55,17 @@ class UserController extends Controller
         return view('admin::pages.user.show', ['title' => $this->title, 'title_page' => 'Просмотр пользователя', 'user' => $user]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
+
     public function edit($id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::with('profile')->where('id', $id)->first();
         if (!$user)
             return redirect()->route('admin.user.index');
 
         return view('admin::pages.user.edit', ['title' => $this->title, 'title_page' => 'Редактирование пользователя', 'user' => $user]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
+
     public function update(Request $request, $id)
     { // TODO сделать переименование директории юзера (storage/app/public/users/user)
         $request->validate([
@@ -98,22 +76,29 @@ class UserController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
         ];
+
         $arr = $request->toArray();
         if (!empty($arr['password']) and $arr['password'] == $arr['password_confirmation']) {
             $data['password'] = Hash::make($arr['password']);
         }
 
-        User::where('id', $id)->update($data);
+        \DB::transaction(function () use ($id, $data, $request){
+            User::where('id', $id)->update($data);
+
+            $profile = Profile::where('user_id', $id)->first();
+            if ($request->has('auth')) {
+                $profile->update(['auth' => '1']);
+            }else{
+                $profile->update(['auth' => '0']);
+            }
+        });
+
 
         session()->flash('message', 'Сохранил');
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
+
     public function destroy($id)
     {
         $user = User::where('id', $id)->first();

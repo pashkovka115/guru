@@ -26,7 +26,7 @@
                                 <div class="event_list">
                                     <div class="owl-carousel owl-theme slide-cat event_list_photo">
                                         @php
-                                        $gallery = json_decode($tour->gallery);
+                                        $gallery = json_decode($tour->gallery) ?? [];
                                         //var_dump($gallery, '===========');
                                         @endphp
                                         @foreach($gallery as $src)
@@ -36,18 +36,9 @@
                                             </a>
                                         </div>
                                         @endforeach
-                                        {{--<div class="item">
-                                            <a href="" class="event_list__link">
-                                                <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid event_list_img">
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <a href="" class="event_list__link">
-                                                <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid event_list_img">
-                                            </a>
-                                        </div>--}}
+
                                     </div>
-                                    @if($tour->leaders)
+                                    @if($tour->leaders->count() > 0)
                                     <div class="event_list__autor">
                                         @foreach($tour->leaders as $leader)
                                             @if($leader->avatar)
@@ -56,31 +47,39 @@
                                                 </a>
                                             @endif
                                         @endforeach
-                                        <em>Ваш гиды</em>
+                                        <em>Ваши гиды</em>
                                     </div>
                                     @endif
                                     <div class="event__list_block">
                                         <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-event">
                                             @php
-                                                $start = \Carbon\Carbon::create($tour->date_start);
-                                                $end = \Carbon\Carbon::create($tour->date_end);
+                                            $variants = $tour->variants;
+                                            if (isset($variants[0])) {
+                                                $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
+                                                $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
                                                 $diff = $start->diffInDays($end);
+
+                                                echo $tour->title . ', ' . $start->formatLocalized('%e %B %Y');
+                                            }else{
+                                                echo $tour->title;
+                                            }
                                             @endphp
-                                            {{ $tour->title }}, {{ $start->formatLocalized('%e %B %Y') }}
                                         </a>
                                         <a href="#" class="location-event">
                                             {{ $tour->city }}, {{ $tour->country }}
                                         </a>
+                                        @if(isset($variants[0]))
                                         <p class="dates-event">
                                             <span>
                                 {{ $start->formatLocalized('%e %B') }}
                                 - {{ $end->formatLocalized('%e %B %Y') }}
                                 ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
                                             </span>
-                                            @if($tour->variants->count() > 0)
+                                            @if($tour->variants->count() > 1)
                                             <a class="toggle-dates-event">Другие даты</a>
                                             @endif
                                         </p>
+                                        @endif
                                         <ul class="event-highlights">
                                             @if($tour->info_excerpt)
                                             <li class="event-highlights-icon">
@@ -136,9 +135,9 @@
                                                 }
                                                 ?>
                                             </div>
-                                            <div class="event-cost">
+                                            {{-- <div class="event-cost">
                                                 {{ number_format($tour->price_base / 100) }} RUB
-                                            </div>
+                                            </div> --}}
                                         </div>
 
                                     </div>
@@ -175,10 +174,9 @@
                             </div>
                             @endforeach
                         </div>
-                        <script> var next_url_page = '{{ $tours->nextPageUrl() }}'</script>
 
                         <div class="col-lg-12 after-posts">
-                            <button type="button" class="btn-load-more">
+                            <button type="button" class="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
                                 Показать еще
                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                             </button>
@@ -191,32 +189,37 @@
     </div>
 @endsection
 @section('scripts_footer')
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+{{--    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>--}}
+{{--    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>--}}
 {{--    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />--}}
     <script>
         $(function() {
             $('.btn-load-more').on('click', function(){
-                // $('.after-posts').hide();
+                 //$('.after-posts').hide();
                 const btn = $(this);
                 const loader = btn.find('span');
-                if(next_url_page === ''){
+                /*if(next_url_page === ''){
                     $('.after-posts').hide();
                     return;
-                }
+                }*/
+
                 $.ajax({
-                    url: next_url_page,
+                    url: $('.btn-load-more').data('next-url'), // TODO: надо реализовать подгрузку контента
                     type: 'GET',
                     beforeSend: function(){
                         btn.attr('disabled', true);
                         loader.addClass('d-inline-block');
                     },
                     success: function(response){
+                        $('.after-posts').hide();
                         setTimeout(function(){
                             loader.removeClass('d-inline-block');
                             btn.attr('disabled', false);
                             console.log(response);
-                            $('.after-posts').before(response);
+                            // $('.after-posts').before(response);
+                            var $after_posts = $('.after-posts');
+                            $after_posts.before(response);
+                            $after_posts.remove();
                         }, 1000);
                     },
                     error: function(){

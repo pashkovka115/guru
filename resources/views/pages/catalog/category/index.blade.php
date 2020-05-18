@@ -35,26 +35,32 @@
                                                 </a>
                                             @endif
                                         @endforeach
-                                        <em>Ваш гиды</em>
+                                        <em>Вашы гиды</em>
                                     </div>
                                     @endif
                                     <div class="event__list_block">
                                         <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-event">
-                                            @php
+                                        <?php
+                                            $variants = $tour->variants;
+                                            if (isset($variants[0])) {
                                                 $start = \Carbon\Carbon::create($tour->date_start);
                                                 $end = \Carbon\Carbon::create($tour->date_end);
                                                 $diff = $start->diffInDays($end);
-                                            @endphp
-                                            {{ $tour->title }}, {{ $start->formatLocalized('%e %B %Y') }}
+
+                                            echo $tour->title .', '. $start->formatLocalized('%e %B %Y');
+                                                }
+                                            ?>
                                         </a>
                                         <a href="#" class="location-event">
                                             {{ $tour->city }}, {{ $tour->country }}
                                         </a>
                                         <p class="dates-event">
                                             <span>
-                                {{ $start->formatLocalized('%e %B') }}
-                                - {{ $end->formatLocalized('%e %B %Y') }}
-                                ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
+                                                @isset($variants[0])
+                                                {{ $start->formatLocalized('%e %B') }}
+                                                - {{ $end->formatLocalized('%e %B %Y') }}
+                                                ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
+                                                @endisset
                                             </span>
                                             @if($tour->variants->count() > 0)
                                             <a class="toggle-dates-event">Другие даты</a>
@@ -162,14 +168,14 @@
                     </div>
                 </div>
             </div>
-            <script> var next_url_page = '{{ $tours->nextPageUrl() }}'</script>
 
             <div class="col-lg-12 after-posts">
-                <button type="button" class="btn-load-more">
+                <button type="button" class="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
                     Показать еще
                     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                 </button>
             </div>
+
         </div>
     </div>
 @endsection
@@ -180,26 +186,31 @@
     <script>
         $(function() {
             $('.btn-load-more').on('click', function(){
-                // $('.after-posts').hide();
+                //$('.after-posts').hide();
                 const btn = $(this);
                 const loader = btn.find('span');
-                if(next_url_page === ''){
+                /*if(next_url_page === ''){
                     $('.after-posts').hide();
                     return;
-                }
+                }*/
+
                 $.ajax({
-                    url: next_url_page,
+                    url: $('.btn-load-more').data('next-url'), // TODO: надо реализовать подгрузку контента
                     type: 'GET',
                     beforeSend: function(){
                         btn.attr('disabled', true);
                         loader.addClass('d-inline-block');
                     },
                     success: function(response){
+                        $('.after-posts').hide();
                         setTimeout(function(){
                             loader.removeClass('d-inline-block');
                             btn.attr('disabled', false);
-                            //console.log(response);
-                            $('.after-posts').before(response);
+                            console.log(response);
+                            // $('.after-posts').before(response);
+                            var $after_posts = $('.after-posts');
+                            $after_posts.before(response);
+                            $after_posts.remove();
                         }, 1000);
                     },
                     error: function(){

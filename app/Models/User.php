@@ -69,7 +69,7 @@ class User extends Authenticatable
             'tour_leader',
             'leader_id',
             'tour_id'
-        )->with('category');
+        )->with(['category', 'variants']);
     }
 
     /**

@@ -10,90 +10,87 @@ use Modules\Admin\Models\LandingBloks;
 
 class LandingController extends Controller
 {
-    public function index()
+    public function show()
     {
-        $landing = LandingBloks::with('parts')->orderBy('sort')->get();
+        $titles = Landing::where('post_type', 'title')->orderBy('sort')->get();
+        $headers = Landing::where('post_type', 'header')->orderBy('sort')->get();
+        $posts = Landing::where('post_type', 'post')->orderBy('sort')->get();
+        $decoratives = Landing::where('post_type', 'decorative')->orderBy('sort')->get();
+        $progresies = Landing::where('post_type', 'progress')->orderBy('sort')->get();
+        $contents = Landing::where('post_type', 'content')->orderBy('sort')->get();
 
-//        return view('pages.landing.index', ['landing' => $landing]);
-        return view('admin::pages.landing.index', ['landing' => $landing]);
+        return view('admin::pages.landing.show', [
+            'titles' => $titles,
+            'headers' => $headers,
+            'posts' => $posts,
+            'decoratives' => $decoratives,
+            'progresies' => $progresies,
+            'contents' => $contents,
+        ]);
+    }
+
+    public function add_field(Request $request)
+    {
+        $request->validate([
+            'post_type' => ['required', 'regex:/header|post|decorative|progress|content/']
+        ]);
+
+        Landing::create([
+            'post_type' => $request->input('post_type')
+        ]);
+
+        session()->flash('message', 'Поле добавленно');
+        return redirect()->back();
     }
 
 
-    public function create()
+    public function edit()
     {
-        return view('admin::create');
+        $headers = Landing::where('post_type', 'header')->orderBy('sort')->get();
+        $posts = Landing::where('post_type', 'post')->orderBy('sort')->get();
+        $decoratives = Landing::where('post_type', 'decorative')->orderBy('sort')->get();
+        $progresies = Landing::where('post_type', 'progress')->orderBy('sort')->get();
+        $contents = Landing::where('post_type', 'content')->orderBy('sort')->get();
+
+        return view('admin::pages.landing.edit', [
+            'headers' => $headers,
+            'posts' => $posts,
+            'decoratives' => $decoratives,
+            'progresies' => $progresies,
+            'contents' => $contents,
+        ]);
     }
 
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
-        //
-    }
+        $request_fields = $request->except('_token');
 
+        $new_fields = [];
+        foreach ($request_fields as $request_field => $v){
+            if (stripos($request_field, '_') !== false){
+                $sp = explode('_', $request_field);
+                $field_name = str_replace('-', '_', $sp[0]);
+                $row_id = (int)$sp[1];
 
-    public function show($id)
-    {
-        return view('admin::show');
-    }
-
-
-    public function edit($id)
-    {
-        return view('admin::edit');
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        $landing = [];
-        $parts = [];
-
-        foreach ($request->input('landing') as $key => $land){
-            $l = [
-                'id' => (int)explode('_', $key)[1],
-                'title' => $land['title'] ?? '',
-                'img' => $land['img'] ?? ''
-            ];
-            $landing[] = $l;
-            if (is_array($land)){
-                foreach ($land as $k2 => $v2){
-                    if (stripos($k2, 'blockid') === 0 and is_array($v2)){
-                        $part = [
-                            'id' => (int)explode('_', $k2)[1],
-                            'title' => $v2['title'] ?? '',
-                            'img' => $v2['img'] ?? '',
-                            'content' => $v2['content'] ?? ''
-                        ];
-                        $parts[] = $part;
-                    }
-                }
+                $new_fields[$row_id][$field_name] = $v;
             }
-
         }
 
-        \DB::transaction(function () use ($landing, $parts){
-            foreach ($landing as $land){
-                \DB::table('landing_blocks')->where('id', $land['id'])->update([
-                    'title' => $land['title'],
-                    'img' => $land['img']
-                ]);
-            }
-            foreach ($parts as $part){
-                \DB::table('landing')->where('id', $part['id'])->update([
-                    'title' => $part['title'],
-                    'img' => $part['img'],
-                    'content' => $part['content']
-                ]);
-            }
-        });
-        session()->flash('message', 'Обновил');
+        foreach ($new_fields as $id => $fields){
+            Landing::where('id', $id)->update($fields);
+        }
 
+        session()->flash('message', 'Обновил');
         return redirect()->back();
     }
 
 
     public function destroy($id)
     {
-        //
+        Landing::where('id', $id)->delete();
+
+        session()->flash('message', 'Удалил');
+        return redirect()->back();
     }
 }

@@ -9,6 +9,15 @@
                         @csrf
                         @method('PATCH')
                         <div class="card-body">
+                            @if($user->profile)
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <?php if ($user->profile->auth) $checked = ' checked'; else $checked = ''; ?>
+                                    <input id="auth" class="form-check-input" type="checkbox" name="auth"{{ $checked }}>
+                                    <label for="auth" class="form-check-label">Личность подтверждена</label>
+                                </div>
+                            </div>
+                            @endif
                             <div class="form-group">
                                 <label for="name">Имя</label>
                                 <input type="text" class="form-control" id="name" name="name"
@@ -32,7 +41,7 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
                         </div>
                     </form>
                 </div>

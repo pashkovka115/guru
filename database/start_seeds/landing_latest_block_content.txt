@@ -1,0 +1,40 @@
+<div class="col-lg-6">
+    <div class="block_adds__list">
+        <p class="title-advantage-list">Lorem ipsum dolor sit amet, consectetur.</p>
+        <p class="text-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex ea vero quasi nemo ab sit, quas iure excepturi veritatis architecto.</p>
+    </div>
+    <div class="block_adds__list">
+        <p class="title-advantage-list">Lorem ipsum dolor sit amet, consectetur.</p>
+        <p class="text-normal">
+        1. Lorem ipsum dolor sit amet, consectetur adipisicing.<br>
+        2. Lorem ipsum dolor sit amet, consectetur adipisicing.<br>
+        3. Lorem ipsum dolor sit amet, consectetur adipisicing.<br>
+        4. Lorem ipsum dolor sit amet, consectetur adipisicing.<br>
+        5. Lorem ipsum dolor sit amet, consectetur adipisicing.
+        </p>
+    </div>
+    <div class="block_adds__list">
+        <p class="title-advantage-list">Lorem ipsum dolor sit amet, consectetur.</p>
+        <p class="text-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex ea vero quasi nemo ab sit, quas iure excepturi veritatis architecto.</p>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="block_adds__list">
+        <p class="title-advantage-list">Lorem ipsum dolor sit amet, consectetur.</p>
+        <p class="text-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex ea vero quasi nemo ab sit, quas iure excepturi veritatis architecto.</p>
+    </div>
+    <div class="block_adds__list">
+        <p class="title-advantage-list">Lorem ipsum dolor sit amet, consectetur.</p>
+        <p class="text-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex ea vero quasi nemo ab sit, quas iure excepturi veritatis architecto.</p>
+    </div>
+    <div class="block_adds__list">
+        <p class="title-advantage-list">Lorem ipsum dolor sit amet, consectetur.</p>
+        <p class="text-normal">
+        1. Lorem ipsum dolor sit amet, consectetur adipisicing.<br>
+        2. Lorem ipsum dolor sit amet, consectetur adipisicing.<br>
+        3. Lorem ipsum dolor sit amet, consectetur adipisicing.<br>
+        4. Lorem ipsum dolor sit amet, consectetur adipisicing.<br>
+        5. Lorem ipsum dolor sit amet, consectetur adipisicing.
+        </p>
+    </div>
+</div>

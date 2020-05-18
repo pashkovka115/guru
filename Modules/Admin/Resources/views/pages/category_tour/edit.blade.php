@@ -15,6 +15,10 @@
                                        value="{{ $category->title }}" required>
                             </div>
                             <div class="form-group">
+                                <label for="title">Описание</label>
+                                <textarea rows="3" class="form-control" name="description">{{ $category->description }}</textarea>
+                            </div>
+                            <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label for="img">Текущее изображение</label>

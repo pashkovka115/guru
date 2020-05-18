@@ -88,6 +88,7 @@ class CategoryTourController extends Controller
     {
         $data = [
             'title' => $request->input('title'),
+            'description' => $request->input('description'),
         ];
         if ($request->input('img') != '' and mb_strlen($request->input('img')) > 1) {
             $data['img'] = $request->input('img');

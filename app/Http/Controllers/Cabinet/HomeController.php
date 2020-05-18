@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Modules\Admin\Models\Tour;
@@ -62,24 +63,28 @@ class HomeController extends Controller
             $user->name = $request->input('name');
             $user->save();
 
-            $user->profile->excerpt = $request->input('excerpt');
-            $user->profile->description = $request->input('description');
-            $user->profile->url = $request->input('url');
-            $user->profile->avatar = get_url_to_uploaded_files(auth()->user(), $request->file('avatar'));
-            $user->profile->country = $request->input('country');
-            $user->profile->city = $request->input('city');
-            $user->profile->address = $request->input('address');
-            $user->profile->street = $request->input('street');
-            $user->profile->house = $request->input('house');
-            $user->profile->region = $request->input('region');
-            $user->profile->latitude = $request->input('latitude');
-            $user->profile->latitude = $request->input('latitude');
-            $user->profile->longitude = $request->input('longitude');
+            if ($user->profile) {
+                $user->profile->excerpt = $request->input('excerpt');
+                $user->profile->description = $request->input('description');
+                $user->profile->url = $request->input('url');
+                $user->profile->avatar = get_url_to_uploaded_files(auth()->user(), $request->file('avatar'));
+                $user->profile->country = $request->input('country');
+                $user->profile->city = $request->input('city');
+                $user->profile->address = $request->input('address');
+                $user->profile->street = $request->input('street');
+                $user->profile->house = $request->input('house');
+                $user->profile->region = $request->input('region');
+                $user->profile->latitude = $request->input('latitude');
+                $user->profile->latitude = $request->input('latitude');
+                $user->profile->longitude = $request->input('longitude');
 
-            if ($request->has('gallery') and $request->file('gallery') !== null) {
-                $user->profile->gallery = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery')));
+                if ($request->has('gallery') and $request->file('gallery') !== null) {
+                    $user->profile->gallery = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery')));
+                }
+                $user->profile->save();
+            }else{
+                Profile::create(['user_id' => auth()->id()]);
             }
-            $user->profile->save();
         });
 
         session()->flash('message', 'Обновил');
