@@ -13,9 +13,9 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // create permissions
         Permission::create(['name' => 'dashboard_view', 'description' => 'Просматривать главную панель']);
-//        Permission::create(['name' => 'dashboard_edit', 'description' => 'Редактировать ']); - не имеет смысла
-//        Permission::create(['name' => 'dashboard_add', 'description' => 'Добавлять ']); - не имеет смысла
-//        Permission::create(['name' => 'dashboard_delete', 'description' => 'Удалять ']); - не имеет смысла
+//        Permission::create(['name' => 'dashboard_edit', 'description' => 'Редактировать ']);
+        Permission::create(['name' => 'dashboard_add', 'description' => 'Подтверждать статус пользователя']);
+//        Permission::create(['name' => 'dashboard_delete', 'description' => 'Удалять ']);
 
         Permission::create(['name' => 'user_view', 'description' => 'Просматривать пользователей']);
         Permission::create(['name' => 'user_edit', 'description' => 'Редактировать пользователя']);

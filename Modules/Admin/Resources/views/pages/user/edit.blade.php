@@ -26,7 +26,7 @@
                             <div class="form-group">
                                 <label for="email">Email адрес</label>
                                 <input type="email" class="form-control" id="exampleInputEmail1" name="email"
-                                       value="{{ $user->email }}" required>
+                                       value="{{ $user->email }}" required disabled>
                             </div>
                             <div class="form-group">
                                 <label for="password1">Новый пароль</label>

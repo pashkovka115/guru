@@ -22,6 +22,9 @@
                             <span class="confirm">Подтвержден</span>
                             @else
                             <span class="not-confirm">Не подтвержден</span>
+                                @if(auth()->user()->profile->request)
+                                    <span class="not-confirm">, Ожидает подтверждения</span>
+                                @endif
                             @endif
                         </div>
                         <div class="user-email"><span>Email:</span> {{ auth()->user()->email }}</div>
@@ -30,15 +33,16 @@
                     <div class="personal_status">
                         <p class="text-normal">Спасибо за регистрацию!</p>
                         <p class="text-normal">Чтобы получить возможность создания своих мероприятия, авторов и организаций на нашем сервисе, запросите авторизацию у администрации, нажав кнопку ниже.</p>
-                        <div class="user-editing"><a href="" class="btn-personal">Запросить авторизацию</a></div>
+                        <div class="user-editing"><a href="{{ route('site.cabinet.request_auth') }}" class="btn-personal">Запросить авторизацию</a></div>
                     </div>
                     @elseif((auth()->user()->profile->auth ?? false) and $count_tour == 0)
                         <div class="personal_status">
                             <p class="text-normal">Ваш профиль авторизован!</p>
-                            <p class="text-normal">Ваш профиль подтвержден, и вы можете начать добавления мероприятий.</p>
-                            <p class="text-normal">Чтобы добавить свое первое мероприятие, нажмите на кнопку ниже, а затем заполните каждый из разделов.</p>
+                            <p class="text-normal">Ваш профиль подтвержден, и вы можете начать добавление мероприятий.</p>
                             <a href="{{ route('site.cabinet.tour.create') }}" class="btn-personal">Добавить мероприятие</a>
                         </div>
+                    @else
+                        <a href="{{ route('site.cabinet.tour.create') }}" class="btn-personal">Добавить мероприятие</a>
                     @endif
                 </div>
             </div>

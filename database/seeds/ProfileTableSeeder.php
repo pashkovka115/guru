@@ -24,10 +24,13 @@ class ProfileTableSeeder extends Seeder
             if ($raiting > 5)
                 $raiting = 5;
 
+            $auth = ($i % 2 == 0 or $i == 1) ? '1' : '0';
+            $request = (boolean)((int)$auth) ? '0' : '1';
+
             $user->profile()->create([
                 'user_id'=> $user->id,
-                'auth' => ($i % 2 == 0 or $i == 1) ? '1' : '0',
-//                'type_user'=>$type_user,
+                'auth' => $auth,
+                'request' => $request,
                 'avatar' => '['.json_encode(asset('assets/site/images/avatar.jpg')).']',
                 'raiting'=> $raiting,
                 'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum fugit incidunt quasi deserunt, libero placeat.',

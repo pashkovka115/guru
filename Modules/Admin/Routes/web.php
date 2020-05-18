@@ -4,8 +4,16 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
 //    После добавления маршрута необходимо создать разрешения для этого маршрута в
 //    \App\Http\Middleware\CheckPermissions::class и в базе данных(или в сиде RolesAndPermissionsSeeder.php)
 
-    Route::resource('/', 'DashboardController')
-        ->only(['index'])->names('admin.dashboard');
+    Route::get('/', 'DashboardController@index')->name('admin.dashboard.index');
+    Route::get('users-requests', 'DashboardController@requests')->name('admin.dashboard.requests');
+
+    Route::prefix('dashboard')->group(function (){
+        Route::get('store/{id}', 'DashboardController@store')->name('admin.dashboard.auth.user');
+//        Route::get('edit', 'DashboardController@edit')->name('admin.dashboard.edit');
+//        Route::post('add-field', 'DashboardController@add_field')->name('admin.landing.add_field');
+//        Route::post('update', 'DashboardController@update')->name('admin.dashboard.update');
+//        Route::get('destroy/{id}', 'DashboardController@destroy')->name('admin.dashboard.destroy');
+    });
 
     Route::resource('user', 'UserController')
         ->names('admin.user');

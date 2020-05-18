@@ -70,11 +70,11 @@ class UserController extends Controller
     { // TODO сделать переименование директории юзера (storage/app/public/users/user)
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+//            'email' => 'required|email',
         ]);
         $data = [
             'name' => $request->input('name'),
-            'email' => $request->input('email'),
+//            'email' => $request->input('email'),
         ];
 
         $arr = $request->toArray();
@@ -87,10 +87,14 @@ class UserController extends Controller
 
             $profile = Profile::where('user_id', $id)->first();
             if ($request->has('auth')) {
-                $profile->update(['auth' => '1']);
+                $profile->auth = '1';
+                $profile->request = '0';
+
             }else{
-                $profile->update(['auth' => '0']);
+                $profile->auth = '0';
+                $profile->request = '0';
             }
+            $profile->save();
         });
 
 

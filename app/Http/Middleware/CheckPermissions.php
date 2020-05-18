@@ -34,6 +34,7 @@ class CheckPermissions
     private $abilities = [
         'index'   => 'view',
         'show'    => 'view',
+        'requests' => 'view',
         'edit'    => 'edit',
         'update'  => 'edit',
         'create'  => 'add',

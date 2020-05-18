@@ -35,6 +35,7 @@ Route::prefix('cabinet')->middleware('auth')->group(function (){
     Route::resource('/messages', 'Cabinet\MessageController')->only(['index', 'destroy'])->names('site.cabinet.message');
     Route::resource('/reviews', 'Cabinet\ReviewController')->only(['index'])->names('site.cabinet.review');
     Route::resource('/purchases', 'Cabinet\PurchasesController')->only('index')->names('site.cabinet.purchases');
+    Route::get('request-auth', 'Cabinet\SettingsController@request_auth')->name('site.cabinet.request_auth');
 });
 
 Route::get('/delete-variant-tour/{id}', 'Cabinet\AjaxController@remove_variant_tour')->middleware('auth');

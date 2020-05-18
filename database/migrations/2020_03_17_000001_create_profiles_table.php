@@ -16,6 +16,7 @@ class CreateProfilesTable extends Migration
 //            $table->enum('type_user', ['user', 'organizer', 'leader']);
             $table->float('raiting')->default(0.0);
             $table->enum('auth', ['0','1'])->comment('аунтифицирован администратором');
+            $table->enum('request', ['0','1'])->comment('заявка на аунтификацию');
             $table->string('url')->nullable()->comment('Ссылка на видео');
             $table->string('avatar')->nullable();
             $table->text('excerpt')->nullable()->comment('кратко о себе');
