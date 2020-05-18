@@ -87,7 +87,7 @@
     </div>
 </div>
 <div class="mobile_menu_overlay"></div>
-
+@section('scripts')
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -100,7 +100,7 @@
 
 <script src="{{asset('assets/site/js/main.js')}}"></script>
 @yield('scripts_footer')
-
+@show
 <script>
     $('.login-list').click( function(){
         $('.login-sub').toggle();

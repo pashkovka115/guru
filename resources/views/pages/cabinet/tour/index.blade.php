@@ -1,4 +1,13 @@
 @extends('layouts.app')
+
+@section('styles')
+    @include('pages.cabinet.styles')
+@endsection
+
+@section('scripts')
+    @include('pages.cabinet.scripts')
+@endsection
+
 @section('content')
     <div class="block_personal_content">
         <div class="container">

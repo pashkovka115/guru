@@ -1,7 +1,13 @@
 @extends('layouts.app')
+
 @section('styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    @include('pages.cabinet.styles')
 @endsection
+
+@section('scripts')
+    @include('pages.cabinet.scripts')
+@endsection
+
 @section('content')
         <div class="block_create">
             <div class="container">
