@@ -263,11 +263,17 @@ padding: 0 25px;
 }
 .elem__tour {
   position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 5px 1px rgba(0,0,0,.2);
-    margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px 1px rgba(0,0,0,.2);
+  margin-bottom: 30px;
+}
+.elem__tour img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  object-position: center center;
 }
 .title__tour {
   position: absolute;
@@ -667,6 +673,10 @@ width: 100%;
   color: #493c35;
 }
 .btn_add {
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
   color: #fff;
   border: 1px solid #eb9a27;
   border-bottom-width: 3px;
@@ -679,6 +689,9 @@ width: 100%;
 }
 .btn_add:hover {
   color: #fff;
+}
+.elem_adds .btn_add {
+  margin:0;
 }
 .megamenu {
   padding: 0;
@@ -1422,11 +1435,16 @@ display: block;
 .owl-carousel .owl-stage {
   display: flex;
   height: 100%;
+  max-height: 360px;
 }
 .owl-carousel .owl-item img {
   width: auto;
   height: 100%;
+  min-height: 360px;
   max-height: 360px;
+}
+.event_list__link {
+  display: block;
 }
 .event_list__autor {
   position: absolute;
