@@ -155,6 +155,28 @@
 @endforeach
 
 <div id="remove_el" class="col-lg-12 after-posts">
+    <script>
+        $('.slide-cat').owlCarousel({
+            loop:true,
+            margin:10,
+            responsiveClass:true,
+            dots: false,
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true
+                },
+                600:{
+                    items:1,
+                    nav:true
+                },
+                1000:{
+                    items:1,
+                    nav:true
+                }
+            }
+        });
+    </script>
     <button type="button" class="btn-load-more" id="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
         Показать еще
         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
