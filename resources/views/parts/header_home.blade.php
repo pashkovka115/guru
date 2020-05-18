@@ -122,10 +122,13 @@
     <div class="home_block">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-12">
-                    <?php //dd($titles); ?>
-                    <h1 class="home__title">Самая большая коллекция оздоровительных туров по всему миру.</h1>
-                </div>
+                @if($home_header_titles->count() > 0)
+                    @foreach($home_header_titles as $tit_head)
+                        <div class="col-md-12">
+                            <h1 class="home__title">{{ $tit_head->title }}</h1>
+                        </div>
+                    @endforeach
+                @endif
                 <div class="form_search">
                     <form action="{{ route('site.catalog.search') }}" method="post" autocomplete="off" class="search-input">
                         @csrf

@@ -19,11 +19,13 @@ class MainController extends Controller
             ->limit(8)
             ->get();
 
-        \View::share('categories', $categories);
-
         $posts = \DB::table('posts')->where('id', '>', 0)->orderByDesc('created_at')->limit(2)->get();
+        $titles = Home::where('post_type', 'title')->get();
         $our_ideas = Home::where('post_type', 'content')->get();
         $our_progress = Home::where('post_type', 'progress')->get();
+
+        \View::share('categories', $categories);
+        \View::share('home_header_titles', $titles);
 
         return view('pages.home.index', [
             'categories' => $categories,

@@ -117,7 +117,7 @@
                             <div class="form-group">
                                 <label>Выберите тип поля</label>
                                 <select name="post_type" class="form-control">
-{{--                                    <option value="title">Заголовок страницы</option>--}}
+                                    <option value="title">Заголовок в шапке</option>
                                     <option value="content">Наша идея</option>
 {{--                                    <option value="people">Наша команда</option>--}}
                                     <option value="progress">Наши преимущества</option>
