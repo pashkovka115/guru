@@ -60,11 +60,14 @@
                             {{ $tour->title }}
                         </a>
                         <p class="dates-tour">
-                            @php
-                                $start = \Carbon\Carbon::create($tour->date_start);
-                                $end = \Carbon\Carbon::create($tour->date_end);
-                            @endphp
-                            <span>{{ $start->formatLocalized('%e %B') }} - {{ $end->formatLocalized('%e %B %Y') }}</span>
+                            <?php
+                            $variants = $tour->variants;
+                            if (isset($variants[0])){
+                                $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
+                                $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
+                                echo '<span>' . $start->formatLocalized('%e %B') .' - '. $end->formatLocalized('%e %B %Y') . '</span>';
+                                }
+                            ?>
                         </p>
                         <div class="rating-tour">
                             <div class="rating">
