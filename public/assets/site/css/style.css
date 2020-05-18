@@ -573,7 +573,7 @@ width: 100%;
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-.nav.login-list {
+.nav .login-list {
   position:relative;
   cursor:pointer;
   width: 32px;
@@ -3150,16 +3150,19 @@ input[name="photogallery"] {
   display: none;
   top: 50px;
   position: absolute;
-  right: 15px;
+  right: 0;
   background: #fafafa;
-  padding: 10px;
+  padding: 5px 15px;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid #dedbda;
 }
 .form_search_header form {
   height: 40px;
   line-height: 40px;
 }
 .form_search_header input {
-  max-width: 180px;
+  max-width: 100%;
   min-width: 180px;
   height: 40px;
 }

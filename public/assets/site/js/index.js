@@ -25,12 +25,6 @@ $(document).on('click', function(e) {
 $('.mobile_search').click( function(){
     $('.form_search_header').toggle();
 });
-$(document).on('click', function(e) {
-    if (!$(e.target).closest(".mobile_search").length) {
-        $('.form_search_header').hide();
-    }
-    e.stopPropagation();
-});
 
 $(function() {
     $(document).on("click", ".mobile_menu_container span", function(e) {
