@@ -38,16 +38,18 @@
                 <a href="#" class="location-event">
                     {{ $tour->city }}, {{ $tour->country }}
                 </a>
-                <p class="dates-event">
-                                            <span>
-                                {{ $start->formatLocalized('%e %B') }}
-                                - {{ $end->formatLocalized('%e %B %Y') }}
-                                ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
-                                            </span>
-                    @if($tour->variants->count() > 0)
-                        <a class="toggle-dates-event">Другие даты</a>
-                    @endif
-                </p>
+                @if(isset($variants[0]))
+                    <p class="dates-event">
+                        <span>
+                            {{ $start->formatLocalized('%e %B') }}
+                            - {{ $end->formatLocalized('%e %B %Y') }}
+                            ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
+                        </span>
+                        @if($tour->variants->count() > 1)
+                            <a class="toggle-dates-event">Другие даты</a>
+                        @endif
+                    </p>
+                @endif
                 <ul class="event-highlights">
                     @if($tour->info_excerpt)
                         <li class="event-highlights-icon">
@@ -152,8 +154,8 @@
     </div>
 @endforeach
 
-<div class="col-lg-12 after-posts">
-    <button type="button" class="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
+<div id="remove_el" class="col-lg-12 after-posts">
+    <button type="button" class="btn-load-more" id="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
         Показать еще
         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
     </button>
