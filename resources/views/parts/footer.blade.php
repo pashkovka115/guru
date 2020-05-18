@@ -41,10 +41,15 @@
                     <div class="col-lg-12 col-md-4 col-sm-12 menu_dop">
                         <p class="title-footer">Присоединяйтесь к нам в соц.сетях:</p>
                         <ul class="social">
-                            <li><a href="#" title="facebook"></a></li>
-                            <li><a href="#" title="vk"></a></li>
-                            <li><a href="#" title="instagram"></a></li>
-                            <li><a href="#"	title="telegram"></a></li>
+                            <li><a href="#" title="facebook"><img src="/assets/site/images/facebook.svg" alt="" class="img-fluid"></a></li>
+                            <li><a href="#" title="vk"><img src="/assets/site/images/vk.svg" alt="" class="img-fluid"></a></li>
+                            <li><a href="#" title="instagram"><img src="/assets/site/images/instagram.svg" alt="" class="img-fluid"></a></li>
+                            <li><a href="#" title="telegram"><img src="/assets/site/images/telegram.svg" alt="" class="img-fluid"></a></li>
+                            <li><a href="#" title="whatsapp"><img src="/assets/site/images/whatsapp.svg" alt="" class="img-fluid"></a></li>
+                            <li><a href="#" title="youtube"><img src="/assets/site/images/youtube.svg" alt="" class="img-fluid"></a></li>
+                            <li><a href="#" title="viber"><img src="/assets/site/images/viber.svg" alt="" class="img-fluid"></a></li>
+                            <li><a href="#" title="twitter"><img src="/assets/site/images/twitter.svg" alt="" class="img-fluid"></a></li>
+                            <li><a href="#" title="google+"><img src="/assets/site/images/google+.svg" alt="" class="img-fluid"></a></li>
                         </ul>
                     </div>
                     <div class="col-lg-12 col-md-4 col-sm-12 menu_dop">
@@ -74,6 +79,9 @@
             <li><a class="parent" href="{{ route('site.cabinet.tour.create') }}">Добавить мероприятие</a></li>
             <li><a class="parent" href="{{ route('register') }}">Регистрация</a></li>
             <li><a class="parent" href="{{ route('login') }}">Войти</a></li>
+            <!-- Если вход выполнен в личный кабинет убираем Регистрацию и Войти и на их место -->
+            <li><a class="parent" href="">Личный кабинет</a></li>
+            <li><a class="parent" href="">Выйти</a></li>
             <hr>
         </ul>
     </div>
