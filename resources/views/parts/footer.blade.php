@@ -78,10 +78,20 @@
             <hr>
             <li><a class="parent" href="{{ route('site.cabinet.tour.create') }}">Добавить мероприятие</a></li>
             <li><a class="parent" href="{{ route('register') }}">Регистрация</a></li>
+            @guest
             <li><a class="parent" href="{{ route('login') }}">Войти</a></li>
             <!-- Если вход выполнен в личный кабинет убираем Регистрацию и Войти и на их место -->
-            <li><a class="parent" href="">Личный кабинет</a></li>
-            <li><a class="parent" href="">Выйти</a></li>
+            @else
+            <li><a class="parent" href="{{ route('site.cabinet.user.index') }}">Личный кабинет</a></li>
+            <li>
+                <a href="{{ route('logout') }}"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> Выйти
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </li>
+            @endguest
             <hr>
         </ul>
     </div>
