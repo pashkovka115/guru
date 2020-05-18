@@ -25,7 +25,7 @@ class TourVariantTableSeeder extends Seeder
             $variant = [
                 'tour_id' => 1,
                 'price_variant' => random_int(10000, 157000),
-                'photo_variant' => 'http://retreat-guru.loc/assets/site/images/home_bg.jpg',
+                'photo_variant' => '['.json_encode(asset('assets/site/images/home_bg_new.jpg')).']',
                 'date_start_variant' => $faker->date(),
                 'date_end_variant' => $faker->date(),
                 'text_variant' => $faker->paragraph(),

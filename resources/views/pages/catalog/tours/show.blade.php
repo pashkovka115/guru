@@ -495,7 +495,7 @@
                                 <div class="price-info">
                                     <p class="cost-tour">{{ number_format($variant->price_variant / 100) }} <span>RUB</span></p>
                                     <p>{{ $variant->amount_variant }}</p>
-                                    <p>{{ $variant->text_variant }}</p>
+                                    <p>{{ mb_strimwidth($variant->text_variant, 0, 100, '...') }}</p>
                                 </div>
                             </label>
                         </div>
