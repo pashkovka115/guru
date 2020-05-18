@@ -37,12 +37,20 @@
 
                                         </div>
                                         @if($tour->leaders->count() > 0)
+                                            @php //dd($tour->leaders); @endphp
                                             <div class="event_list__autor">
                                                 @foreach($tour->leaders as $leader)
-                                                    @if($leader->avatar)
-                                                        <a href="#" title="Имя автора">
-                                                            <img src="{{ $leader->avatar }}" alt="аватар"
+                                                    @if($leader->profile->avatar)
+                                                        <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
+                                                            <?php $arr_img = json_decode($leader->profile->avatar);
+                                                            if (isset($arr_img[0])): ?>
+                                                            <img src="{{ $arr_img[0] }}" alt="аватар"
                                                                  class="img-fluid">
+                                                            <?php endif; ?>
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
+                                                            <span>{{ $leader->name }}</span>
                                                         </a>
                                                     @endif
                                                 @endforeach
