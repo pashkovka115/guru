@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="row">
+        <div id="load_content" class="row">
             @foreach($posts as $post)
                 @if($loop->index % 5 == 0)
             <div class="col-lg-8 col-md-12">
@@ -23,14 +23,14 @@
                 </div>
             </div>
             @endforeach
-                <script> var next_url_page = '{{ $posts->nextPageUrl() }}'</script>
 
-                    <div class="col-lg-12 after-posts">
-                        <button type="button" class="btn-load-more">
-                            Показать еще
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                        </button>
-                    </div>
+                <div id="remove_el" class="col-lg-12 after-posts">
+                    <button type="button" class="btn-load-more" id="btn-load-more"
+                            data-next-url="{{ $posts->nextPageUrl() }}">
+                        Показать еще
+                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -39,36 +39,31 @@
 
 @section('scripts_footer')
     <script>
-        $(function() {
-            $('.btn-load-more').on('click', function(){
+        $(document).ready(function () {
+            $(document).on('click', '#btn-load-more', function (e) {
+                e.preventDefault();
+                var next_url = $('#btn-load-more').data('next-url');
                 const btn = $(this);
                 const loader = btn.find('span');
-                if(next_url_page === ''){
-                    $('.after-posts').hide();
-                    return;
-                }
+
                 $.ajax({
-                    url: next_url_page,
+                    url: next_url,
                     type: 'GET',
-                    beforeSend: function(){
+                    beforeSend: function () {
                         btn.attr('disabled', true);
                         loader.addClass('d-inline-block');
                     },
-                    success: function(response){
-                        setTimeout(function(){
-                            loader.removeClass('d-inline-block');
-                            btn.attr('disabled', false);
-                            console.log(response);
-                            $('.after-posts').before(response);
-                        }, 1000);
+                    success: function (response) {
+                        $('#remove_el').remove();
+                        $('#load_content').append(response);
                     },
-                    error: function(){
+                    error: function () {
                         alert('Ошибка!');
                         loader.removeClass('d-inline-block');
                         btn.attr('disabled', false);
                     }
                 });
-            });
+            })
         });
     </script>
 @endsection

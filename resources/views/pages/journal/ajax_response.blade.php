@@ -11,11 +11,11 @@
         </div>
     </div>
 @endforeach
-@php
-if ($posts->lastPage() == $posts->currentPage()){
-    $next_url_page = null;
-}else{
-    $next_url_page = $posts->nextPageUrl();
-}
-@endphp
-<script> next_url_page = '{{ $next_url_page }}'; </script>
+
+<div id="remove_el" class="col-lg-12 after-posts">
+    <button type="button" class="btn-load-more" id="btn-load-more"
+            data-next-url="{{ $posts->nextPageUrl() }}">
+        Показать еще
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+    </button>
+</div>
