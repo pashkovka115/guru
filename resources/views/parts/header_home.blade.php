@@ -123,6 +123,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12">
+                    <?php //dd($titles); ?>
                     <h1 class="home__title">Самая большая коллекция оздоровительных туров по всему миру.</h1>
                 </div>
                 <div class="form_search">

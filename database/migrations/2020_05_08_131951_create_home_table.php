@@ -10,7 +10,7 @@ class CreateHomeTable extends Migration
     {
         Schema::create('home', function (Blueprint $table) {
             $table->id();
-            $table->enum('post_type', ['title', 'content', 'people', 'progress']);
+            $table->enum('post_type', ['title', 'content', 'progress']);
             $table->integer('sort')->default(0);
             $table->string('title')->nullable();
             $table->text('excerpt')->nullable();

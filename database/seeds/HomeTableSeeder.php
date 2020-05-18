@@ -13,6 +13,11 @@ class HomeTableSeeder extends Seeder
     {
         $parts = [
             [
+                'post_type' => 'title',
+                'title' => 'Самая большая коллекция оздоровительных туров по всему миру.',
+                'excerpt' => '',
+            ],
+            [
                 'post_type' => 'content',
                 'title' => 'Наша идея',
                 'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo doloremque error ducimus perspiciatis omnis earum minus, temporibus quae quibusdam. Rerum ut mollitia dolorem alias? Aspernatur unde id, corporis, at porro reprehenderit ut explicabo eveniet minima cumque!',

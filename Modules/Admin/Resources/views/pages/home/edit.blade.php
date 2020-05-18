@@ -8,6 +8,36 @@
                 <div class="col">
                     <div class="card card-primary">
                         <div class="card-header">
+                            <h5>Заголовок в шапке</h5>
+                        </div>
+                        @foreach($titles as $tit)
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        <div class="form-group">
+                                            <label for="title">Заголовок</label>
+                                            <input type="text" class="form-control" id="title"
+                                                   name="title_{{ $tit->id }}" value="{{ $tit->title }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            <a  href="{{ route('admin.home.destroy', ['id' => $tit->id]) }}" class="btn btn-danger btn-sm" style="margin-top: 2.1rem">
+                                                <i class="fas fa-trash"></i>Удалить
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card card-primary">
+                        <div class="card-header">
                             <h5>Наша идея</h5>
                         </div>
                         @foreach($contents as $content)
