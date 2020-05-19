@@ -41,15 +41,9 @@
                     <div class="col-lg-12 col-md-4 col-sm-12 menu_dop">
                         <p class="title-footer">Присоединяйтесь к нам в соц.сетях:</p>
                         <ul class="social">
-                            <li><a href="#" title="facebook"><img src="/assets/site/images/facebook.svg" alt="" class="img-fluid"></a></li>
-                            <li><a href="#" title="vk"><img src="/assets/site/images/vk.svg" alt="" class="img-fluid"></a></li>
-                            <li><a href="#" title="instagram"><img src="/assets/site/images/instagram.svg" alt="" class="img-fluid"></a></li>
-                            <li><a href="#" title="telegram"><img src="/assets/site/images/telegram.svg" alt="" class="img-fluid"></a></li>
-                            <li><a href="#" title="whatsapp"><img src="/assets/site/images/whatsapp.svg" alt="" class="img-fluid"></a></li>
-                            <li><a href="#" title="youtube"><img src="/assets/site/images/youtube.svg" alt="" class="img-fluid"></a></li>
-                            <li><a href="#" title="viber"><img src="/assets/site/images/viber.svg" alt="" class="img-fluid"></a></li>
-                            <li><a href="#" title="twitter"><img src="/assets/site/images/twitter.svg" alt="" class="img-fluid"></a></li>
-                            <li><a href="#" title="google+"><img src="/assets/site/images/google+.svg" alt="" class="img-fluid"></a></li>
+                            @foreach(get_settings('url') as $network)
+                            <li><a href="{{ $network->url }}" title="{{ $network->url }}"><img src="{{ $network->icon }}" alt="" class="img-fluid"></a></li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="col-lg-12 col-md-4 col-sm-12 menu_dop">
@@ -73,8 +67,8 @@
         <ul>
             <li class="mobile_menu_title"><span class="mobile_menu_close"></span></li>
             <li><a class="parent" href="/">Главная</a></li>
-            <li><a class="parent" href="/">Каталог мероприятий</a></li>
-            <li><a class="parent" href="/">О нас</a></li>
+            <li><a class="parent" href="{{ route('site.catalog.category.list') }}">Каталог мероприятий</a></li>
+            <li><a class="parent" href="{{ route('site.about') }}">О нас</a></li>
             <hr>
             <li><a class="parent" href="{{ route('site.cabinet.tour.create') }}">Добавить мероприятие</a></li>
             <li><a class="parent" href="{{ route('register') }}">Регистрация</a></li>
