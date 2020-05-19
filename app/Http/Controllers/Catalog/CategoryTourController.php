@@ -17,7 +17,7 @@ class CategoryTourController extends Controller
         $ids = CategoryTour::all('id')->keyBy('id')->toArray();
         if (count($ids) > 0) {
             $rand_id = $ids[array_rand($ids)];
-            $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])->where('category_tour_id', $rand_id)->paginate(2);
+            $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])->where('category_tour_id', $rand_id)->paginate(10);
 
             if ($request->ajax()) {
                 return view('pages.catalog.category.ajax_index', ['tours' => $tours]);
@@ -33,7 +33,7 @@ class CategoryTourController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])->where('category_tour_id', $id)->paginate(2);
+        $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])->where('category_tour_id', $id)->paginate(10);
 
         if ($request->ajax()){
             return view('pages.catalog.category.ajax_show', ['tours' => $tours]);
