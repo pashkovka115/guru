@@ -215,6 +215,10 @@
             $(document).on('click', '#btn-load-more', function (e) {
                 e.preventDefault();
                 var next_url = $('#btn-load-more').data('next-url');
+                if (next_url === '' || next_url === null){
+                    $('#remove_el').remove();
+                    return;
+                }
                 const btn = $(this);
                 const loader = btn.find('span');
 
