@@ -8,6 +8,7 @@ class HelpController extends Controller
 {
     public function show()
     {
-        return view('pages.help.show');
+        $settings = get_settings('help');
+        return view('pages.help.show', ['settings' => $settings]);
     }
 }

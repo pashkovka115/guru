@@ -8,6 +8,7 @@ use Modules\Admin\Http\Controllers\AboutController;
 use Modules\Admin\Http\Controllers\CategoryPostController;
 use Modules\Admin\Http\Controllers\CategoryTourController;
 use Modules\Admin\Http\Controllers\DashboardController;
+use Modules\Admin\Http\Controllers\HelpController;
 use Modules\Admin\Http\Controllers\HomeController;
 use Modules\Admin\Http\Controllers\LandingController;
 use Modules\Admin\Http\Controllers\PageController;
@@ -107,6 +108,7 @@ class CheckPermissions
         GeneralController::class => 'tour',
 
         SocialNetworkController::class => 'settings',
+        HelpController::class => 'settings',
 
 //        File Mager
         FileManagerController::class => 'file-manager'

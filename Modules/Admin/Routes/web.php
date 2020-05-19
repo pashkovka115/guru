@@ -73,10 +73,13 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
 
     Route::prefix('settings')->group(function (){
         Route::resource('soc_network', 'Settings\SocialNetworkController')->except('show')->names('admin.settings.soc_network');
-//        Route::get('soc_network', 'Settings\SocialNetworkController@index')->name('admin.settings.soc_network.index');
-//        Route::get('soc_network/show/{id}', 'Settings\SocialNetworkController@show')->name('admin.settings.soc_network.show');
-//        Route::get('soc_network/edit/{id}', 'Settings\SocialNetworkController@edit')->name('admin.settings.soc_network.edit');
-//        Route::post('soc_network/update/{id}', 'Settings\SocialNetworkController@update')->name('admin.settings.soc_network.update');
-//        Route::get('soc_network/destroy/{id}', 'Settings\SocialNetworkController@destroy')->name('admin.settings.soc_network.destroy');
+
+        Route::prefix('help')->group(function (){
+            Route::get('show', 'HelpController@show')->name('admin.help.show');
+            Route::get('edit', 'HelpController@edit')->name('admin.help.edit');
+            Route::post('add-field', 'HelpController@add_field')->name('admin.help.add_field');
+            Route::post('update', 'HelpController@update')->name('admin.help.update');
+//            Route::get('destroy/{id}', 'HomeController@destroy')->name('admin.home.destroy');
+        });
     });
 });

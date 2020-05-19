@@ -10,7 +10,7 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->enum('post_type', ['url']);
+            $table->enum('post_type', ['url', 'help']);
             $table->integer('sort')->default(0);
             $table->string('title')->nullable();
             $table->text('excerpt')->nullable();

@@ -223,6 +223,12 @@
                         <p>О нас</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.help.show') }}" class="nav-link">
+                        <i class="fas fa-hands-helping"></i>
+                        <p>Помощь и поддержка</p>
+                    </a>
+                </li>
 
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
