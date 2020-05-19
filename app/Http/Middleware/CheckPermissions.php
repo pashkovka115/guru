@@ -14,6 +14,7 @@ use Modules\Admin\Http\Controllers\PageController;
 use Modules\Admin\Http\Controllers\PermissionController;
 use Modules\Admin\Http\Controllers\PostController;
 use Modules\Admin\Http\Controllers\RoleController;
+use Modules\Admin\Http\Controllers\Settings\SocialNetworkController;
 use Modules\Admin\Http\Controllers\Tour\GeneralController;
 use Modules\Admin\Http\Controllers\Tour\IndexController;
 use Modules\Admin\Http\Controllers\TourController;
@@ -74,7 +75,7 @@ class CheckPermissions
      * Список контроллеров к которым будут применяться разрешения $abilities  (админка)
      * по шаблону
      * ControllerName => 'type'
-     * где type произвольная строка как идентификатор этого контроллера
+     * где type произвольная строка как псевдоним этого контроллера
      *
      * При записи:
      * private $abilities = [
@@ -104,6 +105,8 @@ class CheckPermissions
 
         IndexController::class => 'tour',
         GeneralController::class => 'tour',
+
+        SocialNetworkController::class => 'settings',
 
 //        File Mager
         FileManagerController::class => 'file-manager'

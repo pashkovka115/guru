@@ -79,6 +79,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'home_add', 'description' => 'Добавлять на главную']);
         Permission::create(['name' => 'home_delete', 'description' => 'Удалять из главной']);
 
+        Permission::create(['name' => 'settings_view', 'description' => 'Просматривать настройки']);
+        Permission::create(['name' => 'settings_edit', 'description' => 'Редактировать настройки']);
+        Permission::create(['name' => 'settings_add', 'description' => 'Добавлять настройки']);
+        Permission::create(['name' => 'settings_delete', 'description' => 'Удалять настройки']);
+
 
 
 

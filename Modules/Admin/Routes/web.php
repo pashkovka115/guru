@@ -46,7 +46,6 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
     Route::resource('post', 'PostController')
         ->names('admin.post');
 
-//    Route::resource('landing', 'LandingController')->only(['index', 'update'])->names('admin.landing');
 
     Route::prefix('landing')->group(function (){
         Route::get('show', 'LandingController@show')->name('admin.landing.show');
@@ -70,5 +69,14 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
         Route::post('add-field', 'HomeController@add_field')->name('admin.home.add_field');
         Route::post('update', 'HomeController@update')->name('admin.home.update');
         Route::get('destroy/{id}', 'HomeController@destroy')->name('admin.home.destroy');
+    });
+
+    Route::prefix('settings')->group(function (){
+        Route::resource('soc_network', 'Settings\SocialNetworkController')->except('show')->names('admin.settings.soc_network');
+//        Route::get('soc_network', 'Settings\SocialNetworkController@index')->name('admin.settings.soc_network.index');
+//        Route::get('soc_network/show/{id}', 'Settings\SocialNetworkController@show')->name('admin.settings.soc_network.show');
+//        Route::get('soc_network/edit/{id}', 'Settings\SocialNetworkController@edit')->name('admin.settings.soc_network.edit');
+//        Route::post('soc_network/update/{id}', 'Settings\SocialNetworkController@update')->name('admin.settings.soc_network.update');
+//        Route::get('soc_network/destroy/{id}', 'Settings\SocialNetworkController@destroy')->name('admin.settings.soc_network.destroy');
     });
 });
