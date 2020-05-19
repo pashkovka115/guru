@@ -361,6 +361,17 @@
                         </div>
                     </div>
                     @endif
+                    <!-- Помечаю, что добавил сюда блок для видео !!!!!! -->
+                    <div class="event-details-accordion">
+                        <div class="event-accordion accordion-video">
+                            <div class="accordion-btn">Видео:</div>
+                            <div class="panel article">
+                                <div class="block_place">
+                                    <iframe width="100%" height="350" src="https://www.youtube.com/embed/gAnoWXUaVoY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="event-details-accordion" id="reviews">
                         <div class="event-accordion accordion-reviews">
                             <div class="accordion-btn">

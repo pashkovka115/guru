@@ -173,7 +173,7 @@
                                     </div>
                                     <div class="block-panel">
                                         <label for="video-url" class="create-subtitle">Видео YouTube:</label>
-                                        <input id="video-url" type="text" name="video_url" value="{{ $tour->video_url }}">
+                                        <input id="video-url" type="text" name="video_url" value="{{ $tour->video_url }}" placeholder="Пример идентификатора: gAnoWXUaVoY">
                                     </div>
                                     <div class="block-panel">
                                         <label for="tags" class="create-subtitle">Теги темы(максимум 5):</label>

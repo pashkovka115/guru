@@ -2280,6 +2280,9 @@ display: block;
   overflow: hidden;
   border-radius: 8px;
 }
+.block_autor_info .row {
+  align-items: flex-start;
+}
 .block_autor_info .event-gallery-none{
   position: absolute;
   top: 70%;
@@ -2680,6 +2683,7 @@ hr {
 .create-title {
   font-size: 1.8rem;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 .create-subtitle {
   font-weight: 600;
@@ -2704,6 +2708,10 @@ hr {
   max-width: 500px;
   height: 40px;
   padding: 15px;
+}
+.block-panel input::-webkit-inner-spin-button {
+  display: none;
+  -webkit-appearance: none;
 }
 .block-panel textarea {
   width: 100%;
@@ -2784,16 +2792,24 @@ hr {
 .block-variants div:last-child {
   margin-right: 0;
 }
+.block-variants .choose-file {
+  width: 100%;
+  margin: 0 0 20px 0;
+}
 .block-variants .delete {
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  margin-top: 24px;
+}
+.block-variants .delete i{
+  background: red;
+  color: #fff;
   width: 40px;
   height: 40px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  cursor: pointer;
-}
-.block-variants .delete i{
-  font-size: 1.2rem;
 }
 .block-variants div p {
   text-align: center;
@@ -2852,6 +2868,10 @@ hr {
 .block-panel .price-variant {
   width: 100%;
   max-width: 120px;
+}
+.block-variants-info {
+  display: flex;
+  margin-top: 20px;
 }
 .click_to_add_block {
   display: flex;
@@ -3168,6 +3188,18 @@ input[name="photogallery"] {
   .cat_nav__menu li a {
     font-size: .8rem;
   }
+  .search-filter-panel {
+    padding: 0;
+    top: 60px;
+  }
+  .search-filter-panel ul {
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    width: 100%;
+    overflow: auto;
+    padding: 10px 0;
+  }
   .sort span {
     font-size: .8rem;
   }
@@ -3269,18 +3301,6 @@ input[name="photogallery"] {
 .review-aut {
   text-align: right;
 }
-.search-filter-panel {
-  padding: 0;
-  top: 60px;
-}
-.search-filter-panel ul {
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  width: 100%;
-  overflow: auto;
-  padding: 10px 0;
-}
 .sort span {
   display: none;
 }
@@ -3319,6 +3339,23 @@ input[name="photogallery"] {
 }
 .search-category {
   visibility: hidden;
+}
+.subcategory {
+  max-width: 100%;
+  margin-top: 10px;
+  border-radius: 0;
+  left: 0;
+  right: 0;
+}
+.daterangepicker {
+  border-radius: 0px !important;
+  right: 0 !important;
+  left: 0 !important;
+  margin-top: 10px !important;
+  width: 100% !important;
+}
+.ui-slider-horizontal {
+  max-width: 90%;
 }
 }
 @media (max-width: 575px) {

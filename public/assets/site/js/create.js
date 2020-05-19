@@ -71,7 +71,7 @@ $('.click_to_add_block').click(function() {
             </select>
         </div>
         <div class="delete" data-id="0"><i class="fa fa-times" aria-hidden="true"></i></div>
-        </div>
+    </div>
     `);
 });
 
