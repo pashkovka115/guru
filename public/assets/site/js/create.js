@@ -32,7 +32,7 @@ $(".chosen-select").select2({
     tags: true
 });
 
-$('.click_to_add_block').click(function() {
+/*$('.click_to_add_block').click(function() {
   $(this).before(`
     <div class="block-variants">
         <div class="choose-file">
@@ -97,7 +97,7 @@ $(document).on('click', '.delete', function(e) {
         }
     });
 
-});
+});*/
 
 let autocomplete,  marker, infowindow, map;
     function initMap() {
@@ -243,7 +243,7 @@ $(document).ready(function() {
 	        "</span>").insertAfter(".photogallery-container");
 	      $(".removebtn").click(function(){
 	        $(this).parent(".photogallery-demo").remove();
-	      });    
+	      });
 	    });
 	    fileReader.readAsDataURL(f);
 	  }
@@ -262,7 +262,7 @@ $(document).ready(function() {
 	        "</span>").insertAfter(".accommodation-container");
 	      $(".removebtn").click(function(){
 	        $(this).parent(".photogallery-demo").remove();
-	      });    
+	      });
 	    });
 	    fileReader.readAsDataURL(f);
 	  }
@@ -281,7 +281,7 @@ $(document).ready(function() {
 	        "</span>").insertAfter(".meals-container");
 	      $(".removebtn").click(function(){
 	        $(this).parent(".photogallery-demo").remove();
-	      });    
+	      });
 	    });
 	    fileReader.readAsDataURL(f);
 	  }
