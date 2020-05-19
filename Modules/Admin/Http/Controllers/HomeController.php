@@ -11,7 +11,17 @@ class HomeController extends Controller
 {
     public function show()
     {
-        return view('admin::pages.home.show');
+        $titles = Home::where('post_type', 'title')->get();
+        $contents = Home::where('post_type', 'content')->get();
+        $progresies = Home::where('post_type', 'progress')->get();
+
+        return view('admin::pages.home.show', [
+            'title' => 'Редактируем главную',
+            'title_page' => 'Редактируем главную',
+            'titles' => $titles,
+            'contents' => $contents,
+            'progresies' => $progresies
+        ]);
     }
 
 

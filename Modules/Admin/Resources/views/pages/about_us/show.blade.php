@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <a href="{{ route('admin.about.edit') }}" class="btn btn-success">Редактировать</a>
+            </div>
+        </div>
         <form role="form">
             <div class="row">
                 <div class="col">
