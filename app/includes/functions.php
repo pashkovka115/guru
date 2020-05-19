@@ -1,5 +1,9 @@
 <?php
 
+function get_settings($type){
+    return \Modules\Admin\Models\Settings::where('post_type', $type)->get();
+}
+
 function is_admin(){
     if (auth()->check()) {
         return (boolean) DB::table('model_has_roles')->select('model_id')->where('model_id', auth()->id());
