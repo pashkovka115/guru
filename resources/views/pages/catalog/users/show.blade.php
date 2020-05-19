@@ -112,6 +112,41 @@
                         </div>
                     </div>
                     @endif
+                    <!-- Здесь тоже блок в видео и блок с картой добавил, их не хватало -->
+                    <div class="event-details-accordion">
+                        <div class="event-accordion accordion-place">
+                            <div class="accordion-btn">Месторасположение:</div>
+                            <div class="panel article">
+                                <div class="event-pin">
+                                    <span class="event-pin-icon"></span>
+                                    @if($user->country or $user->city)
+                                        <span>{{ $user->country }}, {{ $user->city }}</span>
+                                    @elseif($user->address)
+                                        <span>{{ $user->address }}</span>
+                                    @endif
+                                </div>
+                                <div class="block_place">
+                                    @php
+                                    $link = generate_google_map_link([$user->address]);
+                                    @endphp
+                                    <iframe width="100%" height="350" frameborder="0" style="border:0" src="{{ $link }}" allowfullscreen></iframe>
+                                </div>
+                                <div class="block_place">
+                                    {{ $user->adress_desk }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event-details-accordion">
+                        <div class="event-accordion accordion-video">
+                            <div class="accordion-btn">Видео:</div>
+                            <div class="panel article">
+                                <div class="block_place">
+                                    <iframe width="100%" height="350" src="https://www.youtube.com/embed/gAnoWXUaVoY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @if($user->profile->raiting > 0 or $comments->count() > 0)
                     <div class="event-details-accordion" id="reviews">
                         <div class="event-accordion accordion-reviews">
