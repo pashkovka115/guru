@@ -86,15 +86,39 @@ $('.slide-autor').owlCarousel({
     }
 })
 
-$(".filter-category > li > a").click(function(e) {
-    $(".filter-category > li > a").not(this).removeClass('active');
+$(".filter-category > li > span").click(function(e) {
+    $(".filter-category > li > span").not(this).removeClass('active');
     $(this).toggleClass('active');
 });
 $(document).on('click', function(e) {
     if (!$(e.target).closest(".filter-category > li").length) {
-        $(".filter-category > li > a").not(this).removeClass('active');
+        $(".filter-category > li > span").not(this).removeClass('active');
     }
     e.stopPropagation();
+});
+
+$(function() {
+    $( ".range-line" ).slider({
+        range: true,
+        min: 0,
+        max: 500,
+        values: [ 0, 500 ],
+        slide: function( event, ui ) {
+            $( ".range-result" ).text(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " дней");
+        }
+    });
+});
+
+$(function() {
+    $( ".range-price" ).slider({
+        range: true,
+        min: 0,
+        max: 500000,
+        values: [ 0, 500000 ],
+        slide: function( event, ui ) {
+            $( ".range-price-result" ).text(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " RUB");
+        }
+    });
 });
 
 $('select').each(function(){

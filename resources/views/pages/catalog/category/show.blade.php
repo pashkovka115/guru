@@ -10,9 +10,7 @@
                 @isset($tours[0]->category)
                 <div class="col-lg-12">
                     <div class="block_seo_cat">
-                        <div class="block_seo_photo">
-                            <img src="{{ $tours[0]->category->img }}" alt="" class="img-fluid img-cat-seo">
-                        </div>
+                        <img src="{{ $tours[0]->category->img }}" alt="" class="img-fluid img-cat-seo">
                         <p class="text-normal">{{ $tours[0]->category->description }}</p>
                     </div>
                 </div>
