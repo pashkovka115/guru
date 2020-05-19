@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{asset('assets/site/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/site/css/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap&subset=cyrillic">
     @yield('styles')
     <link rel="stylesheet" href="{{asset('assets/site/css/style.css')}}">
