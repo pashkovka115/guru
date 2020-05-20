@@ -170,7 +170,7 @@
                             @endforeach
                         </div>
                         <div class="article">
-                        {{ $tour->info_description }}
+                        {!! $tour->info_description !!}
                         </div>
                     </div>
                     @if($tour->timetable)
@@ -178,7 +178,7 @@
                         <div class="event-accordion accordion-schedule">
                             <div class="accordion-btn">График мероприятия:</div>
                             <div class="panel article">
-                            {{ $tour->timetable }}
+                            {!! $tour->timetable !!}
                             </div>
                         </div>
                     </div>
@@ -352,10 +352,10 @@
                         <div class="event-accordion accordion-included">
                             <div class="accordion-btn">Включено в мероприятие:</div>
                             <div class="panel article">
-                                {{ $tour->included }}
+                                {!! $tour->included !!}
                                 @if($tour->no_included)
                                 <p class="title-place">Не включено:</p>
-                                {{ $tour->no_included }}
+                                {!! $tour->no_included !!}
                                 @endif
                             </div>
                         </div>
@@ -367,7 +367,7 @@
                             <div class="accordion-btn">Видео:</div>
                             <div class="panel article">
                                 <div class="block_place">
-                                    <iframe width="100%" height="350" src="https://www.youtube.com/embed/gAnoWXUaVoY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <iframe width="100%" height="350" src="https://www.youtube.com/embed/{{ $tour->video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                             </div>
                         </div>

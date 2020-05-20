@@ -77,6 +77,7 @@
 @endsection
 
 @section('content')
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
         <div class="block_create">
             <div class="container">
                 <div class="row">
@@ -154,6 +155,7 @@
                                         <div class="block-panel-sub">
                                             <p>Опишите в форме ниже подробную информацию о месторасположении(как добраться, где будет мероприятии точно и т.д.)</p>
                                             <textarea placeholder="Подробнее о локации проведения" id="adress-desk" name="adress_desk">{{ old('adress_desk') }}</textarea>
+                                            <script> CKEDITOR.replace( 'adress-desk' ); </script>
                                         </div>
                                     </div>
                                     <div class="block-panel">
@@ -174,10 +176,12 @@
                                     <div class="block-panel">
                                         <label for="text-desk" class="create-subtitle">Информация о мероприятии:</label>
                                         <textarea placeholder="Введите краткое описание вашего мероприятия" id="text-desk" name="info_excerpt">{{ old('info_excerpt') }}</textarea>
+                                        <script> CKEDITOR.replace( 'text-desk' ); </script>
                                     </div>
                                     <div class="block-panel">
                                         <label for="text-inform-event" class="create-subtitle">Подробнее о мероприятии:</label>
                                         <textarea placeholder="Перечислите подробную информацию, о вашем мероприятии:" id="text-inform-event" name="info_description">{{ old('info_description') }}</textarea>
+                                        <script> CKEDITOR.replace( 'text-inform-event' ); </script>
                                     </div>
                                     <div class="block-panel">
                                         <label for="group-event" class="create-subtitle">Размер группы:</label>
@@ -207,6 +211,7 @@
                                         <div class="block-panel-sub">
                                             <p>Опишите в форме ниже, детальное расписание мероприятия по дням. Оно не должно быть 100% точным. Дайте участникам понять, что будет происходить каждый день и как все организовано.</p>
                                             <textarea placeholder="Опишите, что участникам стоит ожидать в течении дня" id="timetable-event" name="timetable">{{ old('timetable') }}</textarea>
+                                            <script> CKEDITOR.replace( 'timetable-event' ); </script>
                                         </div>
                                     </div>
                                     <div class="block-panel">
@@ -214,6 +219,7 @@
                                         <div class="block-panel-sub">
                                             <p>Перечислите все, что включено в ваше мероприятие. Это может включать питание, количество ночей проживания, конкретные мероприятия и стоимость авиабилетов.</p>
                                             <textarea placeholder="Опишите, что включено" id="included-event" name="included">{{ old('included') }}</textarea>
+                                            <script> CKEDITOR.replace( 'included-event' ); </script>
                                         </div>
                                     </div>
                                     <div class="block-panel">
@@ -221,6 +227,7 @@
                                         <div class="block-panel-sub">
                                             <p>Перечислите все, что не включено, например, дополнительные мероприятия и авиабилеты.</p>
                                             <textarea placeholder="Опишите, что не включено" id="no-included-event" name="no_included">{{ old('no_included') }}</textarea>
+                                            <script> CKEDITOR.replace( 'no-included-event' ); </script>
                                         </div>
                                     </div>
                                     <div class="block-panel">
@@ -254,6 +261,7 @@
                                             <div class="accommodation-container"></div>
 
                                             <textarea placeholder="Подробное описание" id="accommodation-event" name="accommodation_description"></textarea>
+                                            <script> CKEDITOR.replace( 'accommodation-event' ); </script>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, какие удобства доступны:</p>
                                                 <label for="conditioner">
@@ -334,6 +342,7 @@
                                             <div class="meals-container"></div>
 
                                             <textarea placeholder="Подробное описание" id="meals-event" name="meals_desc">{{ old('meals_desc') }}</textarea>
+                                            <script> CKEDITOR.replace( 'meals-event' ); </script>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, варианты меню:</p>
                                                 <label for="vegan">

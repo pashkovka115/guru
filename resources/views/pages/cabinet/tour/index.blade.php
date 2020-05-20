@@ -44,15 +44,21 @@
                                 <div class="block-public">
                                     <p class="public-title">{{ $tour->title }}</p>
                                     @php
-                                        $start = \Carbon\Carbon::create($tour->date_start);
-                                        $end = \Carbon\Carbon::create($tour->date_end);
+                                    $variants = $tour->variants;
+                                    if (isset($variants[0])){
+                                        $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
+                                        $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
                                         $diff = $start->diffInDays($end);
+                                    }
+
                                     @endphp
+                                    @if(isset($variants[0]))
                                     <p class="public-date">
                                         {{ $start->formatLocalized('%e %B %Y') }}
                                         - {{ $end->formatLocalized('%e %B %Y') }}
                                         ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
                                     </p>
+                                    @endif
                                     <p class="public-status">
                                         @if($tour->active and $tour->good)
                                             <span class="confirm">Опубликовано</span>

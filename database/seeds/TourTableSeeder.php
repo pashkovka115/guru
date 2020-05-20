@@ -49,7 +49,7 @@ class TourTableSeeder extends Seeder
                 'latitude' => $faker->latitude,
                 'longitude' => $faker->longitude,
                 'adress_desk' => $faker->paragraph(5),
-                'video_url' => $faker->url,
+                'video_url' => \Illuminate\Support\Str::random(10),
                 'info_excerpt' => $faker->paragraph(5),
                 'info_description' => $faker->paragraphs(10, true),
                 'count_person' => $count_person[array_rand($count_person)],

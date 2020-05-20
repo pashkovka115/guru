@@ -119,20 +119,20 @@
                             <div class="panel article">
                                 <div class="event-pin">
                                     <span class="event-pin-icon"></span>
-                                    @if($user->country or $user->city)
-                                        <span>{{ $user->country }}, {{ $user->city }}</span>
-                                    @elseif($user->address)
-                                        <span>{{ $user->address }}</span>
+                                    @if($user->profile->country or $user->profile->city)
+                                        <span>{{ $user->profile->country }}, {{ $user->profile->city }}</span>
+                                    @elseif($user->profile->address)
+                                        <span>{{ $user->profile->address }}</span>
                                     @endif
                                 </div>
                                 <div class="block_place">
                                     @php
-                                    $link = generate_google_map_link([$user->address]);
+                                    $link = generate_google_map_link([$user->profile->address]);
                                     @endphp
                                     <iframe width="100%" height="350" frameborder="0" style="border:0" src="{{ $link }}" allowfullscreen></iframe>
                                 </div>
                                 <div class="block_place">
-                                    {{ $user->adress_desk }}
+{{--                                    {{ $user->adress_desk }}--}}
                                 </div>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                             <div class="accordion-btn">Видео:</div>
                             <div class="panel article">
                                 <div class="block_place">
-                                    <iframe width="100%" height="350" src="https://www.youtube.com/embed/gAnoWXUaVoY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <iframe width="100%" height="350" src="https://www.youtube.com/embed/{{ $user->profile->url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                             </div>
                         </div>

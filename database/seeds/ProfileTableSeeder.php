@@ -30,6 +30,7 @@ class ProfileTableSeeder extends Seeder
             $user->profile()->create([
                 'user_id'=> $user->id,
                 'auth' => $auth,
+                'url' => \Illuminate\Support\Str::random(10),
                 'request' => $request,
                 'avatar' => '['.json_encode(asset('assets/site/images/avatar.jpg')).']',
                 'raiting'=> $raiting,
