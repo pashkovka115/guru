@@ -231,11 +231,17 @@
                                 <div class="img-accordion-block">
                                     @php
                                     if ($tour->accommodation_photo){
-                                            $acc_gall = json_decode($tour->accommodation_photo) ?? [];
+                                            $acc_gall = (array)json_decode($tour->accommodation_photo) ?? [];
                                     }else{$acc_gall = [];}
+                                    //dd($acc_gall);
+                                    if (count($acc_gall) < 2){
+                                        $class_img_accordion = 'img-accordion';
+                                    }else{
+                                        $class_img_accordion = 'img-accordion-double';
+                                    }
                                     @endphp
                                     @foreach($acc_gall as $img)
-                                    <div class="img-accordion-double">
+                                    <div class="{{ $class_img_accordion }}">
                                         <img src="{{ $img }}" alt="" class="img-fluid">
                                     </div>
                                         @php if($loop->index == 2) break; @endphp
@@ -286,11 +292,17 @@
                                 <div class="img-accordion-block">
                                     @php
                                         if ($tour->gallery_meals){
-                                                $mea_gall = json_decode($tour->gallery_meals);
+                                                $mea_gall = (array)json_decode($tour->gallery_meals);
                                         }else{$mea_gall = [];}
+
+                                        if (count($mea_gall) < 2){
+                                        $class_img_accordion = 'img-accordion';
+                                    }else{
+                                        $class_img_accordion = 'img-accordion-double';
+                                    }
                                     @endphp
                                     @foreach($mea_gall as $img)
-                                    <div class="img-accordion-double">
+                                    <div class="{{ $class_img_accordion }}">
                                         <img src="{{ $img }}" alt="" class="img-fluid">
                                     </div>
                                     @endforeach
