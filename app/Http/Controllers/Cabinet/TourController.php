@@ -39,6 +39,94 @@ class TourController extends Controller
         ]);
     }
 
+    /*
+     * основная галерея мероприятия
+     * добавить ссылку на файл
+     */
+    public function ajax_general_gallery_insert(Request $request)
+    {
+        if ($request->has('file') and $request->hasHeader('id')){
+            $url_to_files = get_url_to_uploaded_files(auth()->user(), $request->file('file'));
+            $bd_gallery = Tour::where('id', $request->header('id'))->firstOrFail(['id', 'gallery']);
+            $new_gallery = array_merge(json_decode($bd_gallery->gallery), $url_to_files);
+
+            $bd_gallery->update(['gallery' => json_encode($new_gallery)]);
+
+            return [
+                'answer' => 'ok',
+            ];
+        }
+        return ['answer' => 'файл не пришел.'];
+    }
+
+    /*
+     * Проживание и удобства
+     * добавить ссылку на файл
+     */
+    public function ajax_accommodation_gallery_insert(Request $request)
+    {
+        if ($request->has('file') and $request->hasHeader('id')){
+            $url_to_files = get_url_to_uploaded_files(auth()->user(), $request->file('file'));
+            $bd_gallery = Tour::where('id', $request->header('id'))->firstOrFail(['id', 'accommodation_photo']);
+            $new_gallery = array_merge(json_decode($bd_gallery->accommodation_photo), $url_to_files);
+
+            $bd_gallery->update(['accommodation_photo' => json_encode($new_gallery)]);
+
+            return [
+                'answer' => 'ok',
+            ];
+        }
+        return ['answer' => 'файл не пришел.'];
+    }
+
+    /*
+     * Проживание и удобства
+     * добавить ссылку на файл
+     */
+    public function ajax_meals_gallery_insert(Request $request)
+    {
+        if ($request->has('file') and $request->hasHeader('id')){
+            $url_to_files = get_url_to_uploaded_files(auth()->user(), $request->file('file'));
+            $bd_gallery = Tour::where('id', $request->header('id'))->firstOrFail(['id', 'gallery_meals']);
+            $new_gallery = array_merge(json_decode($bd_gallery->gallery_meals), $url_to_files);
+
+            $bd_gallery->update(['gallery_meals' => json_encode($new_gallery)]);
+
+            return [
+                'answer' => 'ok',
+            ];
+        }
+        return ['answer' => 'файл не пришел.'];
+    }
+
+    /*
+     * для любого поля
+     * удалить ссылку на файл
+     */
+    public function ajax_gallery_remove(Request $request)
+    {
+        if ($request->has('field-src') and $request->has('field-name')){
+            $field = $request->input('field-name');
+            $sp = explode('_', $field);
+            $field_name = str_replace('-', '_', $sp[0]);
+            $bd_gallery = Tour::where('id', (int)$sp[1])->firstOrFail(['id', $field_name]);
+            $gall_ar = (array)json_decode($bd_gallery->$field_name);
+
+            foreach ($gall_ar as $key => $value){
+                if ($value == json_decode(json_encode($request->input('field-src')))){
+                    unset($gall_ar[$key]);
+                }
+            }
+
+            $bd_gallery->update([$field_name => json_encode($gall_ar)]);
+
+            return [
+                'answer' => 'ok',
+            ];
+        }
+        return ['answer' => 'error'];
+    }
+
 
     public function store(Request $request)
     {
@@ -82,7 +170,7 @@ class TourController extends Controller
             'latitude' => 'sometimes|nullable|regex:/[\d\.]*/i',
             'longitude' => 'sometimes|nullable|regex:/[\d\.]*/i',
             'adress_desk' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
-            'video_url' => 'sometimes|nullable|url',
+            'video_url' => 'sometimes|nullable',
             'info_excerpt' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
             'info_description' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
             'count_person' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
@@ -247,7 +335,7 @@ class TourController extends Controller
             'latitude' => 'sometimes|nullable|regex:/[\d\.]*/i',
             'longitude' => 'sometimes|nullable|regex:/[\d\.]*/i',
             'adress_desk' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
-            'video_url' => 'sometimes|nullable|url',
+            'video_url' => 'sometimes|nullable',
             'info_excerpt' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
             'info_description' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
             'count_person' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',

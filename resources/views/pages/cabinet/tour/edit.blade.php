@@ -2,6 +2,7 @@
 
 @section('styles')
     @include('pages.cabinet.styles')
+<link rel="stylesheet" href="{{ asset('assets/site/dropzone/min/dropzone.min.css') }}">
 @endsection
 
 @section('scripts')
@@ -59,13 +60,8 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data: {
-                    //'id': e.target.parentElement.dataset.id
-                },
                 success: function(msg){
-                    console.log(msg, 'удаление ' + e.target.parentElement.dataset.id);
                     $(e.target).parent().parent().remove();
-                    // $(this).parent().remove();
                 },
                 error: function (msg, textStatus) {
                     console.log('Неудача. ' + textStatus);
@@ -74,10 +70,92 @@
 
         });
     </script>
+    <script> Dropzone.autoDiscover = false; </script>
+    <script>
+        var myDropzone_gallery1 = new Dropzone("div#files_gallery", {
+            url: "{{ route('site.ajax.general.gallery.insert') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'id': {{ $tour->id }}
+            },
+            init: function () {
+                $(this.element).html(this.options.dictDefaultMessage);
+            },
+            dictDefaultMessage: '<div class="dz-message">Нажмите здесь или перетащите сюда файлы для загрузки</div>',
+            maxFiles: 2,
+            maxFilesize: 2, // Mb
+            dictMaxFilesExceeded: "Достигнут лимит количества файлов. Разрешено 2",
+            dictFileTooBig: 'Ошибка! Максимальный размер файла - 2 Мб!',
+            dictInvalidFileType: 'Разрешены к загрузке файлы: .jpg, .jpeg, .png, .gif',
+            acceptedFiles: '.jpg,.jpeg,.png,.gif'
+        });
+
+        var myDropzone_gallery2 = new Dropzone("div#files_accommodation", {
+            url: "{{ route('site.ajax.accommodation.gallery.insert') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'id': {{ $tour->id }}
+            },
+            init: function () {
+                $(this.element).html(this.options.dictDefaultMessage);
+            },
+            dictDefaultMessage: '<div class="dz-message">Нажмите здесь или перетащите сюда файлы для загрузки</div>',
+            maxFiles: 2,
+            maxFilesize: 2, // Mb
+            dictMaxFilesExceeded: "Достигнут лимит количества файлов. Разрешено 2",
+            dictFileTooBig: 'Ошибка! Максимальный размер файла - 2 Мб!',
+            dictInvalidFileType: 'Разрешены к загрузке файлы: .jpg, .jpeg, .png, .gif',
+            acceptedFiles: '.jpg,.jpeg,.png,.gif'
+        });
+
+        var myDropzone_gallery3 = new Dropzone("div#files_meals", {
+            url: "{{ route('site.ajax.meals.gallery.insert') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'id': {{ $tour->id }}
+            },
+            init: function () {
+                $(this.element).html(this.options.dictDefaultMessage);
+            },
+            dictDefaultMessage: '<div class="dz-message">Нажмите здесь или перетащите сюда файлы для загрузки</div>',
+            maxFiles: 2,
+            maxFilesize: 2, // Mb
+            dictMaxFilesExceeded: "Достигнут лимит количества файлов. Разрешено 2",
+            dictFileTooBig: 'Ошибка! Максимальный размер файла - 2 Мб!',
+            dictInvalidFileType: 'Разрешены к загрузке файлы: .jpg, .jpeg, .png, .gif',
+            acceptedFiles: '.jpg,.jpeg,.png,.gif'
+        });
+
+        $('.removebtn').on('click', function(){
+            var $this  = $(this);
+            var fieldName = $this.data('gallery');
+            var fieldSrc = $this.data('src');
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('site.ajax.gallery.remove') }}",
+                data: {
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'field-name': fieldName,
+                    'field-src': fieldSrc
+                },
+                success: function(msg){
+                    $this.parent(".photogallery-demo").remove();
+                },
+                error: function (msg, textStatus) {
+                    console.log('Неудача. ' + textStatus);
+                }
+            });
+        });
+
+
+    </script>
 @endsection
 
 @section('content')
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('assets/site/dropzone/min/dropzone.min.js') }}"></script>
+
         <div class="block_create">
             <div class="container">
                 <div class="row">
@@ -204,22 +282,21 @@
                                     </div>
                                     <div class="block-panel">
                                         <label for="photogallery" class="create-subtitle">Фотогалерея:</label>
-                                        <div class="block-panel-sub">
-                                                <span class="btn_upload">
-                                                    <input id="photogallery" type="file" name="photogallery[]" multiple class="photogallery">
-                                                    Загрузить фото
-                                                </span>
-                                            <div class="photogallery-container"></div>
-                                            <?php
-                                            $gallery = json_decode($tour->gallery) ?? [];
-                                            foreach ($gallery as $src): ?>
-                                            <span class="photogallery-demo">
+                                        <div class="block-panel-sub" style="width: 100%">
+                                            <div id="files_gallery" class="dropzone"></div>
+                                            <div class="dropzone">
+                                                <?php
+                                                $gallery = json_decode($tour->gallery) ?? [];
+                                                foreach ($gallery as $src): ?>
+                                                <span class="photogallery-demo">
                                                 <img class="photogallery-elem" src="<?= $src ?>" title="undefined">
-                                                <span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                                <span class="removebtn" data-gallery="gallery_{{ $tour->id }}" data-src="<?= $src ?>"><i class="fa fa-times" aria-hidden="true"></i></span>
                                             </span>
-                                            <?php endforeach; ?>
+                                                <?php endforeach; ?>
+                                            </div>
                                             <p>Объявления имеющее как минимум 5 высококачественных фотографии получают больший интересно со стороны клиентов, чем те, у которых нету фото. Максимальное колличество фото не более 20. <span>Изображнея не пройдут процесс проверки, если они включают в себя: текст, водяные знаки, коллажи, фильтры или размытости.</span></p>
                                         </div>
+
                                     </div>
                                     <div class="block-panel">
                                         <label for="adress" class="create-subtitle">Месторасположение мероприятия:</label>
@@ -347,21 +424,17 @@
                                         <label for="accommodation-event" class="create-subtitle">Проживание и удобства:</label>
                                         <div class="block-panel-sub">
                                             <p>Добавьте 1-2 фотографии, опишите подробнее о проживании. Выберите варианты удоств, которые будуте доступны в вашем мероприятии.</p>
-                                            <span class="btn_upload">
-                                                    <input id="accommodation-photo" type="file" name="accommodation_photo[]" multiple="">
-                                                    Загрузить фото
-                                                </span>
-                                            <div class="accommodation-container"></div>
+                                            <div id="files_accommodation" class="dropzone"></div>
+                                            <div class="dropzone">
                                             <?php
                                             $accommodation_photo = json_decode($tour->accommodation_photo) ?? [];
                                             foreach($accommodation_photo as $src): ?>
                                             <span class="photogallery-demo">
                                                 <img class="photogallery-elem" src="<?= $src ?>" title="undefined">
-                                                <span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                                <span class="removebtn" data-gallery="accommodation-photo_{{ $tour->id }}" data-src="<?= $src ?>"><i class="fa fa-times" aria-hidden="true"></i></span>
                                             </span>
                                             <?php endforeach; ?>
-                                            {{--<span class="photogallery-demo"><img class="photogallery-elem" src="https://www.tvr.by/upload/iblock/42d/42d1898756e574fcaf9b7519c354ce9c.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
-                                            <span class="photogallery-demo"><img class="photogallery-elem" src="https://cdn24.img.ria.ru/images/151546/28/1515462835_0:0:1036:587_600x0_80_0_0_a75f922e8b052d966122e1c9dc40feb4.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>--}}
+                                            </div>
                                             <textarea placeholder="Подробное описание" id="accommodation-event" name="accommodation_description"></textarea>
                                             <script> CKEDITOR.replace( 'accommodation-event' ); </script>
                                             <div class="comfort-event">
@@ -437,18 +510,21 @@
                                         <label for="meals-event" class="create-subtitle">Питание:</label>
                                         <div class="block-panel-sub">
                                             <p>Добавьте 1-2 фотографии, опишите подробнее о питании. Выберите варианты питания, которые будуте доступны в вашем мероприятии.</p>
-                                            <span class="btn_upload">
+                                            {{--<span class="btn_upload">
                                                     <input id="meals-photo" type="file" name="gallery_meals[]" multiple="">
                                                     Загрузить фото
                                                 </span>
-                                            <div class="meals-container"></div>
+                                            <div class="meals-container"></div>--}}
+                                            <div id="files_meals" class="dropzone"></div>
+                                            <div class="dropzone">
                                             <?php
                                             $gallery_meals = json_decode($tour->gallery_meals) ?? [];
                                             foreach($gallery_meals as $src): ?>
                                             <span class="photogallery-demo">
                                                 <img class="photogallery-elem" src="<?= $src ?>" title="undefined">
-                                                <span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                                <span class="removebtn" data-gallery="gallery-meals_{{ $tour->id }}" data-src="<?= $src ?>"><i class="fa fa-times" aria-hidden="true"></i></span></span>
                                             <?php endforeach; ?>
+                                            </div>
                                             <textarea placeholder="Подробное описание" id="meals-event" name="meals_desc">{{ old('meals_desc') }}</textarea>
                                             <script> CKEDITOR.replace( 'meals-event' ); </script>
                                             <div class="comfort-event">

@@ -36,6 +36,15 @@ Route::prefix('cabinet')->middleware('auth')->group(function (){
     Route::resource('/reviews', 'Cabinet\ReviewController')->only(['index'])->names('site.cabinet.review');
     Route::resource('/purchases', 'Cabinet\PurchasesController')->only('index')->names('site.cabinet.purchases');
     Route::get('request-auth', 'Cabinet\SettingsController@request_auth')->name('site.cabinet.request_auth');
+
+    Route::prefix('ajax')->group(function (){
+        Route::post('general-gallery-insert', 'Cabinet\TourController@ajax_general_gallery_insert')->name('site.ajax.general.gallery.insert');
+        Route::post('general-accommodation-insert', 'Cabinet\TourController@ajax_accommodation_gallery_insert')->name('site.ajax.accommodation.gallery.insert');
+        Route::post('general-meals-insert', 'Cabinet\TourController@ajax_meals_gallery_insert')->name('site.ajax.meals.gallery.insert');
+
+        Route::post('ajax-gallery-remove', 'Cabinet\TourController@ajax_gallery_remove')->name('site.ajax.gallery.remove');
+    });
+
 });
 
 Route::get('/delete-variant-tour/{id}', 'Cabinet\AjaxController@remove_variant_tour')->middleware('auth');

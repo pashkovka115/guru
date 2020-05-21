@@ -304,11 +304,11 @@
                     },
                     success: function (msg) {
                         $(e.target.parentElement.parentElement).remove();
-                        console.log(e.target);
+                        //console.log(e.target);
                         // $(this).parent(".photogallery-demo").remove();
                     },
                     error: function (msg, textStatus) {
-                        console.log('Неудача. ' + textStatus);
+                        //console.log('Неудача. ' + textStatus);
                     }
                 });
             }else{

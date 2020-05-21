@@ -63,12 +63,12 @@
                     //'id': e.target.parentElement.dataset.id
                 },
                 success: function(msg){
-                    console.log(msg, 'удаление ' + e.target.parentElement.dataset.id);
+                    //console.log(msg, 'удаление ' + e.target.parentElement.dataset.id);
                     $(e.target).parent().parent().remove();
                     // $(this).parent().remove();
                 },
                 error: function (msg, textStatus) {
-                    console.log('Неудача. ' + textStatus);
+                    //console.log('Неудача. ' + textStatus);
                 }
             });
 

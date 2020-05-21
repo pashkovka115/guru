@@ -98,7 +98,7 @@ if ($tours){
                         setTimeout(function(){
                             loader.removeClass('d-inline-block');
                             btn.attr('disabled', false);
-                            console.log(response);
+                            //console.log(response);
                             $('.after-posts').before(response);
                         }, 1000);
                     },

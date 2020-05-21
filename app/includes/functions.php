@@ -53,6 +53,10 @@ function get_image_path_storage_to_profile($user)
     return false;
 }
 
+/*
+ * сохраняет файлы на диск в директорию авторизованного пользователя
+ * (не в базу)
+ */
 function get_url_to_uploaded_files($user, $uploading_files)
 {
     if (is_array($uploading_files)) {
@@ -72,7 +76,7 @@ function get_url_to_uploaded_files($user, $uploading_files)
 
         if (!$uploading_files instanceof \Illuminate\Http\UploadedFile) {
             print_r($uploading_files);
-            throw new Exception('Неправильный объект файла');
+            throw new Exception('Должен instanceof \Illuminate\Http\UploadedFile');
         }
         $path = $uploading_files->store(get_image_path_storage_to_profile($user) . '/img');
         $images[] = asset(str_replace('public', 'storage', $path));

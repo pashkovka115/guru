@@ -141,7 +141,9 @@
                                             <div class="rating-event">
                                                 <div class="rating">
                                                     {!! get_raiting_template($tour->rating) !!}
-                                                    <span class="review-count">(32 отзывов)</span>
+                                                    @if($tour->comments->count() > 0)
+                                                        <span class="review-count">&nbsp;({{ $tour->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $tour->comments->count()) }})</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="event-footer">
