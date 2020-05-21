@@ -187,9 +187,8 @@ class TourController extends Controller
             'gallery_meals.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
             'meals_desc' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
         ]);
-//dd($request->file('accommodation_photo'));
 
-        \DB::transaction(function () use ($request) {
+        \DB::transaction(function() use ($request) {
             $data = [
                 'category_tour_id' => $request->input('category_tour_id'),
                 'title' => $request->input('title'),
@@ -219,6 +218,28 @@ class TourController extends Controller
                 'drinking_water' => $request->input('drinking_water'),
                 'communication' => $request->input('communication'),
                 'accommodation_description' => $request->input('accommodation_description'),
+                "conditioner" => $request->has('conditioner') ? '1' : '0',
+                "wifi" => $request->has('wifi') ? '1' : '0',
+                "pool" => $request->has('pool') ? '1' : '0',
+                "towel" => $request->has('towel') ? '1' : '0',
+                "private_room" => $request->has('private_room') ? '1' : '0',
+                "transfer_fee" => $request->has('transfer_fee') ? '1' : '0',
+                "fish" => $request->has('fish') ? '1' : '0',
+                "meat" => $request->has('meat') ? '1' : '0',
+                "gluten_free" => $request->has('gluten_free') ? '1' : '0',
+                "milk_free" => $request->has('milk_free') ? '1' : '0',
+                "kitchen" => $request->has('kitchen') ? '1' : '0',
+                "dormitory_room" => $request->has('dormitory_room') ? '1' : '0',
+                "separate_house" => $request->has('separate_house') ? '1' : '0',
+                "transfer_free" => $request->has('transfer_free') ? '1' : '0',
+                "not_transfer" => $request->has('not_transfer') ? '1' : '0',
+                "vegan" => $request->has('vegan') ? '1' : '0',
+                "ayurveda" => $request->has('ayurveda') ? '1' : '0',
+                "vegetarianism" => $request->has('vegetarianism') ? '1' : '0',
+                "organic" => $request->has('organic') ? '1' : '0',
+                "nuts_free" => $request->has('nuts_free') ? '1' : '0',
+                "coffee_tea" => $request->has('coffee_tea') ? '1' : '0',
+                "count_meals" => $request->input('count_meals'),
                 'meals_desc' => $request->input('meals_desc'),
             ];
 
@@ -233,8 +254,9 @@ class TourController extends Controller
             if ($request->has('photogallery')){
                 $data['gallery'] = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('photogallery')));
             }
-
-            $tour = Tour::with('tags')->create($data);
+//dd($request->all());
+            $tour = new Tour($data);
+            $tour->save();
 
             if ($request->has('tags') and is_array($request->input('tags')) and count($request->input('tags')) > 0) {
                 $tour->tags()->attach($request->input('tags'));
@@ -246,16 +268,16 @@ class TourController extends Controller
                 $leader = User::with('tours')->where('id', $leader_id)->first();
                 $leader->tours()->attach($tour->id);
             }
-
+//dump($request->all());
+//dd($request->file('photo_variant'));
             // варианты мероприятия
-            // todo: на фронте должны изменить разметку, иначе вариант есть всегда
-            if (is_array($request->input('photo_variant')) and count($request->input('photo_variant')) > 0) {
-                $cnt = count($request->input('photo_variant'));
+            if ($request->has('price_variant') and count((array)$request->input('price_variant')) > 0) {
+                $cnt = count($request->input('price_variant'));
                 $variants = [];
                 for ($i = 0; $i < $cnt; $i++) {
                     $variant = [
                         'tour_id' => $tour->id,
-                        'photo_variant' => $request->input('photo_variant')[$i],
+                        'photo_variant' => json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('photo_variant')[$i])),
                         'date_start_variant' => $request->input('date_start_variant')[$i],
                         'date_end_variant' => $request->input('date_end_variant')[$i],
                         'text_variant' => $request->input('text_variant')[$i],
@@ -264,6 +286,7 @@ class TourController extends Controller
                     ];
                     $variants[] = $variant;
                 }
+//                dd($variants);
                 \DB::table('tours_variants')->insert($variants);
             }
         }, 5);

@@ -94,18 +94,22 @@
                                                         <img
                                                             src="{{ asset('assets/site/images/event-highlights-icon-events-01.svg') }}"
                                                             alt="" class="img-fluid">
-                                                        <span>{{ mb_strimwidth($tour->info_excerpt, 0, 70, '...') }}</span>
+                                                        <span>{{ mb_strimwidth(strip_tags($tour->info_excerpt), 0, 70, '...') }}</span>
                                                     </li>
                                                 @endif
-                                                @if($tour->transfer_free or $tour->transfer_fee)
+                                                @if($tour->transfer_free or $tour->transfer_fee or $tour->not_transfer)
                                                     <li class="event-highlights-icon">
                                                         <img
                                                             src="{{ asset('assets/site/images/event-highlights-icon-transfer-02.svg') }}"
                                                             alt="" class="img-fluid">
                                                         <span>
-                                                    @if($tour->transfer_free) Бесплатный трансфер @endif
-                                                            @if($tour->transfer_fee) Трансфер за дополнительную
-                                                            плату @endif
+                                                        <?php
+                                                        $prop = [];
+                                                        if ($tour->transfer_free) $prop[] = 'Траснфер бесплатно';
+                                                        if ($tour->transfer_fee) $prop[] = 'Траснфер за доп.плату';
+                                                        if ($tour->not_transfer) $prop[] = 'Добираетесь сами';
+                                                        echo implode(', ', $prop);
+                                                        ?>
                                                 </span>
                                                     </li>
                                                 @endif
@@ -117,12 +121,12 @@
                                                         <span>{{ $tour->count_person }}</span>
                                                     </li>
                                                 @endif
-                                                @if($tour->meals_desc)
+                                                @if($tour->count_meals)
                                                     <li class="event-highlights-icon">
                                                         <img
                                                             src="{{ asset('assets/site/images/event-highlights-icon-meals-04.svg') }}"
                                                             alt="" class="img-fluid">
-                                                        <span>{{ mb_strimwidth($tour->meals_desc, 0, 70, '...') }}</span>
+                                                        <span>{{ $tour->count_meals }}</span>
                                                     </li>
                                                 @endif
                                                 @if($tour->private_room or $tour->dormitory_room or $tour->separate_house)
@@ -131,9 +135,13 @@
                                                             src="{{ asset('assets/site/images/event-highlights-icon-room-05.svg') }}"
                                                             alt="" class="img-fluid">
                                                         <span>
-                                                    @if($tour->private_room) Отдельный номер @endif
-                                                            @if($tour->dormitory_room) Общий номер @endif
-                                                            @if($tour->separate_house) Отдельный домик @endif
+                                                        <?php
+                                                        $prop = [];
+                                                            if($tour->private_room) $prop[] = 'Отдельный номер';
+                                                            if($tour->dormitory_room) $prop[] = 'Общий номер';
+                                                            if($tour->separate_house) $prop[] = 'Отдельный домик';
+                                                            echo implode(', ', $prop);
+                                                        ?>
                                                 </span>
                                                     </li>
                                                 @endif

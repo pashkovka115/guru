@@ -217,7 +217,7 @@
                                     <iframe width="100%" height="350" frameborder="0" style="border:0" src="{{ $link }}" allowfullscreen></iframe>
                                 </div>
                                 <div class="block_place">
-                                    {{ $tour->adress_desk }}
+                                    {!! $tour->adress_desk !!}
                                 </div>
                             </div>
                         </div>
@@ -280,7 +280,7 @@
                                         <li class="noactive"><span class="icon-accommodation"></span>Кофе/Чай</li>
                                     @endif
                                 </ul>
-                                {{ $tour->accommodation_description }}
+                                {!! $tour->accommodation_description !!}
                             </div>
                         </div>
                     </div>
@@ -355,7 +355,7 @@
                                             <li class="noactive"><span class="icon-meals"></span>Без орехов</li>
                                     @endif
                                 </ul>
-                                {{ $tour->meals_desc }}
+                                {!! $tour->meals_desc !!}
                             </div>
                         </div>
                     </div>

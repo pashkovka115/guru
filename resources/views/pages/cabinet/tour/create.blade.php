@@ -15,7 +15,7 @@
                 <div class="upload-demo-wrap"><img class="img-fluid portimg" src="{{ asset('assets/site/images/wide.jpg') }}"></div>
             </div>
             <span class="btn_upload">
-                    <input type="file" name="photo_variant[]" class="inputfile photo-variant">
+                    <input type="file" name="photo_variant[]" class="inputfile photo-variant" required>
                     Загрузить фото
                 </span>
         </div>

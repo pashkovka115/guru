@@ -34,18 +34,27 @@
                 </div>
             @endif
             <div class="event__list_block">
-                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-event">
+                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}"
+                   class="title-event">
                     @php
-                        $start = \Carbon\Carbon::create($tour->date_start);
-                        $end = \Carbon\Carbon::create($tour->date_end);
-                        $diff = $start->diffInDays($end);
+                        $variants = $tour->variants;
+                        if (isset($variants[0])) {
+                            if ((bool)$variants[0]->date_start_variant and (bool)$variants[0]->date_end_variant){
+                                $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
+                                $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
+                                $diff = $start->diffInDays($end);
+
+                                echo $tour->title . ', ' . $start->formatLocalized('%e %B %Y');
+                            }
+                        }else{
+                            echo $tour->title;
+                        }
                     @endphp
-                    {{ $tour->title }}, {{ $start->formatLocalized('%e %B %Y') }}
                 </a>
                 <a href="#" class="location-event">
                     {{ $tour->city }}, {{ $tour->country }}
                 </a>
-                @if(isset($variants[0]))
+                @if(isset($variants[0]) and (bool)$variants[0]->date_start_variant and (bool)$variants[0]->date_end_variant)
                     <p class="dates-event">
                         <span>
                             {{ $start->formatLocalized('%e %B') }}
@@ -60,43 +69,57 @@
                 <ul class="event-highlights">
                     @if($tour->info_excerpt)
                         <li class="event-highlights-icon">
-                            <img src="{{ asset('assets/site/images/event-highlights-icon-events-01.svg') }}" alt=""
-                                 class="img-fluid">
-                            <span>{{ mb_strimwidth($tour->info_excerpt, 0, 70, '...') }}</span>
+                            <img
+                                src="{{ asset('assets/site/images/event-highlights-icon-events-01.svg') }}"
+                                alt="" class="img-fluid">
+                            <span>{{ mb_strimwidth(strip_tags($tour->info_excerpt), 0, 70, '...') }}</span>
                         </li>
                     @endif
-                    @if($tour->transfer_free or $tour->transfer_fee)
+                    @if($tour->transfer_free or $tour->transfer_fee or $tour->not_transfer)
                         <li class="event-highlights-icon">
-                            <img src="{{ asset('assets/site/images/event-highlights-icon-transfer-02.svg') }}"
-                                 alt="" class="img-fluid">
+                            <img
+                                src="{{ asset('assets/site/images/event-highlights-icon-transfer-02.svg') }}"
+                                alt="" class="img-fluid">
                             <span>
-                                                    @if($tour->transfer_free) Бесплатный трансфер @endif
-                                @if($tour->transfer_fee) Трансфер за дополнительную плату @endif
+                                                        <?php
+                                $prop = [];
+                                if ($tour->transfer_free) $prop[] = 'Траснфер бесплатно';
+                                if ($tour->transfer_fee) $prop[] = 'Траснфер за доп.плату';
+                                if ($tour->not_transfer) $prop[] = 'Добираетесь сами';
+                                echo implode(', ', $prop);
+                                ?>
                                                 </span>
                         </li>
                     @endif
                     @if($tour->count_person)
                         <li class="event-highlights-icon">
-                            <img src="{{ asset('assets/site/images/event-highlights-icon-people-03.svg') }}" alt=""
-                                 class="img-fluid">
+                            <img
+                                src="{{ asset('assets/site/images/event-highlights-icon-people-03.svg') }}"
+                                alt="" class="img-fluid">
                             <span>{{ $tour->count_person }}</span>
                         </li>
                     @endif
-                    @if($tour->meals_desc)
+                    @if($tour->count_meals)
                         <li class="event-highlights-icon">
-                            <img src="{{ asset('assets/site/images/event-highlights-icon-meals-04.svg') }}" alt=""
-                                 class="img-fluid">
-                            <span>{{ mb_strimwidth($tour->meals_desc, 0, 70, '...') }}</span>
+                            <img
+                                src="{{ asset('assets/site/images/event-highlights-icon-meals-04.svg') }}"
+                                alt="" class="img-fluid">
+                            <span>{{ $tour->count_meals }}</span>
                         </li>
                     @endif
                     @if($tour->private_room or $tour->dormitory_room or $tour->separate_house)
                         <li class="event-highlights-icon">
-                            <img src="{{ asset('assets/site/images/event-highlights-icon-room-05.svg') }}" alt=""
-                                 class="img-fluid">
+                            <img
+                                src="{{ asset('assets/site/images/event-highlights-icon-room-05.svg') }}"
+                                alt="" class="img-fluid">
                             <span>
-                                                    @if($tour->private_room) Отдельный номер @endif
-                                @if($tour->dormitory_room) Общий номер @endif
-                                @if($tour->separate_house) Отдельный домик @endif
+                                                        <?php
+                                $prop = [];
+                                if($tour->private_room) $prop[] = 'Отдельный номер';
+                                if($tour->dormitory_room) $prop[] = 'Общий номер';
+                                if($tour->separate_house) $prop[] = 'Отдельный домик';
+                                echo implode(', ', $prop);
+                                ?>
                                                 </span>
                         </li>
                     @endif
