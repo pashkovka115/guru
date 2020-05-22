@@ -8,6 +8,9 @@ use Modules\Admin\Models\ToursTags;
 
 class TagController extends Controller
 {
+    /*
+     * Вывод мероприятий по тегам (как категории)
+     */
     public function show($id)
     {
         $tag = ToursTags::with('tours')->where('id', $id)->firstOrFail();

@@ -40,9 +40,6 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
     Route::resource('page', 'PageController')
         ->names('admin.page');
 
-//    Route::resource('category_post', 'CategoryPostController')
-//        ->names('admin.category_post');
-
     Route::resource('post', 'PostController')
         ->names('admin.post');
 
@@ -82,4 +79,6 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
 //            Route::get('destroy/{id}', 'HomeController@destroy')->name('admin.home.destroy');
         });
     });
+
+    Route::resource('tags', 'TagController')->names('admin.tour.tags');
 });

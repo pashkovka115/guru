@@ -16,6 +16,7 @@ use Modules\Admin\Http\Controllers\PermissionController;
 use Modules\Admin\Http\Controllers\PostController;
 use Modules\Admin\Http\Controllers\RoleController;
 use Modules\Admin\Http\Controllers\Settings\SocialNetworkController;
+use Modules\Admin\Http\Controllers\TagController;
 use Modules\Admin\Http\Controllers\Tour\GeneralController;
 use Modules\Admin\Http\Controllers\Tour\IndexController;
 use Modules\Admin\Http\Controllers\TourController;
@@ -109,6 +110,8 @@ class CheckPermissions
 
         SocialNetworkController::class => 'settings',
         HelpController::class => 'settings',
+
+        TagController::class => 'tags',
 
 //        File Mager
         FileManagerController::class => 'file-manager'

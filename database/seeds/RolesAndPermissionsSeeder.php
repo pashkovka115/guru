@@ -84,6 +84,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'settings_add', 'description' => 'Добавлять настройки']);
         Permission::create(['name' => 'settings_delete', 'description' => 'Удалять настройки']);
 
+        Permission::create(['name' => 'tags_view', 'description' => 'Просматривать теги мероприятий']);
+        Permission::create(['name' => 'tags_edit', 'description' => 'Редактировать теги мероприятий']);
+        Permission::create(['name' => 'tags_add', 'description' => 'Добавлять теги мероприятий']);
+        Permission::create(['name' => 'tags_delete', 'description' => 'Удалять теги мероприятий']);
+
 
 
 

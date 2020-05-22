@@ -1,0 +1,19 @@
+td.project-actions.text-right.actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+td.project-actions.text-right.actions a,
+td.project-actions.text-right.actions button{
+    max-height: 30px !important;
+    height: 30px !important;
+    width: 40px !important;
+    margin-right: 5px;
+}
+
+td.project-actions.text-right.actions form{
+    margin-block-end: 0;
+    margin-left: 2px;
+}
