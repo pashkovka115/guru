@@ -41,6 +41,14 @@ class AppServiceProvider extends ServiceProvider
 
             $cat_ids = array_keys($tours->keyBy('category_tour_id')->toArray());
             \View::share('popular_cats', \DB::table('category_tours')->whereIn('id', $cat_ids)->limit(10)->get(['id', 'title']) ?? null);
+
+            $items1 = \DB::table('tour_leader')->selectRaw('leader_id')->distinct()->get();
+            \View::share('cnt_leaders', $items1->count());
+
+            $items2 = \DB::table('organizer_leader')->selectRaw('organizer_id')->distinct()->get();
+            \View::share('cnt_organizers', $items2->count());
+
+            \View::share('cnt_tours', Tour::count());
         }
     }
 }

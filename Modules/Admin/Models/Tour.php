@@ -78,7 +78,7 @@ class Tour extends Model
     {
         parent::boot();
         // Для не админа не выводим не активные объекты
-        if (!is_admin()) {
+        if (function_exists('is_admin') and !is_admin()) {
             static::addGlobalScope('active', function (Builder $builder) {
                 $builder->where('active', '1');
             });

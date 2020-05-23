@@ -8,6 +8,7 @@ Route::get('/', 'Home\MainController@index')->name('site.main');
 Auth::routes();
 
 Route::get('/author', 'Catalog\UserController@index')->name('site.author.list');
+Route::get('/organizer', 'Catalog\UserController@organizer')->name('site.organizer.list');
 Route::get('/author/{id}', 'Catalog\UserController@show')->name('site.author.show');
 
 Route::resource('events', 'Catalog\TourController')->only('show')->names('site.catalog.tour');

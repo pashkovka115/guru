@@ -31,6 +31,28 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Список организаторов
+     * В данном случае имя $leaders используется для совместимости
+     * метода UserController::index и шаблонов
+     */
+    public function organizer(Request $request)
+    {
+        $organizers_ids = \DB::table('organizer_leader')
+            ->selectRaw('organizer_id')->distinct()->get();
+        $leaders = User::with(['profile', 'tours_with_category', 'comments'])
+            ->whereIn('id', array_keys($organizers_ids->keyBy('organizer_id')->toArray()))
+            ->paginate();
+
+        if ($request->ajax()){
+            return view('pages.catalog.users.ajax_index', ['leaders' => $leaders]);
+        }else{
+            return view('pages.catalog.users.index', ['leaders' => $leaders, 'title'=>'Ведущие мероприятий']);
+        }
+    }
+
 
     public function show($id)
     {
