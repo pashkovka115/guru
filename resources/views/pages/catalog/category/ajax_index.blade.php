@@ -34,13 +34,20 @@
                 </div>
             @endif
             <div class="event__list_block">
-                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-event">
-                    @php
+                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}"
+                   class="title-event">
+                    <?php
+                    $variants = $tour->variants;
+                    if (isset($variants[0])) {
                         $start = \Carbon\Carbon::create($tour->date_start);
                         $end = \Carbon\Carbon::create($tour->date_end);
                         $diff = $start->diffInDays($end);
-                    @endphp
-                    {{ $tour->title }}, {{ $start->formatLocalized('%e %B %Y') }}
+
+                        echo $tour->title . ', ' . $start->formatLocalized('%e %B %Y');
+                    }else{
+                        echo $tour->title;
+                    }
+                    ?>
                 </a>
                 <a href="#" class="location-event">
                     {{ $tour->city }}, {{ $tour->country }}
@@ -123,7 +130,10 @@
                         ?>
                     </div>
                     <div class="event-cost">
-                        {{ number_format($tour->price_base / 100) }} RUB
+                        @if($tour->variants->count() > 0)
+                            <?php dump($tour->variants); ?>
+                            {{ number_format($tour->variants[0]->price_variant / 100) }} RUB
+                        @endif
                     </div>
                 </div>
 

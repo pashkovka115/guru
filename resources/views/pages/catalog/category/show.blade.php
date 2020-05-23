@@ -164,9 +164,11 @@
                                                     }
                                                     ?>
                                                 </div>
-                                                {{-- <div class="event-cost">
-                                                    {{ number_format($tour->price_base / 100) }} RUB
-                                                </div> --}}
+                                                <div class="event-cost">
+                                                    @if($tour->variants->count() > 0)
+                                                        {{ number_format($tour->variants[0]->price_variant / 100) }} RUB
+                                                    @endif
+                                                </div>
                                             </div>
 
                                         </div>

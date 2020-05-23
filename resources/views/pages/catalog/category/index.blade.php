@@ -52,11 +52,13 @@
                                                 <?php
                                                 $variants = $tour->variants;
                                                 if (isset($variants[0])) {
-                                                    $start = \Carbon\Carbon::create($tour->date_start);
-                                                    $end = \Carbon\Carbon::create($tour->date_end);
+                                                    $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
+                                                    $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
                                                     $diff = $start->diffInDays($end);
 
                                                     echo $tour->title . ', ' . $start->formatLocalized('%e %B %Y');
+                                                }else{
+                                                    echo $tour->title;
                                                 }
                                                 ?>
                                             </a>
@@ -147,7 +149,9 @@
                                                     ?>
                                                 </div>
                                                 <div class="event-cost">
-                                                    {{ number_format($tour->price_base / 100) }} RUB
+                                                    @if($tour->variants->count() > 0)
+                                                    {{ number_format($tour->variants[0]->price_variant / 100) }} RUB
+                                                    @endif
                                                 </div>
                                             </div>
 
