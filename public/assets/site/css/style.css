@@ -2626,6 +2626,12 @@ hr {
   font-weight: 500;
   line-height: normal;
 }
+.personal_events_btn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
 .personal_events_btn .btn-edit {
   background: #fff;
   padding: 10px;
@@ -2635,10 +2641,14 @@ hr {
   display: none;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px; 
+  margin-left: 20px;
 }
-.personal_events_btn .btn-edit:nth-child(2) {
-  margin-bottom: 0;
+.personal_events_btn .btn-delete {
+  background: red;
+  color: #ffffff;
+}
+.personal_events_btn .btn-edit:nth-child(1) {
+  margin-left: 0;
 }
 .personal_status_events:hover > .personal_events_btn .btn-edit,
 .personal_status_events:active > .personal_events_btn .btn-edit,
