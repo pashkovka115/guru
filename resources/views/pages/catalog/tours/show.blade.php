@@ -118,7 +118,7 @@
                                 ?>
                             </span>
                         </div>
-                        <a href="#" class="note-schedule">Другие мероприятия организации</a>
+                        <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" class="note-schedule">Другие мероприятия организации</a>
                         <div class="booking__select selected">
                             <label class="booking__variant">
                                 <input type="radio" name="booking" value="1" checked>
@@ -489,7 +489,7 @@
                                 ?>
                             </span>
                         </div>
-                        <a href="#" class="note-schedule">Другие мероприятия организации</a>
+                        <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" target="_blank" class="note-schedule">Другие мероприятия организации</a>
                         {{-- <div class="booking__select selected">
                             <label class="booking__variant">
                                 <input type="radio" name="booking" value="1" checked>

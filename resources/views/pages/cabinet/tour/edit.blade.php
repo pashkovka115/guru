@@ -82,9 +82,9 @@
                 $(this.element).html(this.options.dictDefaultMessage);
             },
             dictDefaultMessage: '<div class="dz-message">Нажмите здесь или перетащите сюда файлы для загрузки</div>',
-            maxFiles: 2,
-            maxFilesize: 2, // Mb
-            dictMaxFilesExceeded: "Достигнут лимит количества файлов. Разрешено 2",
+            maxFiles: 20,
+            maxFilesize: 3, // Mb
+            dictMaxFilesExceeded: "Достигнут лимит количества файлов. Максимум 20 файлов",
             dictFileTooBig: 'Ошибка! Максимальный размер файла - 2 Мб!',
             dictInvalidFileType: 'Разрешены к загрузке файлы: .jpg, .jpeg, .png, .gif',
             acceptedFiles: '.jpg,.jpeg,.png,.gif'
@@ -435,7 +435,7 @@
                                             </span>
                                             <?php endforeach; ?>
                                             </div>
-                                            <textarea placeholder="Подробное описание" id="accommodation-event" name="accommodation_description"></textarea>
+                                            <textarea placeholder="Подробное описание" id="accommodation-event" name="accommodation_description">{{ $tour->accommodation_description }}</textarea>
                                             <script> CKEDITOR.replace( 'accommodation-event' ); </script>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, какие удобства доступны:</p>
@@ -525,7 +525,7 @@
                                                 <span class="removebtn" data-gallery="gallery-meals_{{ $tour->id }}" data-src="<?= $src ?>"><i class="fa fa-times" aria-hidden="true"></i></span></span>
                                             <?php endforeach; ?>
                                             </div>
-                                            <textarea placeholder="Подробное описание" id="meals-event" name="meals_desc">{{ old('meals_desc') }}</textarea>
+                                            <textarea placeholder="Подробное описание" id="meals-event" name="meals_desc">{{ $tour->meals_desc }}</textarea>
                                             <script> CKEDITOR.replace( 'meals-event' ); </script>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, варианты меню:</p>

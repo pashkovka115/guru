@@ -65,14 +65,14 @@
                                             <a href="#" class="location-event">
                                                 {{ $tour->city }}, {{ $tour->country }}
                                             </a>
+                                            @isset($variants[0])
                                             <p class="dates-event">
                                             <span>
-                                                @isset($variants[0])
                                                     {{ $start->formatLocalized('%e %B') }}
                                                     - {{ $end->formatLocalized('%e %B %Y') }}
                                                     ( {{ $diff }} {{ Lang::choice('День|Дня|Дней', $diff) }} )
-                                                @endisset
                                             </span>
+                                                @endisset
                                                 @if($tour->variants->count() > 0)
                                                     <a class="toggle-dates-event">Другие даты</a>
                                                 @endif
