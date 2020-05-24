@@ -23,10 +23,13 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <p class="title-footer">Популярные Страны:</p>
                 <ul class="footer_menu">
+                    <?php $pop_cou = []; ?>
                     @foreach($popular_country as $tour)
+                            <?php if(!in_array($tour->country, $pop_cou)): ?>
                         <li>
                             <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country }}</a>
                         </li>
+                        <?php $pop_cou[] = $tour->country; endif; ?>
                     @endforeach
                 </ul>
             </div>

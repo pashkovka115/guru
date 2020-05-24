@@ -29,7 +29,7 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        $permission = Permissions::where('id', $id)->first();
+        $permission = Permissions::where('id', $id)->firstOrFail();
         return view('admin::pages.permission.show', ['permission' => $permission, 'title' => $this->title, 'title_page' => 'Просмотр разрешения']);
     }
 
@@ -40,7 +40,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        $permission = Permissions::where('id', $id)->first();
+        $permission = Permissions::where('id', $id)->firstOrFail();
         return view('admin::pages.permission.edit', ['permission' => $permission, 'title' => $this->title, 'title_page' => 'Редактирование разрешения']);
     }
 

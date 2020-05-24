@@ -48,7 +48,7 @@ class SocialNetworkController extends Controller
 
     public function edit($id)
     {
-        $setting = Settings::where('id', $id)->first();
+        $setting = Settings::where('id', $id)->firstOrFail();
 
         return view('admin::pages.soc_network.edit', [
             'title' => 'Социальные сети',
@@ -60,7 +60,7 @@ class SocialNetworkController extends Controller
 
     public function update(Request $request, $id)
     {
-        $setting = Settings::where('id', $id)->first();
+        $setting = Settings::where('id', $id)->firstOrFail();
         $setting->url = $request->input('url');
         $setting->icon = $request->input('icon');
         $setting->save();

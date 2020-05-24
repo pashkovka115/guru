@@ -78,6 +78,17 @@
                                            name="good"{{$checked}}>
                                 </dd>
 
+                                <dt class="col-sm-4">Рекомендуемый</dt>
+                                <dd class="col-sm-8">
+                                    @php
+                                        if ($tour->recommended){
+                                            $checked = ' checked';
+                                        }else{$checked = '';}
+                                    @endphp
+                                    <input class="form-check-input" type="checkbox" id="recommended"
+                                           name="recommended"{{$checked}}>
+                                </dd>
+
                                 <dt class="col-sm-4">Удалить это мероприятие</dt>
                                 <dd class="col-sm-8">
                                     <input class="form-check-input" type="checkbox" name="delete_event" id="delete_event">

@@ -9,26 +9,24 @@
                         @csrf
                         @method('PATCH')
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="title">Заголовок</label>
-                                <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}" required>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="title">Заголовок</label>
+                                        <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <table>
+                                        <tr><td style="font-weight: bold">Адрес на сайте</td></tr>
+                                        <tr><td>&nbsp;</td></tr>
+                                        <tr><td><a href="{{ route('site.journal.blog.show', ['journal' => $post->id]) }}" target="_blank">{{ route('site.pages.official.show', ['page' => $post->id]) }}</a></td></tr>
+                                    </table>
+                                </div>
                             </div>
 
-                            {{--<div class="form-group">
-                                <label>Категория</label>
-                                <select class="form-control" name="category_post_id">
-                                    @foreach($categories as $category)
-                                        @php
-                                            if ($category->id == $post->category->id){$selected = ' selected';}
-                                                else{$selected = '';}
-                                        @endphp
-                                        <option value="{{ $category->id }}"{{ $selected }}>{{ $category->title }}</option>
-                                    @endforeach
-                                </select>
-                            </div>--}}
-
                             <div class="form-group">
-                                <label>Пользователь</label>
+                                <label>Автор</label>
                                 <select class="form-control" name="user_id" required>
                                     <option></option>
                                     @foreach($users as $user)

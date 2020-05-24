@@ -29,14 +29,14 @@ class GeneralController extends Controller
 
     public function show($id)
     {
-        $tour = Tour::with('category')->where('id', $id)->first();
+        $tour = Tour::with('category')->where('id', $id)->firstOrFail();
         return view('admin::pages.tour.general.show', ['title_page' => 'Просмотр тура', 'title' => $this->title, 'tour' => $tour]);
     }
 
 
     public function edit($id)
     {
-        $tour = Tour::with(['category', 'user'])->where('id', $id)->first();
+        $tour = Tour::with(['category', 'user'])->where('id', $id)->firstOrFail();
 
         return view('admin::pages.tour.general.edit', [
             'tour' => $tour,
@@ -65,6 +65,12 @@ class GeneralController extends Controller
             $data['good'] = '0';
         }
 
+        if ($request->has('recommended')){
+            $data['recommended'] = '1';
+        }else{
+            $data['recommended'] = '0';
+        }
+
         Tour::where('id', $id)->update($data);
 
         return redirect()->back();
@@ -73,7 +79,8 @@ class GeneralController extends Controller
 
     public function destroy($id, $back = true)
     {
-        Tour::where('id', $id)->delete();
+        $tour =Tour::where('id', $id)->firstOrFail();
+        $tour->delete();
 
         if ($back){
             return redirect()->back();

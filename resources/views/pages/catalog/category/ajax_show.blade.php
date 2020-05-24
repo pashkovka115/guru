@@ -148,6 +148,8 @@
                     <div class="event-cost">
                         @if($tour->variants->count() > 0)
                             {{ number_format($tour->variants[0]->price_variant / 100) }} RUB
+                        @else
+                            Цена по запросу
                         @endif
                     </div>
                 </div>

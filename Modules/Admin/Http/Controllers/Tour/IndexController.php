@@ -13,7 +13,7 @@ class IndexController extends Controller
 
     public function index()
     {
-        $tours = Tour::with('category')->paginate();
+        $tours = Tour::with('category')->orderByDesc('id')->paginate();
         return view('admin::pages.tour.index', ['tours' => $tours, 'title_page' => 'Список туров', 'title' => $this->title]);
     }
 }

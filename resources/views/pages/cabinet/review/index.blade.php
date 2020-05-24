@@ -25,9 +25,11 @@
                     <p class="text-normal">Как только будет оставлен первый отзыв о вашем мероприятии, он отобразиться здесь.</p>
                 </div>
                 @endif
+
                 <div class="personal_events">
                     <h2 class="user-subtitle">Ваши отзывы:</h2>
                 </div>
+
                 @foreach($my_comments as $my_com)
                 <div class="personal_status_events">
                     <div class="personal_events-public">

@@ -51,7 +51,7 @@ class CategoryPostController extends Controller
      */
     public function show($id)
     {
-        $category = CategoryPost::where('id', $id)->first();
+        $category = CategoryPost::where('id', $id)->firstOrFail();
         return view('admin::pages.category_post.show', ['category' => $category, 'title' => $this->title, 'title_page' => 'Просмотр категории']);
     }
 
@@ -62,7 +62,7 @@ class CategoryPostController extends Controller
      */
     public function edit($id)
     {
-        $category = CategoryPost::where('id', $id)->first();
+        $category = CategoryPost::where('id', $id)->firstOrFail();
         return view('admin::pages.category_post.edit', ['category' => $category, 'title' => $this->title, 'title_page' => 'Редактирование категории']);
     }
 
@@ -88,7 +88,7 @@ class CategoryPostController extends Controller
      */
     public function destroy($id)
     {
-        $category = CategoryPost::with('posts')->where('id', $id)->first();
+        $category = CategoryPost::with('posts')->where('id', $id)->firstOrFail();
         if ($category and $category->posts->count() == 0) {
             $category->delete();
             session()->flash('message', 'Удалено');

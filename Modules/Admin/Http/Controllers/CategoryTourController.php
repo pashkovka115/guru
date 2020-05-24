@@ -12,49 +12,35 @@ class CategoryTourController extends Controller
 {
     public $title = 'Категории туров';
 
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
+
     public function index()
     {
         $title_page = 'Все категории';
-        $categories = CategoryTour::all();
+        $categories = CategoryTour::where('id', '>', 0)->orderByDesc('id')->get();
         return view('admin::pages.category_tour.index', ['title_page' => $title_page, 'title' => $this->title, 'categories' => $categories]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
+
     public function create()
     {
         $title_page = 'Новая категория';
         return view('admin::pages.category_tour.create', ['title_page' => $title_page, 'title' => $this->title]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
+
     public function store(Request $request)
     {
-        CategoryTour::create(['title' => $request->input('title'), 'img' => $request->input('img')]);
+        $cat = CategoryTour::create(['title' => $request->input('title'), 'img' => $request->input('img')]);
 
         session()->flash('message', 'Сохранено');
-        return redirect()->back();
+        return redirect()->route('admin.category_tour.edit', ['category_tour' => $cat->id]);
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
+
     public function show($id)
     {
         $title_page = 'Просмотр категории';
-        $category = CategoryTour::where('id', $id)->first();
+        $category = CategoryTour::where('id', $id)->firstOrFail();
         return view('admin::pages.category_tour.show', [
             'title_page' => $title_page,
             'title' => $this->title,
@@ -62,15 +48,11 @@ class CategoryTourController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
+
     public function edit($id)
     {
         $title_page = 'Редактировать категорию';
-        $category = CategoryTour::where('id', $id)->first();
+        $category = CategoryTour::where('id', $id)->firstOrFail();
         return view('admin::pages.category_tour.edit', [
             'title_page' => $title_page,
             'title' => $this->title,
@@ -78,12 +60,7 @@ class CategoryTourController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
+
     public function update(Request $request, $id)
     {
         $data = [
@@ -102,14 +79,10 @@ class CategoryTourController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
+
     public function destroy($id)
     {
-        $category = CategoryTour::with('tours')->where('id', $id)->first();
+        $category = CategoryTour::with('tours')->where('id', $id)->firstOrFail();
         if ($category) {
             if ($category->tours->count() == 0) {
                 $category->delete();

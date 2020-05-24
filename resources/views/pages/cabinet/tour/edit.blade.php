@@ -83,7 +83,7 @@
             },
             dictDefaultMessage: '<div class="dz-message">Нажмите здесь или перетащите сюда файлы для загрузки</div>',
             maxFiles: 20,
-            maxFilesize: 3, // Mb
+            maxFilesize: 2, // Mb
             dictMaxFilesExceeded: "Достигнут лимит количества файлов. Максимум 20 файлов",
             dictFileTooBig: 'Ошибка! Максимальный размер файла - 2 Мб!',
             dictInvalidFileType: 'Разрешены к загрузке файлы: .jpg, .jpeg, .png, .gif',

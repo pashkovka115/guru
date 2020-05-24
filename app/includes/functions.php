@@ -105,7 +105,7 @@ function get_raiting_template($num, $echo_num = true)
     $num = (float)$num;
     if ($num < 0) $num = 0.0;
     $fl = $num - floor($num);
-//    dd($fl);
+
     if ($num > 0) {
         $str = '<span class="rating-star-display">';
         for ($i = 0; $i < (int)$num; $i++) {
@@ -119,8 +119,13 @@ function get_raiting_template($num, $echo_num = true)
         for ($a = 1, $i = 5 - $count_star; $a <= $i; $a++){
             $str .= '<span class="rating-star-empty"></span>';
         }
-        if ($echo_num)
-            $str .= '<span class="rating-value">' . ((string)$num) . '</span>';
+        if ($echo_num) {
+            $fl = $num - floor($num);
+            if ($fl == 0){
+                $num = (string)$num . '.0';
+            }
+            $str .= '<span class="rating-value">' . strval($num) . '</span>';
+        }
         $str .= '</span>';
         return $str;
     }

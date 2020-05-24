@@ -15,7 +15,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::paginate();
+        $posts = Post::orderByDesc('id')->paginate();
         return view('admin::pages.posts.index', ['posts' => $posts, 'title' => $this->title, 'title_page' => 'Список записей']);
     }
 
@@ -30,7 +30,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        Post::create([
+        $post = Post::create([
             'user_id' => (int)$request->input('user_id'),
             'title' => $request->input('title'),
             'img' => $request->input('img'),
@@ -39,20 +39,20 @@ class PostController extends Controller
         ]);
         session()->flash('message', 'Сохранил');
 
-        return redirect()->back();
+        return redirect()->route('admin.post.edit', ['post' => $post->id]);
     }
 
 
     public function show($id)
     {
-        $post = Post::with(['user'])->where('id', $id)->first();
+        $post = Post::with(['user'])->where('id', $id)->firstOrFail();
         return view('admin::pages.posts.show', ['post' => $post, 'title' => $this->title, 'title_page' => 'Просмотр записи']);
     }
 
 
     public function edit($id)
     {
-        $post = Post::with(['user'])->where('id', $id)->first();
+        $post = Post::with(['user'])->where('id', $id)->firstOrFail();
         $users = User::all();
 
         return view('admin::pages.posts.edit', [
@@ -81,7 +81,7 @@ class PostController extends Controller
 
     public function destroy($id)
     {
-        Post::where('id', $id)->first()->delete();
+        Post::where('id', $id)->firstOrFail()->delete();
         session()->flash('message', 'Удалил');
 
         return redirect()->back();
