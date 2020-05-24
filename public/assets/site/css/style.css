@@ -2685,15 +2685,32 @@ hr {
   margin-top: 10px;
   padding: 5px;
 }
-/* ТЕСТ */
+/* Создание мероприятия */
 .block_create {
   background: #fafafa;
   padding: 40px 0;
+}
+.information-create-block {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 .create-title {
   font-size: 1.8rem;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+.btn-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 150px;
+  height: 34px;
+  font-size: 1rem;
+  background: #dcac6c;
+  color: #fff;
 }
 .create-subtitle {
   font-weight: 600;
@@ -2787,6 +2804,10 @@ hr {
 }
 .create-text-min {
   font-size: .9rem;
+}
+.block-avatar {
+  width: 100%;
+  max-width: 200px;
 }
 .block-variants {
   display: flex;
