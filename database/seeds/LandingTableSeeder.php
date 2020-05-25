@@ -10,6 +10,7 @@ class LandingTableSeeder extends Seeder
         $header = [
             'post_type' => 'header',
             'title' => 'Хотите предложить объявление и найти участников?',
+            'img' => asset('storage/background/bg_add.jpg'),
             'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut error nesciunt, odio porro ducimus placeat.',
             'button_text' => 'Добавить объявление'
         ];
@@ -31,6 +32,7 @@ class LandingTableSeeder extends Seeder
         $decorative = [
             'post_type' => 'decorative',
             //'sort_block' => 2,
+            'img' => asset('storage/background/bg_add.jpg'),
             'title' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, facilis, voluptates? In ullam quod, iusto.',
             'excerpt' => '- Lorem ipsum dolor sit amet.',
         ];

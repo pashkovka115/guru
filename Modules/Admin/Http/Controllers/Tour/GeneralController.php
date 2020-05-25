@@ -9,6 +9,9 @@ use Illuminate\Routing\Controller;
 use Modules\Admin\Models\CategoryTour;
 use Modules\Admin\Models\Tour;
 use Modules\Admin\Models\TourLeader;
+use Modules\Admin\Models\TourRating;
+use Modules\Admin\Models\ToursTagsTours;
+use Modules\Admin\Models\TourVariant;
 
 class GeneralController extends Controller
 {
@@ -79,8 +82,14 @@ class GeneralController extends Controller
 
     public function destroy($id, $back = true)
     {
-        $tour =Tour::where('id', $id)->firstOrFail();
-        $tour->delete();
+        \DB::transaction(function () use ($id){
+            $tour =Tour::where('id', $id)->firstOrFail();
+            TourLeader::where('tour_id', $id)->delete();
+            TourRating::where('tour_id', $id)->delete();
+            ToursTagsTours::where('tour_id', $id)->delete();
+            TourVariant::where('tour_id', $id)->delete();
+            $tour->delete();
+        });
 
         if ($back){
             return redirect()->back();

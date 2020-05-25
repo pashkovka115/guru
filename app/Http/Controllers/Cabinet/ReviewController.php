@@ -24,6 +24,33 @@ class ReviewController extends Controller
 
         return view('pages.cabinet.review.index', ['my_comments' => $my_comments, 'me_comments' => $me_comments ?? []]);
     }
+
+
+    public function edit($id)
+    {
+        $comment = TourRating::with('tour')->where('id', $id)->first();
+
+        return view('pages.cabinet.review.edit', ['comment' => $comment]);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        TourRating::where('id', $id)->update([
+            'title' => $request->input('title'),
+            'comment' => $request->input('comment'),
+        ]);
+
+        return redirect()->back();
+    }
+
+
+    public function destroy($id)
+    {
+        TourRating::where('id', $id)->delete();
+
+        return redirect()->back();
+    }
 }
 
 

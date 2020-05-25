@@ -54,9 +54,14 @@
                         </div>
                     </div>
                     <div class="personal_events_btn">
-                        <a href="" class="btn-edit">Редактировать</a>
-                        <a href="" target="_blank" class="btn-edit btn-view">Посмотреть</a>
-                        <a href="" class="btn-edit btn-delete">Удалить</a>
+                        <a href="{{ route('site.cabinet.review.edit', ['review' => $my_com->id]) }}" class="btn-edit">Редактировать</a>
+                        <a href="{{ route('site.catalog.tour.show', ['event' => $my_com->tour->id]) }}" target="_blank" class="btn-edit btn-view">Посмотреть</a>
+                        <a href="{{ route('site.cabinet.review.destroy', ['review' => $my_com->id]) }}" class="btn-edit btn-delete"
+                           onclick="event.preventDefault(); document.getElementById('delete_form_comment').submit();">Удалить</a>
+                        <form id="delete_form_comment" action="{{ route('site.cabinet.review.destroy', ['review' => $my_com->id]) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
                     </div>
                 </div>
                 @endforeach
@@ -91,7 +96,7 @@
                         </div>
                     </div>
                     <div class="personal_events_btn">
-                        <a href="#" class="btn-edit">Посмотреть</a>
+                        <a href="{{ route('site.catalog.tour.show', ['event' => $me_comm->tour->id]) }}" target="_blank" class="btn-edit">Посмотреть</a>
                     </div>
                 </div>
                 @endforeach

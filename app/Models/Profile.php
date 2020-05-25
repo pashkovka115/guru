@@ -8,13 +8,22 @@ class Profile extends Model
 {
     protected $fillable = [
         'user_id',
-        'type_user',
         'raiting',
         'auth',
+        'request',
+        'url',
+        'avatar',
         'excerpt',
         'description',
-        'country',
+        'gallery',
+        'address',
+        'street',
+        'house',
+        'region',
         'city',
+        'country',
+        'latitude',
+        'longitude',
     ];
     public $timestamps = false;
 

@@ -71,7 +71,13 @@
                             <div class="personal_events_btn">
                                 <a href="{{ route('site.cabinet.tour.edit', ['tour' => $tour->id]) }}" class="btn-edit">Редактировать</a>
                                 <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" target="_blank" class="btn-edit btn-view">Посмотреть</a>
-                                <a href="" class="btn-edit btn-delete">Удалить</a>
+                                <a href="{{ route('site.cabinet.tour.destroy', ['tour' => $tour->id]) }}" class="btn-edit btn-delete"
+                                   onclick="event.preventDefault(); document.getElementById('delete-tour-form').submit();">Удалить</a>
+
+                                <form id="delete-tour-form" action="{{ route('site.cabinet.tour.destroy', ['tour' => $tour->id]) }}" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
                             </div>
                         </div>
                     @endforeach

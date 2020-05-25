@@ -7,7 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Modules\Admin\Models\CategoryTour;
 use Modules\Admin\Models\Tour;
+use Modules\Admin\Models\TourLeader;
+use Modules\Admin\Models\TourRating;
 use Modules\Admin\Models\ToursTags;
+use Modules\Admin\Models\ToursTagsTours;
 use Modules\Admin\Models\TourVariant;
 
 
@@ -491,6 +494,21 @@ class TourController extends Controller
             }
 
             $tour->update($data);
+        });
+
+        return redirect()->back();
+    }
+
+
+    public function destroy($id)
+    {
+        \DB::transaction(function () use ($id){
+            $tour =Tour::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+            TourLeader::where('tour_id', $id)->delete();
+            TourRating::where('tour_id', $id)->delete();
+            ToursTagsTours::where('tour_id', $id)->delete();
+            TourVariant::where('tour_id', $id)->delete();
+            $tour->delete();
         });
 
         return redirect()->back();

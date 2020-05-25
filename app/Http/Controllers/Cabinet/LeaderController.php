@@ -10,6 +10,37 @@ use Modules\Admin\Models\OrganizerLeader;
 
 class LeaderController extends Controller
 {
+    /*
+     * для любого поля
+     * удалить ссылку на файл
+     */
+    public function ajax_gallery_remove(Request $request)
+    {
+        if ($request->has('field-src') and $request->has('field-name')) {
+            $field = $request->input('field-name');
+            $sp = explode('_', $field);
+            $field_name = str_replace('-', '_', $sp[0]);
+            $bd_gallery = Profile::where('id', (int)$sp[1])->firstOrFail(['id', $field_name]);
+            $gall_ar = (array)json_decode($bd_gallery->$field_name);
+
+
+            foreach ($gall_ar as $key => $value) {
+                if ($value == json_decode(json_encode($request->input('field-src')))) {
+                    unset($gall_ar[$key]);
+                }
+            }
+
+            $bd_gallery->$field_name = json_encode($gall_ar);
+            $bd_gallery->save();
+
+            return [
+                'answer' => 'ok',
+            ];
+        }
+        return ['answer' => 'error'];
+    }
+
+
     public function index()
     {
         $user = User::with('leaders')->where('id', auth()->id())->firstOrFail();
@@ -25,38 +56,73 @@ class LeaderController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->input('email') != auth()->user()->email) {
-            $request->validate([
-                "name" => "required|regex:/[\w\s\-]*/i",
-                "email" => "required|email|unique:users",
-                "password" => "confirmed|min:8",
-            ]);
-        } else {
-            $request->validate([
-                "email" => "required|email",
-            ]);
+        $request->validate([
+            "name" => "required|regex:/[\w\s\-]*/i",
+            "email" => "required|email|unique:users",
+        ]);
+        $new_dir = get_image_path_to_profile($request->all());
+        if (!is_dir($new_dir)) {
+            mkdir($new_dir, 0755, true);
         }
+// description
+//address
+//street
+//house
+//region
+//city
+//country
+//latitude
+//longitude
+//  url
 
         \DB::transaction(function () use ($request) {
-            if ($request->input('email') != auth()->user()->email) {
-                $user = User::create([
-                    "name" => $request->input('name'),
-                    "email" => $request->input('email'),
-                    "password" => bcrypt($request->input('password'))
-                ]);
-                $leader_id = $user->id;
-            } else {
-                $leader_id = auth()->id();
+            $user = User::with('profile')->create([
+                "name" => $request->input('name'),
+                "email" => $request->input('email'),
+            ]);
+//            $user->save();
+
+//            $user = User::where('id', $user->id)->first();
+
+//            dd(get_url_to_uploaded_files($user, $request->file('avatar')));
+
+            $profile = new Profile([
+                'user_id' => $user->id,
+                'description' => $request->input('description'),
+                'address' => $request->input('address'),
+                'street' => $request->input('street'),
+                'house' => $request->input('house'),
+                'region' => $request->input('region'),
+                'city' => $request->input('city'),
+                'country' => $request->input('country'),
+                'latitude' => $request->input('latitude'),
+                'longitude' => $request->input('longitude'),
+                'url' => $request->input('url'),
+            ]);
+            $profile->save();
+
+            $profile = Profile::where('id', $profile->id)->first();
+
+            if ($request->has('avatar')){
+                $profile->avatar = json_encode(get_url_to_uploaded_files($user, $request->file('avatar')));
             }
+
+            if ($request->has('gallery')){
+                $profile->gallery = json_encode(get_url_to_uploaded_files($user, $request->file('gallery')));
+            }
+            $profile->save();
 
             OrganizerLeader::create([
                 'organizer_id' => auth()->id(),
-                'leader_id' => $leader_id
+                'leader_id' => $user->id
             ]);
+            session(['created_author_id' => $user->id]);
+
+//            dd('====================');
         });
 
         session()->flash('message', 'Сохранил');
-        return redirect()->back();
+        return redirect()->route('site.cabinet.leaders.edit', ['leader' => session()->get('created_author_id')]);
     }
 
 
@@ -119,8 +185,11 @@ class LeaderController extends Controller
                     $user->profile->latitude = $request->input('latitude');
                     $user->profile->longitude = $request->input('longitude');
 
-                    if ($request->has('gallery') and $request->file('gallery') !== null){
-                        $user->profile->gallery = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery')));
+                    if ($request->has('gallery') and $request->file('gallery') !== null) {
+                        $old_gallery = json_decode($user->profile->gallery) ?: [];
+                        $new_img = get_url_to_uploaded_files(auth()->user(), $request->file('gallery'));
+                        $new_gallery = array_merge($old_gallery, $new_img);
+                        $user->profile->gallery = json_encode($new_gallery);
                     }
 
                     $user->profile->save();
@@ -143,7 +212,7 @@ class LeaderController extends Controller
                         "latitude" => $request->input('latitude'),
                         "longitude" => $request->input('longitude'),
                     ];
-                    if ($request->has('gallery') and $request->file('gallery') !== null){
+                    if ($request->has('gallery') and $request->file('gallery') !== null) {
                         $data['gallery'] = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery')));
                     }
                     Profile::create($data);
