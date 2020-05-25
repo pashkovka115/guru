@@ -15,7 +15,10 @@
                 <div class="col-lg-12">
                     @include('parts.cabinet.menu')
                     <div class="information-create">
-                        <h1 class="create-title">Мои данные</h1>
+                        <div class="information-create-block">
+                            <h1 class="create-title">Мои данные</h1>
+                            <a href="" class="btn-view">Посмотреть</a>
+                        </div>
                         <div class="panel-create">
                             <form enctype="multipart/form-data" action="{{ route('site.cabinet.user.update', ['user' => auth()->id()]) }}" autocomplete="off" method="post">
                                 @csrf

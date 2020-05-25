@@ -53,11 +53,11 @@
                             </p>
                         </div>
                     </div>
-                    {{--<div class="personal_events_btn">
-                    todo: для будущей реализации (этот функционал нужен?)
-                        <a href="#" class="btn-edit">Редактировать</a>
-                        <a href="#" class="btn-edit btn-view">Посмотреть</a>
-                    </div>--}}
+                    <div class="personal_events_btn">
+                        <a href="" class="btn-edit">Редактировать</a>
+                        <a href="" target="_blank" class="btn-edit btn-view">Посмотреть</a>
+                        <a href="" class="btn-edit btn-delete">Удалить</a>
+                    </div>
                 </div>
                 @endforeach
 
@@ -90,9 +90,9 @@
                             </p>
                         </div>
                     </div>
-                    {{--<div class="personal_events_btn">
+                    <div class="personal_events_btn">
                         <a href="#" class="btn-edit">Посмотреть</a>
-                    </div>--}}
+                    </div>
                 </div>
                 @endforeach
             </div>

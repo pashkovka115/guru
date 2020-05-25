@@ -2,7 +2,7 @@
 @section('content')
     @if($headers)
     @foreach($headers as $header)
-    <div class="block_adds">
+    <div class="block_adds" style="background: url('СЮДА ВСТАВЛЯЕМ ФОТО ИЗ АДМИНКИ');">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 elem_adds">
@@ -38,7 +38,7 @@
 
     @if($decoratives)
         @foreach($decoratives as $decorative)
-    <div class="block_adds_content_bg">
+    <div class="block_adds_content_bg" style="background: url('СЮДА ВСТАВЛЯЕМ ФОТО ИЗ АДМИНКИ');">
         <div class="container">
             <div class="row">
                 <div class="block_adds_content__text">

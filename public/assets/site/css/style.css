@@ -2626,6 +2626,12 @@ hr {
   font-weight: 500;
   line-height: normal;
 }
+.personal_events_btn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
 .personal_events_btn .btn-edit {
   background: #fff;
   padding: 10px;
@@ -2635,10 +2641,14 @@ hr {
   display: none;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px; 
+  margin-left: 20px;
 }
-.personal_events_btn .btn-edit:nth-child(2) {
-  margin-bottom: 0;
+.personal_events_btn .btn-delete {
+  background: red;
+  color: #ffffff;
+}
+.personal_events_btn .btn-edit:nth-child(1) {
+  margin-left: 0;
 }
 .personal_status_events:hover > .personal_events_btn .btn-edit,
 .personal_status_events:active > .personal_events_btn .btn-edit,
@@ -2675,15 +2685,32 @@ hr {
   margin-top: 10px;
   padding: 5px;
 }
-/* ТЕСТ */
+/* Создание мероприятия */
 .block_create {
   background: #fafafa;
   padding: 40px 0;
+}
+.information-create-block {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 .create-title {
   font-size: 1.8rem;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+.btn-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 150px;
+  height: 34px;
+  font-size: 1rem;
+  background: #dcac6c;
+  color: #fff;
 }
 .create-subtitle {
   font-weight: 600;
@@ -2777,6 +2804,10 @@ hr {
 }
 .create-text-min {
   font-size: .9rem;
+}
+.block-avatar {
+  width: 100%;
+  max-width: 200px;
 }
 .block-variants {
   display: flex;

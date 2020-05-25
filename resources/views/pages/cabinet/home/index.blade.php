@@ -39,10 +39,15 @@
                         <div class="personal_status">
                             <p class="text-normal">Ваш профиль авторизован!</p>
                             <p class="text-normal">Ваш профиль подтвержден, и вы можете начать добавление мероприятий.</p>
+                            <p class="text-normal">Чтобы добавить свое первое мероприятие, нажмите на кнопку ниже, а затем заполните каждый из разделов.</p>
                             <a href="{{ route('site.cabinet.tour.create') }}" class="btn-personal">Добавить мероприятие</a>
                         </div>
                     @else
-                        <a href="{{ route('site.cabinet.tour.create') }}" class="btn-personal">Добавить мероприятие</a>
+                        <div class="personal_status">
+                            <p class="text-normal">Ваш профиль авторизован!</p>
+                            <p class="text-normal">Ваш профиль подтвержден, и вы можете начать добавление мероприятий.</p>
+                            <a href="{{ route('site.cabinet.tour.create') }}" class="btn-personal">Добавить мероприятие</a>
+                        </div>
                     @endif
                 </div>
             </div>

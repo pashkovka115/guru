@@ -32,9 +32,9 @@
                             </div>
                             <div class="personal_events_btn">
                                 <a href="{{ route('site.cabinet.leaders.edit', ['leader' => $leader->id]) }}" class="btn-edit">Редактировать</a>
-
+                                <a href="" target="_blank" class="btn-edit btn-view">Посмотреть</a>
                                 <a href="{{ route('site.cabinet.leaders.destroy', ['leader' => $leader->id]) }}"
-                                   onclick="event.preventDefault(); document.getElementById('delete-form{{ $loop->index }}').submit();" class="btn-edit"> Удалить
+                                   onclick="event.preventDefault(); document.getElementById('delete-form{{ $loop->index }}').submit();" class="btn-edit btn-delete"> Удалить
                                 </a>
                                 <form id="delete-form{{ $loop->index }}" action="{{ route('site.cabinet.leaders.destroy', ['leader' => $leader->id]) }}" method="POST" style="display: none;">
                                     @csrf
