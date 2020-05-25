@@ -205,13 +205,14 @@
 											<label for="video-url" class="create-subtitle">Видео YouTube:</label>
 											<input id="video-url" type="text" name="video-url" value="">
 										</div>
-										<div class="block-panel">
+										<!--<div class="block-panel">
+										TODO: теги не предусмотрены
 											<label for="tags" class="create-subtitle">Теги (максимум 5):</label>
 											<select class="chosen-select" id="tags" name="tags" multiple="multiple">
 											    <option value="тег1">тег1</option>
 											    <option value="тег2">тег2</option>
 											</select>
-										</div>
+										</div>-->
 										<div class="block-publication">
 											<button type="submit" class="btn-public">Сохранить</button>
 										</div>
@@ -398,25 +399,25 @@
 <script>
 	let autocomplete,  marker, infowindow, map;
 	function initMap() {
-		
+
 		/*map = new google.maps.Map(document.getElementById('map'), {
 			center: {lat:-33.56, lng:151.21},
 			zoom: 13
 		});
-		
+
 		infowindow = new google.maps.InfoWindow();
 		marker = new google.maps.Marker({
 			map:map
 		});*/
-		
+
 		let inputs = document.querySelector('#address');
 		autocomplete = new google.maps.places.Autocomplete(inputs);
-		
+
 		google.maps.event.addListener(autocomplete,'place_changed',function() {
-			
+
 			/*marker.setVisible(false);
 			infowindow.close();*/
-			
+
 			let place = autocomplete.getPlace();
 			if(!place.geometry) {
 				alert('Error');
@@ -427,15 +428,15 @@
 			else {
 				alert('Error');
 			}*/
-			
+
 			/*marker.setIcon({
 				url:place.icon,
 				scaledSize: new google.maps.Size(35,35)
 			});
-			
+
 			marker.setPosition(place.geometry.location);
 			marker.setVisible(true);*/
-			
+
 			let address = '';
 			if(place.address_components) {
 				address = [
@@ -444,25 +445,25 @@
 		              (place.address_components[2] && place.address_components[2].short_name || '')
 		            ].join(' ');
 			}
-			
+
 			//infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
 			//infowindow.open(map, marker);
-			
+
 			document.getElementById('latitude').value = place.geometry.location.lat();
 			document.getElementById('longitude').value= place.geometry.location.lng();
-			
+
 			let city = '';
             let street = '';
             let house = '';
             let region = '';
             let country = '';
-            
+
             let tmp = '';
             place.address_components.forEach(function(item) {
             	tmp = item.long_name;
             	if(item.types) {
             		item.types.forEach(function(t) {
-            			
+
             			switch(t) {
             				case 'street_number':
             					house = tmp;
@@ -482,7 +483,7 @@
 								city = tmp;
 								break;
             			}
-            			
+
             		});
             	}
             });
@@ -512,7 +513,7 @@
 	            "</span>").insertAfter(".photogallery-container");
 	          $(".removebtn").click(function(){
 	            $(this).parent(".photogallery-demo").remove();
-	          });    
+	          });
 	        });
 	        fileReader.readAsDataURL(f);
 	      }
