@@ -436,7 +436,7 @@
                                 <p class="title-shedule">Отзывов - {{ $comments->count() }}</p>
                                 @endif
                                 <div class="block-reviews">
-                                    @foreach($comments as $comment)
+                                    @foreach($comments->reverse() as $comment)
                                     <article class="block-reviews_elem article">
                                         <div class="review_header">
                                             <p class="title-review">{{ $comment->title }}</p>
