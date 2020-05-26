@@ -2,7 +2,7 @@
 @section('content')
     @if($tour->gallery)
     <div class="block_event_image">
-        <div class="container-fluid no-padding">
+        <div class="container-fluid no-padding event-gallery-pc">
             @php
                 $gallery = json_decode($tour->gallery);
             @endphp
@@ -50,6 +50,27 @@
                 </div>
             </div>
         </div>
+        <div class="container event-gallery-mobile">
+            <div class="row">
+                <div class="owl-carousel owl-theme slide-cat event_list_photo">
+                    <div class="item">
+                        <a href="" class="event_list__link">
+                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid event_list_img">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="" class="event_list__link">
+                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid event_list_img">
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="" class="event_list__link">
+                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid event_list_img">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     @endif
     <div class="block_event_content">
@@ -63,7 +84,7 @@
                                 <div class="rating">
                                     {!! get_raiting_template($tour->rating) !!}
                                     @if($comments->count() > 0)
-                                    <a href="#reviews" class="review-count">Отзывов - <span>{{ $comments->count() }}</span></a>
+                                    <a href="#reviews" class="review-count scroll-to">Отзывов - <span>{{ $comments->count() }}</span></a>
                                     @endif
                                 </div>
                             </div>
@@ -133,7 +154,8 @@
                                     {{ $tour->info_description }}
                                 </div>
                             </label>
-                        </div>
+                        </div> -->
+                        <div class="booking__selected">
                         @foreach($tour->variants as $variant)
                             <div class="booking__select">
                                 <label class="booking__variant">
@@ -145,16 +167,17 @@
                                     <div class="price-info">
                                         <p class="cost-tour">{{ number_format($variant->price_variant / 100) }} <span>RUB</span></p>
                                         <p>{{ $variant->amount_variant }}</p>
-                                        {{ $variant->text_variant }}
+                                        <p>{{ mb_strimwidth($variant->text_variant, 0, 50, '...') }}</p>
                                     </div>
                                 </label>
                             </div>
                         @endforeach
+                        </div>
                     </div>
                     @if($tour->info_excerpt)
                     <div class="event-list">
                         <h2 class="event-subtitle">Информация о мероприятии</h2>
-                        {!! $tour->info_excerpt !!}
+                        <div class="article-block">{!! $tour->info_excerpt !!}</div>
                     </div>
                     @endif
                     <div class="event-details-text">
@@ -165,14 +188,14 @@
                         <div class="event_list__autor">
                             @foreach($tour->leaders as $leader)
                                 <?php //dd($leader->profile); ?>
-                            <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" target="_blank" title="{{ $leader->name }}">
+                                <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" target="_blank" title="{{ $leader->name }}">
                                 <img src="{{ json_decode($leader->profile->avatar)[0] ?? '' }}" alt="фото автора" class="img-fluid">
                                 <span>{{ $leader->name }}</span>
                             </a>
                             @endforeach
                         </div>
                         <div class="article">
-                        {!! $tour->info_description !!}
+                            <div class="article-block">{!! $tour->info_description !!}</div>
                         </div>
                     </div>
                     @if($tour->timetable)
@@ -180,7 +203,8 @@
                         <div class="event-accordion accordion-schedule">
                             <div class="accordion-btn">График мероприятия:</div>
                             <div class="panel article">
-                            {!! $tour->timetable !!}
+                                <div class="article-block">{!! $tour->timetable !!}</div>
+                                <p class="note-schedule"><span>Примечание:</span> Расписание является приблизительным и может изменится.</p>
                             </div>
                         </div>
                     </div>
@@ -212,13 +236,15 @@
                                     @endif
                                 </div>
                                 <div class="block_place">
-                                    @php
-                                    $link = generate_google_map_link([$tour->address]);
-                                    @endphp
-                                    <iframe width="100%" height="350" frameborder="0" style="border:0" src="{{ $link }}" allowfullscreen></iframe>
+                                    <div class="article-block">
+                                        @php
+                                        $link = generate_google_map_link([$tour->address]);
+                                        @endphp
+                                        <iframe width="100%" height="350" frameborder="0" style="border:0" src="{{ $link }}" allowfullscreen></iframe>
+                                    </div>
                                 </div>
                                 <div class="block_place">
-                                    {!! $tour->adress_desk !!}
+                                    <div class="article-block">{!! $tour->adress_desk !!}</div>
                                 </div>
                             </div>
                         </div>
@@ -282,7 +308,7 @@
                                         <li class="noactive"><span class="icon-accommodation"></span>Кофе/Чай</li>
                                     @endif
                                 </ul>
-                                {!! $tour->accommodation_description !!}
+                                <div class="article-block">{!! $tour->accommodation_description !!}</div>
                             </div>
                         </div>
                     </div>
@@ -357,7 +383,7 @@
                                             <li class="noactive"><span class="icon-meals"></span>Без орехов</li>
                                     @endif
                                 </ul>
-                                {!! $tour->meals_desc !!}
+                                <div class="article-block">{!! $tour->meals_desc !!}</div>
                             </div>
                         </div>
                     </div>
@@ -366,10 +392,10 @@
                         <div class="event-accordion accordion-included">
                             <div class="accordion-btn">Включено в мероприятие:</div>
                             <div class="panel article">
-                                {!! $tour->included !!}
+                                <div class="article-block">{!! $tour->included !!}</div>
                                 @if($tour->no_included)
                                 <p class="title-place">Не включено:</p>
-                                {!! $tour->no_included !!}
+                                <div class="article-block">{!! $tour->no_included !!}</div>
                                 @endif
                             </div>
                         </div>
@@ -382,7 +408,9 @@
                             <div class="accordion-btn">Видео:</div>
                             <div class="panel article">
                                 <div class="block_place">
-                                    <iframe width="100%" height="350" src="https://www.youtube.com/embed/{{ $tour->video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="article-block">
+                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/{{ $tour->video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -427,8 +455,13 @@
                                             <p class="text-review">{{ $comment->comment }}</p>
                                         </div>
                                         <div class="review_footer">
-                                            <span class="review-autor">{{ $comment->user->name }}</span> -
-                                            <span class="review-date">{{ $comment->updated_at->formatLocalized('%e %B %Y') }}</span>
+                                            <div class="review_footer_autor">
+                                                <span class="review-autor">{{ $comment->user->name }}</span> -
+                                                <span class="review-date">{{ $comment->updated_at->formatLocalized('%e %B %Y') }}</span>
+                                            </div>
+                                            <div class="review_footer_edit">
+                                                <a href="#">Изменить отзыв</a>
+                                            </div>
                                         </div>
                                     </article>
                                     @endforeach
@@ -511,22 +544,24 @@
                                 </div>
                             </label>
                         </div> --}}
+                        <div class="booking__selected">
                         @foreach($tour->variants as $variant)
-                        <div class="booking__select">
-                            <label class="booking__variant">
-                                <input type="radio" name="booking" value="2">
-                                <span class="radio"></span>
-                                <div class="price-img">
-                                    <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
-                                </div>
-                                <div class="price-info">
-                                    <p class="cost-tour">{{ number_format($variant->price_variant / 100) }} <span>RUB</span></p>
-                                    <p>{{ $variant->amount_variant }}</p>
-                                    <p>{{ mb_strimwidth($variant->text_variant, 0, 100, '...') }}</p>
-                                </div>
-                            </label>
-                        </div>
+                            <div class="booking__select">
+                                <label class="booking__variant">
+                                    <input type="radio" name="booking" value="2">
+                                    <span class="radio"></span>
+                                    <div class="price-img">
+                                        <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
+                                    </div>
+                                    <div class="price-info">
+                                        <p class="cost-tour">{{ number_format($variant->price_variant / 100) }} <span>RUB</span></p>
+                                        <p>{{ $variant->amount_variant }}</p>
+                                        <p>{{ mb_strimwidth($variant->text_variant, 0, 50, '...') }}</p>
+                                    </div>
+                                </label>
+                            </div>
                         @endforeach
+                        </div>
                         <div class="booking__event">
                             <p class="note-schedule"><span>Бронирования</span> места составляет <span>14%</span> от суммы!</p>
                             <a href="#" class="btn-booking">Забронировать место</a>
@@ -536,7 +571,10 @@
             </div>
         </div>
     </div>
-
+    <div class="booking__event__mobile">
+		<p class="note-schedule"><span>Бронирования</span> места составляет <span>14%</span> от суммы!</p>
+		<a href="#" class="btn-booking">Забронировать место</a>
+	</div>
     @auth
     <div class="fancybox-content" id="form-reviews" style="display: none;">
         <div class="form-title">Оставить отзыв</div>
