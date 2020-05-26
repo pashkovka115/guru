@@ -19,7 +19,7 @@ class CreateToursRatingTable extends Migration
             $table->enum('new_comment', ['1', '0']);
             $table->unsignedBigInteger('tour_id');
             $table->unsignedBigInteger('user_id');
-            $table->tinyInteger('rating');
+            $table->float('rating');
             $table->string('title');
             $table->longText('comment');
             $table->timestamps();
