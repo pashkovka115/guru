@@ -17,7 +17,7 @@
                     <div class="information-create">
                         <div class="information-create-block">
                             <h1 class="create-title">Редактируем автора (преподавателя)</h1>
-                            <a href="" class="btn-view">Посмотреть</a>
+                            <a href="" class="btn-views">Посмотреть</a>
                         </div>
                         <div class="panel-create">
                             <form enctype="multipart/form-data" action="{{ route('site.cabinet.leaders.update', ['leader' => $user->id]) }}" autocomplete="off" method="post">

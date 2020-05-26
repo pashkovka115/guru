@@ -38,6 +38,7 @@ ul, ol {
 :-ms-input-placeholder{color: #131313;}
 ::-ms-input-placeholder{color: #131313;}
 ::placeholder{color: #131313;} 
+
 .wrapper {
 	width: 100%;
 	max-width: 1920px;
@@ -1633,6 +1634,9 @@ display: block;
 .no-padding .row {
   margin:0 auto;
 }
+.event-gallery-mobile {
+  display: none;
+}
 .block_event_content {
   color: #493c35;
   padding: 40px 0;
@@ -1827,6 +1831,9 @@ display: block;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+.article-block {
+  margin-bottom: 20px;
+}
 .title-shedule, .title-place {
   font-size: 1rem;
   font-weight: 600;
@@ -1983,7 +1990,9 @@ display: block;
 .review-text {
   margin-left: 10px;
 }
-.rating-accordion .rating-star-solid:before,.rating-accordion .rating-star-half:before {
+.rating-accordion .rating-star-solid:before,
+.rating-accordion .rating-star-half:before,
+.rating-accordion .rating-star-empty:before {
   font-size: 1.5rem;
 }
 .btn-review, .btn-booking {
@@ -2009,6 +2018,7 @@ display: block;
   display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     margin-bottom: 20px;
 }
 .title-review {
@@ -2019,10 +2029,15 @@ display: block;
     margin-bottom: 0;
 }
 .review_header .rating {
-  display: none;
+  display: flex;
   align-items: center;
+  line-height: normal;
 }
 .review_footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   font-size: .75rem;
     color: #968a84;
 }
@@ -2111,10 +2126,32 @@ display: block;
   font-size: .9rem;
   margin-bottom: 5px;
 }
+.booking__selected {
+  height: auto;
+  max-height: 300px;
+  overflow: auto;
+  overflow-x: hidden;
+  margin: 10px auto;
+}
+.booking__selected::-webkit-scrollbar {
+	background: #f5f5f3;
+  width: 6px;
+}
+.booking__selected::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px #808080;
+  border-radius: 10px;
+}
+.booking__selected::-webkit-scrollbar-thumb {
+  background: #0cc11a; 
+  border-radius: 10px;
+}
+.booking__selected::-webkit-scrollbar-thumb:hover {
+  background: #49af61; 
+}
 .booking__select {
   background: #fff;
   margin-left: -20px;
-  margin-right: -20px;
+  margin-right: -15px;
   padding: 10px 20px;
   cursor: pointer;
 }
@@ -2126,6 +2163,7 @@ display: block;
 }
 .booking__variant {
   display: flex;
+  padding: 5px;
 }
 .price-img {
   width: 100%;
@@ -2210,7 +2248,7 @@ display: block;
   border-radius: 10px;
   width: 100%;
   min-width: 300px;
-  height: 100%;
+  height: auto;
   min-height: 150px;
 }
 .form-reviews-block button {
@@ -2628,7 +2666,6 @@ hr {
 }
 .personal_events_btn {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
@@ -2701,7 +2738,7 @@ hr {
   margin-bottom: 20px;
   margin-top: 20px;
 }
-.btn-view {
+.btn-views {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2710,6 +2747,9 @@ hr {
   height: 34px;
   font-size: 1rem;
   background: #dcac6c;
+  color: #fff;
+}
+.btn-views:hover {
   color: #fff;
 }
 .create-subtitle {
@@ -3051,8 +3091,14 @@ input[name="photogallery"] {
   .personal_nav:after {
     bottom: 5px;
   }
-  .personal_status_events .personal_events_btn .btn-edit {
+  .personal_events_btn {
+    flex-direction: column;
+  }
+  .personal_events_btn .btn-edit {
     display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 0;
   }
 }
 @media(max-width: 767px) {
@@ -3069,15 +3115,6 @@ input[name="photogallery"] {
   .personal_status_events {
     flex-wrap: wrap;
   }
-  .personal_events_btn {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-  }
-  .personal_events_btn .btn-edit:nth-child(2) {
-    margin-left: 20px;
-    margin-bottom: 20px;
-  }
 }
 @media (max-width: 575px) {
   .personal_events {
@@ -3090,6 +3127,7 @@ input[name="photogallery"] {
     margin-right: 0;
   }
   .personal_status_events img {
+    width: 100%;
     max-width: 100%;
     height: 200px;
   }
@@ -3388,6 +3426,17 @@ input[name="photogallery"] {
 .ui-slider-horizontal {
   max-width: 90%;
 }
+.block_event_image,
+.block_event_image .container,
+.block_event_image .row {
+  height: 360px;
+}
+.event-gallery-pc {
+  display: none;
+}
+.event-gallery-mobile {
+  display: block;
+}
 }
 @media (max-width: 575px) {
   .home__title {
@@ -3458,6 +3507,7 @@ input[name="photogallery"] {
     background: #fff;
     padding: 0 20px 10px 20px;
     text-align: center;
+    z-index: 1;
   }
   .booking__event__mobile .note-schedule {
     font-size: .6rem;
@@ -3550,12 +3600,12 @@ input[name="photogallery"] {
     font-size: .8rem;
   }
 }
-@media (max-width: 420px) { 
+/* @media (max-width: 420px) { 
   .rating-accordion .review-text {
     margin-top: 10px;
     margin-left: 0px;
   }
-}
+} */
 @media (max-width: 380px) { 
   .toggle-dates-event {
     margin-left: 0;
@@ -3567,12 +3617,6 @@ input[name="photogallery"] {
   }
   .event_list__autor {
     top: 32%;
-  }
-  .block_event_image {
-    height: 300px;
-  }
-  .block_event_image>.container-fluid>.row>.no-padding:last-child {
-    height: 300px;
   }
   .event-dateils_block {
     margin-bottom: 0;
