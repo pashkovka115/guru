@@ -31,10 +31,10 @@ Route::get('about-us', 'Pages\AboutController@show')->name('site.about');
 Route::prefix('cabinet')->middleware('auth')->group(function (){
     Route::get('', function (){ return redirect()->route('site.cabinet.user.index'); });
     Route::resource('/user', 'Cabinet\HomeController')->only(['index', 'edit', 'update'])->names('site.cabinet.user');
-    Route::resource('/tour', 'Cabinet\TourController')->only(['index', 'create', 'store', 'edit', 'update'])->names('site.cabinet.tour');
+    Route::resource('/tour', 'Cabinet\TourController')->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])->names('site.cabinet.tour');
     Route::resource('/leaders', 'Cabinet\LeaderController')->except('show')->names('site.cabinet.leaders');
     Route::resource('/messages', 'Cabinet\MessageController')->only(['index', 'destroy'])->names('site.cabinet.message');
-    Route::resource('/reviews', 'Cabinet\ReviewController')->only(['index'])->names('site.cabinet.review');
+    Route::resource('/reviews', 'Cabinet\ReviewController')->only(['index', 'edit', 'destroy', 'update'])->names('site.cabinet.review');
     Route::resource('/purchases', 'Cabinet\PurchasesController')->only('index')->names('site.cabinet.purchases');
     Route::get('request-auth', 'Cabinet\SettingsController@request_auth')->name('site.cabinet.request_auth');
 
@@ -44,6 +44,8 @@ Route::prefix('cabinet')->middleware('auth')->group(function (){
         Route::post('general-meals-insert', 'Cabinet\TourController@ajax_meals_gallery_insert')->name('site.ajax.meals.gallery.insert');
 
         Route::post('ajax-gallery-remove', 'Cabinet\TourController@ajax_gallery_remove')->name('site.ajax.gallery.remove');
+
+        Route::post('ajax-gallery-author-remove', 'Cabinet\LeaderController@ajax_gallery_remove')->name('site.ajax.gallery.author.remove');
     });
 
 });

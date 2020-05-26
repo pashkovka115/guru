@@ -131,8 +131,9 @@
                     </div>
                     <div class="event-cost">
                         @if($tour->variants->count() > 0)
-                            <?php dump($tour->variants); ?>
                             {{ number_format($tour->variants[0]->price_variant / 100) }} RUB
+                        @else
+                            Цена по запросу
                         @endif
                     </div>
                 </div>

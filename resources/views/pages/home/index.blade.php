@@ -29,6 +29,7 @@
         </div>
     </div>
     @endforeach
+    @if($recommended_tours->count() > 0)
     <div class="block_featured_tour">
         <div class="container">
             <div class="row">
@@ -47,11 +48,13 @@
                             @isset($gal[0])
                             <img src="{{ $gal[0] }}" alt="" class="img-fluid">
                             @endisset
-                            @if($tour->variants->count() > 0)
                             <p class="cost-tour">
-                                {{ number_format($tour->variants[0]->price_variant / 100) }} RUB
+                                @if($tour->variants->count() > 0)
+                                    {{ number_format($tour->variants[0]->price_variant / 100) }} RUB
+                                @else
+                                    Цена по запросу
+                                @endif
                             </p>
-                            @endif
                         </a>
                         <a href="#" class="location-tour">
                             {{ $tour->city }}, {{ $tour->country }}
@@ -86,6 +89,7 @@
             </div>
         </div>
     </div>
+    @endif
     @if($posts->count() > 0)
     <div class="block_news">
         <div class="container">

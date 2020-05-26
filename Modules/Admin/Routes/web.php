@@ -6,6 +6,8 @@ Route::prefix('admin')->middleware('admin_auth')->group(function() {
 
     Route::get('/', 'DashboardController@index')->name('admin.dashboard.index');
     Route::get('users-requests', 'DashboardController@requests')->name('admin.dashboard.requests');
+    Route::get('new-tour', 'DashboardController@new_items')->name('admin.dashboard.new_tours');
+    Route::get('recommended-tour', 'DashboardController@recommended')->name('admin.dashboard.recommended');
 
     Route::prefix('dashboard')->group(function (){
         Route::get('store/{id}', 'DashboardController@store')->name('admin.dashboard.auth.user');

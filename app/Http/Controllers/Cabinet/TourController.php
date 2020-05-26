@@ -7,7 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Modules\Admin\Models\CategoryTour;
 use Modules\Admin\Models\Tour;
+use Modules\Admin\Models\TourLeader;
+use Modules\Admin\Models\TourRating;
 use Modules\Admin\Models\ToursTags;
+use Modules\Admin\Models\ToursTagsTours;
 use Modules\Admin\Models\TourVariant;
 
 
@@ -133,11 +136,8 @@ class TourController extends Controller
         $request->validate([
             'category_tour_id' => 'required|numeric',
             'title' => 'regex:/[\w\s\d\_\-\.]*/i',
-            'leader_ids' => 'array|required',
-            'leader_ids.*' => 'integer|required',
-//            'date_start' => 'sometimes|nullable|date',
-//            'date_end' => 'sometimes|nullable|date',
-//            'price_base' => 'required|numeric',
+//            'leader_ids' => 'array|required',
+//            'leader_ids.*' => 'integer|required',
 
             'tags' => 'sometimes|nullable|array',
             'tags.*' => 'sometimes|nullable|numeric',
@@ -188,14 +188,12 @@ class TourController extends Controller
             'meals_desc' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
         ]);
 
-        \DB::transaction(function() use ($request) {
+//        global $tour;
+//        \DB::transaction(function() use ($request) {
             $data = [
                 'category_tour_id' => $request->input('category_tour_id'),
                 'title' => $request->input('title'),
                 'user_id' => \Auth::id(),
-//                'date_start' => $request->input('date_start'),
-//                'date_end' => $request->input('date_end'),
-//                'price_base' => $request->input('price_base'),
 
                 'address' => $request->input('address'),
                 'street' => $request->input('street'),
@@ -264,12 +262,12 @@ class TourController extends Controller
 
 
             // прикрепляем к мероприятию ведущих
-            foreach ($request->input('leader_ids') as $leader_id) {
+            $leader_ids = !empty($request->input('leader_ids')) ? $request->input('leader_ids') : [];
+            foreach ($leader_ids as $leader_id) {
                 $leader = User::with('tours')->where('id', $leader_id)->first();
                 $leader->tours()->attach($tour->id);
             }
-//dump($request->all());
-//dd($request->file('photo_variant'));
+
             // варианты мероприятия
             if ($request->has('price_variant') and count((array)$request->input('price_variant')) > 0) {
                 $cnt = count($request->input('price_variant'));
@@ -289,10 +287,10 @@ class TourController extends Controller
 //                dd($variants);
                 \DB::table('tours_variants')->insert($variants);
             }
-        }, 5);
+//        }, 5);
 
         session()->flash('message', 'Сохранено');
-        return redirect()->back();
+        return redirect()->route('site.cabinet.tour.edit', ['tour' => $tour->id]);
     }
 
 
@@ -321,10 +319,10 @@ class TourController extends Controller
         $request->validate([
             'category_tour_id' => 'required|numeric',
             'title' => 'regex:/[\w\s\d\_\-\.]*/i',
-            'leader_ids' => 'array|required',
-            'leader_ids.*' => 'integer|required',
-            'date_start' => 'sometimes|nullable|date',
-            'date_end' => 'sometimes|nullable|date',
+//            'leader_ids' => 'array|required',
+//            'leader_ids.*' => 'integer|required',
+//            'date_start' => 'sometimes|nullable|date',
+//            'date_end' => 'sometimes|nullable|date',
 //            'price_base' => 'required|numeric',
 
             'tags' => 'sometimes|nullable|array',
@@ -379,12 +377,14 @@ class TourController extends Controller
 //        dd($request->all());
 
         \DB::transaction(function () use ($id, $request) {
-            // синхронизация тура с ведущими
-            $leaders_ids = array_map(function ($n) use ($id) {
-                return ['leader_id' => $n * 1, 'tour_id' => $id * 1];
-            }, $request->input('leader_ids'));
-            \DB::table('tour_leader')->where('tour_id', $id)->delete();
-            \DB::table('tour_leader')->insert($leaders_ids);
+            if (!empty($request->input('leader_ids'))) {
+                // синхронизация тура с ведущими
+                $leaders_ids = array_map(function ($n) use ($id) {
+                    return ['leader_id' => $n * 1, 'tour_id' => $id * 1];
+                }, $request->input('leader_ids'));
+                \DB::table('tour_leader')->where('tour_id', $id)->delete();
+                \DB::table('tour_leader')->insert($leaders_ids);
+            }
 
             // синхронизация с вариантами
             // если существуют варианты
@@ -494,6 +494,21 @@ class TourController extends Controller
             }
 
             $tour->update($data);
+        });
+
+        return redirect()->back();
+    }
+
+
+    public function destroy($id)
+    {
+        \DB::transaction(function () use ($id){
+            $tour =Tour::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+            TourLeader::where('tour_id', $id)->delete();
+            TourRating::where('tour_id', $id)->delete();
+            ToursTagsTours::where('tour_id', $id)->delete();
+            TourVariant::where('tour_id', $id)->delete();
+            $tour->delete();
         });
 
         return redirect()->back();

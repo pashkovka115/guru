@@ -30,7 +30,7 @@ class UserRoleController extends Controller
      */
     public function show($id)
     {
-        $user = User::with('roles')->where('id', $id)->first();
+        $user = User::with('roles')->where('id', $id)->firstOrFail();
         return view('admin::pages.user_role.show', ['user' => $user, 'title' => $this->title, 'title_page' => 'Просмотр ролей пользователя']);
     }
 
@@ -41,7 +41,7 @@ class UserRoleController extends Controller
      */
     public function edit($id)
     {
-        $user = User::with('roles')->where('id', $id)->first();
+        $user = User::with('roles')->where('id', $id)->firstOrFail();
         $roles = Role::all();
         return view('admin::pages.user_role.edit', ['user' => $user, 'roles' => $roles, 'title' => $this->title, 'title_page' => 'Редактирование ролей пользователя']);
     }
@@ -54,7 +54,7 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::where('id', $id)->firstOrFail();
 
         if ($user) {
             $roles = [];
