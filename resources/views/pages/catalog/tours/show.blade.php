@@ -53,21 +53,15 @@
         <div class="container event-gallery-mobile">
             <div class="row">
                 <div class="owl-carousel owl-theme slide-cat event_list_photo">
-                    <div class="item">
-                        <a href="" class="event_list__link">
-                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid event_list_img">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="" class="event_list__link">
-                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid event_list_img">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="" class="event_list__link">
-                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid event_list_img">
-                        </a>
-                    </div>
+                    @isset($gallery[0])
+                        @foreach($gallery as $src)
+                            <div class="item">
+                                <a href="" class="event_list__link">
+                                    <img src="{{ $src }}" alt="" class="img-fluid event_list_img">
+                                </a>
+                            </div>
+                        @endforeach
+                    @endisset
                 </div>
             </div>
         </div>
@@ -187,7 +181,6 @@
                         @endif
                         <div class="event_list__autor">
                             @foreach($tour->leaders as $leader)
-                                <?php //dd($leader->profile); ?>
                                 <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" target="_blank" title="{{ $leader->name }}">
                                 <img src="{{ json_decode($leader->profile->avatar)[0] ?? '' }}" alt="фото автора" class="img-fluid">
                                 <span>{{ $leader->name }}</span>
