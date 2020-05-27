@@ -454,9 +454,11 @@
                                                 <span class="review-autor">{{ $comment->user->name }}</span> -
                                                 <span class="review-date">{{ $comment->updated_at->formatLocalized('%e %B %Y') }}</span>
                                             </div>
+                                            @if(auth()->check() and $comment->user->id == auth()->id())
                                             <div class="review_footer_edit">
                                                 <a href="{{ route('site.cabinet.review.edit', ['review' => $comment->id]) }}" target="_blank">Изменить отзыв</a>
                                             </div>
+                                            @endif
                                         </div>
                                     </article>
                                     @endforeach
@@ -464,7 +466,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php //dd($similar_tours); ?>
+
                     @if($similar_tours->count() > 1)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-similar">
