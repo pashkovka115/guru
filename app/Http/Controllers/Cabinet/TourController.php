@@ -23,7 +23,7 @@ class TourController extends Controller
 {
     public function index()
     {
-        $tours = Tour::with('variants')->where('user_id', auth()->id())->get();
+        $tours = Tour::with('variants')->where('user_id', auth()->id())->orderByDesc('id')->get();
 
         return view('pages.cabinet.tour.index', ['tours' => $tours]);
     }

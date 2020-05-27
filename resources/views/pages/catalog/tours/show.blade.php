@@ -134,7 +134,7 @@
                             </span>
                         </div>
                         <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" class="note-schedule">Другие мероприятия организации</a>
-                        <div class="booking__select selected">
+                        {{--<div class="booking__select selected">
                             <label class="booking__variant">
                                 <input type="radio" name="booking" value="1" checked>
                                 <span class="radio"></span>
@@ -148,7 +148,7 @@
                                     {{ $tour->info_description }}
                                 </div>
                             </label>
-                        </div> -->
+                        </div>--}}
                         <div class="booking__selected">
                         @foreach($tour->variants as $variant)
                             <div class="booking__select">
@@ -217,7 +217,7 @@
                     </div>
                     @endif
 
-                    @if($tour->country or $tour->city or $tour->adress_desk)
+                    @if($tour->country and $tour->city and $tour->address)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-place">
                             <div class="accordion-btn">Место проведения:</div>
@@ -236,9 +236,11 @@
                                         <iframe width="100%" height="350" frameborder="0" style="border:0" src="{{ $link }}" allowfullscreen></iframe>
                                     </div>
                                 </div>
+                                @if($tour->adress_desk)
                                 <div class="block_place">
                                     <div class="article-block">{!! $tour->adress_desk !!}</div>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -453,7 +455,7 @@
                                                 <span class="review-date">{{ $comment->updated_at->formatLocalized('%e %B %Y') }}</span>
                                             </div>
                                             <div class="review_footer_edit">
-                                                <a href="#">Изменить отзыв</a>
+                                                <a href="{{ route('site.cabinet.review.edit', ['review' => $comment->id]) }}" target="_blank">Изменить отзыв</a>
                                             </div>
                                         </div>
                                     </article>

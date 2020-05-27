@@ -158,7 +158,7 @@
                                     <div class="form-group">
                                         <label>Текст</label>
                                         <textarea name="excerpt_{{ $post->id }}" class="form-control"
-                                                  rows="3">{{ $post->content }}</textarea>
+                                                  rows="3">{{ $post->excerpt }}</textarea>
                                     </div>
                                 </div>
                                 <hr style="border: solid 1px black">
