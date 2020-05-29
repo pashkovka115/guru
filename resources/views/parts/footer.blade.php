@@ -96,6 +96,27 @@
 <div class="mobile_menu_overlay"></div>
 @section('scripts')
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    (function () {
+        var func = EventTarget.prototype.addEventListener;
+
+        EventTarget.prototype.addEventListener = function (type, fn, capture) {
+            this.func = func;
+            capture = capture || {};
+            capture.passive = false;
+            this.func(type, fn, capture);
+        };
+    }());
+    /*jQuery.event.special.touchstart = {
+        setup: function( _, ns, handle ){
+            if ( ns.includes("noPreventDefault") ) {
+                this.addEventListener("touchstart", handle, { passive: false });
+            } else {
+                this.addEventListener("touchstart", handle, { passive: true });
+            }
+        }
+    };*/
+</script>
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>

@@ -9,10 +9,12 @@
                             <div class="col-lg-5">
                                 <?php
                                 $gallery = [];
-                                if (isset(json_decode($user->profile->avatar)[0])) {
+                                if ($user->profile and isset(json_decode($user->profile->avatar)[0])) {
                                     $gallery[] = json_decode($user->profile->avatar)[0];
                                 }
-                                $gallery = array_merge($gallery, json_decode($user->profile->gallery) ?? []);
+                                if ($user->profile) {
+                                    $gallery = array_merge($gallery, (array)json_decode($user->profile->gallery ?: '') ?? []);
+                                }
                                 ?>
                                 <div class="owl-carousel owl-theme slide-autor">
                                     @foreach($gallery as $photo)
@@ -40,7 +42,9 @@
                                     <h1 class="title-autor">{{ $user->name }}</h1>
                                     <div class="rating-autor">
                                         <div class="rating">
-                                            {!! get_raiting_template($user->profile->raiting, false) !!}
+                                            @if($user->profile)
+                                                {!! get_raiting_template($user->profile->raiting, false) !!}
+                                            @endif
                                             @if($comments->count() > 0)
                                                 <a href="#reviews"
                                                    class="review-count">{{ Lang::choice('Отзыв|Отзыва|Отзывов', $comments->count()) }}
@@ -48,15 +52,27 @@
                                             @endif
                                         </div>
                                     </div>
+                                    @if($user->profile)
                                     <div class="country-autor">
+                                        @if($user->profile->country and $user->profile->city)
                                         <i class="fa fa-home"></i>
-                                        <span>{{ $user->profile->country ?? null }}, {{ $user->profile->city ?? null }}</span>
+                                        @endif
+                                        <span>
+                                            {{ $user->profile->country ?? null }}
+                                            @if($user->profile->country and $user->profile->city), @endif
+                                            {{ $user->profile->city ?? null }}
+                                        </span>
+                                            @if($user->profile->country or $user->profile->city)
                                         <a href="#" class="link-location"><i class="fa fa-location-arrow"></i></a>
+                                            @endif
                                     </div>
+                                    @endif
+                                    @if($user->profile and $user->profile->description)
                                     <div class="about-autor">
                                         <h2 class="event-subtitle">Об авторе</h2>
                                         <p class="text-normal">{{ $user->profile->description ?? null }}</p>
                                     </div>
+                                    @endif
                                     <div class="tags-autor">
                                         @php
                                             $tours = $user->tours_with_category;
@@ -119,7 +135,7 @@
                             </div>
                         </div>
                     @endif
-                    @if($user->profile->country and $user->profile->city and $user->profile->address)
+                    @if($user->profile and $user->profile->country and $user->profile->city and $user->profile->address)
                         <div class="event-details-accordion">
                             <div class="event-accordion accordion-place">
                                 <div class="accordion-btn">Месторасположение:</div>
@@ -146,7 +162,7 @@
                             </div>
                         </div>
                     @endif
-                    @if($user->profile->url)
+                    @if($user->profile and $user->profile->url)
                         <div class="event-details-accordion">
                             <div class="event-accordion accordion-video">
                                 <div class="accordion-btn">Видео:</div>
@@ -162,7 +178,7 @@
                             </div>
                         </div>
                     @endif
-                    @if($user->profile->raiting > 0 or $comments->count() > 0)
+                    @if($user->profile and $user->profile->raiting > 0 or $comments->count() > 0)
                         <div class="event-details-accordion" id="reviews">
                             <div class="event-accordion accordion-reviews">
                                 <div class="accordion-btn">Отзывы клиентов:</div>
@@ -244,13 +260,23 @@
             </div>
             <div class="form-autor-block">
                 <div class="form-autor_photo">
-                    <img src="{{ json_decode($user->profile->avatar)[0] ?? '' }}" alt="" class="img-fluid">
+                    @if($user->profile)
+                        <img src="{{ json_decode($user->profile->avatar)[0] ?? '' }}" alt="" class="img-fluid">
+                    @endif
                     <p class="form-autor_name">{{ $user->name }}</p>
-                    <div class="country-autor">
-                        <i class="fa fa-home"></i>
-                        <span>{{ $user->profile->country ?? null }}, {{ $user->profile->city ?? null }}</span>
-                        <a href="#" class="link-location"><i class="fa fa-location-arrow"></i></a>
-                    </div>
+                    @if($user->profile and ($user->profile->country or $user->profile->city))
+                        <div class="country-autor">
+                            <i class="fa fa-home"></i>
+                            <span>
+                                {{ $user->profile->country ?? null }}
+                                @if($user->profile->country and $user->profile->city) , @endif
+                                {{ $user->profile->city ?? null }}
+                            </span>
+                            @if($user->profile->country or $user->profile->city)
+                            <a href="#" class="link-location"><i class="fa fa-location-arrow"></i></a>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

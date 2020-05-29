@@ -36,7 +36,7 @@
                         <div class="personal_status_events">
                             <div class="personal_events-public">
                                 <?php
-                                $gallary = json_decode($tour->gallery);
+                                $gallary = (array)json_decode($tour->gallery) ?: [];
                                 ?>
                                 @isset($gallary[0])
                                 <img src="{{ $gallary[0] }}" alt="" class="img-fluid">

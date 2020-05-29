@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col">
                     <div class="card card-primary">
-                        <script src="https://cdn.ckeditor.com/4.11.2/standard/ckeditor.js"></script>
+                        <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
                         @foreach($contents as $content)
                             <div class="card-body">
                                 <div class="row">

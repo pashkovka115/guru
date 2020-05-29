@@ -22,7 +22,7 @@ Route::resource('/journal', 'Journal\BlogController')->only(['index', 'show'])->
 
 Route::resource('/page', 'Pages\PageController')->only('show')->names('site.pages.official');
 
-Route::post('/search', 'Catalog\SearchController@index')->name('site.catalog.search');
+Route::match(['post', 'get'], '/search', 'Catalog\SearchController@index')->name('site.catalog.search');
 Route::get('/help', 'HelpController@show')->name('site.help.show');
 
 Route::get('add-advert', 'Landing\LandingPageController@index')->name('site.landing');
@@ -57,5 +57,7 @@ Route::post('/tour-rating-estimate', 'Catalog\TourRatingController@estimate')->n
 Route::post('/send-message', 'Cabinet\MessageController@store')->name('site.send-message-to-leader');
 
 
-
+Route::prefix('test')->group(function (){
+    Route::get('phpinfo', 'InfoController@index');
+});
 

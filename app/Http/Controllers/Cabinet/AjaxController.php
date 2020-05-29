@@ -17,7 +17,7 @@ class AjaxController extends Controller
 
     public function remove_img_gallery_author(Request $request)
     {
-        $user = User::with('profile')->where('id', $request->input('id'))->first();
+        $user = User::with('profile')->where('id', $request->input('id'))->firstOrFail();
         $gallery = json_decode($user->profile->gallery);
 //        return [$request->input('url'), $gallery];
         $key = array_search($request->input('url'), $gallery);

@@ -58,22 +58,11 @@ class UserController extends Controller
     {
         $user = User::with(['tours_with_category', 'profile'])->where('id', $id)->firstOrFail();
         $comments = UserComment::with('user')->where('author_id', $id)->get();
-        // $my_tours_ids = TourLeader::where('leader_id', $id)->get('tour_id');
-        // $ids = array_keys($my_tours_ids->keyBy('tour_id')->toArray());
-        /*$ratings = TourRating::whereIn('tour_id', $ids)->get('rating');
 
-        $arr_ratings = array_keys($ratings->keyBy('rating')->toArray());
-
-        if (count($arr_ratings) > 0) {
-            $rating = array_sum($arr_ratings) / count($arr_ratings);
-        }else{
-            $rating = 0;
-        }*/
 
         return view('pages.catalog.users.show', [
             'user' => $user,
             'comments'=>$comments,
-            //'rating_leader' => $rating, // средний рейтинг по мероприятиям
             'title'=>'Профиль пользователя'
         ]);
     }

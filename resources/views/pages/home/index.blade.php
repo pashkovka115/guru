@@ -43,7 +43,7 @@
                     <div class="elem__featured_tour">
                         <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="elem__featured_more">
                             <?php
-                            $gal = json_decode($tour->gallery) ?? [];
+                            $gal = json_decode($tour->gallery) ?: [];
                             ?>
                             @isset($gal[0])
                             <img src="{{ $gal[0] }}" alt="" class="img-fluid">

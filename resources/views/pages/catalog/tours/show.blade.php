@@ -4,7 +4,7 @@
     <div class="block_event_image">
         <div class="container-fluid no-padding event-gallery-pc">
             @php
-                $gallery = json_decode($tour->gallery);
+                $gallery = (array)json_decode($tour->gallery) ?: [];
             @endphp
             <div class="row">
                 @isset($gallery[0])
@@ -41,7 +41,8 @@
                     <div class="event-gallery-none">
                         <div data-fancybox="gallery" href="{{ $gallery[5] }}" style="background-image: url({{ $gallery[5] }});">Другие фото</div>
                         @isset($gallery[6])
-                            @for($i = 6; $i < (count($gallery) - 6); $i++)
+                            <?php //dd($gallery); ?>
+                            @for($i = 6; $i <= (count($gallery) - 6); $i++)
                                 <div data-fancybox="gallery" href="{{ $gallery[$i] }}" style="background-image: url({{ $gallery[$i] }});"></div>
                             @endfor
                         @endisset

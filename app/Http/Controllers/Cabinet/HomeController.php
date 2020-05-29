@@ -39,6 +39,7 @@ class HomeController extends Controller
 
     public function update(Request $request, $id)
     {
+//        dd($request->all(), $id);
         $request->validate([
             "name" => "required|regex:/[\w\s\-]*/i",
             "excerpt" => "sometimes|nullable|regex:/[\w\s\-]*/i",
@@ -58,8 +59,10 @@ class HomeController extends Controller
             "longitude" => "sometimes|nullable|regex:/[\w\s\-]*/i",
         ]);
 
+//        dd(get_url_to_uploaded_files(auth()->user(), $request->file('avatar'))[0]);
+
         \DB::transaction(function () use ($id, $request) {
-            $user = User::with('profile')->where('id', auth()->id())->first();
+            $user = User::with('profile')->where('id', auth()->id())->firstOrFail();
             $user->name = $request->input('name');
             $user->save();
 
@@ -67,7 +70,6 @@ class HomeController extends Controller
                 $user->profile->excerpt = $request->input('excerpt');
                 $user->profile->description = $request->input('description');
                 $user->profile->url = $request->input('url');
-                $user->profile->avatar = get_url_to_uploaded_files(auth()->user(), $request->file('avatar'));
                 $user->profile->country = $request->input('country');
                 $user->profile->city = $request->input('city');
                 $user->profile->address = $request->input('address');
@@ -78,8 +80,14 @@ class HomeController extends Controller
                 $user->profile->latitude = $request->input('latitude');
                 $user->profile->longitude = $request->input('longitude');
 
+                if ($request->has('avatar')){
+                    $user->profile->avatar =  '["'.get_url_to_uploaded_files(auth()->user(), $request->file('avatar'))[0] . '"]';
+                }
+
                 if ($request->has('gallery') and $request->file('gallery') !== null) {
-                    $user->profile->gallery = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('gallery')));
+                    $old_gallery = (array)json_decode($user->profile->gallery);
+                    $new_gallery = (array)get_url_to_uploaded_files(auth()->user(), $request->file('gallery'));
+                    $user->profile->gallery = json_encode(array_merge($old_gallery, $new_gallery));
                 }
                 $user->profile->save();
             }else{

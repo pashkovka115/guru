@@ -2,7 +2,6 @@
 
 @section('styles')
     @include('pages.cabinet.styles')
-<link rel="stylesheet" href="{{ asset('assets/site/dropzone/min/dropzone.min.css') }}">
 @endsection
 
 @section('scripts')
@@ -70,6 +69,7 @@
 
         });
     </script>
+    <link rel="stylesheet" href="{{ asset('assets/site/dropzone/min/dropzone.min.css') }}">
     <script> Dropzone.autoDiscover = false; </script>
     <script>
         var myDropzone_gallery1 = new Dropzone("div#files_gallery", {
@@ -84,6 +84,7 @@
             dictDefaultMessage: '<div class="dz-message">Нажмите здесь или перетащите сюда файлы для загрузки</div>',
             maxFiles: 20,
             maxFilesize: 2, // Mb
+            parallelUploads: 1,
             dictMaxFilesExceeded: "Достигнут лимит количества файлов. Максимум 20 файлов",
             dictFileTooBig: 'Ошибка! Максимальный размер файла - 2 Мб!',
             dictInvalidFileType: 'Разрешены к загрузке файлы: .jpg, .jpeg, .png, .gif',
@@ -102,6 +103,7 @@
             dictDefaultMessage: '<div class="dz-message">Нажмите здесь или перетащите сюда файлы для загрузки</div>',
             maxFiles: 2,
             maxFilesize: 2, // Mb
+            parallelUploads: 1,
             dictMaxFilesExceeded: "Достигнут лимит количества файлов. Разрешено 2",
             dictFileTooBig: 'Ошибка! Максимальный размер файла - 2 Мб!',
             dictInvalidFileType: 'Разрешены к загрузке файлы: .jpg, .jpeg, .png, .gif',
@@ -120,6 +122,7 @@
             dictDefaultMessage: '<div class="dz-message">Нажмите здесь или перетащите сюда файлы для загрузки</div>',
             maxFiles: 2,
             maxFilesize: 2, // Mb
+            parallelUploads: 1,
             dictMaxFilesExceeded: "Достигнут лимит количества файлов. Разрешено 2",
             dictFileTooBig: 'Ошибка! Максимальный размер файла - 2 Мб!',
             dictInvalidFileType: 'Разрешены к загрузке файлы: .jpg, .jpeg, .png, .gif',
@@ -199,16 +202,17 @@
                                             @foreach($organizator->leaders as $leader)
                                                 @php
                                                 foreach($tour_leaders as $t_lead){
-                                                    if ($leader->id == $t_lead->id){
-                                                        $selected = ' selected';
+                                                    if ($leader->id === $t_lead->id){
+                                                        //dd($leader->id, $t_lead->id);
+                                                        $selected2 = ' selected';
                                                         break;
                                                     }else{
-                                                        $selected = '';
+                                                        $selected2 = '';
                                                     }
                                                 }
-                                                if (!isset($selected)) $selected = '';
+                                                if (!isset($selected2)) $selected2 = '';
                                                 @endphp
-                                            <option value="{{ $leader->id }}"{{ $selected }}>{{ $leader->name }}</option>
+                                            <option value="{{ $leader->id }}"{{ $selected2 }}>{{ $leader->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -325,6 +329,8 @@
                                         <label for="video-url" class="create-subtitle">Видео YouTube:</label>
                                         <input id="video-url" type="text" name="video_url" value="{{ $tour->video_url }}" placeholder="Пример идентификатора: gAnoWXUaVoY">
                                     </div>
+
+                                    @if($tour->tags->count() > 0 or $tags->count() > 0)
                                     <div class="block-panel">
                                         <label for="tags" class="create-subtitle">Теги темы(максимум 5):</label>
                                         <select class="chosen-select" id="tags" name="tags[]" multiple="multiple">
@@ -332,15 +338,17 @@
                                                 @php
                                                     foreach ($tour->tags as $t_tag){
                                                         if ($t_tag->id == $tag->id){
-                                                            $selected = ' selected';
+                                                            $selected3 = ' selected';
                                                             break;
-                                                        }else { $selected = ''; }
+                                                        }else { $selected3 = ''; }
                                                     }
+                                                    if (!isset($selected3)) $selected3 = '';
                                                 @endphp
-                                            <option value="{{ $tag->id }}"{{ $selected }}>{{ $tag->tag }}</option>
+                                            <option value="{{ $tag->id }}"{{ $selected3 }}>{{ $tag->tag }}</option>
                                             @endforeach
                                         </select>
                                     </div>
+                                    @endif
                                     <div class="block-panel">
                                         <label for="text-desk" class="create-subtitle">Информация о мероприятии:</label>
                                         <textarea placeholder="Введите краткое описание вашего мероприятия" id="text-desk" name="info_excerpt">{{ $tour->info_excerpt }}</textarea>

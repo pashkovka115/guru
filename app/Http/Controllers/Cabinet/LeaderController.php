@@ -101,7 +101,7 @@ class LeaderController extends Controller
             ]);
             $profile->save();
 
-            $profile = Profile::where('id', $profile->id)->first();
+            $profile = Profile::where('id', $profile->id)->firstOrFail();
 
             if ($request->has('avatar')){
                 $profile->avatar = json_encode(get_url_to_uploaded_files($user, $request->file('avatar')));
@@ -128,10 +128,10 @@ class LeaderController extends Controller
 
     public function edit($id)
     {
-        $organizer = User::with('leaders')->where('id', auth()->id())->first('id');
+        $organizer = User::with('leaders')->where('id', auth()->id())->firstOrFail('id');
         $ids_my_leaders = $organizer->leaders->keyBy('id')->toArray();
         if (isset($ids_my_leaders[$id])) {
-            $user = User::with('profile')->where('id', $id)->first();
+            $user = User::with('profile')->where('id', $id)->firstOrFail();
             return view('pages.cabinet.leader.edit', ['user' => $user]);
         } else {
             return redirect()->back()->withErrors('Пользователь с таким идентификатором не найден');
@@ -174,7 +174,6 @@ class LeaderController extends Controller
                     $user->profile->excerpt = $request->input('excerpt');
                     $user->profile->description = $request->input('description');
                     $user->profile->url = $request->input('url');
-                    $user->profile->avatar = get_url_to_uploaded_files(auth()->user(), $request->file('avatar'));
                     $user->profile->country = $request->input('country');
                     $user->profile->city = $request->input('city');
                     $user->profile->address = $request->input('address');
@@ -185,11 +184,14 @@ class LeaderController extends Controller
                     $user->profile->latitude = $request->input('latitude');
                     $user->profile->longitude = $request->input('longitude');
 
+                    if ($request->has('avatar')){
+                        $user->profile->avatar =  '["'.get_url_to_uploaded_files(auth()->user(), $request->file('avatar'))[0] . '"]';
+                    }
+
                     if ($request->has('gallery') and $request->file('gallery') !== null) {
-                        $old_gallery = json_decode($user->profile->gallery) ?: [];
-                        $new_img = get_url_to_uploaded_files(auth()->user(), $request->file('gallery'));
-                        $new_gallery = array_merge($old_gallery, $new_img);
-                        $user->profile->gallery = json_encode($new_gallery);
+                        $old_gallery = (array)json_decode($user->profile->gallery);
+                        $new_img = (array)get_url_to_uploaded_files(auth()->user(), $request->file('gallery'));
+                        $user->profile->gallery = json_encode(array_merge($old_gallery, $new_img));
                     }
 
                     $user->profile->save();

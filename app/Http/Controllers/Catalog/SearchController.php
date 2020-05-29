@@ -16,9 +16,12 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'q' => 'required|regex:/[\w\s\d\_\-]*/i'
+            'q' => 'sometimes|nullable|regex:/[\w\s\d\_\-]*/i'
         ]);
         $q = $request->input('q');
+        if (!$q){
+            $q = 'россия';
+        }
         $max_page = 30;
         //Полнотекстовый поиск с пагинацией
         $tours = $this->search($q, $max_page);

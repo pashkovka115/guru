@@ -162,17 +162,16 @@
                                         <label for="video-url" class="create-subtitle">Видео YouTube:</label>
                                         <input id="video-url" type="text" name="video_url" value="{{ old('video_url') }}" placeholder="Пример идентификатора: gAnoWXUaVoY">
                                     </div>
+                                    @if($tags->count() > 0)
                                     <div class="block-panel">
                                         <label for="tags" class="create-subtitle">Теги темы(максимум 5):</label>
-                                        @php
-                                        //dd($tour->tags)
-                                        @endphp
                                         <select class="chosen-select" id="tags" name="tags[]" multiple="multiple">
                                             @foreach($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->tag }}</option>
                                             @endforeach
                                         </select>
                                     </div>
+                                    @endif
                                     <div class="block-panel">
                                         <label for="text-desk" class="create-subtitle">Информация о мероприятии:</label>
                                         <textarea placeholder="Введите краткое описание вашего мероприятия" id="text-desk" name="info_excerpt">{{ old('info_excerpt') }}</textarea>

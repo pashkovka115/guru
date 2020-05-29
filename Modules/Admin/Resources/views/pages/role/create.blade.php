@@ -20,6 +20,7 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="">Назначить разрешения для этой роли:</label>
                                 <div class="custom-control custom-checkbox">
                                     @foreach($permissions as $permission)
                                         <div style="display: inline-block; margin-right: 30px;">

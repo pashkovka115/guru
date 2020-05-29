@@ -24,7 +24,7 @@
                                     <div class="event_list">
                                         <div class="owl-carousel owl-theme slide-cat event_list_photo">
                                             @php
-                                                $gallery = json_decode($tour->gallery) ?? [];
+                                                $gallery = json_decode($tour->gallery) ?: [];
                                                 //var_dump($gallery, '===========');
                                             @endphp
                                             @foreach($gallery as $src)
@@ -42,7 +42,7 @@
                                                 @foreach($tour->leaders as $leader)
                                                     @if($leader->profile->avatar)
                                                         <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
-                                                            <?php $arr_img = json_decode($leader->profile->avatar);
+                                                            <?php $arr_img = json_decode($leader->profile->avatar) ?: [];
                                                             if (isset($arr_img[0])): ?>
                                                             <img src="{{ $arr_img[0] }}" alt="аватар"
                                                                  class="img-fluid">
@@ -74,7 +74,7 @@
                                                 @endphp
                                             </a>
                                             <a href="#" class="location-event">
-                                                {{ $tour->city }}, {{ $tour->country }}
+                                                {{ $tour->city }} @if($tour->city and $tour->country), @endif {{ $tour->country }}
                                             </a>
                                             @if(isset($variants[0]))
                                                 <p class="dates-event">

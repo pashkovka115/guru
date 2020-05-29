@@ -23,7 +23,7 @@ $(function() {
     $(document).on("click", ".mobile_menu_close", function(e) {
         e.preventDefault();
         $(".mobile_menu_container").removeClass("loaded");
-        $(".mobile_menu_overlay").fadeOut();;
+        $(".mobile_menu_overlay").fadeOut();
         $("body").removeClass("no-overlay");
     });
 });
@@ -32,72 +32,7 @@ $(".chosen-select").select2({
     tags: true
 });
 
-/*$('.click_to_add_block').click(function() {
-  $(this).before(`
-    <div class="block-variants">
-        <div class="choose-file">
-            <div class="upload-demo">
-                <div class="upload-demo-wrap"><img class="img-fluid portimg" src="http://a0437878.xsph.ru/assets/site/images/wide.jpg"></div>
-            </div>
-            <span class="btn_upload">
-                    <input type="file" name="photo_variant[]" class="inputfile photo-variant">
-                    Загрузить фото
-                </span>
-        </div>
-        <div class="block-variant-date">
-            <p>Дата начала</p>
-            <input class="text-variant" type="date" name="date_start_variant[]" value="">
-        </div>
-        <div class="block-variant-date">
-            <p>Дата окончания</p>
-            <input class="text-variant" type="date" name="date_end_variant[]" value="">
-        </div>
-        <div class="block-variant-desk">
-            <p>Краткое описание (проживание, питание и т.д.)</p>
-            <input class="text-variant" type="text" name="text_variant[]" value="">
-        </div>
-        <div class="block-variant-price">
-            <p>Цена (RUB)</p>
-            <input class="price-variant" type="text" name="price_variant[]" value="" required>
-        </div>
-        <div class="block-variant-amount">
-            <p>Кол. человек</p>
-            <select name="amount_variant[]" class="amount-variant">
-                <option value="1 человек">1 человек</option>
-                <option value="2 человека">2 человек</option>
-                <option value="3 человека">3 человека</option>
-                <option value="4 человека">4 человека</option>
-                <option value="5 человек">5 человек</option>
-            </select>
-        </div>
-        <div class="delete" data-id="0"><i class="fa fa-times" aria-hidden="true"></i></div>
-    </div>
-    `);
-});
 
-$(document).on('click', '.delete', function(e) {
-    // e.stopPropagation();
-    // console.log(e.target.parentElement)
-    $.ajax({
-        type: "GET",
-        url: "http://a0437878.xsph.ru/delete-variant-tour/" + e.target.parentElement.dataset.id,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-            //'id': e.target.parentElement.dataset.id
-        },
-        success: function(msg){
-            console.log(msg, 'удаление ' + e.target.parentElement.dataset.id);
-            $(e.target).parent().parent().remove();
-            // $(this).parent().remove();
-        },
-        error: function (msg, textStatus) {
-            console.log('Неудача. ' + textStatus);
-        }
-    });
-
-});*/
 
 let autocomplete,  marker, infowindow, map;
     function initMap() {

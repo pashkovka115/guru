@@ -19,7 +19,9 @@
                                     <img src="assets/site/images/slider_img_autor.jpg" alt="" class="img-fluid img-list-autor">
                                     <div class="block-list-autor">
                                         <a href="javascript:void(0);" class="location-event">
-                                            {{ $profile->city }}, {{ $profile->country }}
+                                            {{ $profile->city }}
+                                            @if($profile->city and $profile->country), @endif
+                                            {{ $profile->country }}
                                         </a>
                                         <a href="{{ route('site.author.show', ['id'=>$user->id]) }}" class="name-autor">{{$user->name}}</a>
                                         <p class="text-autor">

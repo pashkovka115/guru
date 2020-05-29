@@ -12,6 +12,9 @@ use Modules\Admin\Models\TourRating;
 use Modules\Admin\Models\ToursTags;
 use Modules\Admin\Models\ToursTagsTours;
 use Modules\Admin\Models\TourVariant;
+use Response;
+use Symfony\Component\Console\Input\Input;
+use Validator;
 
 
 /**
@@ -49,9 +52,19 @@ class TourController extends Controller
     public function ajax_general_gallery_insert(Request $request)
     {
         if ($request->has('file') and $request->hasHeader('id')){
+
+            $validation = Validator::make($request->all(), [
+                'file' => 'image|max:4000'
+            ]);
+
+            if ($validation->fails())
+            {
+                return Response::make($validation->errors()->first(), 400);
+            }
+
             $url_to_files = get_url_to_uploaded_files(auth()->user(), $request->file('file'));
             $bd_gallery = Tour::where('id', $request->header('id'))->firstOrFail(['id', 'gallery']);
-            $new_gallery = array_merge(json_decode($bd_gallery->gallery), $url_to_files);
+            $new_gallery = array_merge((array)json_decode($bd_gallery->gallery ?: ''), $url_to_files);
 
             $bd_gallery->update(['gallery' => json_encode($new_gallery)]);
 
@@ -71,7 +84,7 @@ class TourController extends Controller
         if ($request->has('file') and $request->hasHeader('id')){
             $url_to_files = get_url_to_uploaded_files(auth()->user(), $request->file('file'));
             $bd_gallery = Tour::where('id', $request->header('id'))->firstOrFail(['id', 'accommodation_photo']);
-            $new_gallery = array_merge(json_decode($bd_gallery->accommodation_photo), $url_to_files);
+            $new_gallery = array_merge((array)json_decode($bd_gallery->accommodation_photo ?: ''), $url_to_files);
 
             $bd_gallery->update(['accommodation_photo' => json_encode($new_gallery)]);
 
@@ -91,7 +104,7 @@ class TourController extends Controller
         if ($request->has('file') and $request->hasHeader('id')){
             $url_to_files = get_url_to_uploaded_files(auth()->user(), $request->file('file'));
             $bd_gallery = Tour::where('id', $request->header('id'))->firstOrFail(['id', 'gallery_meals']);
-            $new_gallery = array_merge(json_decode($bd_gallery->gallery_meals), $url_to_files);
+            $new_gallery = array_merge((array)json_decode($bd_gallery->gallery_meals ?: ''), $url_to_files);
 
             $bd_gallery->update(['gallery_meals' => json_encode($new_gallery)]);
 
@@ -113,15 +126,16 @@ class TourController extends Controller
             $sp = explode('_', $field);
             $field_name = str_replace('-', '_', $sp[0]);
             $bd_gallery = Tour::where('id', (int)$sp[1])->firstOrFail(['id', $field_name]);
-            $gall_ar = (array)json_decode($bd_gallery->$field_name);
+            $gall_ar = (array)json_decode($bd_gallery->$field_name ?: '');
 
+            $new_arr = [];
             foreach ($gall_ar as $key => $value){
-                if ($value == json_decode(json_encode($request->input('field-src')))){
-                    unset($gall_ar[$key]);
+                if ($value != json_decode(json_encode($request->input('field-src')))){
+                    $new_arr[] = $value;
                 }
             }
 
-            $bd_gallery->update([$field_name => json_encode($gall_ar)]);
+            $bd_gallery->update([$field_name => json_encode($new_arr)]);
 
             return [
                 'answer' => 'ok',
@@ -136,8 +150,6 @@ class TourController extends Controller
         $request->validate([
             'category_tour_id' => 'required|numeric',
             'title' => 'regex:/[\w\s\d\_\-\.]*/i',
-//            'leader_ids' => 'array|required',
-//            'leader_ids.*' => 'integer|required',
 
             'tags' => 'sometimes|nullable|array',
             'tags.*' => 'sometimes|nullable|numeric',
@@ -264,7 +276,7 @@ class TourController extends Controller
             // прикрепляем к мероприятию ведущих
             $leader_ids = !empty($request->input('leader_ids')) ? $request->input('leader_ids') : [];
             foreach ($leader_ids as $leader_id) {
-                $leader = User::with('tours')->where('id', $leader_id)->first();
+                $leader = User::with('tours')->where('id', $leader_id)->firstOrFail();
                 $leader->tours()->attach($tour->id);
             }
 
@@ -319,14 +331,9 @@ class TourController extends Controller
         $request->validate([
             'category_tour_id' => 'required|numeric',
             'title' => 'regex:/[\w\s\d\_\-\.]*/i',
-//            'leader_ids' => 'array|required',
-//            'leader_ids.*' => 'integer|required',
-//            'date_start' => 'sometimes|nullable|date',
-//            'date_end' => 'sometimes|nullable|date',
-//            'price_base' => 'required|numeric',
 
-            'tags' => 'sometimes|nullable|array',
-            'tags.*' => 'sometimes|nullable|numeric',
+//            'tags' => 'sometimes|nullable|array',
+//            'tags.*' => 'sometimes|nullable|numeric',
 
             'photo_variant' => 'sometimes|nullable|array',
             'photo_variant.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
@@ -374,16 +381,58 @@ class TourController extends Controller
             'meals_desc' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
         ]);
 
-//        dd($request->all());
+        // валидируем добавление существующих авторов
+        if ($request->has('leader_ids') and is_array($request->input('leader_ids'))){
+            $ids = [];
+            foreach ($request->input('leader_ids') as $leader_id){
+                $ids[] = (int)$leader_id;
+            }
+            $user = User::with('leaders')->where('id', auth()->id())->firstOrFail();
+            $lead_ids = array_keys($user->leaders->keyBy('id')->toArray());
 
-        \DB::transaction(function () use ($id, $request) {
-            if (!empty($request->input('leader_ids'))) {
+            $leaders_ids_true = count($ids) === count($lead_ids) and empty(array_diff($ids, $lead_ids));
+            if (!$leaders_ids_true){
+                return redirect()->back()
+                    ->withErrors('Для создания автора/ведущего есть специальный <a href="'.route('site.cabinet.leaders.create').'">раздел</a>');
+            }
+        }else{
+            $leaders_ids_true = false;
+        }
+
+        // валидируем добавление существующих тегов
+        if ($request->has('tags') and is_array($request->input('tags'))){
+            $ids = [];
+            foreach ($request->input('tags') as $tag_id){
+                $ids[] = (int)$tag_id;
+            }
+
+            $tags = ToursTags::all();
+            $tags_ids = array_keys($tags->keyBy('id')->toArray());
+            $tags_ids_true = true;
+            foreach ($ids as $i){
+                if (!in_array($i, $tags_ids)){
+                    $tags_ids_true = false;
+                    break;
+                }
+            }
+
+            if (!$tags_ids_true){
+                return redirect()->back()
+                    ->withErrors('Вы не можете создавать новые теги, для этого есть администратор.');
+            }
+        }
+
+        \DB::transaction(function () use ($id, $request, $leaders_ids_true) {
+            if ($leaders_ids_true) {
                 // синхронизация тура с ведущими
                 $leaders_ids = array_map(function ($n) use ($id) {
                     return ['leader_id' => $n * 1, 'tour_id' => $id * 1];
                 }, $request->input('leader_ids'));
+
                 \DB::table('tour_leader')->where('tour_id', $id)->delete();
                 \DB::table('tour_leader')->insert($leaders_ids);
+            }else{
+                \DB::table('tour_leader')->where('tour_id', $id)->delete();
             }
 
             // синхронизация с вариантами

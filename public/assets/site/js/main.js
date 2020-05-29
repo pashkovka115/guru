@@ -29,7 +29,7 @@ $(function() {
     $(document).on("click", ".mobile_menu_close", function(e) {
         e.preventDefault();
         $(".mobile_menu_container").removeClass("loaded");
-        $(".mobile_menu_overlay").fadeOut();;
+        $(".mobile_menu_overlay").fadeOut();
         $("body").removeClass("no-overlay");
     });
 });
@@ -56,7 +56,7 @@ for (let i = 0; i < acc.length; i++) {
       panel.style.maxHeight = null;
     } else {
       panel.style.maxHeight = panel.scrollHeight + "px";
-    } 
+    }
   });
 }
 
@@ -123,27 +123,27 @@ $(function() {
 
 $('select').each(function(){
     let $this = $(this), numberOfOptions = $(this).children('option').length;
-  
-    $this.addClass('select-hidden'); 
+
+    $this.addClass('select-hidden');
     $this.wrap('<div class="select"></div>');
     $this.after('<div class="select-styled"></div>');
 
     let $styledSelect = $this.next('div.select-styled');
     $styledSelect.text($this.children('option').eq(0).text());
-  
+
     let $list = $('<ul />', {
         'class': 'select-options'
     }).insertAfter($styledSelect);
-  
+
     for (let i = 0; i < numberOfOptions; i++) {
         $('<li />', {
             text: $this.children('option').eq(i).text(),
             rel: $this.children('option').eq(i).val()
         }).appendTo($list);
     }
-  
+
     let $listItems = $list.children('li');
-  
+
     $styledSelect.click(function(e) {
         e.stopPropagation();
         $('div.select-styled.active').not(this).each(function(){
@@ -151,14 +151,14 @@ $('select').each(function(){
         });
         $(this).toggleClass('active').next('ul.select-options').toggle();
     });
-  
+
     $listItems.click(function(e) {
         e.stopPropagation();
         $styledSelect.text($(this).text()).removeClass('active');
         $this.val($(this).attr('rel'));
         $list.hide();
     });
-  
+
     $(document).click(function() {
         $styledSelect.removeClass('active');
         $list.hide();
