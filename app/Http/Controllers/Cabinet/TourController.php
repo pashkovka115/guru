@@ -206,11 +206,16 @@ class TourController extends Controller
             $user = User::with('leaders')->where('id', auth()->id())->first();
             $lead_ids = array_keys($user->leaders->keyBy('id')->toArray());
 
-            $diff = array_diff($ids, $lead_ids);
-            $diff_bool = count($diff) === 0;
-            $cnt_bool = count($ids) === count($lead_ids);
+            $lead_false = false;
+            foreach ($ids as $idd){
+                if (!in_array($idd, $lead_ids)){
+                    $lead_false = true;
+                    break;
+                }
+            }
+            unset($idd);
 
-            if (!($cnt_bool and $diff_bool)){
+            if ($lead_false){
                 return redirect()->back()
                     ->withErrors('Для создания автора/ведущего есть специальный <a href="'.route('site.cabinet.leaders.create').'">раздел</a>');
             }
@@ -427,16 +432,21 @@ class TourController extends Controller
             $user = User::with('leaders')->where('id', auth()->id())->firstOrFail();
             $lead_ids = array_keys($user->leaders->keyBy('id')->toArray());
 
-            $diff = array_diff($ids, $lead_ids);
-            $diff_bool = count($diff) === 0;
-            $cnt_bool = count($ids) === count($lead_ids);
+            $lead_false = false;
+            foreach ($ids as $idd){
+                if (!in_array($idd, $lead_ids)){
+                    $lead_false = true;
+                    break;
+                }
+            }
+            unset($idd);
 
-            if (!($cnt_bool and $diff_bool)){
+            if ($lead_false){
                 return redirect()->back()
                     ->withErrors('Для создания автора/ведущего есть специальный <a href="'.route('site.cabinet.leaders.create').'">раздел</a>');
             }
         }else{
-            $leaders_ids_true = false;
+            $lead_false = true;
         }
 
         // валидируем добавление существующих тегов
@@ -462,8 +472,8 @@ class TourController extends Controller
             }
         }
 
-        \DB::transaction(function () use ($id, $request, $leaders_ids_true) {
-            if ($leaders_ids_true) {
+        \DB::transaction(function () use ($id, $request, $lead_false) {
+            if (!$lead_false) {
                 // синхронизация тура с ведущими
                 $leaders_ids = array_map(function ($n) use ($id) {
                     return ['leader_id' => (int)$n, 'tour_id' => (int)$id];
