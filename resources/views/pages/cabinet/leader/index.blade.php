@@ -32,7 +32,7 @@
                             </div>
                             <div class="personal_events_btn">
                                 <a href="{{ route('site.cabinet.leaders.edit', ['leader' => $leader->id]) }}" class="btn-edit">Редактировать</a>
-                                <a href="" target="_blank" class="btn-edit btn-view">Посмотреть</a>
+                                <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" target="_blank" class="btn-edit btn-view">Посмотреть</a>
                                 <a href="{{ route('site.cabinet.leaders.destroy', ['leader' => $leader->id]) }}"
                                    onclick="event.preventDefault(); document.getElementById('delete-form{{ $loop->index }}').submit();" class="btn-edit btn-delete"> Удалить
                                 </a>

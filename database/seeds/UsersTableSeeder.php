@@ -34,10 +34,13 @@ class UsersTableSeeder extends Seeder
                 'email' => $email,
                 'email_verified_at' => now(),
                 'remember_token' => \Illuminate\Support\Str::random(),
-                'password' => bcrypt('12345678'),
+                'password' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
+            if ($i < 20){
+                $user['password'] = bcrypt('12345678');
+            }
             $users[] = $user;
             mkdir(base_path('storage/app/public/users/' . md5($email) . '/img'), 0755, true);
             file_put_contents(base_path('storage/app/public/users/' . md5($email) . '/img/email.txt'), $email);

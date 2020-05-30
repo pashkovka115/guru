@@ -20,6 +20,8 @@ class DashboardController extends Controller
         $requests_auth = Profile::where('request', '1')->count();
         $all_users = User::count();
         $all_events = Tour::count();
+        $new_tours = Tour::where('new', '1')->count();
+        $recommended = Tour::where('recommended', '1')->count();
 
         return view('admin::pages.dashboard.index', [
             'title' => $this->title,
@@ -27,9 +29,31 @@ class DashboardController extends Controller
             'cnt_not_auth_users' => $cnt_not_auth_users,
             'all_users' => $all_users,
             'all_events' => $all_events,
-            'requests_auth' => $requests_auth
+            'requests_auth' => $requests_auth,
+            'new_tours' => $new_tours,
+            'recommended' => $recommended
         ]);
     }
+
+
+    /*
+     * Рекомендуемые мероприятия
+     */
+    public function recommended()
+    {
+        $tours = Tour::where('recommended', '1')->paginate();
+        return view('admin::pages.dashboard.recommended', ['tours' => $tours, 'title_page' => 'Рекомендуемые мероприятия']);
+    }
+
+    /*
+     * Новые мероприятия
+     */
+    public function new_items()
+    {
+        $tours = Tour::where('new', '1')->paginate();
+        return view('admin::pages.dashboard.new_items', ['tours' => $tours, 'title_page' => 'Не просмотренные мероприятия']);
+    }
+
 
     public function requests()
     {

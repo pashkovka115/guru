@@ -139,8 +139,8 @@
                                 ?>
                             </span>
                         </div>
-                        <a href="#" class="note-schedule">Другие мероприятия организации</a>
-                        <!-- <div class="booking__select selected">
+                        <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" class="note-schedule">Другие мероприятия организации</a>
+                        <div class="booking__select selected">
                             <label class="booking__variant">
                                 <input type="radio" name="booking" value="1" checked>
                                 <span class="radio"></span>
@@ -182,7 +182,9 @@
                     @endif
                     <div class="event-details-text">
                         <h2 class="event-subtitle">Подробнее о мероприятии</h2>
+                        @if($tour->leaders->count() > 0)
                         <p class="event-detailt-autor">Ваши гиды:</p>
+                        @endif
                         <div class="event_list__autor">
                             @foreach($tour->leaders as $leader)
                                 <?php //dd($leader->profile); ?>
@@ -222,6 +224,7 @@
                     </div>
                     @endif
 
+                    @if($tour->country or $tour->city or $tour->adress_desk)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-place">
                             <div class="accordion-btn">Место проведения:</div>
@@ -230,8 +233,6 @@
                                     <span class="event-pin-icon"></span>
                                     @if($tour->country or $tour->city)
                                         <span>{{ $tour->country }}, {{ $tour->city }}</span>
-                                    @elseif($tour->address)
-                                        <span>{{ $tour->address }}</span>
                                     @endif
                                 </div>
                                 <div class="block_place">
@@ -248,6 +249,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-accommodation">
@@ -399,6 +401,8 @@
                         </div>
                     </div>
                     @endif
+
+                    @if($tour->video_url)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-video">
                             <div class="accordion-btn">Видео:</div>
@@ -411,6 +415,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="event-details-accordion" id="reviews">
                         <div class="event-accordion accordion-reviews">
                             <div class="accordion-btn">
@@ -521,7 +526,7 @@
                                 ?>
                             </span>
                         </div>
-                        <a href="#" class="note-schedule">Другие мероприятия организации</a>
+                        <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" target="_blank" class="note-schedule">Другие мероприятия организации</a>
                         {{-- <div class="booking__select selected">
                             <label class="booking__variant">
                                 <input type="radio" name="booking" value="1" checked>

@@ -43,7 +43,7 @@ class RoleController extends Controller
             'name' => 'regex:/[\d\w\_\-\.\sа-я]+/i',
         ]);
 
-        $has_role = Role::where('name', '=', $request->input('name'))->first();
+        $has_role = Role::where('name', '=', $request->input('name'))->firstOrFail();
         if ($has_role) {
             return redirect()->back()->withErrors('Роль с таким именем уже существует');
         }
@@ -76,7 +76,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::where('id', $id)->first();
+        $role = Role::where('id', $id)->firstOrFail();
         return view('admin::pages.role.show', ['role' => $role, 'title' => $this->title, 'title_page' => 'Просмотр роли']);
     }
 
@@ -87,7 +87,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::with('permissions')->where('id', $id)->first();
+        $role = Role::with('permissions')->where('id', $id)->firstOrFail();
         $all_perms = Permissions::all();
         return view('admin::pages.role.edit', ['role' => $role, 'all_perms' => $all_perms, 'title' => $this->title, 'title_page' => 'Редактирование роли']);
     }
@@ -114,7 +114,7 @@ class RoleController extends Controller
                 }
             }
             if (count($permissions) > 0) {
-                $role = Role::where('id', $id)->first();
+                $role = Role::where('id', $id)->firstOrFail();
                 $role->syncPermissions($permissions);
             }
         }
@@ -131,7 +131,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::where('id', $id)->first();
+        $role = Role::where('id', $id)->firstOrFail();
         if ($role->name == 'super_admin') {
             return redirect()->back()->withErrors('Эту роль удалить не возможно!');
         } else {

@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::with('profile')->paginate();
+        $users = User::with('profile')->orderByDesc('id')->paginate();
         return view('admin::pages.user.index', ['users' => $users, 'title' => $this->title, 'title_page' => 'Список пользователей']);
     }
 
@@ -37,20 +37,20 @@ class UserController extends Controller
 
         mkdir(get_image_path_to_profile($request->all()), 0755, true);
 
-        User::create([
+        $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
         ]);
 
         session()->flash('message', 'Сохранил');
-        return redirect()->back();
+        return redirect()->route('admin.user.edit', ['user' => $user->id]);
     }
 
 
     public function show($id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::where('id', $id)->firstOrFail();
 
         return view('admin::pages.user.show', ['title' => $this->title, 'title_page' => 'Просмотр пользователя', 'user' => $user]);
     }
@@ -58,7 +58,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::with('profile')->where('id', $id)->first();
+        $user = User::with('profile')->where('id', $id)->firstOrFail();
         if (!$user)
             return redirect()->route('admin.user.index');
 
@@ -85,7 +85,7 @@ class UserController extends Controller
         \DB::transaction(function () use ($id, $data, $request){
             User::where('id', $id)->update($data);
 
-            $profile = Profile::where('user_id', $id)->first();
+            $profile = Profile::where('user_id', $id)->firstOrFail();
             if ($request->has('auth')) {
                 $profile->auth = '1';
                 $profile->request = '0';
@@ -105,8 +105,11 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = User::where('id', $id)->first();
-        delDir(dirname(get_image_path_to_profile($user)));
+        $user = User::with('profile')->where('id', $id)->firstOrFail();
+        if ($user->profile) {
+            $user->profile->delete();
+        }
+        delDir(get_image_path_to_profile($user));
         $user->delete();
 
         session()->flash('message', 'Удалил');

@@ -10,21 +10,31 @@
                         @method('PATCH')
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="title">Заголовок</label>
                                         <input type="text" class="form-control" id="title" name="title"
                                                value="{{ $page->title }}" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <table>
+                                            <tr><td style="font-weight: bold">Адрес на сайте</td></tr>
+                                            <tr><td>&nbsp;</td></tr>
+                                            <tr><td><a href="{{ route('site.pages.official.show', ['page' => $page->slug]) }}" target="_blank">{{ route('site.pages.official.show', ['page' => $page->slug]) }}</a></td></tr>
+                                        </table>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
                                     <div class="form-group">
                                         <label for="title">Псевдоним</label>
                                         <input type="text" class="form-control" id="title" name="slug"
                                                value="{{ $page->slug }}" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-1">
                                     <!-- select -->
                                     <div class="form-group">
                                         <label>Сортировка</label>

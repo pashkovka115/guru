@@ -38,6 +38,8 @@ class CheckPermissions
         'index'   => 'view',
         'show'    => 'view',
         'requests' => 'view',
+        'new_items' => 'view',
+        'recommended' => 'view',
         'edit'    => 'edit',
         'update'  => 'edit',
         'create'  => 'add',

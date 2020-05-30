@@ -6,6 +6,30 @@
 
 @section('scripts')
     @include('pages.cabinet.scripts')
+    <script>
+        $('.removebtn').on('click', function(){
+            var $this  = $(this);
+            var fieldName = $this.data('gallery');
+            var fieldSrc = $this.data('src');
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('site.ajax.gallery.author.remove') }}",
+                data: {
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'field-name': fieldName,
+                    'field-src': fieldSrc
+                },
+                success: function(msg){
+                    // console.log(msg)
+                    //$this.parent(".photogallery-demo").remove();
+                },
+                error: function (msg, textStatus) {
+                    console.log('Неудача. ' + textStatus);
+                }
+            });
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -17,7 +41,7 @@
                     <div class="information-create">
                         <div class="information-create-block">
                             <h1 class="create-title">Редактируем автора (преподавателя)</h1>
-                            <a href="" class="btn-views">Посмотреть</a>
+                            <a href="{{ route('site.author.show', ['id' => $user->id]) }}" target="_blank" class="btn-view">Посмотреть</a>
                         </div>
                         <div class="panel-create">
                             <form enctype="multipart/form-data" action="{{ route('site.cabinet.leaders.update', ['leader' => $user->id]) }}" autocomplete="off" method="post">
@@ -28,6 +52,7 @@
                                     <input id="name" type="text" name="name" value="{{ $user->name }}" required>
                                     <p style="padding: 10px">{{ $user->email }}</p>
                                 </div>
+
                                 @if($user->profile)
                                 <div class="block-panel">
                                     <div class="form-group">
@@ -67,7 +92,7 @@
                                         @foreach($gallery as $src)
                                             <span class="photogallery-demo">
                                                 <img class="photogallery-elem" src="{{ $src }}" title="undefined">
-                                                <span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                                <span class="removebtn" data-gallery="gallery_{{ $user->profile->id }}" data-src="{{ $src }}"><i class="fa fa-times" aria-hidden="true"></i></span></span>
                                         @endforeach
                                         <p><span>Добавьте фото автора (преподавателя), а также фото, которые посчитаете интересными для профиля</span></p>
                                     </div>

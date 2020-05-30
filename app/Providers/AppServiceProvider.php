@@ -32,7 +32,8 @@ class AppServiceProvider extends ServiceProvider
         if (Schema::hasTable('pages')) {
 
             \View::share('pages_menu', Page::where('id', '>', 0)->orderBy('sort')->get(['id', 'title', 'slug']) ?? null);
-            \View::share('popular_country', \DB::table('tours')->orderByDesc('views')->limit(10)->get(
+
+            \View::share('popular_country', \DB::table('tours')->orderByDesc('views')->limit(11)->get(
                 ['id', 'title', 'category_tour_id', 'country', 'gallery']
                 ) ?? null);
 

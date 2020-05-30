@@ -82,9 +82,9 @@
                 $(this.element).html(this.options.dictDefaultMessage);
             },
             dictDefaultMessage: '<div class="dz-message">Нажмите здесь или перетащите сюда файлы для загрузки</div>',
-            maxFiles: 2,
+            maxFiles: 20,
             maxFilesize: 2, // Mb
-            dictMaxFilesExceeded: "Достигнут лимит количества файлов. Разрешено 2",
+            dictMaxFilesExceeded: "Достигнут лимит количества файлов. Максимум 20 файлов",
             dictFileTooBig: 'Ошибка! Максимальный размер файла - 2 Мб!',
             dictInvalidFileType: 'Разрешены к загрузке файлы: .jpg, .jpeg, .png, .gif',
             acceptedFiles: '.jpg,.jpeg,.png,.gif'
@@ -164,7 +164,7 @@
                         <div class="information-create">
                             <div class="information-create-block">
                                 <h1 class="create-title">Редактировать мероприятие</h1>
-                                <a href="" class="btn-views">Посмотреть</a>
+                                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" target="_blank" class="btn-view">Посмотреть</a>
                             </div>
                             <div class="panel-create">
                                 <form enctype="multipart/form-data" action="{{ route('site.cabinet.tour.update', ['tour' => $tour->id]) }}" autocomplete="off" method="post">
@@ -438,7 +438,7 @@
                                             </span>
                                             <?php endforeach; ?>
                                             </div>
-                                            <textarea placeholder="Подробное описание" id="accommodation-event" name="accommodation_description"></textarea>
+                                            <textarea placeholder="Подробное описание" id="accommodation-event" name="accommodation_description">{{ $tour->accommodation_description }}</textarea>
                                             <script> CKEDITOR.replace( 'accommodation-event' ); </script>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, какие удобства доступны:</p>
@@ -528,7 +528,7 @@
                                                 <span class="removebtn" data-gallery="gallery-meals_{{ $tour->id }}" data-src="<?= $src ?>"><i class="fa fa-times" aria-hidden="true"></i></span></span>
                                             <?php endforeach; ?>
                                             </div>
-                                            <textarea placeholder="Подробное описание" id="meals-event" name="meals_desc">{{ old('meals_desc') }}</textarea>
+                                            <textarea placeholder="Подробное описание" id="meals-event" name="meals_desc">{{ $tour->meals_desc }}</textarea>
                                             <script> CKEDITOR.replace( 'meals-event' ); </script>
                                             <div class="comfort-event">
                                                 <p class="create-subtitle">Выберите, варианты меню:</p>

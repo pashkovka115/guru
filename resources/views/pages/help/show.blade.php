@@ -10,6 +10,7 @@
                 </div>
                 <div class="col-lg-12 block_message">
                     {!! $setting->content !!}
+                    <p><a class="help_message" href="mailto:<?= env('MAIL_USERNAME') ?>">Написать в поддержку</a></p>
                 </div>
             </div>
             @endforeach

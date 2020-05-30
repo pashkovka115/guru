@@ -12,7 +12,7 @@
                                 <h3 class="card-title">Шапка</h3>
                             </div>
                             @foreach($headers as $header)
-                                <div class="card-body">
+                                <div class="card-body" style='background-image: url("{{ $header->img }}")'>
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <div class="form-group">
@@ -49,6 +49,36 @@
                                                     <i class="fas fa-trash"></i>Удалить
                                                 </a>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+
+                                            <div class="form-group">
+                                                <label for="image_label_{{ $loop->index }}">Фоновое изображение</label>
+                                                <div class="input-group">
+                                                    <input type="text" id="header_image_label_{{ $loop->index }}"
+                                                           class="form-control" name="img_{{ $header->id }}"
+                                                           aria-label="Image" aria-describedby="button-image"
+                                                           value="{{ $header->img }}">
+                                                    <div class="input-group-append">
+                                                        <a href="#" class="btn btn-outline-secondary" type="a"
+                                                           id="header_button-image_{{ $loop->index }}">Выбрать
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <img src="{{ $header->img }}" alt="" style="max-height: 100px">
+                                            </div>
+                                            <script>
+                                                document.addEventListener("DOMContentLoaded", function () {
+                                                    document.getElementById('header_button-image_{{ $loop->index }}').addEventListener('click', (event) => {
+                                                        event.preventDefault();
+                                                        inputId = "header_image_label_{{ $loop->index }}"
+                                                        window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+                                                    });
+                                                });
+                                            </script>
+
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -147,7 +177,39 @@
                                 <h3 class="card-title">Декоративный блок</h3>
                             </div>
                             @foreach($decoratives as $decorative)
-                                <div class="card-body">
+                                <div class="card-body" style='background-image: url("{{ $decorative->img }}")'>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+
+                                            <div class="form-group">
+                                                <label for="image_label_{{ $loop->index }}">Фоновое изображение</label>
+                                                <div class="input-group">
+                                                    <input type="text" id="decorative_image_label_{{ $loop->index }}"
+                                                           class="form-control" name="img_{{ $decorative->id }}"
+                                                           aria-label="Image" aria-describedby="button-image"
+                                                           value="{{ $decorative->img }}">
+                                                    <div class="input-group-append">
+                                                        <a href="#" class="btn btn-outline-secondary" type="a"
+                                                           id="decorative_button-image_{{ $loop->index }}">Выбрать
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <img src="{{ $decorative->img }}" alt="" style="max-height: 100px">
+                                            </div>
+                                            <script>
+                                                document.addEventListener("DOMContentLoaded", function () {
+                                                    document.getElementById('decorative_button-image_{{ $loop->index }}').addEventListener('click', (event) => {
+                                                        event.preventDefault();
+                                                        inputId = "decorative_image_label_{{ $loop->index }}"
+                                                        window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+                                                    });
+                                                });
+                                            </script>
+
+                                        </div>
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-sm-10">
                                             <div class="form-group">

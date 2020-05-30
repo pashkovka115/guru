@@ -17,11 +17,16 @@
                 <h1 class="user-title">Редактируем отзыв</h1>
             </div>
             <div class="personal_events">
+<<<<<<< HEAD
                 <h2 class="user-subtitle">Мероприятия: <a href="{{ route('site.catalog.tour.show', ['event' => $comment->tour->id]) }}" target="_blank">{{ $comment->tour->title }}</a></h2>
+=======
+                <h3>На мероприятие: <a href="{{ route('site.catalog.tour.show', ['event' => $comment->tour->id]) }}" target="_blank">{{ $comment->tour->title }}</a></h3>
+>>>>>>> d63db8a9f68ee92f24965588c7b99b82d66061d8
             </div>
             <form action="{{ route('site.cabinet.review.update', ['review' => $comment->id]) }}" method="post">
                 @csrf
                 @method('PUT')
+<<<<<<< HEAD
                 <div class="form-reviews-block">
                     <span>Оценка:</span>
                     <div class="star-rating">
@@ -48,6 +53,17 @@
                     <textarea id="comment" rows="7" name="comment">{{ $comment->comment }}</textarea>
                 </div>
                 <button type="submit" class="btn-personal">Обновить отзыв</button>
+=======
+                <div class="form-group">
+                    <label for="title">Заголовок</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ $comment->title }}">
+                </div>
+                <div class="form-group">
+                    <label for="comment">Текст</label>
+                    <textarea class="form-control" id="comment" rows="7" name="comment">{{ $comment->comment }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+>>>>>>> d63db8a9f68ee92f24965588c7b99b82d66061d8
             </form>
         </div>
     </div>
