@@ -151,9 +151,6 @@ class TourController extends Controller
             'category_tour_id' => 'required|numeric',
             'title' => 'regex:/[\w\s\d\_\-\.]*/i',
 
-            'tags' => 'sometimes|nullable|array',
-            'tags.*' => 'sometimes|nullable|numeric',
-
             'photo_variant' => 'sometimes|nullable|array',
             'photo_variant.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
 
@@ -199,6 +196,48 @@ class TourController extends Controller
             'gallery_meals.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
             'meals_desc' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.\,\/\"\\\']*/i',
         ]);
+
+        // валидируем добавление существующих авторов
+        if ($request->has('leader_ids') and is_array($request->input('leader_ids'))){
+            $ids = [];
+            foreach ($request->input('leader_ids') as $leader_id){
+                $ids[] = (int)$leader_id;
+            }
+            $user = User::with('leaders')->where('id', auth()->id())->first();
+            $lead_ids = array_keys($user->leaders->keyBy('id')->toArray());
+
+            $diff = array_diff($ids, $lead_ids);
+            $diff_bool = count($diff) === 0;
+            $cnt_bool = count($ids) === count($lead_ids);
+
+            if (!($cnt_bool and $diff_bool)){
+                return redirect()->back()
+                    ->withErrors('Для создания автора/ведущего есть специальный <a href="'.route('site.cabinet.leaders.create').'">раздел</a>');
+            }
+        }
+
+        // валидируем добавление существующих тегов
+        if ($request->has('tags') and is_array($request->input('tags'))){
+            $ids = [];
+            foreach ($request->input('tags') as $tag_id){
+                $ids[] = (int)$tag_id;
+            }
+
+            $tags = ToursTags::all();
+            $tags_ids = array_keys($tags->keyBy('id')->toArray());
+            $tags_ids_true = true;
+            foreach ($ids as $i){
+                if (!in_array($i, $tags_ids)){
+                    $tags_ids_true = false;
+                    break;
+                }
+            }
+
+            if (!$tags_ids_true){
+                return redirect()->back()
+                    ->withErrors('Вы не можете создавать новые теги, для этого есть администратор.');
+            }
+        }
 
 //        global $tour;
 //        \DB::transaction(function() use ($request) {
@@ -264,20 +303,22 @@ class TourController extends Controller
             if ($request->has('photogallery')){
                 $data['gallery'] = json_encode(get_url_to_uploaded_files(auth()->user(), $request->file('photogallery')));
             }
-//dd($request->all());
+
             $tour = new Tour($data);
             $tour->save();
+
 
             if ($request->has('tags') and is_array($request->input('tags')) and count($request->input('tags')) > 0) {
                 $tour->tags()->attach($request->input('tags'));
             }
 
-
             // прикрепляем к мероприятию ведущих
             $leader_ids = !empty($request->input('leader_ids')) ? $request->input('leader_ids') : [];
             foreach ($leader_ids as $leader_id) {
-                $leader = User::with('tours')->where('id', $leader_id)->firstOrFail();
-                $leader->tours()->attach($tour->id);
+                $leader = User::with('tours')->where('id', $leader_id)->first();
+                if($leader){
+                    $leader->tours()->attach($tour->id);
+                }
             }
 
             // варианты мероприятия
@@ -296,7 +337,6 @@ class TourController extends Controller
                     ];
                     $variants[] = $variant;
                 }
-//                dd($variants);
                 \DB::table('tours_variants')->insert($variants);
             }
 //        }, 5);
@@ -325,15 +365,12 @@ class TourController extends Controller
         ]);
     }
 
+
     public function update(Request $request, $id)
     {
-//        dd($request->all());
         $request->validate([
             'category_tour_id' => 'required|numeric',
             'title' => 'regex:/[\w\s\d\_\-\.]*/i',
-
-//            'tags' => 'sometimes|nullable|array',
-//            'tags.*' => 'sometimes|nullable|numeric',
 
             'photo_variant' => 'sometimes|nullable|array',
             'photo_variant.*' => 'sometimes|nullable|mimes:jpeg,jpg,png',
@@ -390,8 +427,11 @@ class TourController extends Controller
             $user = User::with('leaders')->where('id', auth()->id())->firstOrFail();
             $lead_ids = array_keys($user->leaders->keyBy('id')->toArray());
 
-            $leaders_ids_true = count($ids) === count($lead_ids) and empty(array_diff($ids, $lead_ids));
-            if (!$leaders_ids_true){
+            $diff = array_diff($ids, $lead_ids);
+            $diff_bool = count($diff) === 0;
+            $cnt_bool = count($ids) === count($lead_ids);
+
+            if (!($cnt_bool and $diff_bool)){
                 return redirect()->back()
                     ->withErrors('Для создания автора/ведущего есть специальный <a href="'.route('site.cabinet.leaders.create').'">раздел</a>');
             }
@@ -426,7 +466,7 @@ class TourController extends Controller
             if ($leaders_ids_true) {
                 // синхронизация тура с ведущими
                 $leaders_ids = array_map(function ($n) use ($id) {
-                    return ['leader_id' => $n * 1, 'tour_id' => $id * 1];
+                    return ['leader_id' => (int)$n, 'tour_id' => (int)$id];
                 }, $request->input('leader_ids'));
 
                 \DB::table('tour_leader')->where('tour_id', $id)->delete();
