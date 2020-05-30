@@ -167,7 +167,7 @@
                         <div class="information-create">
                             <div class="information-create-block">
                                 <h1 class="create-title">Редактировать мероприятие</h1>
-                                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" target="_blank" class="btn-view">Посмотреть</a>
+                                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" target="_blank" class="btn-views">Посмотреть</a>
                             </div>
                             <div class="panel-create">
                                 <form enctype="multipart/form-data" action="{{ route('site.cabinet.tour.update', ['tour' => $tour->id]) }}" autocomplete="off" method="post">
