@@ -507,6 +507,37 @@ footer {
   color: #493c35;
   margin-top: 20px;
 }
+/* Оповещение и ошибки */
+.block-error {
+  background: #fafafa;
+}
+.row-error {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+.alert-danger {
+  color: #fff;
+  background-color: rgba(255, 0, 23, 0.5);
+  padding: 15px;
+  margin: 0 15px;
+  border:0;
+}
+.alert-info {
+  color: #fff;
+  background-color: #0cc11a;
+  padding: 15px;
+  margin: 0 15px;
+  border:0;
+}
+.alert {
+  position: relative;
+  border-radius: 0;
+}
+.block-error a {
+  color: #fff;
+  text-decoration: underline;
+}
 /* Страница Добавления объявления */
 .header_menu {
   position: sticky;
@@ -2042,7 +2073,7 @@ display: block;
     color: #968a84;
 }
 .readmore-js-expanded {
-  height: 100% !important;
+  height: auto !important;
 }
 .accordion-reviews .readmore-js-toggle{
   display: flex;
@@ -2240,16 +2271,15 @@ display: block;
   height: 40px;
   padding: 15px;
   width: 100%;
-  border-radius: 10px;
   border: 1px solid #a9a9a9;
 }
 .form-reviews-block textarea {
   padding: 15px;
-  border-radius: 10px;
   width: 100%;
   min-width: 300px;
   height: auto;
   min-height: 150px;
+  border: 1px solid #a9a9a9;
 }
 .form-reviews-block button {
   color: #fff;
@@ -2257,7 +2287,6 @@ display: block;
   border-bottom-width: 3px;
   text-shadow: 0 1px #da8914;
   font-weight: 400;
-  border-radius: 8px!important;
   padding: .5rem;
   background-color: #fbaf42;
   letter-spacing: 1px;
@@ -2290,7 +2319,6 @@ display: block;
 {
 	content: "\f005";
 }
-
 /* Страница авторов и организаторов */
 .block_autor_content {
   padding: 40px 0;
@@ -2610,6 +2638,7 @@ hr {
   align-items: center;
   justify-content: center;
   padding: 10px;
+  border:0;
 }
 .btn-personal:hover, .btn-personal:focus, .btn-personal:active {
   color: #ffffff;
