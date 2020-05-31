@@ -6,30 +6,6 @@
 
 @section('scripts')
     @include('pages.cabinet.scripts')
-    <script>
-        $('.removebtn').on('click', function(){
-            var $this  = $(this);
-            var fieldName = $this.data('gallery');
-            var fieldSrc = $this.data('src');
-
-            $.ajax({
-                type: "POST",
-                url: "{{ route('site.ajax.gallery.author.remove') }}",
-                data: {
-                    '_token': $('meta[name="csrf-token"]').attr('content'),
-                    'field-name': fieldName,
-                    'field-src': fieldSrc
-                },
-                success: function(msg){
-                    // console.log(msg)
-                    //$this.parent(".photogallery-demo").remove();
-                },
-                error: function (msg, textStatus) {
-                    console.log('Неудача. ' + textStatus);
-                }
-            });
-        });
-    </script>
 @endsection
 
 @section('content')
@@ -37,12 +13,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    @include('parts.cabinet.menu')
                     <div class="information-create">
-                        <div class="information-create-block">
-                            <h1 class="create-title">Редактируем автора (преподавателя)</h1>
-                            <a href="{{ route('site.author.show', ['id' => $user->id]) }}" target="_blank" class="btn-views">Посмотреть</a>
-                        </div>
+                        <h1 class="create-title">Редактировать автора (преподавателя)</h1>
+                        <a href="{{ route('site.author.show', ['id' => $user->id]) }}" target="_blank" class="btn-views">Посмотреть</a>
                         <div class="panel-create">
                             <form enctype="multipart/form-data" action="{{ route('site.cabinet.leaders.update', ['leader' => $user->id]) }}" autocomplete="off" method="post">
                                 @csrf
@@ -50,30 +23,37 @@
                                 <div class="block-panel">
                                     <label for="name" class="create-subtitle">Имя и фамилия автора (преподавателя):</label>
                                     <input id="name" type="text" name="name" value="{{ $user->name }}" required>
-                                    <p style="padding: 10px">{{ $user->email }}</p>
                                 </div>
-
+                                <div class="block-panel">
+                                    <label for="email" class="create-subtitle">Email:</label>
+                                    <input id="email" type="email" name="email" value="{{ $user->email }}" disabled>
+                                </div>
                                 @if($user->profile)
                                 <div class="block-panel">
-                                    <div class="form-group">
-                                        <label for="avatar">Изменить аватар</label>
-                                        <input type="file" class="form-control-file" id="avatar" name="avatar">
-                                        @if($user->profile->avatar)
-                                        <img src="{{ json_decode($user->profile->avatar)[0] ?? '' }}" alt="аватар">
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="block-panel">
-                                    <label for="name-excerpt" class="create-subtitle">Информация об авторе (преподавателе):</label>
-                                    <div class="block-panel-sub">
-                                        <p>Опишите в форме ниже краткую информацию об авторе. Может использоваться в лентах.</p>
-                                        <textarea id="name-excerpt" name="excerpt">{{ $user->profile->excerpt ?? '' }}</textarea>
+                                    <label for="avatar" class="create-subtitle">Аватар:</label>
+                                    <div class="block-avatar">
+                                        <div class="choose-file">
+                                            <div class="upload-demo">
+                                                <?php
+                                                if ($user->profile->avatar){
+                                                    $src = json_decode($user->profile->avatar)[0] ?: '';
+                                                }else{
+                                                    $src = asset('assets/site/images/no-avatar.jpg');
+                                                }
+                                                ?>
+                                                <div class="upload-demo-wrap"><img class="img-fluid portimg" src="{{ $src }}"></div>
+                                            </div>
+                                            <span class="btn_upload">
+                                                <input type="file" name="avatar" class="inputfile photo-variant">
+                                                Загрузить фото
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="block-panel">
                                     <label for="name-desk" class="create-subtitle">Информация об авторе (преподавателе):</label>
                                     <div class="block-panel-sub">
-                                        <p>Опишите в форме ниже подробную информацию об авторе (преподавателе). Используется на странице автора.</p>
+                                        <p>Опишите в форме ниже подробную информацию об авторе (преподавателе)</p>
                                         <textarea id="name-desk" name="description">{{ $user->profile->description ?? '' }}</textarea>
                                     </div>
                                 </div>
@@ -81,20 +61,24 @@
                                     <label for="photogallery" class="create-subtitle">Фотогалерея:</label>
                                     <div class="block-panel-sub">
 												<span class="btn_upload">
-										        	<input id="photogallery" type="file" name="gallery[]" multiple class="photogallery" >
+										        	<input id="photogallery" type="file" name="photogallery" multiple class="photogallery" >
 										        	Загрузить фото
 										      	</span>
                                         <div class="photogallery-container"></div>
+                                        <!-- Пример как будет выглядеть в редактировании -->
+                                        {{--<span class="photogallery-demo"><img class="photogallery-elem" src="https://www.tvr.by/upload/iblock/42d/42d1898756e574fcaf9b7519c354ce9c.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                        <span class="photogallery-demo"><img class="photogallery-elem" src="https://cdn24.img.ria.ru/images/151546/28/1515462835_0:0:1036:587_600x0_80_0_0_a75f922e8b052d966122e1c9dc40feb4.jpg" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                        <span class="photogallery-demo"><img class="photogallery-elem" src="https://avatars.mds.yandex.net/get-vh/1528766/17938558859946010694-8Om2usjIWnMGFo-u6w3VfA-1551431625/936x524" title="undefined"><span class="removebtn"><i class="fa fa-times" aria-hidden="true"></i></span></span>--}}
                                         <?php
                                         $gallery = json_decode($user->profile->gallery) ?? [];
-
                                         ?>
                                         @foreach($gallery as $src)
                                             <span class="photogallery-demo">
                                                 <img class="photogallery-elem" src="{{ $src }}" title="undefined">
-                                                <span class="removebtn" data-gallery="gallery_{{ $user->profile->id }}" data-src="{{ $src }}"><i class="fa fa-times" aria-hidden="true"></i></span></span>
+                                                <span class="removebtn" data-gallery="gallery_{{ $user->profile->id }}" data-src="{{ $src }}"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                            </span>
                                         @endforeach
-                                        <p><span>Добавьте фото автора (преподавателя), а также фото, которые посчитаете интересными для профиля</span></p>
+                                        <p>Добавьте фото автора (преподавателя), а также фото, которые посчитаете интересными для профиля</p>
                                     </div>
                                 </div>
                                 <div class="block-panel">
@@ -109,21 +93,12 @@
                                     <input id="longitude" type="hidden" name="longitude">
                                     <div id="map"></div>
                                 </div>
-
                                 <div class="block-panel">
                                     <label for="video-url" class="create-subtitle">Видео YouTube:</label>
                                     <input id="video-url" type="text" name="url" value="{{ $user->profile->url ?? '' }}">
                                 </div>
-                                @else
-                                    <p>Сохраните для создания профиля</p>
-                                @endif
-                                {{--<div class="block-panel">
-                                    <label for="tags" class="create-subtitle">Теги (максимум 5):</label>
-                                    <select class="chosen-select" id="tags" name="tags[]" multiple="multiple">
-                                        <option value="тег1">тег1</option>
-                                        <option value="тег2">тег2</option>
-                                    </select>
-                                </div>--}}
+                            @endif
+
                                 <div class="block-publication">
                                     <button type="submit" class="btn-public">Сохранить</button>
                                 </div>
@@ -135,7 +110,6 @@
         </div>
     </div>
 @endsection
-
 @section('scripts_footer')
     <script>
         $(function() {
@@ -278,33 +252,7 @@
                                 "<img class=\"photogallery-elem\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
                                 "<span class=\"removebtn\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span>" +
                                 "</span>").insertAfter(".photogallery-container");
-                           /* $(".removebtn").click(function(e){
-                                //console.log(e.target.parentElement.previousElementSibling.src);
-                                //return;
-                                if (! e.target.parentElement.previousElementSibling.src.startsWith('data:')) {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "{{ url('delete-img-gallery-author') }}",
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        data: {
-                                            'url': e.target.parentElement.previousElementSibling.src,
-                                            'id': {{ $user->id }}
-                                        },
-                                        success: function (msg) {
-                                            console.log(msg);
-                                            $(this).parent(".photogallery-demo").remove();
-                                        },
-                                        error: function (msg, textStatus) {
-                                            console.log('Неудача. ' + textStatus);
-                                        }
-                                    });
-                                }else{
-                                    $(this).parent(".photogallery-demo").remove();
-                                }
 
-                            }); */
                         });
                         fileReader.readAsDataURL(f);
                     }
@@ -317,9 +265,9 @@
 
     <script>
         $(".removebtn").click(function(e) {
-           // $(this).parent(".photogallery-demo").remove();
+            // $(this).parent(".photogallery-demo").remove();
 
-            if (e.target.parentElement.previousElementSibling.src && ! e.target.parentElement.previousElementSibling.src.startsWith('data:')) {
+            // if (e.target.parentElement.previousElementSibling.src && ! e.target.parentElement.previousElementSibling.src.startsWith('data:')) {
                 $.ajax({
                     type: "POST",
                     url: "{{ url('delete-img-gallery-author') }}",
@@ -339,9 +287,9 @@
                         //console.log('Неудача. ' + textStatus);
                     }
                 });
-            }else{
+            /*}else{
                 $(this).parent(".photogallery-demo").remove();
-            }
+            }*/
 
         });
     </script>
