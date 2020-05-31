@@ -29,7 +29,25 @@ $(function() {
 });
 
 $(".chosen-select").select2({
-    tags: true
+    maximumSelectionLength: 5,
+    language: {
+        maximumSelected: function (args) {
+           let message = 'Вы можете выбрать не более' + args.maximum + ' элемент';
+    
+           if (args.maximum  >= 2 && args.maximum <= 4) {
+               message += 'а';
+           } else if (args.maximum >= 5) {
+               message += 'ов';
+           }
+           return message;
+        },
+        noResults: function () {
+            return 'Ничего не найдено';
+        },
+        searching: function () {
+            return 'Поиск…';
+        }
+    }
 });
 
 
