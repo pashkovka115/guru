@@ -30,13 +30,13 @@
                                         <textarea rows="5" style="width: 100%" id="content" disabled>{{ $setting->content }}</textarea>
                                     </div>
                                 </div>
-
-                            <div class="card-footer">
-                                <a href="{{ route('admin.help.edit') }}" class="btn btn-primary">Редактировать</a>
-                            </div>
                         </div>
                     </div>
             @endforeach
+
+            <div class="card-footer">
+                <a href="{{ route('admin.help.edit') }}" class="btn btn-primary">Редактировать</a>
+            </div>
         </form>
     </div>
 @endsection

@@ -15,7 +15,7 @@
                                 <div class="event_list">
                                     <div class="owl-carousel owl-theme slide-cat event_list_photo">
                                         @php
-                                        $gallery = json_decode($tour->gallery);
+                                        $gallery = json_decode($tour->gallery ?: '') ?: [];
                                         @endphp
                                         @foreach($gallery as $src)
                                         <div class="item">
@@ -24,40 +24,46 @@
                                             </a>
                                         </div>
                                         @endforeach
-                                        <div class="item">
-                                            <a href="" class="event_list__link">
-                                                <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid event_list_img">
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <a href="" class="event_list__link">
-                                                <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}" alt="" class="img-fluid event_list_img">
-                                            </a>
-                                        </div>
                                     </div>
-                                    <div class="event_list__autor">
-                                        <a href="#" title="Имя автора">
-                                            <img src="{{ asset('assets/site/images/slider_img_autor.jpg') }}" alt="аватар" class="img-fluid">
-                                        </a>
-                                        <a href="#" title="Имя автора">
-                                            <img src="{{ asset('assets/site/images/slider_img_autor.jpg') }}" alt="аватар" class="img-fluid">
-                                        </a>
-                                        <a href="#" title="Имя автора">
-                                            <img src="{{ asset('assets/site/images/slider_img_autor.jpg') }}" alt="аватар" class="img-fluid">
-                                        </a>
-                                        <em>Ваш гиды</em>
-                                    </div>
+
+                                    @if($tour->leaders->count() > 0)
+                                        <div class="event_list__autor">
+                                            @foreach($tour->leaders as $leader)
+                                                @if($leader->profile->avatar)
+                                                    <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
+                                                        <?php $arr_img = json_decode($leader->profile->avatar ?: '') ?: [];
+                                                        if (isset($arr_img[0])): ?>
+                                                        <img src="{{ $arr_img[0] }}" alt="аватар"
+                                                             class="img-fluid">
+                                                        <?php endif; ?>
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
+                                                        <span>{{ $leader->name }}</span>
+                                                    </a>
+                                                @endif
+                                            @endforeach
+                                            <em>Ваши гиды</em>
+                                        </div>
+                                    @endif
+
                                     <div class="event__list_block">
                                         <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-event">
-                                            @php
-                                                $start = \Carbon\Carbon::create($tour->date_start);
-                                                $end = \Carbon\Carbon::create($tour->date_end);
+                                            <?php
+                                            $variants = $tour->variants;
+                                            if (isset($variants[0])) {
+                                                $start = \Carbon\Carbon::create($variants[0]->date_start_variant);
+                                                $end = \Carbon\Carbon::create($variants[0]->date_end_variant);
                                                 $diff = $start->diffInDays($end);
-                                            @endphp
-                                            {{ $tour->title }}, {{ $start->formatLocalized('%e %B %Y') }}
+
+                                                echo $tour->title . ', ' . $start->formatLocalized('%e %B %Y');
+                                            }else{
+                                                echo $tour->title;
+                                            }
+                                            ?>
                                         </a>
                                         <a href="#" class="location-event">
-                                            {{ $tour->city }}, {{ $tour->country }}
+                                            {{ $tour->city }} @if($tour->city and $tour->country), @endif {{ $tour->country }}
                                         </a>
                                         <p class="dates-event">
                                             <span>
@@ -73,7 +79,7 @@
                                             @if($tour->info_excerpt)
                                             <li class="event-highlights-icon">
                                                 <img src="{{ asset('assets/site/images/event-highlights-icon-events-01.svg') }}" alt="" class="img-fluid">
-                                                <span>{{ mb_strimwidth($tour->info_excerpt, 0, 70, '...') }}</span>
+                                                <span>{{ mb_strimwidth(strip_tags($tour->info_excerpt), 0, 70, '...') }}</span>
                                             </li>
                                             @endif
                                             @if($tour->transfer_free or $tour->transfer_fee)
@@ -94,7 +100,7 @@
                                             @if($tour->meals_desc)
                                             <li class="event-highlights-icon">
                                                 <img src="{{ asset('assets/site/images/event-highlights-icon-meals-04.svg') }}" alt="" class="img-fluid">
-                                                <span>{{ mb_strimwidth($tour->meals_desc, 0, 70, '...') }}</span>
+                                                <span>{{ mb_strimwidth(strip_tags($tour->meals_desc), 0, 70, '...') }}</span>
                                             </li>
                                             @endif
                                             @if($tour->private_room or $tour->dormitory_room or $tour->separate_house)
@@ -108,12 +114,18 @@
                                             </li>
                                             @endif
                                         </ul>
-                                        <div class="rating-event">
-                                            <div class="rating">
-												{!! get_raiting_template($tour->rating) !!}
-                                                <span class="review-count">(32 отзывов)</span>
+                                        @if($tour->rating > 0)
+                                            <div class="rating-event">
+                                                <div class="rating">
+                                                    {!! get_raiting_template($tour->rating) !!}
+                                                    @if($tour->comments->count() > 0)
+                                                        <span
+                                                            class="review-count">({{ $tour->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $tour->comments->count()) }})
+                                                            </span>
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                         <div class="event-footer">
                                             <div class="event-tags">
                                                 <?php

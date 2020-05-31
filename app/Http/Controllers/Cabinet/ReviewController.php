@@ -28,7 +28,7 @@ class ReviewController extends Controller
 
     public function edit($id)
     {
-        $comment = TourRating::with('tour')->where('id', $id)->first();
+        $comment = TourRating::with('tour')->where('id', $id)->firstOrFail();
 
         return view('pages.cabinet.review.edit', ['comment' => $comment]);
     }

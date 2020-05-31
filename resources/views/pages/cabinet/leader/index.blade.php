@@ -18,7 +18,7 @@
                         <h1 class="user-title">Ведущие</h1>
                         <a href="{{ route('site.cabinet.leaders.create') }}" class="btn-personal">Добавить ведущего</a>
                     </div>
-                    @foreach($user->leaders as $leader)
+                    @foreach($user->leaders->reverse() as $leader)
                         <div class="personal_status_events">
                             <div class="personal_events-public">
                                 <div class="block-public">

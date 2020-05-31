@@ -37,15 +37,15 @@ class RolesAndPermissionsSeeder extends Seeder
 //        Permission::create(['name' => 'user-role_add', 'description' => 'Добавлять роль']); - не имеет смысла
 //        Permission::create(['name' => 'user-role_delete', 'description' => 'Удалять роль']); - не имеет смысла
 
-        Permission::create(['name' => 'category-tour_view', 'description' => 'Просматривать категории туров']);
-        Permission::create(['name' => 'category-tour_edit', 'description' => 'Редактировать категории туров']);
-        Permission::create(['name' => 'category-tour_add', 'description' => 'Добавлять категорию тура']);
-        Permission::create(['name' => 'category-tour_delete', 'description' => 'Удалять категорию тура']);
+        Permission::create(['name' => 'category-tour_view', 'description' => 'Просматривать категории мероприятий']);
+        Permission::create(['name' => 'category-tour_edit', 'description' => 'Редактировать категории мероприятий']);
+        Permission::create(['name' => 'category-tour_add', 'description' => 'Добавлять категорию мероприятий']);
+        Permission::create(['name' => 'category-tour_delete', 'description' => 'Удалять категорию мероприятий']);
 
-        Permission::create(['name' => 'tour_view', 'description' => 'Просматривать туры']);
-        Permission::create(['name' => 'tour_edit', 'description' => 'Редактировать туры']);
-        Permission::create(['name' => 'tour_add', 'description' => 'Добавлять тур']);
-        Permission::create(['name' => 'tour_delete', 'description' => 'Удалять тур']);
+        Permission::create(['name' => 'tour_view', 'description' => 'Просматривать мероприятия']);
+        Permission::create(['name' => 'tour_edit', 'description' => 'Редактировать мероприятия']);
+        Permission::create(['name' => 'tour_add', 'description' => 'Добавлять мероприятия']);
+        Permission::create(['name' => 'tour_delete', 'description' => 'Удалять мероприятия']);
 
         Permission::create(['name' => 'file-manager_*', 'description' => 'Использовать файловый менеджер']);
 
@@ -107,16 +107,16 @@ class RolesAndPermissionsSeeder extends Seeder
         $role = Role::create(['name' => 'super_admin', 'description' => 'Можно всё']);
         $role->givePermissionTo(Permission::all());
 
-        Role::create(['name' => 'moderator', 'description' => 'Просматривает главную'])->givePermissionTo(['dashboard_view']);
+//        Role::create(['name' => 'moderator', 'description' => 'Просматривает главную'])->givePermissionTo(['dashboard_view']);
 
         $users = \App\Models\User::all();
-        if ($users){
+        if ($users->count() > 0){
             $admin = $users[0];
             $admin->assignRole('super_admin');
-            if (isset($users[1])){
+            /*if (isset($users[1])){
                 $moderator = $users[1];
                 $moderator->assignRole('moderator');
-            }
+            }*/
         }
     }
 }

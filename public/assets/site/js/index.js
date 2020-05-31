@@ -5,11 +5,11 @@ $(document).scroll(function() {
     if ($(this).scrollTop() > scroll_btn) {
         $(".form_search").hide();
         $("header").addClass('fixed');
-        
+
     }else{
         $(".form_search").show();
         $("header").removeClass('fixed');
-    }   
+    }
 });
 
 $('.search-input').click( function(){
@@ -49,7 +49,7 @@ $(function() {
     $(document).on("click", ".mobile_menu_close", function(e) {
         e.preventDefault();
         $(".mobile_menu_container").removeClass("loaded");
-        $(".mobile_menu_overlay").fadeOut();;
+        $(".mobile_menu_overlay").fadeOut();
         $("body").removeClass("no-overlay");
     });
 });

@@ -22,7 +22,7 @@
                             <span class="confirm">Подтвержден</span>
                             @else
                             <span class="not-confirm">Не подтвержден</span>
-                                @if(auth()->user()->profile->request)
+                                @if(auth()->user()->profile and auth()->user()->profile->request)
                                     <span class="not-confirm">, Ожидает подтверждения</span>
                                 @endif
                             @endif

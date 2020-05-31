@@ -4,7 +4,7 @@
     <div class="block_event_image">
         <div class="container-fluid no-padding event-gallery-pc">
             @php
-                $gallery = json_decode($tour->gallery);
+                $gallery = (array)json_decode($tour->gallery) ?: [];
             @endphp
             <div class="row">
                 @isset($gallery[0])
@@ -41,7 +41,8 @@
                     <div class="event-gallery-none">
                         <div data-fancybox="gallery" href="{{ $gallery[5] }}" style="background-image: url({{ $gallery[5] }});">Другие фото</div>
                         @isset($gallery[6])
-                            @for($i = 6; $i < (count($gallery) - 6); $i++)
+                            <?php //dd($gallery); ?>
+                            @for($i = 6; $i <= (count($gallery) - 6); $i++)
                                 <div data-fancybox="gallery" href="{{ $gallery[$i] }}" style="background-image: url({{ $gallery[$i] }});"></div>
                             @endfor
                         @endisset
@@ -53,21 +54,15 @@
         <div class="container event-gallery-mobile">
             <div class="row">
                 <div class="owl-carousel owl-theme slide-cat event_list_photo">
-                    <div class="item">
-                        <a href="" class="event_list__link">
-                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid event_list_img">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="" class="event_list__link">
-                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid event_list_img">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="" class="event_list__link">
-                            <img src="images/home_bg_new.jpg" alt="" class="img-fluid event_list_img">
-                        </a>
-                    </div>
+                    @isset($gallery[0])
+                        @foreach($gallery as $src)
+                            <div class="item">
+                                <a href="" class="event_list__link">
+                                    <img src="{{ $src }}" alt="" class="img-fluid event_list_img">
+                                </a>
+                            </div>
+                        @endforeach
+                    @endisset
                 </div>
             </div>
         </div>
@@ -140,7 +135,7 @@
                             </span>
                         </div>
                         <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" class="note-schedule">Другие мероприятия организации</a>
-                        <div class="booking__select selected">
+                        {{--<div class="booking__select selected">
                             <label class="booking__variant">
                                 <input type="radio" name="booking" value="1" checked>
                                 <span class="radio"></span>
@@ -154,7 +149,7 @@
                                     {{ $tour->info_description }}
                                 </div>
                             </label>
-                        </div> -->
+                        </div>--}}
                         <div class="booking__selected">
                         @foreach($tour->variants as $variant)
                             <div class="booking__select">
@@ -187,7 +182,6 @@
                         @endif
                         <div class="event_list__autor">
                             @foreach($tour->leaders as $leader)
-                                <?php //dd($leader->profile); ?>
                                 <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" target="_blank" title="{{ $leader->name }}">
                                 <img src="{{ json_decode($leader->profile->avatar)[0] ?? '' }}" alt="фото автора" class="img-fluid">
                                 <span>{{ $leader->name }}</span>
@@ -224,7 +218,7 @@
                     </div>
                     @endif
 
-                    @if($tour->country or $tour->city or $tour->adress_desk)
+                    @if($tour->country and $tour->city and $tour->address)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-place">
                             <div class="accordion-btn">Место проведения:</div>
@@ -243,9 +237,11 @@
                                         <iframe width="100%" height="350" frameborder="0" style="border:0" src="{{ $link }}" allowfullscreen></iframe>
                                     </div>
                                 </div>
+                                @if($tour->adress_desk)
                                 <div class="block_place">
                                     <div class="article-block">{!! $tour->adress_desk !!}</div>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -443,7 +439,7 @@
                                 <p class="title-shedule">Отзывов - {{ $comments->count() }}</p>
                                 @endif
                                 <div class="block-reviews">
-                                    @foreach($comments as $comment)
+                                    @foreach($comments->reverse() as $comment)
                                     <article class="block-reviews_elem article">
                                         <div class="review_header">
                                             <p class="title-review">{{ $comment->title }}</p>
@@ -459,9 +455,11 @@
                                                 <span class="review-autor">{{ $comment->user->name }}</span> -
                                                 <span class="review-date">{{ $comment->updated_at->formatLocalized('%e %B %Y') }}</span>
                                             </div>
+                                            @if(auth()->check() and $comment->user->id == auth()->id())
                                             <div class="review_footer_edit">
-                                                <a href="#">Изменить отзыв</a>
+                                                <a href="{{ route('site.cabinet.review.edit', ['review' => $comment->id]) }}" target="_blank">Изменить отзыв</a>
                                             </div>
+                                            @endif
                                         </div>
                                     </article>
                                     @endforeach
@@ -469,7 +467,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php //dd($similar_tours); ?>
+
                     @if($similar_tours->count() > 1)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-similar">

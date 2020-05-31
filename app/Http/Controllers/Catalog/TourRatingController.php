@@ -40,7 +40,7 @@ class TourRatingController extends Controller
                 $cnt = count($nums_arr);
                 $tour_rating = array_sum($nums_arr) / $cnt;
 
-                $tour = Tour::where('id', $request->input('tour_id'))->first();
+                $tour = Tour::where('id', $request->input('tour_id'))->firstOrFail();
                 $tour->update(['rating' => $tour_rating]);
             }
 

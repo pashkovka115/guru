@@ -16,7 +16,7 @@
                                     <div class="event_list">
                                         <div class="owl-carousel owl-theme slide-cat event_list_photo">
                                             @php
-                                                $gallery = json_decode($tour->gallery);
+                                                $gallery = json_decode($tour->gallery) ?: [];
                                             @endphp
                                             @foreach($gallery as $src)
                                                 <div class="item">
@@ -31,7 +31,7 @@
                                                 @foreach($tour->leaders as $leader)
                                                     @if($leader->profile->avatar)
                                                         <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
-                                                            <?php $arr_img = json_decode($leader->profile->avatar);
+                                                            <?php $arr_img = json_decode($leader->profile->avatar) ?: [];
                                                             if (isset($arr_img[0])): ?>
                                                             <img src="{{ $arr_img[0] }}" alt="аватар"
                                                                  class="img-fluid">
@@ -63,7 +63,7 @@
                                                 ?>
                                             </a>
                                             <a href="#" class="location-event">
-                                                {{ $tour->city }}, {{ $tour->country }}
+                                                {{ $tour->city }} @if($tour->city and $tour->country), @endif {{ $tour->country }}
                                             </a>
                                             @isset($variants[0])
                                             <p class="dates-event">
@@ -83,7 +83,7 @@
                                                         <img
                                                             src="{{ asset('assets/site/images/event-highlights-icon-events-01.svg') }}"
                                                             alt="" class="img-fluid">
-                                                        <span>{{ mb_strimwidth($tour->info_excerpt, 0, 70, '...') }}</span>
+                                                        <span>{{ mb_strimwidth(strip_tags($tour->info_excerpt), 0, 70, '...') }}</span>
                                                     </li>
                                                 @endif
                                                 @if($tour->transfer_free or $tour->transfer_fee)
@@ -111,7 +111,7 @@
                                                         <img
                                                             src="{{ asset('assets/site/images/event-highlights-icon-meals-04.svg') }}"
                                                             alt="" class="img-fluid">
-                                                        <span>{{ mb_strimwidth($tour->meals_desc, 0, 70, '...') }}</span>
+                                                        <span>{{ mb_strimwidth(strip_tags($tour->meals_desc), 0, 70, '...') }}</span>
                                                     </li>
                                                 @endif
                                                 @if($tour->private_room or $tour->dormitory_room or $tour->separate_house)
@@ -133,7 +133,8 @@
                                                         {!! get_raiting_template($tour->rating) !!}
                                                         @if($tour->comments->count() > 0)
                                                             <span
-                                                                class="review-count">({{ $tour->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $tour->comments->count()) }})</span>
+                                                                class="review-count">({{ $tour->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $tour->comments->count()) }})
+                                                            </span>
                                                         @endif
                                                     </div>
                                                 </div>

@@ -21,6 +21,6 @@ class ToursTags extends Model
             'tours_tags_tours',
             'tour_tag_id',
             'tour_id'
-        );
+        )->with(['leaders', 'variants', 'comments']);
     }
 }
