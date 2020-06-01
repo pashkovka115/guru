@@ -64,27 +64,12 @@ class LeaderController extends Controller
         if (!is_dir($new_dir)) {
             mkdir($new_dir, 0755, true);
         }
-// description
-//address
-//street
-//house
-//region
-//city
-//country
-//latitude
-//longitude
-//  url
 
         \DB::transaction(function () use ($request) {
             $user = User::with('profile')->create([
                 "name" => $request->input('name'),
                 "email" => $request->input('email'),
             ]);
-//            $user->save();
-
-//            $user = User::where('id', $user->id)->first();
-
-//            dd(get_url_to_uploaded_files($user, $request->file('avatar')));
 
             $profile = new Profile([
                 'user_id' => $user->id,
@@ -191,7 +176,8 @@ class LeaderController extends Controller
                     if ($request->has('gallery') and $request->file('gallery') !== null) {
                         $old_gallery = (array)json_decode($user->profile->gallery);
                         $new_img = (array)get_url_to_uploaded_files(auth()->user(), $request->file('gallery'));
-                        $user->profile->gallery = json_encode(array_merge($old_gallery, $new_img));
+                        $new_gall = array_merge($old_gallery, $new_img);
+                        $user->profile->gallery = json_encode($new_gall,  JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                     }
 
                     $user->profile->save();
