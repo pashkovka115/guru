@@ -39,6 +39,7 @@ class ReviewController extends Controller
         TourRating::where('id', $id)->update([
             'title' => $request->input('title'),
             'comment' => $request->input('comment'),
+            'rating' => (int)$request->input('rating')
         ]);
 
         return redirect()->back();

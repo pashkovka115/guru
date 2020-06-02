@@ -1,6 +1,7 @@
 <?php
 
-function get_settings($type){
+function get_settings($type)
+{
     return \Modules\Admin\Models\Settings::where('post_type', $type)->get();
 }
 
@@ -116,12 +117,12 @@ function get_raiting_template($num, $echo_num = true)
             $str .= '<span class="rating-star-half"></span>';
             $count_star++;
         }
-        for ($a = 1, $i = 5 - $count_star; $a <= $i; $a++){
+        for ($a = 1, $i = 5 - $count_star; $a <= $i; $a++) {
             $str .= '<span class="rating-star-empty"></span>';
         }
         if ($echo_num) {
             $fl = $num - floor($num);
-            if ($fl == 0){
+            if ($fl == 0) {
                 $num = (string)$num . '.0';
             }
             $str .= '<span class="rating-value">' . strval($num) . '</span>';
@@ -130,6 +131,23 @@ function get_raiting_template($num, $echo_num = true)
         return $str;
     }
     return false;
+}
+
+function get_rating_template_for_form($num)
+{
+    $num = (int)$num;
+    $str = '';
+    for ($i = 5; $i > 0; $i--) {
+        if ($i === $num){
+            $active = ' star-rating__active';
+        }else{
+            $active = '';
+        }
+        $str .= "<input class=\"star-rating__input\" id=\"star-rating-$i\" type=\"radio\" name=\"rating\" value=\"$i\">"
+            . "<label class=\"star-rating__ico fa fa-star-o$active\" for=\"star-rating-$i\" title=\"$i out of 5 stars\"></label>";
+    }
+
+    return $str;
 }
 
 
