@@ -127,7 +127,7 @@
                 @if($tour->rating > 0)
                     <div class="rating-event">
                         <div class="rating">
-                            {!! get_raiting_template($tour->rating) !!}
+                            {!! get_rating_template($tour->rating) !!}
                             @if($tour->comments->count() > 0)
                                 <span
                                     class="review-count">({{ $tour->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $tour->comments->count()) }})</span>

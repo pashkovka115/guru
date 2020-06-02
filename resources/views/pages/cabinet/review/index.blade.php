@@ -42,7 +42,7 @@
                         <div class="block-public">
                             <p class="public-title">{{ $my_com->tour->title }}</p>
                             <div class="rating">
-                                {!! get_raiting_template($my_com->rating) !!}
+                                {!! get_rating_template($my_com->rating) !!}
                             </div>
                             <p class="public-status">
                                 @if($my_com->tour->active and $my_com->tour->good)
@@ -84,7 +84,7 @@
                         <div class="block-public">
                             <p class="public-title">{{ $me_comm->tour->title }}</p>
                             <div class="rating">
-                                {!! get_raiting_template($me_comm->tour->rating) !!}
+                                {!! get_rating_template($me_comm->tour->rating) !!}
                             </div>
                             <p class="public-status">
                                 @if($me_comm->tour->active and $me_comm->tour->good)

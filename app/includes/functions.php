@@ -100,7 +100,7 @@ function delDir($dir)
     }
 }
 
-function get_raiting_template($num, $echo_num = true)
+function get_rating_template($num, $echo_num = true)
 {
     $count_star = 0;
     $num = (float)$num;

@@ -18,7 +18,7 @@
                 <div class="rating-event">
                     @if($profile)
                         <div class="rating">
-                            {!! get_raiting_template($user->profile->raiting) !!}
+                            {!! get_rating_template($user->profile->raiting) !!}
                             @if($user->comments->count() > 0)
                                 <span
                                     class="review-count">&nbsp;({{ $user->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $user->comments->count()) }})</span>

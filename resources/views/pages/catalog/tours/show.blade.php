@@ -77,7 +77,7 @@
                         <div class="event-dateils_block">
                             <div class="rating-tour">
                                 <div class="rating">
-                                    {!! get_raiting_template($tour->rating) !!}
+                                    {!! get_rating_template($tour->rating) !!}
                                     @if($comments->count() > 0)
                                     <a href="#reviews" class="review-count scroll-to">Отзывов - <span>{{ $comments->count() }}</span></a>
                                     @endif
@@ -421,7 +421,7 @@
                                 <div class="rating-accordion-block">
                                     <div class="rating-accordion">
                                         <div class="rating">
-                                            {!! get_raiting_template($tour->rating, false) !!}
+                                            {!! get_rating_template($tour->rating, false) !!}
                                             @if($tour->rating > 0)
                                             <span class="review-text">Средний рейтинг {{ $tour->rating }} из 5.0</span>
                                             @endif
@@ -444,7 +444,7 @@
                                         <div class="review_header">
                                             <p class="title-review">{{ $comment->title }}</p>
                                             <div class="rating">
-                                                {!! get_raiting_template($comment->rating) !!}
+                                                {!! get_rating_template($comment->rating) !!}
                                             </div>
                                         </div>
                                         <div class="review_main">
@@ -488,7 +488,7 @@
                                             <p>{{ $item->title }}</p>
                                             <div class="rating-accordion">
                                                 <div class="rating">
-                                                    {!! get_raiting_template($item->rating, false) !!}
+                                                    {!! get_rating_template($item->rating, false) !!}
                                                     @if($item->rating > 0)
                                                     <span class="review-text">{{ $item->rating }}</span>
                                                     @endif

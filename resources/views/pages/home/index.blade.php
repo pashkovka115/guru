@@ -75,7 +75,7 @@
                         <div class="rating-tour">
                             <div class="rating">
                                 @if($tour->rating > 0)
-                                {!! get_raiting_template($tour->rating, false) !!}
+                                {!! get_rating_template($tour->rating, false) !!}
                                 @endif
                                 @if($tour->comments->count() > 0)
                                 <span class="review-count">({{ $tour->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $tour->comments->count()) }})</span>

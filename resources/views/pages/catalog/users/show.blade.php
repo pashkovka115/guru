@@ -43,7 +43,7 @@
                                     <div class="rating-autor">
                                         <div class="rating">
                                             @if($user->profile)
-                                                {!! get_raiting_template($user->profile->raiting, false) !!}
+                                                {!! get_rating_template($user->profile->raiting, false) !!}
                                             @endif
                                             @if($comments->count() > 0)
                                                 <a href="#reviews"
@@ -188,7 +188,7 @@
                                             <div class="rating-accordion">
                                                 <div class="rating">
 
-                                                    {!! get_raiting_template($user->profile->raiting, false) !!}
+                                                    {!! get_rating_template($user->profile->raiting, false) !!}
                                                     <span class="review-text">Средний рейтинг {{ $user->profile->raiting }} из 5.0</span>
                                                 </div>
                                             </div>
@@ -203,7 +203,7 @@
                                                 <div class="review_header">
                                                     <p class="title-review">{{ $comment->title }}</p>
                                                     <div class="rating">
-                                                        {!! get_raiting_template($comment->rating) !!}
+                                                        {!! get_rating_template($comment->rating) !!}
                                                     </div>
                                                 </div>
                                                 <div class="review_main">
