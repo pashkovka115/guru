@@ -10,6 +10,9 @@
                 <a href="{{ route('site.cabinet.tour.index') }}"{!! request()->is('cabinet/tour') ? '  class="active"' : null  !!}>Мероприятия</a>
             </li>
             <li>
+                <a href="">Видео-курсы</a>
+            </li>
+            <li>
                 <a href="{{ route('site.cabinet.leaders.index') }}"{!! request()->is('cabinet/leaders') ? '  class="active"' : null  !!}>Авторы</a>
             </li>
         @endif

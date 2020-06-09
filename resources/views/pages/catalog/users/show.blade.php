@@ -63,13 +63,13 @@
                                             {{ $user->profile->city ?? null }}
                                         </span>
                                             @if($user->profile->country or $user->profile->city)
-                                        <a href="#" class="link-location"><i class="fa fa-location-arrow"></i></a>
+                                        <a href="#location" class="link-location"><i class="fa fa-location-arrow"></i></a>
                                             @endif
                                     </div>
                                     @endif
                                     @if($user->profile and $user->profile->description)
                                     <div class="about-autor">
-                                        <h2 class="event-subtitle">Об авторе</h2>
+                                        <h2 class="event-subtitle">Об организаторе</h2>
                                         <p class="text-normal">{{ $user->profile->description ?? null }}</p>
                                     </div>
                                     @endif
@@ -135,8 +135,29 @@
                             </div>
                         </div>
                     @endif
+                    <div class="event-details-accordion">
+                        <div class="event-accordion accordion-autor-retreat">
+                            <div class="accordion-btn">Обучающие курсы:</div>
+                            <div class="panel article">
+                                <ul class="list_similar_events">
+                                    <li class="similar_events_elem">
+                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/SYfrvNDPiBg"></iframe>
+                                    </li>
+                                    <li class="similar_events_elem">
+                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/Sjv-ROxckOI"></iframe>
+                                    </li>
+                                    <li class="similar_events_elem">
+                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/HV5WyThdoh0"></iframe>
+                                    </li>
+                                    <li class="similar_events_elem">
+                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/Q99Z4R6Glmw"></iframe>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     @if($user->profile and $user->profile->country and $user->profile->city and $user->profile->address)
-                        <div class="event-details-accordion">
+                        <div class="event-details-accordion" id="location">
                             <div class="event-accordion accordion-place">
                                 <div class="accordion-btn">Месторасположение:</div>
                                 <div class="panel article">
@@ -149,11 +170,13 @@
                                         @endif
                                     </div>
                                     <div class="block_place">
+                                        <div class="article-block">
                                         @php
                                             $link = generate_google_map_link([$user->profile->address]);
                                         @endphp
                                         <iframe width="100%" height="350" frameborder="0" style="border:0"
                                                 src="{{ $link }}" allowfullscreen></iframe>
+                                        </div>        
                                     </div>
                                     {{--<div class="block_place">
                                        {{ $user->adress_desk }}
@@ -168,11 +191,9 @@
                                 <div class="accordion-btn">Видео:</div>
                                 <div class="panel article">
                                     <div class="block_place">
-                                        <iframe width="100%" height="350"
-                                                src="https://www.youtube.com/embed/{{ $user->profile->url }}"
-                                                frameborder="0"
-                                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                                allowfullscreen></iframe>
+                                        <div class="article-block">
+                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/{{ $user->profile->url }}"></iframe>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
