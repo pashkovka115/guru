@@ -95,7 +95,8 @@
 </div>
 <div class="mobile_menu_overlay"></div>
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+{{--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>--}}
+<script src="{{ asset('assets/site/js/jquery-3.4.1.min.js') }}"></script>
 <script>
     (function () {
         var func = EventTarget.prototype.addEventListener;
@@ -117,16 +118,24 @@
         }
     };*/
 </script>
-<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+{{--<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>--}}
+<script src="{{ asset('assets/site/js/jquery.fancybox.min.js') }}"></script>
+{{--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>--}}
+<script src="{{ asset('assets/site/js/popper.min.js') }}"></script>
+{{--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>--}}
+<script src="{{ asset('assets/site/bootstrap/js/bootstrap.min.js') }}"></script>
+{{--<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>--}}
+<script type="text/javascript" src="{{ asset('assets/site/js/moment.min.js') }}"></script>
+{{--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>--}}
+<script type="text/javascript" src="{{ asset('assets/site/js/daterangepicker.min.js') }}"></script>
+{{--<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />--}}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/site/css/daterangepicker.css') }}" />
 <script src="{{asset('assets/site/js/readmore.min.js')}}"></script>
 <script src="{{asset('assets/site/js/owl.carousel.min.js')}}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+{{--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--}}
+<script src="{{ asset('assets/site/js/jquery-ui.js') }}"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>--}}
+<script src="{{ asset('assets/site/js/jquery.ui.touch-punch.min.js') }}"></script>
 <script src="{{asset('assets/site/js/main.js')}}"></script>
 @yield('scripts_footer')
 @show

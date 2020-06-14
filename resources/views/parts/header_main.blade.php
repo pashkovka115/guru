@@ -31,13 +31,19 @@
     <meta name="msapplication-TileImage" content="{{ asset('assets/site/images/favicon/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
     @section('styles')
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">--}}
+        <link rel="stylesheet" href="{{ asset('assets/site/bootstrap/css/bootstrap.min.css') }}">
+{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />--}}
+    <link rel="stylesheet" href="{{ asset('assets/site/css/jquery.fancybox.min.css') }}" />
+{{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">--}}
+    <link rel="stylesheet" href="{{ asset('assets/site/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{asset('assets/site/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/site/css/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+{{--    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">--}}
+    <link rel="stylesheet" href="{{ asset('assets/site/css/jquery-ui.css') }}">
+    <?php if (stripos(env('APP_URL'), '.loc') === false): ?>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap&subset=cyrillic">
+    <?php endif; ?>
     @yield('styles')
     <link rel="stylesheet" href="{{asset('assets/site/css/style.css')}}">
     @show
