@@ -22,7 +22,6 @@
             <form action="{{ route('site.cabinet.review.update', ['review' => $comment->id]) }}" method="post">
                 @csrf
                 @method('PUT')
-                @if($comment->rating)
                 <div class="form-reviews-block">
                     <span>Оценка:</span>
                     <div class="star-rating">
@@ -41,7 +40,6 @@
                         </div>
                     </div>
                 </div>
-                @endif
                 <div class="form-reviews-block">
                     <label for="title">Заголовок отзыва:</label>
                     <input type="text" id="title" name="title" value="{{ $comment->title }}">

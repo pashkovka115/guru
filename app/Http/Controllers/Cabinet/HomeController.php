@@ -69,7 +69,7 @@ class HomeController extends Controller
             if ($user->profile) {
                 $user->profile->excerpt = $request->input('excerpt');
                 $user->profile->description = $request->input('description');
-                $user->profile->url = $request->input('url');
+                $user->profile->url = get_id_youtube_from_url($request->input('url'));
                 $user->profile->country = $request->input('country');
                 $user->profile->city = $request->input('city');
                 $user->profile->address = $request->input('address');

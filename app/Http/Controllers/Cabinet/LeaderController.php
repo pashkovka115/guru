@@ -82,7 +82,7 @@ class LeaderController extends Controller
                 'country' => $request->input('country'),
                 'latitude' => $request->input('latitude'),
                 'longitude' => $request->input('longitude'),
-                'url' => $request->input('url'),
+                'url' => get_id_youtube_from_url($request->input('url')),
             ]);
             $profile->save();
 
@@ -158,7 +158,7 @@ class LeaderController extends Controller
                 if ($user->profile) {
                     $user->profile->excerpt = $request->input('excerpt');
                     $user->profile->description = $request->input('description');
-                    $user->profile->url = $request->input('url');
+                    $user->profile->url = get_id_youtube_from_url($request->input('url'));
                     $user->profile->country = $request->input('country');
                     $user->profile->city = $request->input('city');
                     $user->profile->address = $request->input('address');
@@ -189,7 +189,7 @@ class LeaderController extends Controller
                         'raiting' => 0,
                         "excerpt" => $request->input('excerpt'),
                         "description" => $request->input('description'),
-                        "url" => $request->input('url'),
+                        "url" => get_id_youtube_from_url($request->input('url')),
                         'avatar' => get_url_to_uploaded_files(auth()->user(), $request->file('avatar')),
                         "country" => $request->input('country'),
                         "city" => $request->input('city'),

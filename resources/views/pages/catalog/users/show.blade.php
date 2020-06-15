@@ -244,13 +244,13 @@
         <div class="form-autor-content">
             <div class="form-autor-block">
                 <div class="form-title">Связаться с автором мероприятия</div>
-                <form action="{{ route('site.send-message-to-leader') }}" autocomplete="off" method="post">
+                <form action="{{ route('site.send-message-to-leader') }}" method="post">
                     @csrf
                     <input type="hidden" name="leader" value="{{ $user->id }}">
-                    <div class="form-reviews-block"><span>Ваше имя*</span><input type="text" name="name" required/>
+                    <div class="form-reviews-block"><span>Ваше имя*</span><input type="text" name="name" value="{{ old('name') }}" required/>
                     </div>
-                    <div class="form-reviews-block"><span>Email*</span><input type="email" name="email" required/></div>
-                    <div class="form-reviews-block"><span>Телефон*</span><input type="tel" name="phone" required/></div>
+                    <div class="form-reviews-block"><span>Email*</span><input type="email" name="email" value="{{ old('email') }}" required/></div>
+                    <div class="form-reviews-block"><span>Телефон*</span><input type="tel" name="phone" value="{{ old('phone') }}" required/></div>
                     <div class="form-reviews-block"><span>Ваше сообщение*</span><textarea type="text" name="message"
                                                                                           required></textarea></div>
                     <div class="form-reviews-block">

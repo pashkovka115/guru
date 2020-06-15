@@ -21,6 +21,14 @@
                     @foreach($user->leaders->reverse() as $leader)
                         <div class="personal_status_events">
                             <div class="personal_events-public">
+                                @if($leader->profile and $leader->profile->avatar)
+                                    <?php
+                                    $src = json_decode($leader->profile->avatar)[0];
+                                    ?>
+                                <img src="{{ $src }}" alt="" class="img-fluid">
+                                @else
+                                <img src="{{ asset('assets/site/images/no-avatar.jpg') }}" alt="" class="img-fluid">
+                                @endif
                                 <div class="block-public">
                                     <p class="public-title">{{ $leader->name }}</p>
                                     <p class="public-date">{{ $leader->email }}</p>

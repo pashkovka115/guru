@@ -138,7 +138,7 @@ function get_rating_template_for_form($num)
     $num = (int)$num;
     $str = '';
     for ($i = 5; $i > 0; $i--) {
-        if ($i === $num){
+        if ($i <= $num){
             $active = ' star-rating__active';
         }else{
             $active = '';
@@ -148,6 +148,28 @@ function get_rating_template_for_form($num)
     }
 
     return $str;
+}
+
+/*
+ * Возвращает идентификатор из строки url на ютуб
+ */
+function get_id_youtube_from_url(string $url)
+{
+    if (stripos($url, 'https://www.youtube.com/watch?v=') === 0) {
+        $sp1 = explode('?', $url);
+        $sp2 = explode('&', $sp1[1]);
+        $id = explode('=', $sp2[0])[1];
+
+    } elseif (stripos($url, 'https://youtu.be/') === 0) {
+        $sp0 = explode('?', $url);
+        $sp1 = explode('//', $sp0[0]);
+        $sp2 = explode('/', $sp1[1]);
+        $id = $sp2[1];
+    } else {
+        return '';
+    }
+
+    return trim($id);
 }
 
 
