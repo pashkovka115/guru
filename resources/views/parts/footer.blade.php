@@ -25,9 +25,17 @@
                 <ul class="footer_menu">
                     <?php $pop_cou = []; ?>
                     @foreach($popular_country as $tour)
+                        <?php //dd($tour) ?>
                             <?php if(!in_array($tour->country, $pop_cou)): ?>
                         <li>
-                            <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country }}</a>
+{{--                            <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country }}</a>--}}
+                            <a href="{{ route('site.catalog.category.name', ['id' => $tour->category_tour_id]) }}">
+                                @if ($tour->country)
+                                    {{ $tour->country }}
+                                @elseif($tour->title)
+                                    {{ $tour->title }}
+                                @endif
+                            </a>
                         </li>
                         <?php $pop_cou[] = $tour->country; endif; ?>
                     @endforeach
