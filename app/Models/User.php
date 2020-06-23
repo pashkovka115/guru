@@ -8,8 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\Admin\Models\Tour;
 use Modules\Admin\Models\UserComment;
-use Modules\Admin\Models\UserTour;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
+
 
 class User extends Authenticatable
 {
@@ -37,6 +38,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function sendPasswordResetNotification($token)
+    {
+        // Добавляем свой класс.
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
 
     /*
      * Профиль пользователя
