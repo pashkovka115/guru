@@ -2,7 +2,7 @@
 @section('content')
     @if($headers)
     @foreach($headers as $header)
-    <div class="block_adds" style="background: url('{{ $header->img }}');">
+    <div class="block_adds" style="background-image: url('{{ $header->img }}');">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 elem_adds">
@@ -38,7 +38,7 @@
 
     @if($decoratives)
         @foreach($decoratives as $decorative)
-    <div class="block_adds_content_bg" style="background: url('{{ $decorative->img }}');">
+    <div class="block_adds_content_bg" style="background-image: url('{{ $decorative->img }}');">
         <div class="container">
             <div class="row">
                 <div class="block_adds_content__text">

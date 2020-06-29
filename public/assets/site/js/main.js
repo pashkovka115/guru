@@ -236,3 +236,22 @@ $('#demo').daterangepicker({
 }, function cb(start, end) {
         $('#demo').html(start.format('MM.DD.YY') + ' - ' + end.format('MM.DD.YY'));
 });
+
+function youTubes_makeDynamic() {
+    let $ytIframes = $('iframe[src*="youtube.com"]');
+    $ytIframes.each(function (i,e) {
+        let $ytFrame = $(e);
+        let ytKey;
+        let tmp = $ytFrame.attr('src').split(/\//); tmp = tmp[tmp.length - 1]; tmp = tmp.split('?'); ytKey = tmp[0];
+        let $ytLoader = $('<div class="youtube" style="background-image: url(https://i.ytimg.com/vi/'+ytKey+'/maxresdefault.jpg)">');
+        $ytLoader.append($('<div class="play"></div>'));
+        $ytLoader.data('$ytFrame',$ytFrame);
+        $ytFrame.replaceWith($ytLoader);
+        $ytLoader.click(function () {
+            let $ytFrame = $ytLoader.data('$ytFrame');
+            $ytFrame.attr('src',$ytFrame.attr('src')+'?autoplay=1');
+            $ytLoader.replaceWith($ytFrame);
+        });
+    });
+};
+$(document).ready(function () {youTubes_makeDynamic()});
