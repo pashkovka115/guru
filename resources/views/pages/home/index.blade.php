@@ -50,7 +50,7 @@
                             @endisset
                             <p class="cost-tour">
                                 @if($tour->variants->count() > 0)
-                                    {{ number_format($tour->variants[0]->price_variant / 100) }} RUB
+                                    {{ number_format($tour->variants[0]->price_variant) }} RUB
                                 @else
                                     Цена по запросу
                                 @endif

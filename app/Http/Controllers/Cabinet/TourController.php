@@ -161,7 +161,7 @@ class TourController extends Controller
             'text_variant.*' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.]*/i',
 
             'price_variant' => 'sometimes|nullable|array',
-            'price_variant.*' => 'sometimes|nullable|regex:/[\d]*/i',
+            'price_variant.*' => 'sometimes|nullable|regex:/^[\d]*$/i',
 
             'amount_variant' => 'sometimes|nullable|array',
             'amount_variant.*' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.]*/i',
@@ -387,7 +387,7 @@ class TourController extends Controller
             'text_variant.*' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.]*/i',
 
             'price_variant' => 'sometimes|nullable|array',
-            'price_variant.*' => 'sometimes|nullable|regex:/[\d]*/i',
+            'price_variant.*' => 'sometimes|nullable|regex:/^[\d]*$/i',
 
             'amount_variant' => 'sometimes|nullable|array',
             'amount_variant.*' => 'sometimes|nullable|regex:/[\w\s\d\_\-\.]*/i',

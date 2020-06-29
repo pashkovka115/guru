@@ -138,8 +138,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'price_variant.0' => [
+            'regex' => 'Поле :attribute должно быть числом',
         ],
     ],
 
@@ -168,6 +168,7 @@ return [
         'last_name'             => 'Фамилия',
         'password'              => 'Пароль',
         'password_confirmation' => 'Подтверждение пароля',
+        'price_variant.0' =>'Цена',
         'city'                  => 'Город',
         'country'               => 'Страна',
         'address'               => 'Адрес',

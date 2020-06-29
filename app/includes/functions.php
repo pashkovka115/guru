@@ -153,8 +153,10 @@ function get_rating_template_for_form($num)
 /*
  * Возвращает идентификатор из строки url на ютуб
  */
-function get_id_youtube_from_url(string $url)
+function get_id_youtube_from_url($url)
 {
+    if (!is_string($url))
+        return '';
     if (stripos($url, 'https://www.youtube.com/watch?v=') === 0) {
         $sp1 = explode('?', $url);
         $sp2 = explode('&', $sp1[1]);

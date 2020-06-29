@@ -144,7 +144,7 @@
                                     <img src="{{ $images[0] ?? null }}" alt="" class="img-fluid">
                                 </div>
                                 <div class="price-info">
-                                    <p class="cost-tour">{{ number_format($tour->price_base / 100) }} <span>RUB</span></p>
+                                    <p class="cost-tour">{{ number_format($tour->price_base) }} <span>RUB</span></p>
                                     <p>{{ $tour->count_person }}</p>
                                     {{ $tour->info_description }}
                                 </div>
@@ -154,13 +154,15 @@
                         @foreach($tour->variants as $variant)
                             <div class="booking__select">
                                 <label class="booking__variant">
+                                    <input type="hidden" name="tour_id" value="{{ $tour->id }}">
+                                    <input type="hidden" name="variant_id" value="{{ $variant->id }}">
                                     <input type="radio" name="booking" value="2">
                                     <span class="radio"></span>
                                     <div class="price-img">
                                         <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
                                     </div>
                                     <div class="price-info">
-                                        <p class="cost-tour">{{ number_format($variant->price_variant / 100) }} <span>RUB</span></p>
+                                        <p class="cost-tour">{{ number_format($variant->price_variant) }} <span>RUB</span></p>
                                         <p>{{ $variant->amount_variant }}</p>
                                         <p>{{ mb_strimwidth($variant->text_variant, 0, 50, '...') }}</p>
                                     </div>
@@ -536,7 +538,7 @@
                                     @endif
                                 </div>
                                 <div class="price-info">
-                                    <p class="cost-tour">{{ number_format($tour->price_base / 100) }} <span>RUB</span></p>
+                                    <p class="cost-tour">{{ number_format($tour->price_base) }} <span>RUB</span></p>
                                     <p>{{ $tour->count_person }}</p>
                                     <p>{{ $tour->info_excerpt }}</p>
                                 </div>
@@ -546,13 +548,15 @@
                         @foreach($tour->variants as $variant)
                             <div class="booking__select">
                                 <label class="booking__variant">
+                                    <input type="hidden" name="tour_id" value="{{ $tour->id }}">
+                                    <input type="hidden" name="variant_id" value="{{ $variant->id }}">
                                     <input type="radio" name="booking" value="2">
                                     <span class="radio"></span>
                                     <div class="price-img">
                                         <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
                                     </div>
                                     <div class="price-info">
-                                        <p class="cost-tour">{{ number_format($variant->price_variant / 100) }} <span>RUB</span></p>
+                                        <p class="cost-tour">{{ number_format($variant->price_variant) }} <span>RUB</span></p>
                                         <p>{{ $variant->amount_variant }}</p>
                                         <p>{{ mb_strimwidth($variant->text_variant, 0, 50, '...') }}</p>
                                     </div>
