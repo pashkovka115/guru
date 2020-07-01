@@ -192,20 +192,24 @@
                                 </div>
                             @endforeach
 
-                                @foreach($users as $user)
-                                    @if($user->profile)
-                                        <div class="user mb-3">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <a href="{{ route('site.author.show', ['id' => $user->id]) }}" target="_blank">{{ $user->name }}</a>
-                                                </div>
-                                                <div class="card-body">
-                                                    {{ $user->profile->description }}
-                                                </div>
+                            @foreach($users as $user)
+                                @if($user->profile)
+                                    <div class="user mb-3">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <a href="{{ route('site.author.show', ['id' => $user->id]) }}" target="_blank">{{ $user->name }}</a>
+                                            </div>
+                                            <div class="card-body">
+                                                {{ $user->profile->description }}
                                             </div>
                                         </div>
-                                    @endif
-                                @endforeach
+                                    </div>
+                                @endif
+                            @endforeach
+
+                            @if($tours->count() == 0 and $users->count() == 0)
+                                <h5 class="ml-3">По Вашему запросу нет результата. Попробуйте изменить запрос.</h5>
+                            @endif
 
                         </div>
                     </div>

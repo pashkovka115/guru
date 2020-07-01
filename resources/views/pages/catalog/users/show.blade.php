@@ -69,7 +69,11 @@
                                     @endif
                                     @if($user->profile and $user->profile->description)
                                     <div class="about-autor">
-                                        <h2 class="event-subtitle">Об организаторе</h2>
+                                        <h2 class="event-subtitle">
+                                            @if($user->profile->type_user == 'organizer')Об организаторе
+                                            @elseif($user->profile->type_user == 'leader') Об авторе
+                                            @endif
+                                        </h2>
                                         <p class="text-normal">{{ $user->profile->description ?? null }}</p>
                                     </div>
                                     @endif
@@ -135,27 +139,25 @@
                             </div>
                         </div>
                     @endif
+                    @if($user->profile and $user->profile->type_user == 'organizer' and $user->profile->video_courses)
+                        <?php
+                        $videos = (array)json_decode($user->profile->video_courses);
+                        ?>
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-autor-retreat">
                             <div class="accordion-btn">Обучающие курсы:</div>
                             <div class="panel article">
                                 <ul class="list_similar_events">
+                                    @foreach($videos as $video)
                                     <li class="similar_events_elem">
-                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/SYfrvNDPiBg"></iframe>
+                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/{{ $video }}"></iframe>
                                     </li>
-                                    <li class="similar_events_elem">
-                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/Sjv-ROxckOI"></iframe>
-                                    </li>
-                                    <li class="similar_events_elem">
-                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/HV5WyThdoh0"></iframe>
-                                    </li>
-                                    <li class="similar_events_elem">
-                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/Q99Z4R6Glmw"></iframe>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div>
+                    @endif
                     @if($user->profile and $user->profile->country and $user->profile->city and $user->profile->address)
                         <div class="event-details-accordion" id="location">
                             <div class="event-accordion accordion-place">

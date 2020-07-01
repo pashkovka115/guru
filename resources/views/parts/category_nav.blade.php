@@ -2,17 +2,17 @@
     <ul class="cat_nav__menu">
         <li>
             <a href="{{ route('site.catalog.category.list') }}"{!! Route::currentRouteName() == 'site.catalog.category.list' ? '  class="active"' : null  !!}>
-                Мероприятия ({{ $cnt_tours }})
+                Мероприятия @if(Route::currentRouteName() != 'site.catalog.search') ({{ $cnt_tours }}) @endif
             </a>
         </li>
         <li>
             <a href="{{ route('site.author.list') }}"{!! Route::currentRouteName() == 'site.author.list' ? '  class="active"' : null  !!}>
-                Учителя и Авторы ({{ $cnt_leaders }})
+                Учителя и Авторы @if(Route::currentRouteName() != 'site.catalog.search') ({{ $cnt_leaders }}) @endif
             </a>
         </li>
         <li>
             <a href="{{ route('site.organizer.list') }}"{!! Route::currentRouteName() == 'site.organizer.list' ? '  class="active"' : null  !!}>
-                Организации ({{ $cnt_organizers }})
+                Организации @if(Route::currentRouteName() != 'site.catalog.search') ({{ $cnt_organizers }}) @endif
             </a>
         </li>
     </ul>

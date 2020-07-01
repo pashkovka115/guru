@@ -13,11 +13,11 @@
                 <a href="{{ route('site.cabinet.leaders.index') }}"{!! request()->is('cabinet/leaders') ? '  class="active"' : null  !!}>Авторы</a>
             </li>
         @endif
-        @if((auth()->user()->profile->auth ?? false) or (auth()->user()->profile->type_user ?? false) == 'leader')
+        @if((auth()->user()->profile->auth ?? false))
             <li><a href="{{ route('site.cabinet.review.index') }}"{!! Route::currentRouteName() == 'site.cabinet.review.index' ? '  class="active"' : null  !!}>Отзывы</a></li>
         @endif
         <li><a href="{{ route('site.cabinet.purchases.index') }}"{!! Route::currentRouteName() == 'site.cabinet.purchases.index' ? '  class="active"' : null  !!}>Покупки</a></li>
-        <li><a href="">Видео-курсы</a></li>
+        <li><a href="{{ route('site.cabinet.video.index') }}"{!! Route::currentRouteName() == 'site.cabinet.video.index' ? '  class="active"' : null  !!}>Видео-курсы</a></li>
         <li>
             <a href="{{ route('site.cabinet.user.edit', ['user' => auth()->id()]) }}"{!! Route::currentRouteName() == 'site.cabinet.user.edit' ? '  class="active"' : null  !!}>Редактировать данные</a>
         </li>

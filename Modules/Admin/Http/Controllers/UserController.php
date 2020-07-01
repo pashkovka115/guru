@@ -89,10 +89,11 @@ class UserController extends Controller
             if ($request->has('auth')) {
                 $profile->auth = '1';
                 $profile->request = '0';
-
+                $profile->type_user = 'organizer'; // организатор
             }else{
                 $profile->auth = '0';
                 $profile->request = '0';
+                $profile->type_user = 'leader'; // ведущий (никто)
             }
             $profile->save();
         });

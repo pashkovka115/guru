@@ -36,6 +36,7 @@ Route::prefix('cabinet')->middleware('auth')->group(function (){
     Route::resource('/messages', 'Cabinet\MessageController')->only(['index', 'destroy'])->names('site.cabinet.message');
     Route::resource('/reviews', 'Cabinet\ReviewController')->only(['index', 'edit', 'destroy', 'update'])->names('site.cabinet.review');
     Route::resource('/purchases', 'Cabinet\PurchasesController')->only('index')->names('site.cabinet.purchases');
+    Route::resource('/video', 'Cabinet\VideoController')->only(['index', 'store', 'destroy', 'update'])->names('site.cabinet.video');
     Route::get('request-auth', 'Cabinet\SettingsController@request_auth')->name('site.cabinet.request_auth');
 
     Route::prefix('ajax')->group(function (){
