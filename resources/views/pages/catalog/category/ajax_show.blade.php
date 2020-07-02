@@ -1,5 +1,16 @@
 @foreach($tours as $tour)
-    <div class="col-lg-12">
+    <?php
+    if($tour->variants->count() > 0){
+        $sort_price = $tour->variants[0]->price_variant;
+    }else{
+        $sort_price = 0;
+    }
+    ?>
+    <div class="col-lg-12"
+         data-price="{{ $sort_price }}"
+         data-date="{{ $tour->created_at }}"
+         data-popular="{{ $tour->views }}"
+    >
         <div class="event_list">
             <div class="owl-carousel owl-theme slide-cat event_list_photo">
                 @php

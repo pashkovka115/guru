@@ -30,7 +30,7 @@
                                 <div class="col-lg-12"
                                      data-price="{{ $sort_price }}"
                                      data-date="{{ $tour->created_at }}"
-                                     data-popular="{{ $tour->views }}">
+                                     data-popular="{{ $tour->views }}"
                                 >
                                     <div class="event_list">
                                         <div class="owl-carousel owl-theme slide-cat event_list_photo">
