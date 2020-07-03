@@ -150,7 +150,7 @@
                                 <ul class="list_similar_events">
                                     @foreach($videos as $video)
                                     <li class="similar_events_elem">
-                                        <iframe width="100%" height="350" src="https://www.youtube.com/embed/{{ $video }}"></iframe>
+                                        <iframe width="100%" height="150" src="https://www.youtube.com/embed/{{ $video }}" allowfullscreen></iframe>
                                     </li>
                                     @endforeach
                                 </ul>

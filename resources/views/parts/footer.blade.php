@@ -102,6 +102,7 @@
     </div>
 </div>
 <div class="mobile_menu_overlay"></div>
+<div class="btn-scroll"></div>
 @section('scripts')
 {{--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>--}}
 <script src="{{ asset('assets/site/js/jquery-3.4.1.min.js') }}"></script>
