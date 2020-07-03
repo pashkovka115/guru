@@ -255,3 +255,62 @@ function youTubes_makeDynamic() {
     });
 };
 $(document).ready(function () {youTubes_makeDynamic()});
+
+jQuery(document).ready(function() {
+    let btn = $('.btn-scroll');  
+    $(window).scroll(function() {     
+        if ($(window).scrollTop() > 500) {
+           btn.addClass('show');
+         } else {
+           btn.removeClass('show');
+         }
+    });
+    btn.on('click', function(e) {
+        e.preventDefault();
+        $('html, body').animate({scrollTop:0}, '300');
+   });
+});
+
+document.querySelector('li[rel="price-low"]').onclick = function () {
+    sortList('data-price');
+}
+document.querySelector('li[rel="price-high"]').onclick = function () {
+    sortListDesc('data-price');
+}
+document.querySelector('li[rel="date-start"]').onclick = function () {
+    sortListDesc('data-date');
+}
+document.querySelector('li[rel="popular"]').onclick = function () {
+    sortListDesc('data-popular');
+}
+
+function sortList(sortType) {
+    let items = document.querySelector('#load_content');
+    for (let i = 0; i < items.children.length - 1; i++) {
+        for (let j = i; j < items.children.length; j++) {
+            if (+items.children[i].getAttribute(sortType) > +items.children[j].getAttribute(sortType)) {
+                console.log(1);
+                let replacedNode = items.replaceChild(items.children[j], items.children[i]);
+                insertAfter(replacedNode, items.children[i]);
+            }
+        }
+    }
+}
+
+function sortListDesc(sortType) {
+    let items = document.querySelector('#load_content');
+    for (let i = 0; i < items.children.length - 1; i++) {
+        for (let j = i; j < items.children.length; j++) {
+            if (+items.children[i].getAttribute(sortType) < +items.children[j].getAttribute(sortType)) {
+                console.log(1);
+                let replacedNode = items.replaceChild(items.children[j], items.children[i]);
+                insertAfter(replacedNode, items.children[i]);
+            }
+        }
+    }
+}
+
+
+function insertAfter(elem, refElem) {
+    return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
+}

@@ -2151,6 +2151,7 @@ display: block;
 }
 .similar_events_elem .youtube {
   min-height:150px;
+  max-height:150px;
 }
 .similar-link {
   display: block;
@@ -2790,6 +2791,62 @@ hr {
   margin-top: 10px;
   padding: 5px;
 }
+.block-videos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.block-videos input{
+    margin-bottom: 10px;
+}
+.form_edit {
+    margin-bottom: 0;
+}
+.form_edit input{
+    margin-bottom: 10px;
+}
+.form_edit__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.block-panel .form_edit__btn-update {
+    background: #dcac6c;
+    padding: 10px;
+    color: #fff;
+    font-weight: 400;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0;
+    width: 100%;
+    max-width: 200px;
+    margin-right: 10px;
+}
+.block-panel .form_edit__btn-delete {
+    background: #ff0000;
+    padding: 10px;
+    color: #fff;
+    font-weight: 400;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0;
+    width: 100%;
+    max-width: 200px;
+}
+.btn-add-video {
+    background: #dcac6c;
+    padding: 10px;
+    color: #fff;
+    font-weight: 400;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0;
+    width: 100%;
+    max-width: 200px;
+}
 /* Создание мероприятия */
 .block_create {
   background: #fafafa;
@@ -3145,6 +3202,47 @@ input[name="photogallery"] {
 }
 .block-panel .select2-search__field {
   height: auto;
+}
+.btn-scroll {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #0cc11a;
+    position: fixed;
+    right: 30px;
+    bottom: 50px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color .3s, 
+    opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;  
+}
+.btn-scroll:before {
+    content: '';
+    background: url(../images/arrow_menu.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    width: 16px;
+    height: 16px;
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+    filter: invert(1);
+}
+.btn-scroll.show {
+    opacity: .5;
+    visibility: visible;
+}
+.btn-scroll:hover.show,
+.btn-scroll:active.show,
+.btn-scroll:focus.show {
+    opacity: 1;
 }
 /* Адаптивность тест для админки */
 @media(max-width: 991px) {

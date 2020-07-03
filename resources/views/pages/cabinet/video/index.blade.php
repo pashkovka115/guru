@@ -17,33 +17,22 @@
                     <div class="information-create">
                         <div class="information-create-block">
                             <h1 class="create-title">Видео</h1>
-                            <a href="" target="_blank" class="btn-views">Посмотреть</a>
                         </div>
                         <div class="block-panel">
-                            <div class="block-selection" style="width: 100%">
+                            <div class="block-selection">
                                 <div class="block-panel-sub">
                                     <?php
                                     $videos = json_decode($video_courses) ?? [];
                                     ?>
                                     @foreach($videos as $video)
                                         <div class="block-variants">
-                                            <form class="form_edit" action="" method="post" style="width: 100%">
+                                            <form class="form_edit" action="" method="post">
                                                 @csrf
                                                 <input type="hidden" name="old_link" value="{{ $video }}">
                                                 <input class="video-url" type="text" name="video_url" value="{{ $video }}" placeholder="Ссылка на видео">
-                                                <input type="submit" name="update_url"
-                                                       value="Обновить"
-                                                       data-action="{{ route('site.cabinet.video.update', ['video' => auth()->id()]) }}"
-                                                       data-method="PUT"
-                                                       style="width: 150px"
-                                                >
-
-                                                <input type="submit" name="delete_url"
-                                                       value="Удалить"
-                                                       data-action="{{ route('site.cabinet.video.destroy', ['video' => auth()->id()]) }}"
-                                                        data-method="DELETE"
-                                                       style="width: 150px"
-                                                >
+                                                <input class="video-title" type="text" name="video_title" value="" placeholder="Заголовок видео">
+                                                <input type="submit" class="form_edit__btn-update" name="update_url" value="Обновить" data-action="{{ route('site.cabinet.video.update', ['video' => auth()->id()]) }}" data-method="PUT">
+                                                <input type="submit" class="form_edit__btn-delete" name="delete_url" value="Удалить" data-action="{{ route('site.cabinet.video.destroy', ['video' => auth()->id()]) }}" data-method="DELETE">
                                             </form>
                                         </div>
                                     @endforeach
@@ -74,7 +63,7 @@
     <script>
         document.body.onload = function () {
             $('.btn-add-video').click(function() {
-                $(this).before(`<div class="block-variants"><input class="video-url" type="text" name="video_url[]" value="" placeholder="Ссылка на видео"></div>`);
+                $(this).before(`<div class="block-videos"><input class="video-url" type="text" name="video_url[]" value="" placeholder="Ссылка на видео"><input class="video-title" type="text" name="video_title" value="" placeholder="Заголовок видео"></div>`);
             });
 
             $('form.form_edit').on('click', 'input[type="submit"]', function (e) {
