@@ -3,10 +3,14 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
+use DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Modules\Admin\Models\CategoryTour;
 use Modules\Admin\Models\Page;
 use Modules\Admin\Models\Tour;
+use Modules\Admin\Models\TourVariant;
+use Route;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -50,6 +54,15 @@ class AppServiceProvider extends ServiceProvider
             \View::share('cnt_organizers', $items2->count());
 
             \View::share('cnt_tours', Tour::count());
+
+            \View::composer('parts.filter_panel', function ($view){
+                $view->with([
+                    'all_categories' => CategoryTour::all(['id', 'title']),
+                    'countries' => DB::table('tours')->select('country')->distinct()->get(),
+                    'max_price' => TourVariant::max('price_variant'),
+                    'min_price' => TourVariant::min('price_variant'),
+                ]);
+            });
         }
     }
 }

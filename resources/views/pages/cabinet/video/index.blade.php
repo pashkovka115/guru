@@ -22,17 +22,17 @@
                             <div class="block-selection">
                                 <div class="block-panel-sub">
                                     <?php
-                                    $videos = json_decode($video_courses) ?? [];
+                                    $videos = (object)json_decode($video_courses) ?? [];
                                     ?>
                                     @foreach($videos as $video)
                                         <div class="block-variants">
-                                            <form class="form_edit" action="" method="post">
+                                            <form class="form_edit" action="{{ route('site.cabinet.video.destroy', ['video' => auth()->id()]) }}" method="post">
+                                                @method('DELETE')
                                                 @csrf
-                                                <input type="hidden" name="old_link" value="{{ $video }}">
-                                                <input class="video-url" type="text" name="video_url" value="{{ $video }}" placeholder="Ссылка на видео">
-                                                <input class="video-title" type="text" name="video_title" value="" placeholder="Заголовок видео">
-                                                <input type="submit" class="form_edit__btn-update" name="update_url" value="Обновить" data-action="{{ route('site.cabinet.video.update', ['video' => auth()->id()]) }}" data-method="PUT">
-                                                <input type="submit" class="form_edit__btn-delete" name="delete_url" value="Удалить" data-action="{{ route('site.cabinet.video.destroy', ['video' => auth()->id()]) }}" data-method="DELETE">
+{{--                                                <input type="hidden" name="old_link" value="{{ $video }}">--}}
+                                                <input class="video-url" type="text" name="video_url" value="{{ $video->url }}" placeholder="Ссылка на видео">
+                                                <input class="video-title" type="text" name="video_title" value="{{ $video->title ?? '' }}" placeholder="Заголовок видео">
+                                                <input type="submit" class="form_edit__btn-delete" value="Удалить">
                                             </form>
                                         </div>
                                     @endforeach
@@ -63,19 +63,7 @@
     <script>
         document.body.onload = function () {
             $('.btn-add-video').click(function() {
-                $(this).before(`<div class="block-videos"><input class="video-url" type="text" name="video_url[]" value="" placeholder="Ссылка на видео"><input class="video-title" type="text" name="video_title" value="" placeholder="Заголовок видео"></div>`);
-            });
-
-            $('form.form_edit').on('click', 'input[type="submit"]', function (e) {
-                e.preventDefault();
-                $this = $(this)
-                var action_url = $this.data('action');
-                var action_method = $this.data('method');
-                var $form = $this.parent('form');
-
-                $form.attr('action', action_url);
-                $this.before('<input type="hidden" name="_method" value="' + action_method + '">');
-                $form.submit();
+                $(this).before(`<div class="block-videos"><input class="video-url" type="text" name="video_url[]" value="" placeholder="Ссылка на видео"><input class="video-title" type="text" name="video_title[]" value="" placeholder="Заголовок видео"></div>`);
             });
         };
     </script>

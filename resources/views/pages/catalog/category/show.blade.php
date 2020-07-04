@@ -29,7 +29,11 @@
                                 ?>
                                 <div class="col-lg-12"
                                      data-price="{{ $sort_price }}"
-                                     data-date="{{ $tour->created_at }}"
+                                     <?php if($tour->variants->count() > 0): ?>
+                                     data-date="{{ \Carbon\Carbon::parse($tour->variants[0]->date_start_variant)->timestamp }}"
+                                     <?php else: ?>
+                                     data-date="0"
+                                     <?php endif; ?>
                                      data-popular="{{ $tour->views }}"
                                 >
                                     <div class="event_list">
@@ -200,7 +204,7 @@
                                                         <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}"
                                                              alt="" class="img-fluid">
                                                         <div class="more_events_info">
-                                                            <a href="#" class="more-title-event">
+                                                            <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="more-title-event">
                                                                 {{ $tour->title }}
                                                             </a>
                                                             <p class="more-dates-event">

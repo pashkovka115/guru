@@ -22,55 +22,32 @@ class VideoController extends Controller
         $request->validate([
             "video_url"   => "sometimes|nullable|array",
             "video_url.*" => "sometimes|nullable|regex:/(.+youtu\.?be.+)/i",
+            'video_title' => 'sometimes|nullable|array',
+            'video_title.*' => 'sometimes|nullable|regex:/[\w\s\_\-0-9]*/i'
         ]);
 
         if ($request->has('video_url') and $request->input('video_url')) {
             $user = User::with('profile')->where('id', auth()->id())->first();
             $cleared_urls = [];
 
-            if (!$user->profile->video_courses) {
-                foreach ($request->input('video_url') as $url) {
-                    $id = get_id_youtube_from_url($url);
-                    if ($id){
-                        $cleared_urls[] = $id;
-                    }
-                    $id = false;
-                }
-                $user->profile->video_courses = json_encode($cleared_urls, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
-            } else {
-                $urls = json_decode($user->profile->video_courses) ?? [];
-                foreach ($request->input('video_url') as $url) {
-                    $id = get_id_youtube_from_url($url);
-                    if ($id){
-                        $cleared_urls[] = $id;
-                    }
-                    $id = false;
-                }
-                $new_urls = array_merge($urls, $cleared_urls);
-                $user->profile->video_courses = json_encode($new_urls, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
-            }
-
-            $user->profile->save();
-        }
-
-        return redirect()->back();
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        $user = User::with('profile')->where('id', auth()->id())->first();
-        if ($user->profile->video_courses) {
             $urls = (array)json_decode($user->profile->video_courses) ?? [];
-            foreach ($urls as $key => $url) {
-                if ($request->input('old_link') == $url) {
-                    $urls[$key] = $request->input('video_url');
-                    break;
+            foreach ($request->input('video_url') as $key => $url) {
+                $id = get_id_youtube_from_url($url);
+                if ($id){
+                    $item['url'] = $id;
+                    if ($request->has('video_title') and isset($request->input('video_title')[$key])){
+                        $item['title'] = $request->input('video_title')[$key];
+                    }
+                    $cleared_urls[] = $item;
                 }
+                $id = false;
             }
-            $user->profile->video_courses = json_encode($urls, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+            $new_urls = array_merge($urls, $cleared_urls);
+            $user->profile->video_courses = json_encode($new_urls, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+
             $user->profile->save();
         }
+
         return redirect()->back();
     }
 
@@ -81,7 +58,7 @@ class VideoController extends Controller
         if ($user->profile->video_courses) {
             $urls = (array)json_decode($user->profile->video_courses) ?? [];
             foreach ($urls as $key => $url) {
-                if ($request->input('video_url') == $url) {
+                if ($request->input('video_url') == $url->url) {
                     unset($urls[$key]);
                 }
             }

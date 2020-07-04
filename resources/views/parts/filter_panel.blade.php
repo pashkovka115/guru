@@ -8,34 +8,12 @@
                         <div class="subcategory">
                             <div class="category_filter_block">
                                 <div class="category_group_filter">
+                                    @foreach($all_categories as $category)
                                     <label>
-                                        <input type="checkbox" name="cat1" value="Категория 1">
-                                        <span>Категория 1</span>
+                                        <input type="checkbox" name="cat1" value="{{ $category->id }}">
+                                        <span>{{ $category->title }}</span>
                                     </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="Категория 2">
-                                        <span>Категория 2</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="Категория 3">
-                                        <span>Категория 3</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Категория 1</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Категория 1</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Категория 1</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Категория 1</span>
-                                    </label>
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="category_button_filter">
@@ -48,34 +26,12 @@
                         <div class="subcategory">
                             <div class="category_filter_block">
                                 <div class="category_group_filter">
+                                    @foreach($countries as $country)
                                     <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Страна 1</span>
+                                        <input type="checkbox" name="cat1" value="{{ $country->country }}">
+                                        <span>{{ $country->country }}</span>
                                     </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Страна 1</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Страна 1</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Страна 1</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Страна 1</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Страна 1</span>
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="cat1" value="cat1">
-                                        <span>Страна 1</span>
-                                    </label>
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="category_button_filter">
@@ -88,6 +44,7 @@
                     </li>
                     <li>
                         <span class="range-result">Продолжительность</span>
+{{--     Здесь отсылай на сервер количество дней которое выберет пользователь                   --}}
                         <div class="subcategory">
                             <div class="filter_range">
                                 <div class="range-result">Продолжительность</div>
@@ -99,6 +56,7 @@
                         </div>
                     </li>
                     <li>
+                         {{ $min_price }} - {{ $max_price }}
                         <span class="range-price-result">Цена</span>
                         <div class="subcategory">
                             <div class="filter_range">

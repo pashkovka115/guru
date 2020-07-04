@@ -16,6 +16,7 @@
             </a>
         </li>
     </ul>
+    @if(Route::currentRouteName() == 'site.catalog.category.list' or Route::currentRouteName() == 'site.catalog.category.name')
     <div class="sort">
         <span>Сортировать по:</span>
         <select id="sortby">
@@ -25,4 +26,5 @@
             <option value="price-high">Цена(по убыванию)</option>
         </select>
     </div>
+        @endif
 </div>

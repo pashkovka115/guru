@@ -8,7 +8,11 @@
     ?>
     <div class="col-lg-12"
          data-price="{{ $sort_price }}"
-         data-date="{{ $tour->created_at }}"
+         <?php if($tour->variants->count() > 0): ?>
+         data-date="{{ \Carbon\Carbon::parse($tour->variants[0]->date_start_variant)->timestamp }}"
+         <?php else: ?>
+         data-date="0"
+         <?php endif; ?>
          data-popular="{{ $tour->views }}"
     >
         <div class="event_list">
