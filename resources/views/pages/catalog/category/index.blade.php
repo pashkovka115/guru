@@ -189,7 +189,7 @@
                                                         <img src="{{ asset('assets/site/images/home_bg_new.jpg') }}"
                                                              alt="" class="img-fluid">
                                                         <div class="more_events_info">
-                                                            <a href="#" class="more-title-event">
+                                                            <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="more-title-event">
                                                                 {{ $tour->title }}
                                                             </a>
                                                             <p class="more-dates-event">
