@@ -21,7 +21,7 @@
                             {!! get_rating_template($user->profile->raiting) !!}
                             @if($user->comments->count() > 0)
                                 <span
-                                    class="review-count">&nbsp;({{ $user->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $user->comments->count()) }})</span>
+                                        class="review-count">&nbsp;({{ $user->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $user->comments->count()) }})</span>
                             @endif
                         </div>
                     @endif
@@ -49,4 +49,13 @@
         </div>
     </div>
 @endforeach
-<script> var next_url_page = '{{ $leaders->nextPageUrl() }}'</script>
+
+@if($leaders->hasMorePages())
+    <div id="remove_el" class="col-lg-12 after-posts">
+        <button type="button" class="btn-load-more" id="btn-load-more"
+                data-next-url="{{ $leaders->nextPageUrl() }}">
+            Показать еще
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        </button>
+    </div>
+@endif

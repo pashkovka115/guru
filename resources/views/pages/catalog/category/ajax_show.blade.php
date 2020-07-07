@@ -1,8 +1,8 @@
 @foreach($tours as $tour)
     <?php
-    if($tour->variants->count() > 0){
+    if ($tour->variants->count() > 0) {
         $sort_price = $tour->variants[0]->price_variant;
-    }else{
+    } else {
         $sort_price = 0;
     }
     ?>
@@ -32,7 +32,8 @@
                 <div class="event_list__autor">
                     @foreach($tour->leaders as $leader)
                         @if($leader->profile->avatar)
-                            <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
+                            <a href="{{ route('site.author.show', ['id' => $leader->id]) }}"
+                               title="{{ $leader->name }}">
                                 <?php $arr_img = json_decode($leader->profile->avatar) ?: [];
                                 if (isset($arr_img[0])): ?>
                                 <img src="{{ $arr_img[0] }}" alt="аватар"
@@ -40,7 +41,8 @@
                                 <?php endif; ?>
                             </a>
                         @else
-                            <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
+                            <a href="{{ route('site.author.show', ['id' => $leader->id]) }}"
+                               title="{{ $leader->name }}">
                                 <span>{{ $leader->name }}</span>
                             </a>
                         @endif
@@ -85,16 +87,16 @@
                     @if($tour->info_excerpt)
                         <li class="event-highlights-icon">
                             <img
-                                src="{{ asset('assets/site/images/event-highlights-icon-events-01.svg') }}"
-                                alt="" class="img-fluid">
+                                    src="{{ asset('assets/site/images/event-highlights-icon-events-01.svg') }}"
+                                    alt="" class="img-fluid">
                             <span>{{ mb_strimwidth(strip_tags($tour->info_excerpt), 0, 70, '...') }}</span>
                         </li>
                     @endif
                     @if($tour->transfer_free or $tour->transfer_fee or $tour->not_transfer)
                         <li class="event-highlights-icon">
                             <img
-                                src="{{ asset('assets/site/images/event-highlights-icon-transfer-02.svg') }}"
-                                alt="" class="img-fluid">
+                                    src="{{ asset('assets/site/images/event-highlights-icon-transfer-02.svg') }}"
+                                    alt="" class="img-fluid">
                             <span>
                                                         <?php
                                 $prop = [];
@@ -109,30 +111,30 @@
                     @if($tour->count_person)
                         <li class="event-highlights-icon">
                             <img
-                                src="{{ asset('assets/site/images/event-highlights-icon-people-03.svg') }}"
-                                alt="" class="img-fluid">
+                                    src="{{ asset('assets/site/images/event-highlights-icon-people-03.svg') }}"
+                                    alt="" class="img-fluid">
                             <span>{{ $tour->count_person }}</span>
                         </li>
                     @endif
                     @if($tour->count_meals)
                         <li class="event-highlights-icon">
                             <img
-                                src="{{ asset('assets/site/images/event-highlights-icon-meals-04.svg') }}"
-                                alt="" class="img-fluid">
+                                    src="{{ asset('assets/site/images/event-highlights-icon-meals-04.svg') }}"
+                                    alt="" class="img-fluid">
                             <span>{{ $tour->count_meals }}</span>
                         </li>
                     @endif
                     @if($tour->private_room or $tour->dormitory_room or $tour->separate_house)
                         <li class="event-highlights-icon">
                             <img
-                                src="{{ asset('assets/site/images/event-highlights-icon-room-05.svg') }}"
-                                alt="" class="img-fluid">
+                                    src="{{ asset('assets/site/images/event-highlights-icon-room-05.svg') }}"
+                                    alt="" class="img-fluid">
                             <span>
                                                         <?php
                                 $prop = [];
-                                if($tour->private_room) $prop[] = 'Отдельный номер';
-                                if($tour->dormitory_room) $prop[] = 'Общий номер';
-                                if($tour->separate_house) $prop[] = 'Отдельный домик';
+                                if ($tour->private_room) $prop[] = 'Отдельный номер';
+                                if ($tour->dormitory_room) $prop[] = 'Общий номер';
+                                if ($tour->separate_house) $prop[] = 'Отдельный домик';
                                 echo implode(', ', $prop);
                                 ?>
                                                 </span>
@@ -145,7 +147,7 @@
                             {!! get_rating_template($tour->rating) !!}
                             @if($tour->comments->count() > 0)
                                 <span
-                                    class="review-count">({{ $tour->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $tour->comments->count()) }})</span>
+                                        class="review-count">({{ $tour->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $tour->comments->count()) }})</span>
                             @endif
                         </div>
                     </div>
@@ -206,28 +208,30 @@
 <div id="remove_el" class="col-lg-12 after-posts">
     <script>
         $('.slide-cat').owlCarousel({
-            loop:true,
-            margin:10,
-            responsiveClass:true,
+            loop: true,
+            margin: 10,
+            responsiveClass: true,
             dots: false,
-            responsive:{
-                0:{
-                    items:1,
-                    nav:true
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
                 },
-                600:{
-                    items:1,
-                    nav:true
+                600: {
+                    items: 1,
+                    nav: true
                 },
-                1000:{
-                    items:1,
-                    nav:true
+                1000: {
+                    items: 1,
+                    nav: true
                 }
             }
         });
     </script>
-    <button type="button" class="btn-load-more" id="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
-        Показать еще
-        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-    </button>
+    @if($tours->hasMorePages())
+        <button type="button" class="btn-load-more" id="btn-load-more" data-next-url="{{ $tours->nextPageUrl() }}">
+            Показать еще
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        </button>
+    @endif
 </div>
