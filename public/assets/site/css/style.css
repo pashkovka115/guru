@@ -1059,7 +1059,7 @@ font-weight: 600;
 .subcategory {
   position: absolute;
   width: 100%;
-  max-width: 250px;
+  max-width: 500px;
   height: auto;
   margin-top: 6px;
   background: #fff;
@@ -1163,40 +1163,44 @@ font-weight: 600;
 .filter_range .range-price-result {
   margin-bottom: 20px;
 }
-.ui-slider-horizontal {
-  height: 4px;
-  border: 0;
-  background: #dadada;
-  border-radius: 50px;
-  max-width: 190px;
-  margin-bottom: 10px;
+
+.filter_range .ui-slider {
+    position: relative;
+    width: 92%;
+    margin: 0 auto;
+    height: 5px;
+    border-radius:10px;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2), 1px 1px 5px rgba(255, 255, 255, 1);
+    border: 0;
 }
-.ui-widget-header {
-  background: #0cc11a;
+.filter_range .ui-slider .ui-slider-handle {
+    position: absolute;
+    margin-left: -9px;
+    width: 6px;
+    height: 6px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 3px solid #0cc11a;
+    top: -7px;
+    background: #FFF;
+    z-index: 2;
+    transition: transform 0.2s, border 0.4s;
+    padding: 6px;
 }
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 20px;
-  height: 20px;
-  padding: 0px;
-  margin: 0px;
-  font-size: initial;
-  background: rgb(255, 255, 255);
-  border: 3px solid rgb(12, 193, 26);
-  cursor: pointer;
-  top: -8px;
-  outline: 0;
+.filter_range .ui-slider .ui-slider-handle:hover,
+.filter_range .ui-slider .ui-slider-handle:focus {
+    transform: scale(1.2);
+    border: 3px solid #49af61;
 }
-.ui-state-hover,
-.ui-widget-content .ui-state-hover,
-.ui-widget-header .ui-state-hover,
-.ui-state-focus, .ui-widget-content .ui-state-focus,
-.ui-widget-header .ui-state-focus,
-.ui-state-active {
-  background: rgb(255, 255, 255);
+.filter_range .ui-slider .ui-slider-range {
+    position: absolute;
+    z-index: 1;
+    height: 5px;
+    border: 0;
+    background: #49af61;
+    border-radius: 10px;
 }
+
 .block_seo_cat {
   margin-bottom: 30px;
   background: #fff;
@@ -1273,7 +1277,7 @@ font-weight: 600;
   width: 220px;
   height: 32px;
   font-weight: 400;
-  font-size: 1rem;
+  font-size: .9rem;
 }
 .sort .select-styled {
   position: absolute;
@@ -2152,6 +2156,10 @@ display: block;
 .similar_events_elem .youtube {
   min-height:150px;
   max-height:150px;
+}
+.similar_events_title {
+  font-size: 0.9rem;
+  margin: 5px auto;
 }
 .similar-link {
   display: block;

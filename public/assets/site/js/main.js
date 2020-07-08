@@ -97,29 +97,92 @@ $(document).on('click', function(e) {
     e.stopPropagation();
 });
 
-$(function() {
-    $( ".range-line" ).slider({
+$(".range-line" ).slider({
         range: true,
         min: 0,
-        max: 500,
-        values: [ 0, 500 ],
+        max: 365,
+        values: [ 0, 365 ],
+        animate: "fast",
         slide: function( event, ui ) {
             $( ".range-result" ).text(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " дней");
+            $(".range-day-min").val(ui.values[ 0 ]);   
+            $(".range-day-max").val(ui.values[ 1 ]); 
         }
     });
-});
-
-$(function() {
-    $( ".range-price" ).slider({
+    $(".range-day-min").val($(".range-line").slider("values", 0));
+    $(".range-day-max").val($(".range-line").slider("values", 1));
+    $(document).focusout(function() {
+        var input_left = $(".range-day-min").val().replace(/[^0-9]/g, ''),    
+        opt_left = $(".range-line").slider("option", "min"),
+        where_right = $(".range-line").slider("values", 1),
+        input_right = $(".range-day-max").val().replace(/[^0-9]/g, ''),    
+        opt_right = $(".range-line").slider("option", "max"),
+        where_left = $(".range-line").slider("values", 0); 
+        if (input_left > where_right) { 
+            input_left = where_right; 
+        }
+        if (input_left < opt_left) {
+            input_left = opt_left; 
+        }
+        if (input_left == "") {
+        input_left = 0;    
+        }        
+        if (input_right < where_left) { 
+            input_right = where_left; 
+        }
+        if (input_right > opt_right) {
+            input_right = opt_right; 
+        }
+        if (input_right == "") {
+        input_right = 0;    
+        }    
+        $(".range-day-min").val(input_left); 
+        $(".range-day-max").val(input_right); 
+        $(".range-line").slider( "values", [ input_left, input_right ] );
+    });
+    $(".range-price" ).slider({
         range: true,
-        min: 0,
-        max: 500000,
-        values: [ 0, 500000 ],
+        min: {{ $min_price }},
+        max: {{ $max_price }},
+        values: [ {{ $min_price }}, {{ $max_price }} ],
+        animate: "fast",
         slide: function( event, ui ) {
             $( ".range-price-result" ).text(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " RUB");
+            $(".range-price-min").val(ui.values[ 0 ]);   
+            $(".range-price-max").val(ui.values[ 1 ]); 
         }
     });
-});
+    $(".range-price-min").val($(".range-price").slider("values", 0));
+    $(".range-price-max").val($(".range-price").slider("values", 1));
+    $(document).focusout(function() {
+        var input_left = $(".range-price-min").val().replace(/[^0-9]/g, ''),    
+        opt_left = $(".range-price").slider("option", "min"),
+        where_right = $(".range-price").slider("values", 1),
+        input_right = $(".range-price-max").val().replace(/[^0-9]/g, ''),    
+        opt_right = $(".range-price").slider("option", "max"),
+        where_left = $(".range-price").slider("values", 0); 
+        if (input_left > where_right) { 
+            input_left = where_right; 
+        }
+        if (input_left < opt_left) {
+            input_left = opt_left; 
+        }
+        if (input_left == "") {
+        input_left = 0;    
+        }        
+        if (input_right < where_left) { 
+            input_right = where_left; 
+        }
+        if (input_right > opt_right) {
+            input_right = opt_right; 
+        }
+        if (input_right == "") {
+        input_right = 0;    
+        }    
+        $(".range-price-min").val(input_left); 
+        $(".range-price-max").val(input_right); 
+        $(".range-price").slider( "values", [ input_left, input_right ] );
+    });
 
 $('select').each(function(){
     let $this = $(this), numberOfOptions = $(this).children('option').length;
@@ -235,6 +298,7 @@ $('#demo').daterangepicker({
     "opens": "center"
 }, function cb(start, end) {
         $('#demo').html(start.format('MM.DD.YY') + ' - ' + end.format('MM.DD.YY'));
+        $('.date-picker').val((start.format('MM.DD.YY') + ' - ' + end.format('MM.DD.YY')));
 });
 
 function youTubes_makeDynamic() {
