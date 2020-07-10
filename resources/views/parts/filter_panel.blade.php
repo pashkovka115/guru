@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <form>
+                <form class="filter-form">
                     <ul class="filter-category">
                         <li>
                             <span class="category-result">Выбрать категорию</span>
@@ -74,6 +74,7 @@
                             </div>
                         </li>
                     </ul>
+                    <button class="btn-filter-clear">Очистить</button>
                 </form>
             </div>
         </div>

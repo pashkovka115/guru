@@ -1037,6 +1037,9 @@ font-weight: 600;
   z-index: 1;
 
 }
+.filter-form {
+  margin-bottom: 0;
+}
 .search-filter-panel ul {
   display: flex;
   align-items: center;
