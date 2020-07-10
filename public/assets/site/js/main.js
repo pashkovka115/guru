@@ -97,30 +97,6 @@ $(document).on('click', function(e) {
     e.stopPropagation();
 });
 
-$(function() {
-    $( ".range-line" ).slider({
-        range: true,
-        min: 0,
-        max: 500,
-        values: [ 0, 500 ],
-        slide: function( event, ui ) {
-            $( ".range-result" ).text(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " дней");
-        }
-    });
-});
-
-$(function() {
-    $( ".range-price" ).slider({
-        range: true,
-        min: 0,
-        max: 500000,
-        values: [ 0, 500000 ],
-        slide: function( event, ui ) {
-            $( ".range-price-result" ).text(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " RUB");
-        }
-    });
-});
-
 $('select').each(function(){
     let $this = $(this), numberOfOptions = $(this).children('option').length;
 
@@ -194,49 +170,6 @@ $('.slide-cat').owlCarousel({
     }
 })
 
-$('#demo').daterangepicker({
-    "locale": {
-        "format": "MM/DD/YYYY",
-        "separator": " - ",
-        "applyLabel": "Применить",
-        "cancelLabel": "Закрыть",
-        "fromLabel": "От",
-        "toLabel": "До",
-        "customRangeLabel": "Custom",
-        "weekLabel": "Г",
-        "daysOfWeek": [
-            "Вс",
-            "Пн",
-            "Вт",
-            "Ср",
-            "Чт",
-            "Пт",
-            "Сб"
-        ],
-        "monthNames": [
-            "Январь",
-            "Февраль",
-            "Март",
-            "Апрель",
-            "Мая",
-            "Июнь",
-            "Июль",
-            "Август",
-            "Сентябрь",
-            "Октябрь",
-            "Ноябрь",
-            "Декабрь"
-        ],
-        "firstDay": 1
-    },
-
-    "startDate": moment(),
-    "endDate": moment(),
-    "opens": "center"
-}, function cb(start, end) {
-        $('#demo').html(start.format('MM.DD.YY') + ' - ' + end.format('MM.DD.YY'));
-});
-
 function youTubes_makeDynamic() {
     let $ytIframes = $('iframe[src*="youtube.com"]');
     $ytIframes.each(function (i,e) {
@@ -270,47 +203,3 @@ jQuery(document).ready(function() {
         $('html, body').animate({scrollTop:0}, '300');
    });
 });
-
-document.querySelector('li[rel="price-low"]').onclick = function () {
-    sortList('data-price');
-}
-document.querySelector('li[rel="price-high"]').onclick = function () {
-    sortListDesc('data-price');
-}
-document.querySelector('li[rel="date-start"]').onclick = function () {
-    sortListDesc('data-date');
-}
-document.querySelector('li[rel="popular"]').onclick = function () {
-    sortListDesc('data-popular');
-}
-
-function sortList(sortType) {
-    let items = document.querySelector('#load_content');
-    for (let i = 0; i < items.children.length - 1; i++) {
-        for (let j = i; j < items.children.length; j++) {
-            if (+items.children[i].getAttribute(sortType) > +items.children[j].getAttribute(sortType)) {
-                console.log(1);
-                let replacedNode = items.replaceChild(items.children[j], items.children[i]);
-                insertAfter(replacedNode, items.children[i]);
-            }
-        }
-    }
-}
-
-function sortListDesc(sortType) {
-    let items = document.querySelector('#load_content');
-    for (let i = 0; i < items.children.length - 1; i++) {
-        for (let j = i; j < items.children.length; j++) {
-            if (+items.children[i].getAttribute(sortType) < +items.children[j].getAttribute(sortType)) {
-                console.log(1);
-                let replacedNode = items.replaceChild(items.children[j], items.children[i]);
-                insertAfter(replacedNode, items.children[i]);
-            }
-        }
-    }
-}
-
-
-function insertAfter(elem, refElem) {
-    return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
-}
