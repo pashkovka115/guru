@@ -160,7 +160,7 @@
     });
 </script>
 
-
+@if(Route::currentRouteName() == 'site.catalog.category.list' or Route::currentRouteName() == 'site.catalog.category.name')
 <!-- Данные скрипты только для страницы категорий, там где есть фильтр и сортировка -->
 <script>
     // Скрипт для фильтра даты
@@ -342,5 +342,6 @@
         return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
     }
 </script>
+@endif
 </body>
 </html>

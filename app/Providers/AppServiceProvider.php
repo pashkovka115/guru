@@ -55,7 +55,7 @@ class AppServiceProvider extends ServiceProvider
 
             \View::share('cnt_tours', Tour::count());
 
-            \View::composer('parts.filter_panel', function ($view){
+            \View::composer(['parts.filter_panel', 'parts.footer'], function ($view){
                 $view->with([
                     'all_categories' => CategoryTour::all(['id', 'title']),
                     'countries' => DB::table('tours')->select('country')->distinct()->get(),
