@@ -11,7 +11,7 @@
                                     <div class="category_group_filter">
                                         @foreach($all_categories as $category)
                                         <label>
-                                            <input type="checkbox" name="category" value="{{ $category->id }}">
+                                            <input type="checkbox" name="category[]" value="{{ $category->id }}">
                                             <span>{{ $category->title }}</span>
                                         </label>
                                         @endforeach
@@ -29,7 +29,7 @@
                                     <div class="category_group_filter">
                                         @foreach($countries as $country)
                                         <label>
-                                            <input type="checkbox" name="country" value="{{ $country->country }}">
+                                            <input type="checkbox" name="country[]" value="{{ $country->country }}">
                                             <span>{{ $country->country }}</span>
                                         </label>
                                         @endforeach

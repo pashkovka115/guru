@@ -205,7 +205,7 @@
         "opens": "center"
     }, function cb(start, end) {
             $('#demo').html(start.format('MM.DD.YY') + ' - ' + end.format('MM.DD.YY'));
-            $('.date-picker').val((start.format('MM.DD.YY') + ' - ' + end.format('MM.DD.YY')));
+            $('.date-picker').val((start.format('YYYY-MM-DD') + '|' + end.format('YYYY-MM-DD')));
     });
     // Скрипт для дней и для цены подключается только в месте где есть фильтр
     $(".range-line" ).slider({

@@ -212,7 +212,10 @@
                     </div>
                 </div>
             </div>
-
+<?php
+//    dump($request->all())
+?>
+            @if(method_exists($tours, 'nextPageUrl'))
             <div id="remove_el" class="col-lg-12 after-posts">
                 <button type="button" class="btn-load-more" id="btn-load-more"
                         data-next-url="{{ $tours->nextPageUrl() }}">
@@ -220,7 +223,7 @@
                     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                 </button>
             </div>
-
+            @endif
         </div>
     </div>
 @endsection
