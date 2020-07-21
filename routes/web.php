@@ -57,8 +57,16 @@ Route::post('/delete-img-gallery-author', 'Cabinet\AjaxController@remove_img_gal
 Route::post('/tour-rating-estimate', 'Catalog\TourRatingController@estimate')->name('site.tour.rating.estimate');
 Route::post('/send-message', 'Cabinet\MessageController@store')->name('site.send-message-to-leader');
 
+Route::prefix('payment')->group(function (){
+    Route::get('handler', 'Payment\UnitPayController@handler')->name('unitpay.handler');
+    Route::post('customer-pays', 'Payment\PayController@store')->name('customer.pays');
+    Route::get('order-before-pay/{id}', 'Payment\PayController@show')->name('customer.order.show');
+});
+
 
 Route::prefix('test')->group(function (){
-    Route::get('phpinfo', 'InfoController@index');
+    Route::get('phpinfo', 'Tests\InfoController@index');
+    Route::get('pay-test', 'Tests\PayController@test');
+    Route::get('pay-test2', 'Tests\PayController@test2');
 });
 

@@ -38,11 +38,9 @@
         <div class="block-variant-amount">
             <p>Кол. человек</p>
             <select name="amount_variant[]" class="amount-variant">
-                <option value="1 человек">1 человек</option>
-                <option value="2 человека">2 человек</option>
-                <option value="3 человека">3 человека</option>
-                <option value="4 человека">4 человека</option>
-                <option value="5 человек">5 человек</option>
+                @for($i = 1; $i <= 50; $i++)
+                    <option value="{{ $i }}">{{ $i }} {{ Lang::choice('человек|человека|человек', $i) }}</option>
+                @endfor
             </select>
         </div>
         <div class="delete" data-id="0"><i class="fa fa-times" aria-hidden="true"></i></div>

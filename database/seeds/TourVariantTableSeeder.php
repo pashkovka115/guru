@@ -8,7 +8,7 @@ class TourVariantTableSeeder extends Seeder
 {
     public function run(Faker $faker)
     {
-        $count_person = [
+        /*$count_person = [
             "1 человек",
             "2 человека",
             "3 человека",
@@ -17,11 +17,12 @@ class TourVariantTableSeeder extends Seeder
             "от 5 до 10 человек",
             "от 10 до 20 человек",
             "от 20 до 50 человек"
-        ];
+        ];*/
 
         $variants = [];
 
         for ($i = 0; $i<5; $i++){
+            $amount_variant = random_int(1, 50);
             $variant = [
                 'tour_id' => 1,
                 'price_variant' => random_int(10000, 157000),
@@ -29,7 +30,8 @@ class TourVariantTableSeeder extends Seeder
                 'date_start_variant' => $faker->date(),
                 'date_end_variant' => $faker->date(),
                 'text_variant' => $faker->paragraph(),
-                'amount_variant' => $count_person[array_rand($count_person)],
+                'amount_variant' => $amount_variant,
+                'signed_up' => $amount_variant,
             ];
             $variants[] = $variant;
         }
