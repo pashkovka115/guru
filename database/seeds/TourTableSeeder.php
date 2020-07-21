@@ -25,7 +25,7 @@ class TourTableSeeder extends Seeder
             "Без питания"
         ];
         $tours = [];
-        for ($i = 0; $i < 200; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $tour = [
                 'user_id' => random_int(1, 2),
                 'category_tour_id' => random_int(1, $category_tours),

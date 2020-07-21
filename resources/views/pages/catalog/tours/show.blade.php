@@ -116,6 +116,7 @@
                         </div>
                     </div>
                     <div class="block-booking block-booking-mobile">
+                        @if($tour->variants->count() > 0)
                         <p class="event-subtitle-text">
                             Забронировать мероприятие
                         </p>
@@ -170,6 +171,11 @@
                             </div>
                         @endforeach
                         </div>
+                        @else
+                            <p class="event-subtitle-text">
+                                Нет свободных мест
+                            </p>
+                        @endif
                     </div>
                     @if($tour->info_excerpt)
                     <div class="event-list">
@@ -508,6 +514,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="block-booking">
+                        @if($tour->variants->count() > 0)
                         <p class="event-subtitle-text">
                             Забронировать мероприятие
                         </p>
@@ -566,8 +573,13 @@
                         </div>
                         <div class="booking__event">
                             <p class="note-schedule"><span>Бронирования</span> места составляет <span>14%</span> от суммы!</p>
-                            <a href="#" class="btn-booking">Забронировать место</a>
+                            <a href="#" data-tour="1" data-variant="1" class="btn-booking">Забронировать место</a>
                         </div>
+                        @else
+                            <p class="event-subtitle-text">
+                                Нет свободных мест
+                            </p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -606,7 +618,83 @@
         </form>
     </div>
     @endauth
+    <div id="overflow">
+        <div id="customer_register">
+            <form action="{{ route('customer.pays') }}" method="post">
+                @csrf
+                <div class="form-group">
+                    <label for="exampleInputname">Имя и фамилия*</label>
+                    <input type="text" name="name" class="form-control" id="exampleInputname" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email адрес*</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputphone">Телефон</label>
+                    <input type="tel" name="phone" class="form-control" id="exampleInputphone" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlsome_data">Комментарий</label>
+                    <textarea name="some_data" class="form-control" id="exampleFormControlsome_data" rows="3"></textarea>
+                </div>
+
+                <input type="hidden" name="tour_id" value="">
+                <input type="hidden" name="variant_id" value="">
+                <button type="submit" class="btn btn-primary">Продолжить</button>
+                <button type="submit" class="btn btn-danger">Отмена</button>
+            </form>
+        </div>
+    </div>
+    @section('styles')
+        @parent
+        <style>
+            #overflow{
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(3,216,182,0.33);
+            }
+            #customer_register{
+                padding: 20px;
+                border: solid 1px #0cc11a;
+                border-radius: 10px;
+                width: 800px;
+                height: 550px;
+                background: white;
+                margin: auto;
+                position: fixed;
+                top: 50px;
+                left: 100px;
+                bottom: 50px;
+                right: 100px;
+            }
+
+            #customer_register form .select-styled{
+                display: none;
+            }
+        </style>
+    @endsection
 @endsection
 @section('scripts_footer')
+    <script>
+    $('.btn-booking').on('click', function () {
+        $('#overflow').css('display', 'block');
+        $this = $(this);
+        var tour_id = $this.data('tour');
+        var variant_id = $this.data('variant');
 
+        $form = $('#customer_register form');
+        $form.find('[name=tour_id]').val(tour_id);
+        $form.find('[name=variant_id]').val(variant_id);
+
+    });
+    /*$('body').on('click', '#overflow', function () {
+        this.stopPropagation();
+        $('#overflow').css('display', 'none');
+    });*/
+    </script>
 @endsection

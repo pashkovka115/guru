@@ -19,7 +19,8 @@ class CreateTourVariantTable extends Migration
             $table->timestamp('date_end_variant')->nullable();
             $table->string('photo_variant')->nullable();
             $table->text('text_variant')->nullable();
-            $table->string('amount_variant')->comment('Размер группы');
+            $table->integer('amount_variant')->comment('Размер группы');
+            $table->integer('signed_up')->default(0)->comment('число подписавшихся');
         });
 
         Schema::table($this->tableName, function (Blueprint $table){

@@ -339,6 +339,7 @@ class TourController extends Controller
                         'text_variant' => $request->input('text_variant')[$i],
                         'price_variant' => $request->input('price_variant')[$i],
                         'amount_variant' => $request->input('amount_variant')[$i],
+                        'signed_up' => $request->input('amount_variant')[$i],
                     ];
                     $variants[] = $variant;
                 }
@@ -507,6 +508,7 @@ class TourController extends Controller
                         'date_end_variant' => $request->input('date_end_variant')[$i],
                         'text_variant' => $request->input('text_variant')[$i],
                         'amount_variant' => $request->input('amount_variant')[$i],
+                        'signed_up' => $request->input('amount_variant')[$i],
                     ];
 
                     if ($request->has('photo_variant') and isset($request->file('photo_variant')["$i"])) {
