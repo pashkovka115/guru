@@ -1038,7 +1038,9 @@ font-weight: 600;
 
 }
 .filter-form {
-  margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
 }
 .search-filter-panel ul {
   display: flex;
@@ -1203,7 +1205,13 @@ font-weight: 600;
     background: #49af61;
     border-radius: 10px;
 }
-
+.btn-filter-clear {
+    color: #49af61;
+    border: 0;
+    font-size: .9rem;
+    background-color: #f5f5f3;
+    font-weight: 700;
+}
 .block_seo_cat {
   margin-bottom: 30px;
   background: #fff;
@@ -1819,6 +1827,7 @@ display: block;
   width: 100%;
   height: 100%;
   min-height: 350px;
+  max-height: 350px;
 }
 .youtube .play {
   background: url('/assets/site/images/youtube-play-btn.png') no-repeat;
@@ -2246,6 +2255,7 @@ display: block;
 .booking__variant {
   display: flex;
   padding: 5px;
+  cursor: pointer;
 }
 .price-img {
   width: 100%;
@@ -3254,6 +3264,204 @@ input[name="photogallery"] {
 .btn-scroll:active.show,
 .btn-scroll:focus.show {
     opacity: 1;
+}
+
+/* Форма бронирования */
+#customer-register {
+    display: none;
+    width: 100%;
+    max-width: 400px;
+    padding: 0;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.form-booking__photo {
+    margin-bottom: 20px;
+}
+.form-booking__photo img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    object-position: center center;
+}
+.form-booking__block {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px 20px;
+}
+.form-booking__block:last-child {
+    padding-bottom: 0;
+}
+.form-booking__input {
+    height: 40px;
+    padding: 15px;
+    width: 100%;
+    border: 1px solid #a9a9a9;
+}
+.form-booking__text {
+    height: auto;
+    min-height: 100px;
+}
+.form-booking__btn {
+    color: #fff;
+    border: 0;
+    border-bottom: 1px solid #188420;
+    border-bottom-width: 3px;
+    font-weight: 400;
+    padding: .5rem;
+    background-color: #0cc11a;
+    letter-spacing: 1px;
+    width: 100%;
+    margin: .5rem auto;
+}
+.form-booking__btn_cancel {
+    border: 1px solid #eb9a27;
+    background-color: #fbaf42;
+}
+#customer-register .fancybox-close-small {
+    background: #ffffff;
+}
+/* Страница Предварительного заказа */
+.payment {
+    margin: 40px auto;
+}
+.payment__title {
+    font-size: 1.8rem;
+}
+.payment__number {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #dcac6c;
+    text-transform: uppercase;
+}
+.payment__number > span {
+    color: #0cc11a;
+}
+.payment__customer-data {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.customer-text > span {
+    font-weight: 600;
+}
+.customer-to-pay {
+    font-weight: 700;
+    color: #0cc11a;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+.customer-to-pay > span {
+    color: #493c35;
+    text-transform: uppercase;
+}
+.customer-description {
+    font-size: .8rem;
+    font-weight: 500;
+}
+.customer-description > span {
+    color: #dcac6c;
+    font-weight: 600;
+}
+.select-hidden {
+    display:none;
+}
+.payment__form-select {
+    display: flex;
+    flex-direction: column;
+}
+.payment__form-select > label {
+    font-weight: 600;
+}
+.payment__form-select > .select {
+    position: relative;
+    margin-bottom: 20px
+}
+.payment__form-select .select-options {
+    position: absolute;
+    top: 45px;
+    display: none;
+    background: #fff;
+    z-index: 1;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 0 0 8px 8px;
+    border: 1px solid #d7d7cd;
+}
+.payment__form-select .select-options > li{
+    cursor: pointer;
+    padding: 10px;
+    transition: all .3s;
+}
+.payment__form-select .select-options > li:hover{
+    background: #f5f5f3;
+}
+.payment__form-select .select-options > li:last-child{
+    border-radius: 0 0 8px 8px;
+}
+.payment__form-select .select-styled{
+    border: 1px solid #d7d7cd;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: transparent;
+}
+.payment__form-select .select-styled.active {
+    border-radius: 8px 8px 0 0;
+}
+.payment__form-select .select-styled:before {
+    content: '';
+    background: url(../images/arrow_menu.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    right: 10px;
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+.payment__form-select .select-styled.active > .select-options {
+    display: block;
+}
+.payment__form-payment .btn-booking {
+    border: 0;
+    width: 100%;
+    max-width: 300px;
+}
+.payment__cancel-return{
+    border: 1px solid #d7d7cd;
+    border-radius: 8px;
+    padding: 20px;
+    position: sticky;
+    top: 72px;
+    background: #f5f5f3;
+}
+.payment__subtitle {
+    font-weight: 700;
+    font-size: .9rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid #d7d7cd;
+    text-align: center;
+    padding-bottom: 15px;
+    color: #dcac6c;
+}
+.customer-text--m {
+    font-size: .8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+.customer-text--m input {
+    margin-right: 10px;
 }
 /* Адаптивность тест для админки */
 @media(max-width: 991px) {
