@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="copyright">© <?= date('Y') ?> Новый сайт</div>
+                <div class="copyright">© <?= date('Y') ?> Gurufor</div>
             </div>
         </div>
     </div>
@@ -220,10 +220,8 @@
             $(".range-day-max").val(ui.values[ 1 ]); 
         }
     });
-    $(".range-day-min").val($(".range-line").slider("values", 0));
-    $(".range-day-max").val($(".range-line").slider("values", 1));
     $(document).focusout(function() {
-        var input_left = $(".range-day-min").val().replace(/[^0-9]/g, ''),    
+        const input_left = $(".range-day-min").val().replace(/[^0-9]/g, ''),    
         opt_left = $(".range-line").slider("option", "min"),
         where_right = $(".range-line").slider("values", 1),
         input_right = $(".range-day-max").val().replace(/[^0-9]/g, ''),    
@@ -251,6 +249,8 @@
         $(".range-day-max").val(input_right); 
         $(".range-line").slider( "values", [ input_left, input_right ] );
     });
+    
+    
     $(".range-price" ).slider({
         range: true,
         min: {{ $min_price }},
@@ -263,10 +263,8 @@
             $(".range-price-max").val(ui.values[ 1 ]); 
         }
     });
-    $(".range-price-min").val($(".range-price").slider("values", 0));
-    $(".range-price-max").val($(".range-price").slider("values", 1));
     $(document).focusout(function() {
-        var input_left = $(".range-price-min").val().replace(/[^0-9]/g, ''),    
+        const input_left = $(".range-price-min").val().replace(/[^0-9]/g, ''),    
         opt_left = $(".range-price").slider("option", "min"),
         where_right = $(".range-price").slider("values", 1),
         input_right = $(".range-price-max").val().replace(/[^0-9]/g, ''),    

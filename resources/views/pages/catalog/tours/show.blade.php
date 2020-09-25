@@ -157,7 +157,7 @@
                                 <label class="booking__variant">
                                     <input type="hidden" name="tour_id" value="{{ $tour->id }}">
                                     <input type="hidden" name="variant_id" value="{{ $variant->id }}">
-                                    <input type="radio" name="booking" value="2">
+                                    <input type="radio" name="booking">
                                     <span class="radio"></span>
                                     <div class="price-img">
                                         <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
@@ -551,13 +551,13 @@
                                 </div>
                             </label>
                         </div> --}}
-                        <div class="booking__selected">
+                        <div class="booking__selected booking__selected-desktop">
                         @foreach($tour->variants as $variant)
                             <div class="booking__select">
                                 <label class="booking__variant">
                                     <input type="hidden" name="tour_id" value="{{ $tour->id }}">
                                     <input type="hidden" name="variant_id" value="{{ $variant->id }}">
-                                    <input type="radio" name="booking" value="2">
+                                    <input type="radio" name="booking">
                                     <span class="radio"></span>
                                     <div class="price-img">
                                         <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
@@ -572,8 +572,8 @@
                         @endforeach
                         </div>
                         <div class="booking__event">
-                            <p class="note-schedule"><span>Бронирования</span> места составляет <span>14%</span> от суммы!</p>
-                            <a href="#" data-tour="1" data-variant="1" class="btn-booking">Забронировать место</a>
+                            <p class="note-schedule"><span>Бронирования</span> места составляет <span>10%</span> от суммы!</p>
+                            <a href="#" data-tour="1" data-variant="1" class="btn-booking" data-src="#customer-register" data-fancybox>Забронировать место</a>
                         </div>
                         @else
                             <p class="event-subtitle-text">
@@ -586,8 +586,8 @@
         </div>
     </div>
     <div class="booking__event__mobile">
-		<p class="note-schedule"><span>Бронирования</span> места составляет <span>14%</span> от суммы!</p>
-		<a href="#" class="btn-booking">Забронировать место</a>
+		<p class="note-schedule"><span>Бронирования</span> места составляет <span>10%</span> от суммы!</p>
+		<a href="#" data-tour="1" data-variant="1" class="btn-booking" data-src="#customer-register" data-fancybox>Забронировать место</a>
 	</div>
     @auth
     <div class="fancybox-content" id="form-reviews" style="display: none;">
@@ -618,76 +618,58 @@
         </form>
     </div>
     @endauth
-    <div id="overflow">
-        <div id="customer_register">
-            <form action="{{ route('customer.pays') }}" method="post">
-                @csrf
-                <div class="form-group">
-                    <label for="exampleInputname">Имя и фамилия*</label>
-                    <input type="text" name="name" class="form-control" id="exampleInputname" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email адрес*</label>
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputphone">Телефон</label>
-                    <input type="tel" name="phone" class="form-control" id="exampleInputphone" aria-describedby="emailHelp">
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlsome_data">Комментарий</label>
-                    <textarea name="some_data" class="form-control" id="exampleFormControlsome_data" rows="3"></textarea>
-                </div>
-
-                <input type="hidden" name="tour_id" value="">
-                <input type="hidden" name="variant_id" value="">
-                <button type="submit" class="btn btn-primary">Продолжить</button>
-                <button type="submit" class="btn btn-danger">Отмена</button>
-            </form>
-        </div>
+    <div class="fancybox-content" id="customer-register">
+        <form action="{{ route('customer.pays') }}" method="post" class="form-booking" autocomplete="off">
+            @csrf
+            <div class="form-booking__photo">
+                <img src="http://gurufor.com/assets/site/images/home_bg_new.jpg" alt="" class="img-fluid">
+            </div>
+            <div class="form-booking__block">
+                <span class="form-booking__title">Имя и фамилия*</span>
+                <input type="text" name="name" class="form-booking__input" required>
+            </div>
+            <div class="form-booking__block">
+                <span class="form-booking__title">Email адрес*</span>
+                <input type="email" name="email" class="form-booking__input" required>
+            </div>
+            <div class="form-booking__block">
+                <span class="form-booking__title">Телефон</span>
+                <input type="tel" name="phone" class="form-booking__input">
+            </div>
+            <div class="form-booking__block">
+                <span class="form-booking__title">Комментарий</span>
+                <textarea name="some_data" class="form-booking__text"></textarea>
+            </div>
+            <input type="hidden" name="tour_id" value="">
+            <input type="hidden" name="variant_id" value="">
+            <div class="form-booking__block">
+                <button type="submit" class="form-booking__btn form-booking__btn_accept">Забронировать</button>
+                <button type="submit" class="form-booking__btn form-booking__btn_cancel" data-fancybox-close>Отмена</button>
+            </div>
+        </form>
     </div>
-    @section('styles')
-        @parent
-        <style>
-            #overflow{
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(3,216,182,0.33);
-            }
-            #customer_register{
-                padding: 20px;
-                border: solid 1px #0cc11a;
-                border-radius: 10px;
-                width: 800px;
-                height: 550px;
-                background: white;
-                margin: auto;
-                position: fixed;
-                top: 50px;
-                left: 100px;
-                bottom: 50px;
-                right: 100px;
-            }
-
-            #customer_register form .select-styled{
-                display: none;
-            }
-        </style>
-    @endsection
 @endsection
 @section('scripts_footer')
     <script>
+    const row = document.querySelector(".booking__selected-desktop");
+    const btn = document.querySelector(".btn-booking");
+    
+    row.addEventListener("change", (e) => {
+    
+      const children = e.target.parentElement.children;
+    
+      btn.dataset.tour = children[0].value;
+      btn.dataset.variant = children[1].value;
+    
+    });
+    </script>
+    <script>
     $('.btn-booking').on('click', function () {
-        $('#overflow').css('display', 'block');
         $this = $(this);
-        var tour_id = $this.data('tour');
-        var variant_id = $this.data('variant');
+        let tour_id = $this.data('tour');
+        let variant_id = $this.data('variant');
 
-        $form = $('#customer_register form');
+        $form = $('.form-booking');
         $form.find('[name=tour_id]').val(tour_id);
         $form.find('[name=variant_id]').val(variant_id);
 
