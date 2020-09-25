@@ -61,6 +61,9 @@ Route::prefix('payment')->group(function (){
     Route::get('handler', 'Payment\UnitPayController@handler')->name('unitpay.handler');
     Route::post('customer-pays', 'Payment\PayController@store')->name('customer.pays');
     Route::get('order-before-pay/{id}', 'Payment\PayController@show')->name('customer.order.show');
+    Route::get('init-payment/order/{id}', 'Payment\PayController@init_payment')->name('customer.order.init_payment');
+    Route::get('success', 'Payment\PayController@pay_success')->name('payment.success');
+    Route::get('fail', 'Payment\PayController@pay_fail')->name('payment.fail');
 });
 
 

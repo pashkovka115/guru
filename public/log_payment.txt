@@ -1,0 +1,21 @@
+=============
+[ 23-07-2020 09:43:08 ]
+method: check
+account=1
+date=2020-07-23 07:26:23
+ip=127.0.0.1
+isPreauth=0
+operator=card
+orderCurrency=RUB
+orderSum=137972.00
+payerCurrency=RUB
+payerSum=137972.00
+paymentType=card
+profit=134522.7
+projectId=295051
+signature=2005f5262bc0caf081b8bec73cd6899f7ac98a78792805050de4b9dfb856d5cd
+sum=137972
+test=1
+unitpayId=842
+
+==============

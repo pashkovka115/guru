@@ -20,21 +20,29 @@ class UnitPayController extends Controller
             $unitPay->checkHandlerRequest();
 
 //            list($method, $params) = array($_GET['method'], $_GET['params']);
-            list($method, $params) = array($request->input('method'), $request->input('params'));
+            list($method, $params) = [$request->input('method'), $request->input('params')];
+//            dd($params);
 
-            if (!isset($params['account'])){
-                throw new InvalidArgumentException('No order number!');
+            if (!isset($params['account'])) {
+                return response($unitPay->getErrorHandlerResponse('No order number!'))
+                    ->header('Content-type', 'application/json');
             }
 
 
-
             // временно, удалить после отладки
-            if (count($params) > 0){
-                $str_params = implode(' | ', $params);
-                if ($str_params){
+            if (count($params) > 0) {
+                $str_params = '';
+                foreach ($params as $key => $param) {
+                    $str_params .= "$key=$param\n";
+                }
+                if ($str_params) {
                     file_put_contents(
                         'log_payment.txt',
-                        '[ ' . date('d-m-Y H:i:s') . ' ]' . "method: $method | " . $str_params . "\n",
+                        '=============' . "\n" . '[ ' . date('d-m-Y H:i:s') . ' ]' .
+                        "\n" . "method: $method" .
+                        "\n" . $str_params .
+                        "\n" . '==============' .
+                        "\n",
                         FILE_APPEND
                     );
                 }
@@ -48,26 +56,24 @@ class UnitPayController extends Controller
             $itemName = $order->tour_title;
 
 // My Order Data
-            $orderId        = (int)$order->id;
-            $orderSum       = (int)$order->price_variant;
-            $orderDesc      = env('UNITPAY_DESC') . '"'.$itemName.'"';
-            $orderCurrency  = 'RUB';
+            $orderId = (int)$order->id;
+            $orderSum = $order->deposit;
+            $orderDesc = env('UNITPAY_DESC') . '"' . $itemName . '"';
+            $orderCurrency = 'RUB';
             ////////////////////////////////////////////
-
-
-
 
 
             // Очень важно! Подтвердите запрос с данными вашего заказа, до завершения заказа
             if (
-            ((int)$params['orderSum']) != $orderSum ||
-                $params['desc'] != $orderDesc ||
-                $params['orderCurrency'] != $orderCurrency ||
+                ((int)$params['sum']) != $orderSum ||
+//                $params['desc'] != $orderDesc ||
+//                $params['orderCurrency'] != $orderCurrency ||
                 ((int)$params['account']) != $orderId ||
                 $params['projectId'] != env('UNITPAY_PROJECT_ID')
             ) {
                 // logging data and throw exception
-                throw new InvalidArgumentException('Order validation Error!');
+                return response($unitPay->getErrorHandlerResponse('Order validation Error!'))
+                    ->header('Content-type', 'application/json');
             }
 
             switch ($method) {
@@ -75,7 +81,8 @@ class UnitPayController extends Controller
                 case 'check':
                     $order->latest_actions = $method;
                     $order->save();
-                    return $unitPay->getSuccessHandlerResponse('Check Success. Ready to pay.');
+                    return response($unitPay->getSuccessHandlerResponse('Check Success. Ready to pay.'))
+                        ->header('Content-type', 'application/json');
 
                 // Метод Pay означает, что полученные деньги
                 case 'pay':
@@ -84,14 +91,16 @@ class UnitPayController extends Controller
                     $order->status = 'paid';
                     $order->latest_actions = $method;
                     $order->save();
-                    return $unitPay->getSuccessHandlerResponse('Pay Success');
+                    return response($unitPay->getSuccessHandlerResponse('Pay Success'))
+                        ->header('Content-type', 'application/json');
 
                 // Метод Error означает, что произошла ошибка.
                 case 'error':
                     // Пожалуйста, зарегистрируйте текст ошибки.
                     $order->latest_actions = $method;
                     $order->save();
-                    return $unitPay->getSuccessHandlerResponse('Error logged');
+                    return response($unitPay->getSuccessHandlerResponse('Error logged'))
+                        ->header('Content-type', 'application/json');
 
                 // Метод возврата средств означает, что деньги возвращены клиенту
                 case 'refund':
@@ -99,28 +108,36 @@ class UnitPayController extends Controller
                     $order->status = 'return_payment';
                     $order->latest_actions = $method;
                     $order->save();
-                    return $unitPay->getSuccessHandlerResponse('Order canceled');
+                    return response($unitPay->getSuccessHandlerResponse('Order canceled'))
+                        ->header('Content-type', 'application/json');
 
                 case 'preauth':
                     // средства заблокированы на карте клиента (по умолчанию на 114 часов)
                     $order->status = 'preauth';
                     $order->latest_actions = $method;
                     $order->save();
-                    return $unitPay->getSuccessHandlerResponse('Success');
+                    return response($unitPay->getSuccessHandlerResponse('Success'))
+                        ->header('Content-type', 'application/json');
 
                 case 'confirmPayment':
                     // средства списаны с клиента (в случае preauth)
                     $order->status = 'confirmPayment';
                     $order->latest_actions = $method;
                     $order->save();
-                    return $unitPay->getSuccessHandlerResponse('Success');
+                    return response($unitPay->getSuccessHandlerResponse('Success'))
+                        ->header('Content-type', 'application/json');
 
             }
 // Oops! Something went wrong.
         } catch (\Exception $e) {
-            print $unitPay->getErrorHandlerResponse($e->getMessage());
+            return response($unitPay->getErrorHandlerResponse($e->getMessage()))
+                ->header('Content-type', 'application/json');
         }
 
-        return $unitPay->getErrorHandlerResponse('Произошла не предвиденная ошибка. Сообщите об этом администратору.');
+        return response(
+            $unitPay->getErrorHandlerResponse(
+                'Произошла не предвиденная ошибка. Сообщите об этом администратору.'
+            )
+        )->header('Content-type', 'application/json');
     }
 }

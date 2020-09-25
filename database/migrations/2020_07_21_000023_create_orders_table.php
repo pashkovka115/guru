@@ -54,7 +54,9 @@ class CreateOrdersTable extends Migration
             $table->string('country')->nullable()->comment('мероприятие');
             $table->string('latitude')->nullable()->comment('мероприятие');
             $table->string('longitude')->nullable()->comment('мероприятие');
-            $table->unsignedInteger('price_variant');
+            $table->unsignedInteger('price_variant')->comment('цена мероприятия');
+            $table->unsignedFloat('deposit')->comment('сумма надбавки');
+            $table->unsignedInteger('rate')->comment('процент надбавки');
             $table->string('date_start_variant')->nullable();
             $table->string('date_end_variant')->nullable();
             $table->text('text_variant')->nullable();

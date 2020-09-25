@@ -1,27 +1,5 @@
 <?php
 namespace App\Http\Controllers\Payment;
-/**
- * UnitPay Payment Module
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Open Software License (OSL 3.0)
- * that is available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
- *
- * @category        UnitPay
- * @package         unitpay/unitpay
- * @version         1.0.0
- * @author          UnitPay
- * @copyright       Copyright (c) 2015 UnitPay
- * @license         http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- *
- * EXTENSION INFORMATION
- *
- */
-
-
-
 
 /**
  * Способ оплаты UnitPay
@@ -191,29 +169,27 @@ class UnitPay
      *
      * @param $method
      * @param array $params
-     *
-     * @return object
-     *
-     * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function api($method, $params = array())
     {
         if (!in_array($method, $this->supportedUnitpayMethods)) {
-            throw new UnexpectedValueException('Method is not supported');
+            return response($this->getErrorHandlerResponse('Method is not supported'))
+                ->header('Content-type', 'application/json');
         }
 
         if (isset($this->requiredUnitpayMethodsParams[$method])) {
             foreach ($this->requiredUnitpayMethodsParams[$method] as $rParam) {
                 if (!isset($params[$rParam])) {
-                    throw new InvalidArgumentException('Param ' . $rParam . ' is null');
+                    return response($this->getErrorHandlerResponse('Param ' . $rParam . ' is null'))
+                        ->header('Content-type', 'application/json');
                 }
             }
         }
 
         $params['secretKey'] = $this->secretKey;
         if (empty($params['secretKey'])) {
-            throw new InvalidArgumentException('SecretKey is null');
+            return response($this->getErrorHandlerResponse('SecretKey is null'))
+                ->header('Content-type', 'application/json');
         }
 
         $requestUrl = $this->apiUrl . '?' . http_build_query([
@@ -223,7 +199,8 @@ class UnitPay
 
         $response = json_decode(file_get_contents($requestUrl));
         if (!is_object($response)) {
-            throw new InvalidArgumentException('Temporary server error. Please try again later.');
+            return response($this->getErrorHandlerResponse('Temporary server error. Please try again later.'))
+                ->header('Content-type', 'application/json');
         }
 
         return $response;
@@ -231,31 +208,30 @@ class UnitPay
 
     /**
      * Check request on handler from UnitPay
-     *
-     * @return bool
-     *
-     * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
      */
     public function checkHandlerRequest()
     {
         $ip = $this->getIp();
         if (!isset($_GET['method'])) {
-            throw new InvalidArgumentException('Method is null');
+            return response($this->getErrorHandlerResponse('Method is null'))
+                ->header('Content-type', 'application/json');
         }
 
         if (!isset($_GET['params'])) {
-            throw new InvalidArgumentException('Params is null');
+            return response($this->getErrorHandlerResponse('Params is null'))
+                ->header('Content-type', 'application/json');
         }
 
         list($method, $params) = array($_GET['method'], $_GET['params']);
 
         if (!in_array($method, $this->supportedPartnerMethods)) {
-            throw new UnexpectedValueException('Method is not supported');
+            return response($this->getErrorHandlerResponse('Method is not supported'))
+                ->header('Content-type', 'application/json');
         }
 
         if (!isset($params['signature']) || $params['signature'] != $this->getSignature($params, $method)) {
-            throw new InvalidArgumentException('Wrong signature');
+            return response($this->getErrorHandlerResponse('Wrong signature'))
+                ->header('Content-type', 'application/json');
         }
 
         /**
@@ -264,7 +240,8 @@ class UnitPay
          * @link http://help.unitpay.money/article/67-ip-addresses
          */
         if (!in_array($ip, $this->supportedUnitpayIp)) {
-            throw new InvalidArgumentException('IP address Error');
+            return response($this->getErrorHandlerResponse('IP address Error'))
+                ->header('Content-type', 'application/json');
         }
 
         return true;
