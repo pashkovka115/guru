@@ -31,12 +31,16 @@ class PayController extends Controller
             }
         }
 
-        $customer = new Customer();
-        $customer->name = $request->input('name');
-        $customer->email = $request->input('email');
-        $customer->phone = $request->input('phone');
-        $customer->some_data = $request->input('some_data');
-        $customer->save();
+        $customer = Customer::where('email', $request->input('email'))->first();
+
+        if (!$customer){
+            $customer = new Customer();
+            $customer->name = $request->input('name');
+            $customer->email = $request->input('email');
+            $customer->phone = $request->input('phone');
+            $customer->some_data = $request->input('some_data');
+            $customer->save();
+        }
 
         $order = new Order();
         $order->status = 'new';
@@ -77,8 +81,8 @@ class PayController extends Controller
         return view('pages.payment.checkout', ['order' => $order]);
     }
 
-
-    public function init_payment(Request $request, $id)
+// todo: начало оплаты
+   /* public function init_payment(Request $request, $id)
     {
         $request->validate([
             'paymentType' => 'required|regex:/[a-zA-Z]+/'
@@ -121,10 +125,10 @@ class PayController extends Controller
         }
         return response(json_encode($json))->header('Content-type', 'application/json'); // todo: удалить после отладки
 //        return redirect()->route('payment.fail');
-    }
+    }*/
 
 
-    public function pay_success(Request $request)
+    /*public function pay_success(Request $request)
     {
         return response($request->all())->header('Content-type', 'application/json');
     }
@@ -143,7 +147,7 @@ class PayController extends Controller
         ksort($params);
         $str = implode('{up}', $params);
         return hash('sha256', $str);
-    }
+    }*/
 
     protected function calc_deposit($summ, $rate)
     {
