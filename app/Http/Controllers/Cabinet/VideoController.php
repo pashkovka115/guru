@@ -10,7 +10,11 @@ class VideoController extends Controller
 {
     public function index()
     {
-        $video_courses = auth()->user()->profile->video_courses;
+        $video_courses = false;
+        $profile = auth()->user()->profile;
+        if ($profile){
+            $video_courses = $profile->video_courses;
+        }
         if (!$video_courses)
             $video_courses = '[]';
         return view('pages.cabinet.video.index', ['video_courses' => $video_courses]);

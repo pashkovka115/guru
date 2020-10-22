@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Modules\Admin\Models\Customer;
 use Modules\Admin\Models\Order;
 use Modules\Admin\Models\Tour;
+
+
 
 class PayController extends Controller
 {
@@ -31,6 +35,7 @@ class PayController extends Controller
             }
         }
 
+        // Создаём покупателя
         $customer = Customer::where('email', $request->input('email'))->first();
 
         if (!$customer){
@@ -40,6 +45,29 @@ class PayController extends Controller
             $customer->phone = $request->input('phone');
             $customer->some_data = $request->input('some_data');
             $customer->save();
+        }
+
+        // Регистрируем пользователя если нет его
+        $user = User::where('email', $request->input('email'))->first();
+
+        if (!$user){
+
+            if (auth()->check()){
+                auth()->logout();
+            }
+
+            $data = $request->toArray();
+            $data['password'] = \Illuminate\Support\Str::random(10);
+            $this->register_user($data);
+            session(['password_pay' => $data['password']]);
+        }
+
+
+
+
+        $img = (array)$tour->gallery;
+        if (isset($img[0])){
+            $img = json_decode($img[0])[0];
         }
 
         $order = new Order();
@@ -63,6 +91,7 @@ class PayController extends Controller
         $order->country = $tour->country;
         $order->latitude = $tour->latitude;
         $order->longitude = $tour->longitude;
+        $order->img = $img;
         $order->price_variant = $variant->price_variant;
         $order->rate = 10; // todo: 10% от стоимомти тура на начальном этапе
         $order->deposit = $this->calc_deposit($order->price_variant, $order->rate);
@@ -81,77 +110,39 @@ class PayController extends Controller
         return view('pages.payment.checkout', ['order' => $order]);
     }
 
-// todo: начало оплаты
-   /* public function init_payment(Request $request, $id)
+
+    protected function register_user(array $data)
     {
-        $request->validate([
-            'paymentType' => 'required|regex:/[a-zA-Z]+/'
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
         ]);
-
-        $order = Order::where('id', $id)->firstOrFail();
-        $app_params = [
-            'method' => 'initPayment',
-            'params[paymentType]' => $request->input('paymentType'),
-            'params[account]' => $order->id,
-            'params[sum]' => $order->deposit,
-            'params[desc]' => $order->payment_desc,
-            'params[projectId]' => env('UNITPAY_PROJECT_ID'),
-            'params[resultUrl]' => env('APP_URL'),
-            'params[ip]' => $_SERVER['REMOTE_ADDR'],
-            'params[secretKey]' => env('UNITPAY_SECRET_KEY_TEST'),
-            //    'params[signature]' => 'цифровая подпись',
-            'params[customerEmail]' => $order->customer_email,
-            'params[preauth]' => 1,
-            'params[preauthExpireLogic]' => 1,
-            'params[test]' => 1
-        ];
-
-        $domain = 'https://unitpay.ru/api?';
-        $app_params['params[signature]'] = $this->get_form_signature($app_params);
-        $url = $domain . http_build_query($app_params);
-
-        $json = json_decode(file_get_contents($url));
-//        var_dump($json); exit();
-
-        if (isset($json->result)){
-            if (isset($json->result->paymentId)){
-                $order->unitpayId = $json->result->paymentId;
-                $order->status = 'preauth';
-                $order->save();
-            }
-            if (isset($json->result->redirectUrl)){
-                return redirect($json->result->redirectUrl);
-            }
-        }
-        return response(json_encode($json))->header('Content-type', 'application/json'); // todo: удалить после отладки
-//        return redirect()->route('payment.fail');
-    }*/
-
-
-    /*public function pay_success(Request $request)
-    {
-        return response($request->all())->header('Content-type', 'application/json');
     }
 
-    public function pay_fail(Request $request)
-    {
-        return response($request->all())->header('Content-type', 'application/json');
-    }
-
-
-    protected function get_form_signature(...$params)
-    {
-        if (isset($params[0])) {
-            $params = $params[0];
-        }
-        ksort($params);
-        $str = implode('{up}', $params);
-        return hash('sha256', $str);
-    }*/
 
     protected function calc_deposit($summ, $rate)
     {
         return round((float)($summ / 100 * $rate));
+    }
+
+    // paid
+    public function handler_from_pay_system(Request $request)
+    {
+        $order = Order::where('id', $request->input('invoiceId'))->firstOrFail();
+        $order->status = 'paid';
+        $order->deposit = $request->input('amount');
+        $order->currency = $request->input('currency');
+        $order->payment_desc = $request->input('description');
+        $accountId = explode('___', $request->input('accountId'));
+        $order->customer_email = $accountId[0];
+        $order->customer_phone = $accountId[1];
+        $order->update();
+
+        $json = json_encode([
+            'request' => $request->toArray(),
+        ]);
+        return $json;
     }
 }
 

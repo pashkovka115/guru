@@ -28,6 +28,8 @@ class Order extends Model
         'country',
         'latitude',
         'longitude',
+        'img',
+        'deposit',
         'price_variant',
         'date_start_variant',
         'date_end_variant',

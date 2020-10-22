@@ -60,6 +60,8 @@ Route::post('/send-message', 'Cabinet\MessageController@store')->name('site.send
 Route::prefix('payment')->group(function (){
 //    Route::get('handler', 'Payment\UnitPayController@handler')->name('unitpay.handler');
     Route::post('customer-pays', 'Payment\PayController@store')->name('customer.pays');
+    // обработчик после оплаты
+    Route::post('handler-from-pay-system', 'Payment\PayController@handler_from_pay_system')->name('customer.paid');
     Route::get('order-before-pay/{id}', 'Payment\PayController@show')->name('customer.order.show');
 //    Route::get('init-payment/order/{id}', 'Payment\PayController@init_payment')->name('customer.order.init_payment');
 //    Route::get('success', 'Payment\PayController@pay_success')->name('payment.success');

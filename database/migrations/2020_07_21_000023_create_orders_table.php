@@ -37,7 +37,7 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('tour_id');
             $table->bigInteger('variant_id');
             $table->bigInteger('organizer_id');
-            $table->string('unitpayId')->nullable();
+            $table->string('unitpayId')->nullable(); // todo: нужен?
             $table->string('customer_name');
             $table->string('customer_email');
             $table->string('customer_phone')->nullable();
@@ -54,8 +54,10 @@ class CreateOrdersTable extends Migration
             $table->string('country')->nullable()->comment('мероприятие');
             $table->string('latitude')->nullable()->comment('мероприятие');
             $table->string('longitude')->nullable()->comment('мероприятие');
+            $table->string('img')->nullable()->comment('картинка'); // todo: сделать ссылку на заглушку
+            $table->string('deposit')->nullable()->comment('оплаченный депозит');
+            $table->string('currency')->nullable()->comment('валюта депозита');
             $table->unsignedInteger('price_variant')->comment('цена мероприятия');
-            $table->unsignedFloat('deposit')->comment('сумма надбавки');
             $table->unsignedInteger('rate')->comment('процент надбавки');
             $table->string('date_start_variant')->nullable();
             $table->string('date_end_variant')->nullable();
