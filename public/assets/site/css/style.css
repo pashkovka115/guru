@@ -3463,6 +3463,76 @@ input[name="photogallery"] {
 .customer-text--m input {
     margin-right: 10px;
 }
+.payment__info {
+    margin-bottom: 20px;
+}
+/* Модальные окна оплаты */
+.modal {
+    padding: 0 !important;
+}
+.modal-open {
+    padding: 0 !important;
+}
+.modal__dialog {
+    top: 50%;
+    transform: translateY(-50%);
+    min-width: 300px;
+    max-width: 500px;
+    position: relative;
+    margin: 0 auto;
+}
+.modal__content {
+    background: #f5f5f3;
+    padding: 30px;
+    width: 100%;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+    border: 0;
+    border-radius: 0;
+}
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #d7d7cd;
+}
+.modal__title {
+    color: #dcac6c;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+.modal__close {
+    background: rgba(0,0,0,.9);
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border:0;
+}
+.modal__close svg{
+    width: 24px;
+    height: 24px;
+    fill: #fff;
+}
+.modal__text {
+    font-size: .9rem;
+    font-weight: 500;
+    color: #493c35;
+    margin: 1rem auto;
+}
+.modal__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal__row > .btn-personal {
+    margin: 0 5px;
+    font-size: .9rem;
+}
+.modal__text--fail {
+        text-decoration: underline #ff0000;
+}
 /* Адаптивность тест для админки */
 @media(max-width: 991px) {
   .personal_nav__menu {
@@ -3499,6 +3569,12 @@ input[name="photogallery"] {
   }
   .personal_status_events {
     flex-wrap: wrap;
+  }
+  .modal__row {
+    flex-direction: column;
+  }
+  .modal__row > .btn-personal {
+    margin: 5px auto;  
   }
 }
 @media (max-width: 575px) {

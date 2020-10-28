@@ -96,75 +96,60 @@
     </div>
 
     <div id="fail-modal" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Ошибка платежа</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+        <div class="modal__dialog">
+            <div class="modal__content">
+                <div class="modal__header">
+                    <h5 class="modal__title">Ошибка платежа</h5>
+                    <button type="button" class="modal__close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <p class="text-danger">Произошла ошибка. Пожалуйста повторите операцию ещё раз.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Попробывать ещё раз</button>
-{{--                    <button type="button" class="btn btn-primary">Save changes</button>--}}
+                <div class="modal__body">
+                    <p class="modal__text modal__text--fail">Произошла ошибка. Пожалуйста закройте данное окно и повторите операцию ещё раз.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="site-fail-modal" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Платёж совершен успешно, но результат на сайт не дошел.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+        <div class="modal__dialog">
+            <div class="modal__content">
+                <div class="modal__header">
+                    <h5 class="modal__title">Платёж совершен успешно, но результат на сайт не дошел.</h5>
+                    <button type="button" class="modal__close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <p class="text-danger">
+                <div class="modal__body">
+                    <p class="modal__text modal__text--fail">
                         Произошла ошибка. Пожалуйста обратитесь к администрации сайта.
                         Платёж совершен успешно, но результат до администрации сайта не дошел.
                         При обращении пожалуйста:
                     </p>
-                    <ol>
-                        <li>предоставьте ссылку на эту страницу</li>
-                        <li>номер заказа</li>
-                        <li>сумма оплаты</li>
-                        <li>дата оплаты (по возможности и время оплаты)</li>
-                    </ol>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Попробывать ещё раз</button>
-{{--                    <button type="button" class="btn btn-primary">Save changes</button>--}}
+                    <p class="modal__text">1. Предоставьте ссылку на эту страницу;</p>
+                    <p class="modal__text">2. Номер заказа;</p>
+                    <p class="modal__text">3. Сумма оплаты;</p>
+                    <p class="modal__text">4. Дата оплаты (по возможности и время оплаты).</p>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="success-modal" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Оплата прошла успешно.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+        <div class="modal__dialog">
+            <div class="modal__content">
+                <div class="modal__header">
+                    <h5 class="modal__title">Оплата прошла успешно.</h5>
+                    <button type="button" class="modal__close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <p class="text-info">Описание что делать покупателю дальше после оплаты.</p>
-                    <p>
-                        <a href="{{ route('site.main') }}">На главную</a>
-                        <a href="{{ route('site.catalog.category.list') }}">В каталог</a>
-                        <a href="{{ route('site.cabinet.purchases.index') }}">В личный кабинет</a>
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Закрыть</button>
-{{--                    <button type="button" class="btn btn-primary">Save changes</button>--}}
+                <div class="modal__body">
+                    <p class="modal__text">Вы можете перейти в личный кабинет, чтобы увидеть забронированное мероприятие или вернуться в каталог.</p>
+                    <div class="modal__row">
+                        <a href="{{ route('site.catalog.category.list') }}" class="btn-personal">В каталог</a>
+                        <a href="{{ route('site.cabinet.purchases.index') }}" class="btn-personal">В личный кабинет</a>
+                    </div>
                 </div>
             </div>
         </div>
