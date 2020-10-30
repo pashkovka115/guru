@@ -17,19 +17,17 @@
                     <div class="personal_events">
                         <h1 class="user-title">Покупки</h1>
                     </div>
-                    <div class="personal_status">
                         @if($my_purchases->count() == 0 and $purchases_from_me->count() == 0)
+                        <div class="personal_status">
                             <p class="text-normal">В данный момент у вас нет покупок!</p>
+                        </div>
                         @endif
                         @if($my_purchases->count() == 0)
+                        <div class="personal_status">
                             <p class="text-normal">Как только вы сделаете свою первую покупку, она отобразится
                                 здесь.</p>
+                        </div>
                         @endif
-                        @if($purchases_from_me->count() == 0)
-                            <p class="text-normal">Как только будет сделана первая покупка вашего мероприятия, она
-                                отобразится здесь.</p>
-                        @endif
-                    </div>
                     @if($my_purchases->count() > 0)
                         <div class="personal_events">
                             <h2 class="user-subtitle">Ваши покупки:</h2>

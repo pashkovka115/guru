@@ -620,7 +620,7 @@
                     Если Вы зарегестрированы введите пароль от личного кабинета здесь или авторизуйтесь и повторите бронирование.
                     Или Вы будете зарегестрированны автоматически если этого E-Mail ещё нет. Внимание! Вводите правдивые данные, иначе регистрация может не состояться.
                 </span>
-                <input type="password" name="password" class="form-booking__input" required>
+                <input type="password" name="password" class="form-booking__input">
             </div>
             @endguest
             <div class="form-booking__block">

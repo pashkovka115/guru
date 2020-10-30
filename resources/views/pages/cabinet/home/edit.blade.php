@@ -32,106 +32,7 @@
         tags: true
     });
 </script>
-{{--<script>
-    let autocomplete,  marker, infowindow, map;
-    function initMap() {
 
-        /*map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat:-33.56, lng:151.21},
-            zoom: 13
-        });
-
-        infowindow = new google.maps.InfoWindow();
-        marker = new google.maps.Marker({
-            map:map
-        });*/
-
-        let inputs = document.querySelector('#address');
-        autocomplete = new google.maps.places.Autocomplete(inputs);
-
-        google.maps.event.addListener(autocomplete,'place_changed',function() {
-
-            /*marker.setVisible(false);
-            infowindow.close();*/
-
-            let place = autocomplete.getPlace();
-            if(!place.geometry) {
-                alert('Error');
-            }
-            /*if(place.geometry.viewport) {
-                map.fitBounds(place.geometry.viewport);
-            }
-            else {
-                alert('Error');
-            }*/
-
-            /*marker.setIcon({
-                url:place.icon,
-                scaledSize: new google.maps.Size(35,35)
-            });
-
-            marker.setPosition(place.geometry.location);
-            marker.setVisible(true);*/
-
-            let address = '';
-            if(place.address_components) {
-                address = [
-                    (place.address_components[0] && place.address_components[0].short_name || ''),
-                    (place.address_components[1] && place.address_components[1].short_name || ''),
-                    (place.address_components[2] && place.address_components[2].short_name || '')
-                ].join(' ');
-            }
-
-            //infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-            //infowindow.open(map, marker);
-
-            document.getElementById('latitude').value = place.geometry.location.lat();
-            document.getElementById('longitude').value= place.geometry.location.lng();
-
-            let city = '';
-            let street = '';
-            let house = '';
-            let region = '';
-            let country = '';
-
-            let tmp = '';
-            place.address_components.forEach(function(item) {
-                tmp = item.long_name;
-                if(item.types) {
-                    item.types.forEach(function(t) {
-
-                        switch(t) {
-                            case 'street_number':
-                                house = tmp;
-                                break;
-                            case 'route' :
-                                street = tmp;
-                                break;
-                            case 'administrative_area_level_1' :
-                            case 'administrative_area_level_2' :
-                                region = tmp;
-                                break;
-                            case 'country' :
-                                country = tmp;
-                                break;
-                            case 'postal_town' :
-                            case 'locality' :
-                                city = tmp;
-                                break;
-                        }
-
-                    });
-                }
-            });
-            document.getElementById('city').value = city;
-            document.getElementById('street').value = street;
-            document.getElementById('house').value = house;
-            document.getElementById('region').value = region;
-            document.getElementById('country').value = country;
-        });
-    }
-</script>--}}
-{{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrIHJDN5FNpn8bC3CfiIzDR8uA-0tOD4Y&libraries=places&callback=initMap"></script>--}}
 <script>
     $(document).ready(function() {
         if (window.File && window.FileList && window.FileReader) {
@@ -147,33 +48,7 @@
                             "<img class=\"photogallery-elem\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
                             "<span class=\"removebtn\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span>" +
                             "</span>").insertAfter(".photogallery-container");
-                        /* $(".removebtn").click(function(e){
-                             //console.log(e.target.parentElement.previousElementSibling.src);
-                             //return;
-                             if (! e.target.parentElement.previousElementSibling.src.startsWith('data:')) {
-                                 $.ajax({
-                                     type: "POST",
-                                     url: "{{ url('delete-img-gallery-author') }}",
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        },
-                                        data: {
-                                            'url': e.target.parentElement.previousElementSibling.src,
-                                            'id': {{ $user->id }}
-                        },
-                        success: function (msg) {
-                            console.log(msg);
-                            $(this).parent(".photogallery-demo").remove();
-                        },
-                        error: function (msg, textStatus) {
-                            console.log('Неудача. ' + textStatus);
-                        }
-                    });
-                }else{
-                    $(this).parent(".photogallery-demo").remove();
-                }
 
-            }); */
                     });
                     fileReader.readAsDataURL(f);
                 }
@@ -186,9 +61,6 @@
 
 <script>
     $(".removebtn").click(function(e) {
-        // $(this).parent(".photogallery-demo").remove();
-
-        //if (e.target.parentElement.previousElementSibling.src && ! e.target.parentElement.previousElementSibling.src.startsWith('data:')) {
         $.ajax({
             type: "POST",
             url: "{{ url('delete-img-gallery-author') }}",
@@ -237,7 +109,9 @@
                     <div class="information-create">
                         <div class="information-create-block">
                             <h1 class="create-title">Мои данные</h1>
+                            @if((auth()->user()->profile->auth ?? false))
                             <a href="{{ route('site.author.show', ['id' => $user->id]) }}" target="_blank" class="btn-views">Посмотреть</a>
+                            @endif
                         </div>
                         <div class="panel-create">
                             <form enctype="multipart/form-data" action="{{ route('site.cabinet.user.update', ['user' => auth()->id()]) }}" autocomplete="off" method="post">
@@ -249,15 +123,6 @@
                                     <p style="padding: 10px">{{ $user->email }}</p>
                                 </div>
                                 @if($user->profile)
-                                {{--<div class="block-panel">
-                                    <div class="form-group">
-                                        <label for="avatar">Изменить аватар</label>
-                                        <input type="file" class="form-control-file" id="avatar" name="avatar">
-                                        @if($user->profile->avatar)
-                                            <img src="{{ json_decode($user->profile->avatar)[0] ?? '' }}" alt="аватар">
-                                        @endif
-                                    </div>
-                                </div>--}}
                                     <div class="block-panel">
                                         <label for="avatar" class="create-subtitle">Аватар:</label>
                                         <div class="block-avatar">
@@ -325,10 +190,7 @@
                                     <input id="longitude" type="hidden" name="longitude">
                                     <div id="map"></div>
                                 </div>
-                                {{--<div class="block-panel">
-                                    <label for="organization" class="create-subtitle">Организация автора (преподавателя):</label>
-                                    <input id="organization" name="organization">
-                                </div>--}}
+
                                 <div class="block-panel">
                                     <label for="video-url" class="create-subtitle">Видео YouTube:</label>
                                     <input id="video-url" type="text" name="url" value="{{ $user->profile->url ?? '' }}">
@@ -336,13 +198,7 @@
                                 @else
                                     <p>Сохраните для создания профиля</p>
                                 @endif
-                                {{--<div class="block-panel">
-                                    <label for="tags" class="create-subtitle">Теги (максимум 5):</label>
-                                    <select class="chosen-select" id="tags" name="tags[]" multiple="multiple">
-                                        <option value="тег1">тег1</option>
-                                        <option value="тег2">тег2</option>
-                                    </select>
-                                </div>--}}
+
                                 <div class="block-publication">
                                     <button type="submit" class="btn-public">Сохранить</button>
                                 </div>
