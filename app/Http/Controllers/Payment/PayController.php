@@ -81,11 +81,6 @@ class PayController extends Controller
             $this->login($request);
         }
 
-
-
-
-
-
         $img = (array)$tour->gallery;
         if (isset($img[0])){
             $img = json_decode($img[0])[0];
