@@ -606,6 +606,7 @@
             <div class="form-booking__photo">
                 <img src="http://gurufor.com/assets/site/images/home_bg_new.jpg" alt="" class="img-fluid">
             </div>
+            @guest
             <div class="form-booking__block">
                 <span class="form-booking__title">Имя и фамилия*</span>
                 <input type="text" name="name" class="form-booking__input" required>
@@ -614,6 +615,7 @@
                 <span class="form-booking__title">Email адрес*</span>
                 <input type="email" name="email" class="form-booking__input" required>
             </div>
+            @endguest
             <div class="form-booking__block">
                 <span class="form-booking__title">Телефон</span>
                 <input type="tel" name="phone" class="form-booking__input">

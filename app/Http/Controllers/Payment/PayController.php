@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Modules\Admin\Models\Customer;
@@ -14,14 +15,25 @@ use Modules\Admin\Models\Tour;
 
 class PayController extends Controller
 {
+    use AuthenticatesUsers;
+
+
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|regex:/[\w\s\-\\\']*/i',
-            'email' => 'required|email',
-            'phone' => 'sometimes|nullable|regex:/[\d]*/',
-            'some_data' => 'sometimes|nullable|regex:/[\w\s\d\_\.\,\-\\\']*/i',
-        ]);
+        if (!auth()->check()){
+            $request->validate([
+                'name' => 'required|regex:/[\w\s\-\\\']*/i',
+                'email' => 'required|email',
+                'phone' => 'sometimes|nullable|regex:/[\d]*/',
+                'some_data' => 'sometimes|nullable|regex:/[\w\s\d\_\.\,\-\\\']*/i',
+            ]);
+        }else{
+            $request->validate([
+                'phone' => 'sometimes|nullable|regex:/[\d]*/',
+                'some_data' => 'sometimes|nullable|regex:/[\w\s\d\_\.\,\-\\\']*/i',
+            ]);
+        }
+
 
         $tour_id = (int)$request->input('tour_id');
         $variant_id = $request->input('variant_id');
@@ -40,8 +52,13 @@ class PayController extends Controller
 
         if (!$customer){
             $customer = new Customer();
-            $customer->name = $request->input('name');
-            $customer->email = $request->input('email');
+            if (auth()->check()){
+                $customer->name = auth()->user()->name;
+                $customer->email = auth()->user()->email;
+            }else{
+                $customer->name = $request->input('name');
+                $customer->email = $request->input('email');
+            }
             $customer->phone = $request->input('phone');
             $customer->some_data = $request->input('some_data');
             $customer->save();
@@ -51,15 +68,17 @@ class PayController extends Controller
         $user = User::where('email', $request->input('email'))->first();
 
         if (!$user){
-
-            if (auth()->check()){
-                auth()->logout();
-            }
-
-            $data = $request->toArray();
+            $data = [];
             $data['password'] = \Illuminate\Support\Str::random(10);
-            $this->register_user($data);
-            session(['password_pay' => $data['password']]);
+            $request->merge($data);
+            if (!auth()->check()){
+                $this->register_user($request);
+                session(['password_pay' => $request->password]);
+            }
+        }
+
+        if (!auth()->check()){
+            $this->login($request);
         }
 
 
@@ -111,12 +130,12 @@ class PayController extends Controller
     }
 
 
-    protected function register_user(array $data)
+    protected function register_user($data)
     {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($data->password),
         ]);
     }
 
