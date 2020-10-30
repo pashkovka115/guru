@@ -615,6 +615,13 @@
                 <span class="form-booking__title">Email адрес*</span>
                 <input type="email" name="email" class="form-booking__input" required>
             </div>
+            <div class="form-booking__block">
+                <span class="form-booking__title">
+                    Если Вы зарегестрированы введите пароль от личного кабинета здесь или авторизуйтесь и повторите бронирование.
+                    Или Вы будете зарегестрированны если этого E-Mail ещё нет автоматически. Внимание! Вводите правдивые данные, иначе регистрация может не состояться.
+                </span>
+                <input type="password" name="password" class="form-booking__input" required>
+            </div>
             @endguest
             <div class="form-booking__block">
                 <span class="form-booking__title">Телефон</span>

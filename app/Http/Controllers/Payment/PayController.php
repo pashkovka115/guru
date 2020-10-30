@@ -84,6 +84,8 @@ class PayController extends Controller
 
 
 
+
+
         $img = (array)$tour->gallery;
         if (isset($img[0])){
             $img = json_decode($img[0])[0];
@@ -161,6 +163,24 @@ class PayController extends Controller
         $json = json_encode([
             'request' => $request->toArray(),
         ]);
+
+        $template = view('email.order', ['order' => $order])->render();
+        $user = User::where('id', auth()->id())->firstOrFail();
+
+        try {
+            \Mail::raw('Бронирование места на мероприятии '. env('APP_NAME'), function ($message) use ($user, $template){
+                $message->from(env('MAIL_USERNAME'));
+                $message->to($user->email);
+                $message->setContentType('text/html');
+                $message->subject($template);
+            });
+        }catch (\Swift_TransportException $exception){
+            return redirect()->back()->withErrors('Неполадки сети. Позже попробуйте ещё раз.');
+        }catch (\Exception $exception){
+            return redirect()->back()->withErrors('ООПС..! Непредвиденная ошибка.');
+        }
+
+
         return $json;
     }
 }
