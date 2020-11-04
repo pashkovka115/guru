@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Mail\OrderMail;
+use App\Mail\RegistrationMail;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -131,11 +132,15 @@ class PayController extends Controller
 
     protected function register_user($data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data->password),
         ]);
+
+        if ($user){
+            Mail::to($data['email'])->send(new RegistrationMail($user, $data->password));
+        }
     }
 
 
