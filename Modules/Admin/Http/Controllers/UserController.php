@@ -110,7 +110,10 @@ class UserController extends Controller
         if ($user->profile) {
             $user->profile->delete();
         }
-        delDir(get_image_path_to_profile($user));
+        $user_dir = get_image_path_to_profile($user);
+        if (is_dir($user_dir)){
+            delDir($user_dir);
+        }
         $user->delete();
 
         session()->flash('message', 'Удалил');
