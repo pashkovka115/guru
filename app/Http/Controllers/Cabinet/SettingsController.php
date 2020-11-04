@@ -12,12 +12,11 @@ class SettingsController extends Controller
     public function request_auth()
     {
         $user = User::with('profile')->where('id', auth()->id())->firstOrFail();
-//        dd($user);
-        /*$user->profile->update([
-            'request' => '1'
-        ]);*/
-        $user->profile->request = '1';
-        $user->profile->save();
+
+        if ($user->profile) {
+            $user->profile->request = '1';
+            $user->profile->save();
+        }
 
         return redirect()->back();
     }

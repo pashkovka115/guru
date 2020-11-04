@@ -30,11 +30,13 @@
                         <div class="user-email"><span>Email:</span> {{ auth()->user()->email }}</div>
                     </div>
                     @if(!(auth()->user()->profile->auth ?? false))
+                        @if(auth()->user()->profile and !(auth()->user()->profile->request))
                     <div class="personal_status">
                         <p class="text-normal">Спасибо за регистрацию!</p>
                         <p class="text-normal">Чтобы получить возможность создания своих мероприятия, авторов и организаций на нашем сервисе, запросите авторизацию у администрации, нажав кнопку ниже.</p>
                         <div class="user-editing"><a href="{{ route('site.cabinet.request_auth') }}" class="btn-personal">Запросить авторизацию</a></div>
                     </div>
+                        @endif
                     @elseif((auth()->user()->profile->auth ?? false) and $count_tour == 0)
                         <div class="personal_status">
                             <p class="text-normal">Ваш профиль авторизован!</p>

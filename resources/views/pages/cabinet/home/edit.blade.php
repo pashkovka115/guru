@@ -196,7 +196,7 @@
                                     <input id="video-url" type="text" name="url" value="{{ $user->profile->url ?? '' }}">
                                 </div>
                                 @else
-                                    <p>Сохраните для создания профиля</p>
+                                    <p>Чтобы получить возможность создания своих мероприятий, нажмите кнопку ниже для создания профиля.</p>
                                 @endif
 
                                 <div class="block-publication">

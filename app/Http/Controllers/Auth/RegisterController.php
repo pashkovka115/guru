@@ -79,5 +79,6 @@ class RegisterController extends Controller
         if ($user){
             Mail::to($data['email'])->send(new RegistrationMail($user));
         }
+        return $user;
     }
 }

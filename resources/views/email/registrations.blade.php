@@ -1814,8 +1814,7 @@
                                                     align="left">
                                                     <h5 style="padding: 0; margin: 0; Margin: 0; text-align: left; line-height: 1.3; color: inherit; word-wrap: normal; font-family: Montserrat, Arial, sans-serif; margin-bottom: 10px; Margin-bottom: 10px; font-size: 14px; font-weight: 700;">
                                                         Ваш Email адрес:</h5>
-                                                    <p style="font-family: Montserrat, Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; Margin: 0; text-align: left; font-size: 15px; line-height: 19px; margin-bottom: 10px; Margin-bottom: 10px; color: #777777;">
-                                                        123@mail.ru</p>
+                                                    <p style="font-family: Montserrat, Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; Margin: 0; text-align: left; font-size: 15px; line-height: 19px; margin-bottom: 10px; Margin-bottom: 10px; color: #777777;">{{ $user->email }}</p>
                                                 </th>
                                             </tr>
                                         </table>
