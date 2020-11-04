@@ -39,6 +39,7 @@
                                     @php
                                         $var_start = \Carbon\Carbon::create($my_purchase->date_start_variant);
                                         $var_end = \Carbon\Carbon::create($my_purchase->date_end_variant);
+                                        $diff = $var_start->diffInDays($var_end);
                                     @endphp
                                     <div class="col-lg-3 col-md-6 col-sm-6">
                                         <a href="{{ route('site.catalog.tour.show', ['event' => $my_purchase->tour_id]) }}" class="elem__featured_tour">
@@ -55,17 +56,14 @@
                                             <div class="title-tour">
                                                 {{--                                        Пляж Санта-Роза, Апрель 2020--}}
                                                 {{ $my_purchase->tour_title }}
-                                                , {{ $var_start->formatLocalized('%e %B %Y') }}
-
                                                 {{--                                        {{ $my_purchase->date_start_variant }}--}}
                                             </div>
                                             <p class="dates-tour">
                                                 {{--                                        <span>Апрель 30 - Мая 3, 2020</span>--}}
                                                 {{--                                        <span>{{ $my_purchase->date_end_variant }}</span>--}}
-                                                <span>{{ $var_end->formatLocalized('%e %B %Y') }}</span>
+                                                <span>@php echo $var_start->formatLocalized('%e %B') .' - '. $var_end->formatLocalized('%e %B %Y') .' ('. $diff . Lang::choice('День|Дня|Дней', $diff) . ')'; @endphp</span>
                                             </p>
                                             <div class="personal_events_paid">
-                                                {{--                    todo: статус руссифицировать                    --}}
                                                 <span>
                                                     @if($my_purchase->status == 'paid')
                                                         Оплачено
