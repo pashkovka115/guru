@@ -604,7 +604,7 @@
         <form action="{{ route('customer.pays') }}" method="post" class="form-booking" autocomplete="off">
             @csrf
             <div class="form-booking__photo">
-                <img src="http://gurufor.com/assets/site/images/home_bg_new.jpg" alt="" class="img-fluid">
+                <img src="http://gurufor.com/assets/site/images/home_bg_new.jpg" alt="" class="img-fluid"> <!-- Здесь должно быть не статичное фото, а первое фото из мероприятия!! -->
             </div>
             @guest
             <div class="form-booking__block">
@@ -626,10 +626,6 @@
             <div class="form-booking__block">
                 <span class="form-booking__title">Телефон</span>
                 <input type="tel" name="phone" class="form-booking__input">
-            </div>
-            <div class="form-booking__block">
-                <span class="form-booking__title">Комментарий</span>
-                <textarea name="some_data" class="form-booking__text"></textarea>
             </div>
             <input type="hidden" name="tour_id" value="">
             <input type="hidden" name="variant_id" value="">
