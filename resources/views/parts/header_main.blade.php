@@ -102,7 +102,7 @@
                         </li>
                         @else
                             <li class="login-list">
-                                <span class="login-link">И</span>
+                                <span class="login-link"></span>
                                 <ul class="login-sub">
                                     <li>
                                         <a href="{{ route('site.cabinet.user.index')}}">Личный кабинет</a>
