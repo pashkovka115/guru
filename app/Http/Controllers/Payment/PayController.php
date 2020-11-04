@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMail;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Modules\Admin\Models\Customer;
 use Modules\Admin\Models\Order;
 use Modules\Admin\Models\Tour;
@@ -159,16 +161,12 @@ class PayController extends Controller
             'request' => $request->toArray(),
         ]);
 
-        $template = view('email.order', ['order' => $order])->render();
         $user = User::where('id', auth()->id())->firstOrFail();
 
         try {
-            \Mail::raw('Бронирование места на мероприятии '. env('APP_NAME'), function ($message) use ($user, $template){
-                $message->from(env('MAIL_USERNAME'));
-                $message->to($user->email);
-                $message->setContentType('text/html');
-                $message->subject($template);
-            });
+
+            Mail::to($user->email)->send(new OrderMail($order));
+
         }catch (\Swift_TransportException $exception){
             return redirect()->back()->withErrors('Неполадки сети. Позже попробуйте ещё раз.');
         }catch (\Exception $exception){
