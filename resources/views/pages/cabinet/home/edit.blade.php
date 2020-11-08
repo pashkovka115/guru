@@ -19,11 +19,9 @@
                     reader.onload = function(event) {
                         $($.parseHTML('<img class="img-fluid">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
                     }
-
                     reader.readAsDataURL(input.files[i]);
                 }
             }
-
         };
     });
 </script>
@@ -32,7 +30,6 @@
         tags: true
     });
 </script>
-
 <script>
     $(document).ready(function() {
         if (window.File && window.FileList && window.FileReader) {
@@ -48,7 +45,6 @@
                             "<img class=\"photogallery-elem\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
                             "<span class=\"removebtn\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></span>" +
                             "</span>").insertAfter(".photogallery-container");
-
                     });
                     fileReader.readAsDataURL(f);
                 }
@@ -58,7 +54,6 @@
         }
     });
 </script>
-
 <script>
     $(".removebtn").click(function(e) {
         $.ajax({
@@ -74,28 +69,11 @@
             success: function (msg) {
                 $(e.target.parentElement.parentElement).remove();
                 //console.log(e.target);
-                // $(this).parent(".photogallery-demo").remove();
             },
             error: function (msg, textStatus) {
                 //console.log('Неудача. ' + textStatus);
             }
         });
-        /*}else{
-            $(this).parent(".photogallery-demo").remove();
-        }*/
-
-    });
-</script>
-
-<script>
-    $('.login-list').click( function(){
-        $('.login-sub').toggle();
-    });
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest(".login-list").length) {
-            $('.login-sub').hide();
-        }
-        e.stopPropagation();
     });
 </script>
 @endsection
@@ -210,4 +188,3 @@
         </div>
     </div>
 @endsection
-

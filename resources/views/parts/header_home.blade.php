@@ -76,15 +76,9 @@
                                 <div class="search-category__title">
                                     Популярные направления
                                 </div>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
-                                <a href="#">Страна 1</a>
+                                @foreach($popular_country as $tour)
+                                    <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country ?? $tour->title ?? '' }}</a>
+                                @endforeach
                             </div>
                         </div>
                     </form>

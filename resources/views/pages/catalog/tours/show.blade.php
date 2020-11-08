@@ -136,23 +136,14 @@
                             </span>
                         </div>
                         <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" class="note-schedule">Другие мероприятия организации</a>
-                        {{--<div class="booking__select selected">
-                            <label class="booking__variant">
-                                <input type="radio" name="booking" value="1" checked>
-                                <span class="radio"></span>
-                                <div class="price-img">
-                                    @php $images = json_decode($tour->gallery)  @endphp
-                                    <img src="{{ $images[0] ?? null }}" alt="" class="img-fluid">
-                                </div>
-                                <div class="price-info">
-                                    <p class="cost-tour">{{ number_format($tour->price_base) }} <span>RUB</span></p>
-                                    <p>{{ $tour->count_person }}</p>
-                                    {{ $tour->info_description }}
-                                </div>
-                            </label>
-                        </div>--}}
+
                         <div class="booking__selected">
                         @foreach($tour->variants as $variant)
+                                <?php
+                                $start_v = \Carbon\Carbon::create($variant->date_start_variant);
+                                $end_v = \Carbon\Carbon::create($variant->date_end_variant);
+                                $diff_v = $start_v->diffInDays($end_v);
+                                ?>
                             <div class="booking__select">
                                 <label class="booking__variant">
                                     <input type="hidden" name="tour_id" value="{{ $tour->id }}">
@@ -164,8 +155,9 @@
                                     </div>
                                     <div class="price-info">
                                         <p class="cost-tour">{{ number_format($variant->price_variant) }} <span>RUB</span></p>
-                                        <p>{{ $variant->amount_variant }}</p>
                                         <p>{{ mb_strimwidth($variant->text_variant, 0, 50, '...') }}</p>
+                                        <p>{{ date('d.m.Y', $start_v->timestamp) }} - {{ date('d.m.Y', $end_v->timestamp) }}</p>
+                                        <p>{{ $diff_v . ' ' . Lang::choice('День|Дня|Дней', $diff_v) }} </p>
                                     </div>
                                 </label>
                             </div>
@@ -536,6 +528,11 @@
                         <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" target="_blank" class="note-schedule">Другие мероприятия организации</a>
                         <div class="booking__selected booking__selected-desktop">
                         @foreach($tour->variants as $variant)
+                            <?php
+                                $start_v = \Carbon\Carbon::create($variant->date_start_variant);
+                                $end_v = \Carbon\Carbon::create($variant->date_end_variant);
+                                $diff_v = $start_v->diffInDays($end_v);
+                            ?>
                             <div class="booking__select">
                                 <label class="booking__variant">
                                     <input type="hidden" name="tour_id" value="{{ $tour->id }}">
@@ -548,6 +545,8 @@
                                     <div class="price-info">
                                         <p class="cost-tour">{{ number_format($variant->price_variant) }} <span>RUB</span></p>
                                         <p>{{ mb_strimwidth($variant->text_variant, 0, 50, '...') }}</p>
+                                        <p>{{ date('d.m.Y', $start_v->timestamp) }} - {{ date('d.m.Y', $end_v->timestamp) }}</p>
+                                        <p>{{ $diff_v . ' ' . Lang::choice('День|Дня|Дней', $diff_v) }} </p>
                                     </div>
                                 </label>
                             </div>
