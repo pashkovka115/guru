@@ -13,6 +13,7 @@ class RegistrationMail extends Mailable
 
     public $user;
     public $password;
+    public $subject = 'Регистрация';
 
 
     public function __construct($user, $password=null)

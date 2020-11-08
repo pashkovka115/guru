@@ -85,17 +85,19 @@ class UserController extends Controller
         \DB::transaction(function () use ($id, $data, $request){
             User::where('id', $id)->update($data);
 
-            $profile = Profile::where('user_id', $id)->firstOrFail();
-            if ($request->has('auth')) {
-                $profile->auth = '1';
-                $profile->request = '0';
-                $profile->type_user = 'organizer'; // организатор
-            }else{
-                $profile->auth = '0';
-                $profile->request = '0';
-                $profile->type_user = 'leader'; // ведущий (никто)
+            $profile = Profile::where('user_id', $id)->first();
+            if (!is_null($profile)){
+                if ($request->has('auth')) {
+                    $profile->auth = '1';
+                    $profile->request = '0';
+                    $profile->type_user = 'organizer'; // организатор
+                }else{
+                    $profile->auth = '0';
+                    $profile->request = '0';
+                    $profile->type_user = 'leader'; // ведущий (никто)
+                }
+                $profile->save();
             }
-            $profile->save();
         });
 
 

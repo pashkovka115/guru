@@ -77,7 +77,7 @@ class RegisterController extends Controller
         ]);
 
         if ($user){
-            Mail::to($data['email'])->send(new RegistrationMail($user));
+            Mail::to($data['email'])->locale('ru')->send(new RegistrationMail($user));
         }
         return $user;
     }

@@ -12,6 +12,7 @@ class OrderMail extends Mailable
     use Queueable, SerializesModels;
 
     public $order;
+    public $subject = 'Бронирование';
 
 
     public function __construct($order)

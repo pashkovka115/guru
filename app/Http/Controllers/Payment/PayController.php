@@ -170,7 +170,7 @@ class PayController extends Controller
 
         try {
 
-            Mail::to($user->email)->send(new OrderMail($order));
+            Mail::to($user->email)->locale('ru')->send(new OrderMail($order));
 
         }catch (\Swift_TransportException $exception){
             return redirect()->back()->withErrors('Неполадки сети. Позже попробуйте ещё раз.');
