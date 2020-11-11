@@ -8,15 +8,19 @@ class ProfileTableSeeder extends Seeder
 
     public function run(Faker $faker)
     {
-        $users = \App\Models\User::with('profile')->get();
+        $users = \App\Models\User::with('profile')->where('id', '>', 0)->get();
+
         $i = 0;
         foreach ($users as $user){
-            if ($i <= 1){
+            $user_id = $user->id;
+
+            if ($user_id == 1){
                 $type_user = 'organizer';
-            }elseif ($i > 1 and $i < 8){
-                $type_user = 'leader';
+            }elseif ($user_id == 2){
+//                $type_user = 'user';
+                continue;
             }else{
-                $type_user = 'user';
+                $type_user = 'leader';
             }
 
 
@@ -24,15 +28,12 @@ class ProfileTableSeeder extends Seeder
             if ($raiting > 5)
                 $raiting = 5;
 
-            $auth = ($i % 2 == 0 or $i == 1) ? '1' : '0';
-            $request = (boolean)((int)$auth) ? '0' : '1';
 
             $user->profile()->create([
-                'user_id'=> $user->id,
-                'auth' => $auth,
+                'user_id'=> $user_id,
                 'url' => \Illuminate\Support\Str::random(10),
-                'request' => $request,
                 'avatar' => '['.json_encode(asset('assets/site/images/avatar.jpg')).']',
+                'type_user' => $type_user,
                 'raiting'=> $raiting,
                 'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum fugit incidunt quasi deserunt, libero placeat.',
                 'description'=> $faker->paragraph(10),

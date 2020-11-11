@@ -26,7 +26,7 @@
                                 <td>{{ $user->created_at }}</td>
                                 <td>
                                     @if($user->profile)
-                                    @if($user->profile->auth) <span class="badge badge-success">Да</span> @else <span class="badge badge-danger">Нет</span> @endif
+                                    @if($user->auth) <span class="badge badge-success">Да</span> @else <span class="badge badge-danger">Нет</span> @endif
                                     @else
                                         <span class="badge badge-danger">Нет</span>
                                     @endif

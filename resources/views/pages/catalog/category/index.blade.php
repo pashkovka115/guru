@@ -44,6 +44,7 @@
                                         @if($tour->leaders->count() > 0)
                                             <div class="event_list__autor">
                                                 @foreach($tour->leaders as $leader)
+                                                    @if(!is_null($leader->profile))
                                                     @if($leader->profile->avatar)
                                                         <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
                                                             <?php $arr_img = json_decode($leader->profile->avatar) ?: [];
@@ -56,6 +57,7 @@
                                                         <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" title="{{ $leader->name }}">
                                                             <span>{{ $leader->name }}</span>
                                                         </a>
+                                                    @endif
                                                     @endif
                                                 @endforeach
                                                 <em>Ваши гиды</em>

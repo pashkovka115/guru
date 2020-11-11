@@ -16,8 +16,8 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $cnt_not_auth_users = Profile::where('auth', '0')->count();
-        $requests_auth = Profile::where('request', '1')->count();
+        $cnt_not_auth_users = User::where('auth', '0')->count();
+        $requests_auth = User::where('request', '1')->count();
         $all_users = User::count();
         $all_events = Tour::count();
         $new_tours = Tour::where('new', '1')->count();
@@ -57,8 +57,8 @@ class DashboardController extends Controller
 
     public function requests()
     {
-        $profiles = Profile::with('user')->where('request', '1')->paginate();
-        return view('admin::pages.dashboard.requests', ['profiles' => $profiles, 'title_page' => 'Заявки на авторизацию']);
+        $users = User::where('request', '1')->paginate();
+        return view('admin::pages.dashboard.requests', ['users' => $users, 'title_page' => 'Заявки на авторизацию']);
     }
 
     /*
@@ -66,12 +66,21 @@ class DashboardController extends Controller
      */
     public function store($id)
     {
-        Profile::where('id', $id)->update([
-            'auth' => '1',
-            'request' => '0'
-        ]);
+        $trans = \DB::transaction(function () use ($id){
+            User::where('id', $id)->update([
+                'auth' => '1',
+                'request' => '0'
+            ]);
+            $profile = Profile::create(['user_id' => $id]);
+            if ($profile){
+                session()->flash('message', 'Авторизовал');
+                return redirect()->back();
+            }
+        }, 3);
 
-        session()->flash('message', 'Авторизовал');
-        return redirect()->back();
+        if ($trans)
+            return $trans;
+
+        return redirect()->back()->withErrors('Ой! Что то пошло не так.');
     }
 }

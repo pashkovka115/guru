@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable()->default(null);
             $table->string('password')->nullable();
+            $table->enum('auth', ['0','1'])->comment('аунтифицирован администратором');
+            $table->enum('request', ['0','1'])->comment('заявка на аунтификацию');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

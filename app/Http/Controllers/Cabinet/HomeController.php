@@ -39,7 +39,6 @@ class HomeController extends Controller
 
     public function update(Request $request, $id)
     {
-//        dd($request->all(), $id);
         $request->validate([
             "name" => "required|regex:/[\w\s\-]*/i",
             "excerpt" => "sometimes|nullable|regex:/[\w\s\-]*/i",
@@ -58,8 +57,6 @@ class HomeController extends Controller
             "latitude" => "sometimes|nullable|regex:/[\w\s\-]*/i",
             "longitude" => "sometimes|nullable|regex:/[\w\s\-]*/i",
         ]);
-
-//        dd(get_url_to_uploaded_files(auth()->user(), $request->file('avatar'))[0]);
 
         \DB::transaction(function () use ($id, $request) {
             $user = User::with('profile')->where('id', auth()->id())->firstOrFail();
@@ -90,9 +87,10 @@ class HomeController extends Controller
                     $user->profile->gallery = json_encode(array_merge($old_gallery, $new_gallery));
                 }
                 $user->profile->save();
-            }else{
-                Profile::create(['user_id' => auth()->id()]);
             }
+            /*elseif ($user->profile and $user->profile->auth){
+                Profile::create(['user_id' => auth()->id()]);
+            }*/
         });
 
         session()->flash('message', 'Обновил');

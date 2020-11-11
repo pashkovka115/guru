@@ -87,7 +87,7 @@
                     <div class="information-create">
                         <div class="information-create-block">
                             <h1 class="create-title">Мои данные</h1>
-                            @if((auth()->user()->profile->auth ?? false))
+                            @if((auth()->user()->auth ?? false))
                             <a href="{{ route('site.author.show', ['id' => $user->id]) }}" target="_blank" class="btn-views">Посмотреть</a>
                             @endif
                         </div>
@@ -98,9 +98,12 @@
                                 <div class="block-panel">
                                     <label for="name" class="create-subtitle">Имя и фамилия:</label>
                                     <input id="name" type="text" name="name" value="{{ $user->name }}" required>
+                                </div>
+                                <div class="block-panel">
+                                    <label for="name" class="create-subtitle">Почта:</label>
                                     <p style="padding: 10px">{{ $user->email }}</p>
                                 </div>
-                                @if($user->profile)
+                                @if($user->auth ?? false)
                                     <div class="block-panel">
                                         <label for="avatar" class="create-subtitle">Аватар:</label>
                                         <div class="block-avatar">
@@ -174,7 +177,7 @@
                                     <input id="video-url" type="text" name="url" value="{{ $user->profile->url ?? '' }}">
                                 </div>
                                 @else
-                                    <p>Чтобы получить возможность создания своих мероприятий, нажмите кнопку ниже для создания профиля.</p>
+{{--                                    <p>Чтобы получить возможность создания своих мероприятий, нажмите кнопку ниже для создания профиля.</p>--}}
                                 @endif
 
                                 <div class="block-publication">

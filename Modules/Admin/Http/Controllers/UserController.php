@@ -77,6 +77,14 @@ class UserController extends Controller
 //            'email' => $request->input('email'),
         ];
 
+        if ($request->has('auth')){
+            $data['auth'] = '1';
+            $data['request'] = '0';
+        }else{
+            $data['auth'] = '0';
+            $data['request'] = '0';
+        }
+
         $arr = $request->toArray();
         if (!empty($arr['password']) and $arr['password'] == $arr['password_confirmation']) {
             $data['password'] = Hash::make($arr['password']);
@@ -88,12 +96,8 @@ class UserController extends Controller
             $profile = Profile::where('user_id', $id)->first();
             if (!is_null($profile)){
                 if ($request->has('auth')) {
-                    $profile->auth = '1';
-                    $profile->request = '0';
                     $profile->type_user = 'organizer'; // организатор
                 }else{
-                    $profile->auth = '0';
-                    $profile->request = '0';
                     $profile->type_user = 'leader'; // ведущий (никто)
                 }
                 $profile->save();

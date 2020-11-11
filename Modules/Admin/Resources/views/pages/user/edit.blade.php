@@ -12,7 +12,7 @@
                             @if($user->profile)
                             <div class="form-group">
                                 <div class="form-check">
-                                    <?php if ($user->profile->auth) $checked = ' checked'; else $checked = ''; ?>
+                                    <?php if ($user->auth) $checked = ' checked'; else $checked = ''; ?>
                                     <input id="auth" class="form-check-input" type="checkbox" name="auth"{{ $checked }}>
                                     <label for="auth" class="form-check-label">Личность подтверждена</label>
                                 </div>

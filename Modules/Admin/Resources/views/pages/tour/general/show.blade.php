@@ -54,7 +54,7 @@
                                 <dt class="col-sm-4">Опубликовано</dt>
                                 <dd class="col-sm-8">
                                     @php
-                                        if ($tour->active){
+                                        if ($tour->active == '1'){
                                             $checked = ' checked';
                                         }else{$checked = '';}
                                     @endphp
@@ -64,12 +64,12 @@
                                 <dt class="col-sm-4">Одобрен администратором</dt>
                                 <dd class="col-sm-8">
                                     @php
-                                        if ($tour->good){
-                                            $checked = ' checked';
-                                        }else{$checked = '';}
+                                        if ($tour->good == '1'){
+                                            $checked2 = ' checked';
+                                        }else{$checked2 = '';}
                                     @endphp
                                     <input class="form-check-input" type="checkbox" id="good"
-                                           name="good"{{$checked}} disabled>
+                                           name="good"{{$checked2}} disabled>
                                 </dd>
 
                                 <dt class="col-sm-4">Удалить это мероприятие</dt>

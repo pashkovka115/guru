@@ -11,11 +11,11 @@ class SettingsController extends Controller
 {
     public function request_auth()
     {
-        $user = User::with('profile')->where('id', auth()->id())->firstOrFail();
+        $user = User::where('id', auth()->id())->firstOrFail();
 
-        if ($user->profile) {
-            $user->profile->request = '1';
-            $user->profile->save();
+        if ($user) {
+            $user->request = '1';
+            $user->save();
         }
 
         return redirect()->back();

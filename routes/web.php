@@ -33,6 +33,7 @@ Route::prefix('cabinet')->middleware('auth')->group(function (){
 
     Route::resource('/user', 'Cabinet\HomeController')->only(['index', 'edit', 'update'])->names('site.cabinet.user');
     Route::resource('/purchases', 'Cabinet\PurchasesController')->only('index')->names('site.cabinet.purchases');
+    Route::get('request-auth', 'Cabinet\SettingsController@request_auth')->name('site.cabinet.request_auth');
 
     Route::group(['middleware' => ['cabinet_auth']], function (){
         Route::resource('/tour', 'Cabinet\TourController')->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])->names('site.cabinet.tour');
@@ -40,7 +41,6 @@ Route::prefix('cabinet')->middleware('auth')->group(function (){
         Route::resource('/messages', 'Cabinet\MessageController')->only(['index', 'destroy'])->names('site.cabinet.message');
         Route::resource('/reviews', 'Cabinet\ReviewController')->only(['index', 'edit', 'destroy', 'update'])->names('site.cabinet.review');
         Route::resource('/video', 'Cabinet\VideoController')->only(['index', 'store', 'destroy'])->names('site.cabinet.video');
-        Route::get('request-auth', 'Cabinet\SettingsController@request_auth')->name('site.cabinet.request_auth');
 
         Route::prefix('ajax')->group(function (){
             Route::post('general-gallery-insert', 'Cabinet\TourController@ajax_general_gallery_insert')->name('site.ajax.general.gallery.insert');
@@ -68,15 +68,12 @@ Route::prefix('payment')->group(function (){
     // обработчик после оплаты
     Route::post('handler-from-pay-system', 'Payment\PayController@handler_from_pay_system')->name('customer.paid');
     Route::get('order-before-pay/{id}', 'Payment\PayController@show')->name('customer.order.show');
-//    Route::get('init-payment/order/{id}', 'Payment\PayController@init_payment')->name('customer.order.init_payment');
-//    Route::get('success', 'Payment\PayController@pay_success')->name('payment.success');
-//    Route::get('fail', 'Payment\PayController@pay_fail')->name('payment.fail');
 });
 
+if (env('APP_DEBUG') == 'true'){
+    Route::prefix('test')->group(function (){
+        Route::get('phpinfo', 'Tests\InfoController@index');
+    });
+}
 
-Route::prefix('test')->group(function (){
-    Route::get('phpinfo', 'Tests\InfoController@index');
-    Route::get('pay-test', 'Tests\PayController@test');
-    Route::get('pay-test2', 'Tests\PayController@test2');
-});
 

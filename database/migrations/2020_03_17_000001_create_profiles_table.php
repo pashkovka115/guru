@@ -13,10 +13,10 @@ class CreateProfilesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->enum('type_user', ['leader', 'organizer']);
+            $table->enum('type_user', ['leader', 'organizer', 'user']);
             $table->float('raiting')->default(0.0);
-            $table->enum('auth', ['0','1'])->comment('аунтифицирован администратором');
-            $table->enum('request', ['0','1'])->comment('заявка на аунтификацию');
+//            $table->enum('auth', ['0','1'])->comment('аунтифицирован администратором');
+//            $table->enum('request', ['0','1'])->comment('заявка на аунтификацию');
             $table->string('url')->nullable()->comment('Ссылка на видео');
             $table->string('avatar')->nullable();
             $table->text('excerpt')->nullable()->comment('кратко о себе');

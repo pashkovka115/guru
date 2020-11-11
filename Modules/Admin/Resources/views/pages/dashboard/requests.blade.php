@@ -18,15 +18,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($profiles as $profile)
+                            @foreach($users as $user)
                             <tr>
-                                <td>{{ $profile->user->id }}</td>
-                                <td>{{ $profile->user->name }}</td>
-                                <td>{{ $profile->user->email }}</td>
-                                <td>{{ $profile->user->created_at }}</td>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->created_at }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a class="btn btn-danger btn-sm" href="{{ route('admin.dashboard.auth.user', ['id' => $profile->id]) }}" onclick="return confirm('Подтвердить статус пользователя?')">
+                                        <a class="btn btn-danger btn-sm" href="{{ route('admin.dashboard.auth.user', ['id' => $user->id]) }}" onclick="return confirm('Подтвердить статус пользователя?')">
                                             <i class="fab fa-creative-commons-by"></i>
                                             Одобрить
                                         </a>
@@ -38,7 +38,7 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    {{ $profiles->links() }}
+                    {{ $users->links() }}
                 </div>
                 <!-- /.card -->
             </div>
