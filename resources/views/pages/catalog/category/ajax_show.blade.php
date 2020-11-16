@@ -22,7 +22,7 @@
                 @endphp
                 @foreach($gallery as $src)
                     <div class="item">
-                        <a href="" class="event_list__link">
+                        <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="event_list__link">
                             <img src="{{ $src }}" alt="" class="img-fluid event_list_img">
                         </a>
                     </div>
@@ -70,9 +70,9 @@
                         }
                     @endphp
                 </a>
-                <a href="#" class="location-event">
+                <span class="location-event">
                     {{ $tour->city }} @if($tour->city and $tour->country), @endif {{ $tour->country }}
-                </a>
+                </span>
                 @if(isset($variants[0]) and (bool)$variants[0]->date_start_variant and (bool)$variants[0]->date_end_variant)
                     <p class="dates-event">
                         <span>

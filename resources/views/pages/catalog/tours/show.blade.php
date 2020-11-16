@@ -57,9 +57,9 @@
                     @isset($gallery[0])
                         @foreach($gallery as $src)
                             <div class="item">
-                                <a href="" class="event_list__link">
+                                <div class="event_list__link">
                                     <img src="{{ $src }}" alt="" class="img-fluid event_list_img">
-                                </a>
+                                </div>
                             </div>
                         @endforeach
                     @endisset
@@ -155,9 +155,9 @@
                                     </div>
                                     <div class="price-info">
                                         <p class="cost-tour">{{ number_format($variant->price_variant) }} <span>RUB</span></p>
-                                        <p>{{ mb_strimwidth($variant->text_variant, 0, 50, '...') }}</p>
-                                        <p>{{ date('d.m.Y', $start_v->timestamp) }} - {{ date('d.m.Y', $end_v->timestamp) }}</p>
-                                        <p>{{ $diff_v . ' ' . Lang::choice('День|Дня|Дней', $diff_v) }} </p>
+                                        <p title="{{ mb_strimwidth($variant->text_variant, 0, 500, '...') }}">{{ mb_strimwidth($variant->text_variant, 0, 40, '...') }}</p>
+                                        <p class="price-info__mini"><span class="create-subtitle">Даты:</span> {{ date('d.m.Y', $start_v->timestamp) }} - {{ date('d.m.Y', $end_v->timestamp) }}</p>
+                                        <p class="price-info__mini"><span class="create-subtitle">Кол. дней:</span> {{ $diff_v . ' ' . Lang::choice('День|Дня|Дней', $diff_v) }}</p>
                                     </div>
                                 </label>
                             </div>
@@ -544,9 +544,9 @@
                                     </div>
                                     <div class="price-info">
                                         <p class="cost-tour">{{ number_format($variant->price_variant) }} <span>RUB</span></p>
-                                        <p>{{ mb_strimwidth($variant->text_variant, 0, 50, '...') }}</p>
-                                        <p>{{ date('d.m.Y', $start_v->timestamp) }} - {{ date('d.m.Y', $end_v->timestamp) }}</p>
-                                        <p>{{ $diff_v . ' ' . Lang::choice('День|Дня|Дней', $diff_v) }} </p>
+                                        <p title="{{ mb_strimwidth($variant->text_variant, 0, 500, '...') }}">{{ mb_strimwidth($variant->text_variant, 0, 40, '...') }}</p>
+                                        <p class="price-info__mini"><span class="create-subtitle">Даты:</span> {{ date('d.m.Y', $start_v->timestamp) }} - {{ date('d.m.Y', $end_v->timestamp) }}</p>
+                                        <p class="price-info__mini"><span class="create-subtitle">Кол. дней:</span> {{ $diff_v . ' ' . Lang::choice('День|Дня|Дней', $diff_v) }}</p>
                                     </div>
                                 </label>
                             </div>

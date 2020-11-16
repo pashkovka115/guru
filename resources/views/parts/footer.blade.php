@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="copyright">© <?= date('Y') ?> Gurufor. <a href="mailto:pariss8@mail.ru">Серверная разработка</a></div>
+                <div class="copyright">© <?= date('Y') ?> Gurufor.</div>
             </div>
         </div>
     </div>
