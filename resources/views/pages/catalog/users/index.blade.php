@@ -12,7 +12,9 @@
                         <div id="load_content" class="row">
                             @foreach($leaders as $user)
                                 @php
-                                    if ($user->profile) {$profile = $user->profile;} else{$profile = null;}
+                                    if (!is_null($user->profile)){
+                                        $profile = $user->profile;
+                                    }else{continue;}
                                 @endphp
                                 <div class="col-lg-4 col-md-6">
                                     <div class="event-list-autor">
