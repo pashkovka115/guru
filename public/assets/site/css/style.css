@@ -2,6 +2,8 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: normal;
   color: #493c35;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 :active,:hover,:focus{
   outline:0;
@@ -1558,7 +1560,6 @@ display: block;
   max-height: 360px;
 }
 .owl-carousel .owl-item img {
-  width: auto;
   height: 100%;
   min-height: 360px;
   max-height: 360px;
@@ -2283,6 +2284,9 @@ display: block;
   margin-bottom: 5px;
   font-size: .8rem;
 }
+.price-info .price-info__mini{
+  font-size: .65rem;
+}
 .booking__variant input {
   display: none;
 }
@@ -2392,6 +2396,7 @@ display: block;
 
 }
 .slide-autor .owl-stage {
+  display:block;
   height: 360px;
 }
 .slide-autor .item{
@@ -2417,7 +2422,7 @@ display: block;
 .block_autor_info .event-gallery-none{
   position: absolute;
   top: 70%;
-  right: 16px;
+  right: 15px;
   z-index: 1; 
 }
 .block_autor_info .event-gallery-none div:first-child {
@@ -2726,6 +2731,7 @@ hr {
   max-width: 400px;
   font-size: .9rem;
   box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+  margin-bottom: 20px;
 }
 .personal_status p:first-child {
   font-weight: 600;

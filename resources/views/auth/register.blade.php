@@ -44,7 +44,7 @@
                         <button type="submit" id="signup-button">Зарегистрировать</button>
                     </form>
                     <div class="signup_politics">
-                        <p>Регистрируясь, вы принимаете условия <a href="#" target="_blank">политики конфиденциальности</a>.</p>
+                        <p>Регистрируясь, вы принимаете условия <a href="/page/politika-konfidencialnosti" target="_blank">политики конфиденциальности</a>.</p>
                     </div>
                 </div>
             </div>
