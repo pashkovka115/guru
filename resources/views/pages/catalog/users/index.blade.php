@@ -18,7 +18,14 @@
                                 @endphp
                                 <div class="col-lg-4 col-md-6">
                                     <div class="event-list-autor">
-                                        <img src="assets/site/images/slider_img_autor.jpg" alt=""
+                                        <?php $avatar = json_decode($user->profile->avatar);
+                                        if ($avatar){
+                                            $avatar = $avatar[0];
+                                        }else{
+                                            $avatar = asset('assets/site/images/no-avatar.jpg');
+                                        }
+                                        ?>
+                                        <img src="{{ $avatar }}" alt=""
                                              class="img-fluid img-list-autor">
                                         <div class="block-list-autor">
                                             <a href="javascript:void(0);" class="location-event">

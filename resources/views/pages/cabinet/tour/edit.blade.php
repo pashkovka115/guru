@@ -257,14 +257,7 @@
                                                     <div class="block-variant-amount">
                                                         <p>Кол. человек</p>
                                                         @php
-                                                        $people = [
-                                                            "1 человек",
-                                                            "2 человека",
-                                                            "3 человека",
-                                                            "4 человека",
-                                                            "5 человек",
-                                                        ];
-
+                                                        $people = [1, 2, 3, 4, 5];
                                                         @endphp
                                                         <select name="amount_variant[]" class="amount-variant">
                                                             <option>Не выбрано</option>
@@ -274,7 +267,7 @@
                                                                    $selected = ' selected';
                                                                 }else{ $selected = ''; }
                                                                 @endphp
-                                                            <option value="{{ $cnt }}"{{ $selected }}>{{ $cnt }}</option>
+                                                            <option value="{{ $cnt }}"{{ $selected }}>{{ $cnt }} {{ Lang::choice('человек|человека|человек', $cnt) }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

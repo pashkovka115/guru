@@ -1,3 +1,4 @@
+@if(Route::currentRouteName() != 'login')
 <div class="block-error">
     <div class="row-error">
         @if($errors->any())
@@ -16,3 +17,6 @@
         @endif
     </div>
 </div>
+@else
+    popap
+@endif
