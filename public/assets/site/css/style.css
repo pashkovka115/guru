@@ -2,8 +2,6 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: normal;
   color: #493c35;
-  overflow-wrap: break-word;
-  word-break: break-all;
 }
 :active,:hover,:focus{
   outline:0;
@@ -1601,6 +1599,12 @@ display: block;
   margin: 10px 10px 30px 10px;
   box-shadow: 0 0 0px 10px rgba(255,255,255,1);
 }
+.event-list-autor img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  object-position: center center;
+}
 .block-list-autor {
   padding: 10px;
 }
@@ -2201,22 +2205,6 @@ display: block;
   padding: 20px;
   position: sticky;
   top: 72px;
-}
-.block-booking-mobile {
-  display:none;
-  position: relative;
-  top: 0;
-}
-.booking__event__mobile {
-  display:none;
-}
-.booking__event__mobile .btn-booking {
-  width: 100%;
-  max-width: 220px;
-  margin: 0 auto;
-  height: 36px;
-  font-size: .9rem;
-  padding: 5px;
 }
 .block-booking .event-date{
   font-size: .9rem;
@@ -3243,7 +3231,7 @@ input[name="photogallery"] {
     background: #0cc11a;
     position: fixed;
     right: 30px;
-    bottom: 50px;
+    bottom: 100px;
     cursor: pointer;
     border-radius: 50%;
     transition: background-color .3s, 
@@ -3286,6 +3274,7 @@ input[name="photogallery"] {
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 .form-booking__photo {
+    position: relative;
     margin-bottom: 20px;
 }
 .form-booking__photo img {
@@ -3293,6 +3282,22 @@ input[name="photogallery"] {
     max-height: 200px;
     object-fit: cover;
     object-position: center center;
+}
+.form-booking__name {
+    position: absolute;
+    background: rgba(0,0,0, .4);
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    font-weight: 500;
 }
 .form-booking__block {
     display: flex;
@@ -3311,6 +3316,11 @@ input[name="photogallery"] {
 .form-booking__text {
     height: auto;
     min-height: 100px;
+}
+.form-booking__alert {
+    font-size: .6rem;
+    color: #ff0000;
+    margin-bottom: 5px;
 }
 .form-booking__btn {
     color: #fff;
@@ -3372,6 +3382,9 @@ input[name="photogallery"] {
 .customer-description > span {
     color: #dcac6c;
     font-weight: 600;
+}
+span.payment__alert {
+  color: #ff0000;
 }
 .select-hidden {
     display:none;
@@ -3541,7 +3554,7 @@ input[name="photogallery"] {
     font-size: .9rem;
 }
 .modal__text--fail {
-        text-decoration: underline #ff0000;
+    text-decoration: underline #ff0000;
 }
 /* Адаптивность тест для админки */
 @media(max-width: 991px) {
@@ -3754,7 +3767,25 @@ input[name="photogallery"] {
     padding-top: 40px;
   }
   .block-booking {
+    position: relative;
     margin-top: 20px;
+    top: 0;
+  }
+  .block-booking .booking__event {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    background: #fff;
+    z-index: 2;
+    padding-bottom: 10px;
+  }
+  .note-schedule {
+    font-size: .6rem;
   }
   .block_autor_info .event-gallery-none {
     top: 75%;
@@ -3964,25 +3995,6 @@ input[name="photogallery"] {
   .block_event_image>.container-fluid>.row>.no-padding:first-child {
     display: none;
   }
-  .block-booking {
-    display: none;
-  }
-  .block-booking-mobile {
-    display: block;
-  }
-  .booking__event__mobile {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #fff;
-    padding: 0 20px 10px 20px;
-    text-align: center;
-    z-index: 1;
-  }
-  .booking__event__mobile .note-schedule {
-    font-size: .6rem;
-  }
   .form-autor-content {
     flex-wrap: wrap;
   }
@@ -4095,4 +4107,32 @@ input[name="photogallery"] {
   .event-date, .event-pin, .event-group {
     margin-bottom: 10px;
   }
+}
+
+.block-alert {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  max-width: 300px;
+  height: 200px;
+  background: #0cc11a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+#errors {
+  background: #ff0000;
+}
+.errors__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(255,255,255,.7);
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }

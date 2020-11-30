@@ -115,60 +115,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="block-booking block-booking-mobile">
-                        @if($tour->variants->count() > 0)
-                        <p class="event-subtitle-text">
-                            Забронировать мероприятие
-                        </p>
-                        <div class="event-date">
-                            <span class="event-date-icon"></span>
-                            <span>
-                                <?php
-                                $variants = $tour->variants;
-                                if (isset($variants[0])) {
-                                    $start = \Carbon\Carbon::create($tour->date_start);
-                                    $end = \Carbon\Carbon::create($tour->date_end);
-                                    $diff = $start->diffInDays($end);
-
-                                 echo $start->formatLocalized('%e %B') .' - '. $end->formatLocalized('%e %B %Y') .' ('. $diff . Lang::choice('День|Дня|Дней', $diff) . ')';
-                                }
-                                ?>
-                            </span>
-                        </div>
-                        <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" class="note-schedule">Другие мероприятия организации</a>
-
-                        <div class="booking__selected">
-                        @foreach($tour->variants as $variant)
-                                <?php
-                                $start_v = \Carbon\Carbon::create($variant->date_start_variant);
-                                $end_v = \Carbon\Carbon::create($variant->date_end_variant);
-                                $diff_v = $start_v->diffInDays($end_v);
-                                ?>
-                            <div class="booking__select">
-                                <label class="booking__variant">
-                                    <input type="hidden" name="tour_id" value="{{ $tour->id }}">
-                                    <input type="hidden" name="variant_id" value="{{ $variant->id }}">
-                                    <input type="radio" name="booking">
-                                    <span class="radio"></span>
-                                    <div class="price-img">
-                                        <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
-                                    </div>
-                                    <div class="price-info">
-                                        <p class="cost-tour">{{ number_format($variant->price_variant) }} <span>RUB</span></p>
-                                        <p title="{{ mb_strimwidth($variant->text_variant, 0, 500, '...') }}">{{ mb_strimwidth($variant->text_variant, 0, 40, '...') }}</p>
-                                        <p class="price-info__mini"><span class="create-subtitle">Даты:</span> {{ date('d.m.Y', $start_v->timestamp) }} - {{ date('d.m.Y', $end_v->timestamp) }}</p>
-                                        <p class="price-info__mini"><span class="create-subtitle">Кол. дней:</span> {{ $diff_v . ' ' . Lang::choice('День|Дня|Дней', $diff_v) }}</p>
-                                    </div>
-                                </label>
-                            </div>
-                        @endforeach
-                        </div>
-                        @else
-                            <p class="event-subtitle-text">
-                                Нет свободных мест
-                            </p>
-                        @endif
-                    </div>
                     @if($tour->info_excerpt)
                     <div class="event-list">
                         <h2 class="event-subtitle">Информация о мероприятии</h2>
@@ -526,7 +472,7 @@
                             </span>
                         </div>
                         <a href="{{ route('site.author.show', ['id' => $tour->user_id]) }}" target="_blank" class="note-schedule">Другие мероприятия организации</a>
-                        <div class="booking__selected booking__selected-desktop">
+                        <div class="booking__selected">
                         @foreach($tour->variants as $variant)
                             <?php
                                 $start_v = \Carbon\Carbon::create($variant->date_start_variant);
@@ -537,10 +483,11 @@
                                 <label class="booking__variant">
                                     <input type="hidden" name="tour_id" value="{{ $tour->id }}">
                                     <input type="hidden" name="variant_id" value="{{ $variant->id }}">
+                                    <input type="hidden" name="variant_img" value="{{ json_decode($variant->photo_variant)[0] ?? '' }}">
                                     <input type="radio" name="booking">
                                     <span class="radio"></span>
                                     <div class="price-img">
-                                        <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" alt="" class="img-fluid">
+                                        <img src="{{ json_decode($variant->photo_variant)[0] ?? '' }}" class="img-fluid">
                                     </div>
                                     <div class="price-info">
                                         <p class="cost-tour">{{ number_format($variant->price_variant) }} <span>RUB</span></p>
@@ -566,10 +513,6 @@
             </div>
         </div>
     </div>
-    <div class="booking__event__mobile">
-		<p class="note-schedule"><span>Бронирования</span> места составляет <span>10%</span> от суммы!</p>
-		<a href="#" data-tour="1" data-variant="1" class="btn-booking" data-src="#customer-register" data-fancybox>Забронировать место</a>
-	</div>
     @auth
     <div class="fancybox-content" id="form-reviews" style="display: none;">
         <div class="form-title">Оставить отзыв</div>
@@ -603,7 +546,10 @@
         <form action="{{ route('customer.pays') }}" method="post" class="form-booking" autocomplete="off">
             @csrf
             <div class="form-booking__photo">
-                <img src="http://gurufor.com/assets/site/images/home_bg_new.jpg" alt="" class="img-fluid"> <!-- Здесь должно быть не статичное фото, а первое фото из мероприятия!! -->
+                {{-- todo: надо джеэсом забирать ссылку на фото из выбранного варианта --}}
+                {{-- fixme: пофиксь меня и открой TODO лист в своём редакторе --}}
+                <img src="/assets/site/images/home_bg.jpg" class="img-fluid">
+                <span class="form-booking__name">{{ $tour->title }}</span>
             </div>
             @guest
             <div class="form-booking__block">
@@ -615,9 +561,9 @@
                 <input type="email" name="email" class="form-booking__input" required>
             </div>
             <div class="form-booking__block">
-                <span class="form-booking__title">
-                    Если Вы зарегестрированы введите пароль от личного кабинета здесь или авторизуйтесь и повторите бронирование.
-                    Или Вы будете зарегестрированны автоматически если этого E-Mail ещё нет. Внимание! Вводите правдивые данные, иначе регистрация может не состояться.
+                <span class="form-booking__alert">
+                    Если Вы зарегестрированы введите пароль от личного кабинета в поле ниже или авторизуйтесь и повторите бронирование.
+                    Иначе Вы будете зарегестрированны автоматически если этого E-Mail ещё нет.
                 </span>
                 <input type="password" name="password" class="form-booking__input">
             </div>
@@ -637,7 +583,7 @@
 @endsection
 @section('scripts_footer')
     <script>
-    const row = document.querySelector(".booking__selected-desktop");
+    const row = document.querySelector(".booking__selected");
     const btn = document.querySelector(".btn-booking");
     
     row.addEventListener("change", (e) => {
@@ -646,6 +592,7 @@
     
       btn.dataset.tour = children[0].value;
       btn.dataset.variant = children[1].value;
+      btn.dataset.img = children[2].value;
     
     });
     </script>
@@ -654,10 +601,12 @@
         $this = $(this);
         let tour_id = $this.data('tour');
         let variant_id = $this.data('variant');
+        let img_src = $this.data('img');
 
         $form = $('.form-booking');
         $form.find('[name=tour_id]').val(tour_id);
         $form.find('[name=variant_id]').val(variant_id);
+        $form.find('.img-fluid').attr('src', img_src);
 
     });
     </script>
