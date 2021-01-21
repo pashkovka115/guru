@@ -247,3 +247,7 @@ $(document).ready(function() {
 $(".removebtn").click(function(){
 	$(this).parent(".photogallery-demo").remove();
 });
+
+$(".errors__close").click(function(){
+    $(".block-alert").toggle();
+});

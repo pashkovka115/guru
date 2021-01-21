@@ -203,3 +203,9 @@ jQuery(document).ready(function() {
         $('html, body').animate({scrollTop:0}, '300');
    });
 });
+
+$(document).ready(function(){
+    $(".errors__close").click(function(){
+      $(".block-alert").toggle();
+    });
+});
