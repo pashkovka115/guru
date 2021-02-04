@@ -47,6 +47,15 @@
                             </div>
                         </div>
                         <div class="payment__order-details">
+                            <p class="payment__subtitle">Регистрация профиля</p>
+                            <p class="customer-description">
+                                @php
+                                $pass = session()->get('password_pay', false);
+                                @endphp
+                                @if($pass)
+                                <span class="payment__alert">Внимание!</span> Ваш профиль был зарегистрирован на сайте, временный пароль был отправлен на email указанный в форме бронирования.
+                                @endif
+                            </p>
                             <p class="payment__number">Оплата</p>
                             <div class="payment__customer-data">
                                 <div class="customer-block">

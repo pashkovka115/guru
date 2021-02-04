@@ -56,9 +56,9 @@
                                 @endif
                             </p>
                         </a>
-                        <a href="#" class="location-tour">
+                        <span class="location-tour">
                             {{ $tour->city }}, {{ $tour->country }}
-                        </a>
+                        </span>
                         <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="title-tour">
                             {{ $tour->title }}
                         </a>

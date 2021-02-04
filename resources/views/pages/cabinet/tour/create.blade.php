@@ -128,7 +128,7 @@
                                         <label for="photogallery" class="create-subtitle">Фотогалерея:</label>
                                         <div class="block-panel-sub">
                                                 <span class="btn_upload">
-                                                    <input id="photogallery" type="file" name="photogallery[]" multiple class="photogallery">
+                                                    <input id="photogallery" type="file" name="photogallery[]" multiple class="photogallery" required>
                                                     Загрузить фото
                                                 </span>
                                             <div class="photogallery-container"></div>
