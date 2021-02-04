@@ -73,6 +73,8 @@ Route::prefix('payment')->group(function (){
 if (env('APP_DEBUG') == 'true'){
     Route::prefix('test')->group(function (){
         Route::get('phpinfo', 'Tests\InfoController@index');
+        Route::get('pay', 'Tests\InfoController@pay');
+        Route::get('pay-handler', 'Tests\InfoController@pay_handler');
     });
 }
 

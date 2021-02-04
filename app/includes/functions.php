@@ -174,6 +174,13 @@ function get_id_youtube_from_url($url)
     return trim($id);
 }
 
+function get_form_signature(...$params)
+{
+    ksort($params);
+    $str = implode('{up}', $params);
+    return hash('sha256', $str);
+}
+
 
 
 

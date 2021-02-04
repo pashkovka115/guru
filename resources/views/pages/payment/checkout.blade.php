@@ -71,9 +71,32 @@
                             <p class="customer-text p-1"><span>Внимание! </span>Это временный пароль: <b>{{ $pass }}</b> запишите его.</p>
                             @endif
                         </div>
-
+<?php
+                        function getFormSignature($account, $currency, $desc, $sum, $secretKey) {
+                            $hashStr = $account.'{up}'.$currency.'{up}'.$desc.'{up}'.$sum.'{up}'.$secretKey;
+                            return hash('sha256', $hashStr);
+                        }
+?>
                         <div class="payment__form-payment">
-                            <button id="payning_btn" type="submit" class="btn-booking">Оплатить картой</button>
+                            <form action="https://unitpay.ru/pay/349301-48c77/card">
+                                <input type="hidden" name="account" value="{{ $order->id }}">
+                                <input type="hidden" name="sum" value="{{ $order->deposit }}">
+                                <input type="hidden" name="currency" value="RUB">
+                                <input type="hidden" name="desc" value="{{ $order->payment_desc }}">
+
+                                <input type="hidden" name="customerEmail" value="{{$order->customer_email}}">
+
+                                <input type="hidden" name="signature" value="<?php echo getFormSignature(
+                                    $order->id,
+                                    'RUB',
+                                    $order->payment_desc,
+                                    $order->deposit,
+                                    env('UNITPAY_SECRET_KEY')
+                                ); ?>">
+
+                                <input id="payning_btn" class="btn-booking" type="submit" value="Оплатить картой">
+                            </form>
+{{--                            <button id="payning_btn" type="submit" class="btn-booking">Оплатить картой</button>--}}
                         </div>
                     </div>
                 </div>
@@ -155,7 +178,7 @@
         </div>
     </div>
 
-@section('scripts_footer')
+{{--@section('scripts_footer')
     <script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
     <script>
         var widget = new cp.CloudPayments({googlePaySupport: false, applePaySupport: false});
@@ -175,7 +198,7 @@
                 },
                 {
                     onSuccess: function (options) { // success
-                        {{--options["csrf-token"] = "{{ csrf_token() }}"--}}
+                        --}}{{--options["csrf-token"] = "{{ csrf_token() }}"--}}{{--
 
                         $.ajax({
                             method: "POST",
@@ -211,5 +234,5 @@
 
         $('#payning_btn').click(pay);
     </script>
-@endsection
+@endsection--}}
 @endsection
