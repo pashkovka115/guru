@@ -249,5 +249,5 @@ $(".removebtn").click(function(){
 });
 
 $(".errors__close").click(function(){
-    $(".block-alert").toggle();
+    $(".block-error__container").toggle();
 });

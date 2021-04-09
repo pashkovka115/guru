@@ -318,7 +318,7 @@
                                     </div>
                                     <div class="block-panel">
                                         <label for="video-url" class="create-subtitle">Видео YouTube:</label>
-                                        <input id="video-url" type="text" name="video_url" value="{{ $tour->video_url }}" placeholder="Пример идентификатора: gAnoWXUaVoY">
+                                        <input id="video-url" type="text" name="video_url" value="{{ $tour->video_url }}" placeholder="Ссылка с youtube">
                                     </div>
 
                                     @if($tour->tags->count() > 0 or $tags->count() > 0)
@@ -403,7 +403,7 @@
                                         </div>
                                     </div>
                                     <div class="block-panel">
-                                        <label for="security-event" class="create-subtitle">Безопастность:</label>
+                                        <label for="security-event" class="create-subtitle">Безопасность:</label>
                                         <div class="block-panel-sub">
                                             <p>Напишите информацию напротив пункта, если ничего не указывать, данное поле не будет выводиться.</p>
                                             <div class="block-security-event">
