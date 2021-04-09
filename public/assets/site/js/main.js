@@ -206,6 +206,6 @@ jQuery(document).ready(function() {
 
 $(document).ready(function(){
     $(".errors__close").click(function(){
-      $(".block-alert").toggle();
+      $(".block-error__container").toggle();
     });
 });

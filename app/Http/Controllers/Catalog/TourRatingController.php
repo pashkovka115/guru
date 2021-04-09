@@ -44,7 +44,7 @@ class TourRatingController extends Controller
                 $tour->update(['rating' => $tour_rating]);
             }
 
-            session()->flash('message', 'Оценка добавлена');
+            session()->flash('message', 'Оценка добавлена, спасибо за ваш отзыв!');
             return redirect()->back();
         }else{
             return redirect()->back()->withErrors('Вы уже оценивали это мероприятие.');
