@@ -164,7 +164,7 @@
                     </div>
                     @endif
 
-                    @if($tour->country and $tour->city and $tour->address)
+                    @if($tour->country and $tour->region)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-place">
                             <div class="accordion-btn">Место проведения:</div>
@@ -178,7 +178,7 @@
                                 <div class="block_place">
                                     <div class="article-block">
                                         @php
-                                        $link = generate_google_map_link([$tour->address]);
+                                        $link = generate_google_map_link($tour);
                                         @endphp
                                         <iframe width="100%" height="350" frameborder="0" style="border:0" src="{{ $link }}" allowfullscreen></iframe>
                                     </div>
@@ -585,15 +585,15 @@
     <script>
     const row = document.querySelector(".booking__selected");
     const btn = document.querySelector(".btn-booking");
-    
+
     row.addEventListener("change", (e) => {
-    
+
       const children = e.target.parentElement.children;
-    
+
       btn.dataset.tour = children[0].value;
       btn.dataset.variant = children[1].value;
       btn.dataset.img = children[2].value;
-    
+
     });
     </script>
     <script>

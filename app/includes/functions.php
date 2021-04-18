@@ -15,15 +15,34 @@ if (!function_exists('is_admin')) {
     }
 }
 
-function generate_google_map_link(array $data)
+function generate_google_map_link($tour)
 {
-    $url = '';
-    foreach ($data as $datum) {
-        if (is_string($datum) and strlen($datum) > 1) {
-            $url = $url . '+' . $datum;
-        }
+    $params = '';
+
+    if ($tour->country){
+        $params .= $tour->country;
     }
-    $link = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyDrIHJDN5FNpn8bC3CfiIzDR8uA-0tOD4Y&q=' . trim($url, '+');
+    if ($tour->region){
+        $params .= '+' . $tour->region;
+    }
+    if ($tour->city){
+        $params .= '+' . $tour->city;
+    }
+    if ($tour->street){
+        $params .= '+' . $tour->street;
+    }
+    if ($tour->house){
+        $params .= '+' . $tour->house;
+    }
+
+    $params = trim($params, '+');
+
+    if ($params == ''){
+        $params = $tour->address;
+    }
+
+    $link = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyDrIHJDN5FNpn8bC3CfiIzDR8uA-0tOD4Y&q=' . $params;
+
     return $link;
 }
 
