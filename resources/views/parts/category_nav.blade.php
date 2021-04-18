@@ -2,6 +2,13 @@
     <ul class="cat_nav__menu">
         <li>
             <a href="{{ route('site.catalog.category.list') }}"{!! Route::currentRouteName() == 'site.catalog.category.list' ? '  class="active"' : null  !!}>
+                <?php
+                if (isset($id)){
+                    $cnt_tours = \Modules\Admin\Models\Tour::where('category_tour_id', $id)->count();
+                }else{
+                    $cnt_tours = \Modules\Admin\Models\Tour::count();
+                }
+                ?>
                 Мероприятия @if(Route::currentRouteName() != 'site.catalog.search') ({{ $cnt_tours }}) @endif
             </a>
         </li>

@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
             $items2 = \DB::table('organizer_leader')->selectRaw('organizer_id')->distinct()->get();
             \View::share('cnt_organizers', $items2->count());
 
-            \View::share('cnt_tours', Tour::count());
+//            \View::share('cnt_tours', Tour::count());
 
             \View::composer(['parts.filter_panel', 'parts.footer'], function ($view){
                 $view->with([

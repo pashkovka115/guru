@@ -63,7 +63,7 @@ class CategoryTourController extends Controller
         if ($request->ajax()) {
             return view('pages.catalog.category.ajax_show', ['tours' => $tours]);
         } else {
-            return view('pages.catalog.category.show', ['tours' => $tours]);
+            return view('pages.catalog.category.show', ['tours' => $tours, 'id' => $id]);
         }
     }
 
