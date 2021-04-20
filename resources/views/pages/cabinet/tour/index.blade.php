@@ -70,7 +70,9 @@
                             </div>
                             <div class="personal_events_btn">
                                 <a href="{{ route('site.cabinet.tour.edit', ['tour' => $tour->id]) }}" class="btn-edit">Редактировать</a>
+                                @if($tour->active == '1')
                                 <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" target="_blank" class="btn-edit btn-view">Посмотреть</a>
+                                @endif
                                 <a href="{{ route('site.cabinet.tour.destroy', ['tour' => $tour->id]) }}" class="btn-edit btn-delete"
                                    onclick="event.preventDefault(); document.getElementById('delete-tour-form_{{ $loop->index }}').submit();">Удалить</a>
 <?php //dump($tour->id); ?>

@@ -28,7 +28,10 @@ class CategoryTourController extends Controller
         ) {
             $tours = $this->filter($request);
         } else {
-            $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])->where('id', '>', 0)->paginate(10);
+            $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])
+                ->where('id', '>', 0)
+                ->where('active', '1')
+                ->paginate(10);
         }
 
         if ($request->ajax()) {
@@ -58,7 +61,10 @@ class CategoryTourController extends Controller
             return $this->index($request);
         }
 
-        $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])->where('category_tour_id', $id)->paginate(10);
+        $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])
+            ->where('category_tour_id', $id)
+            ->where('active', '1')
+            ->paginate(10);
 
         if ($request->ajax()) {
             return view('pages.catalog.category.ajax_show', ['tours' => $tours]);
@@ -79,7 +85,7 @@ class CategoryTourController extends Controller
         $range_price_min = $request->input('range-price-min', false);
         $range_price_max = $request->input('range-price-max', false);
 
-        $tours = Tour::with(['variants', 'category', 'leaders', 'comments']);
+        $tours = Tour::with(['variants', 'category', 'leaders', 'comments'])->where('active', '1');
 
         if ($category) {
             $tours->whereIn('category_tour_id', $category);

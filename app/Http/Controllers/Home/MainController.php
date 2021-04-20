@@ -18,10 +18,12 @@ class MainController extends Controller
         $categories = CategoryTour::all();
         $recommended_tours = Tour::with(['comments', 'variants'])
             ->where('recommended', '1')
+            ->where('active', '1')
             ->limit($limit)
             ->get();
         if ($recommended_tours->count() < $limit){
             $max_views_tours = Tour::with(['comments', 'variants'])
+                ->where('active', '1')
                 ->orderByDesc('views')
                 ->limit($limit)
                 ->get();

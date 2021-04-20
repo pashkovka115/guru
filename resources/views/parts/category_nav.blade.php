@@ -4,9 +4,9 @@
             <a href="{{ route('site.catalog.category.list') }}"{!! Route::currentRouteName() == 'site.catalog.category.list' ? '  class="active"' : null  !!}>
                 <?php
                 if (isset($id)){
-                    $cnt_tours = \Modules\Admin\Models\Tour::where('category_tour_id', $id)->count();
+                    $cnt_tours = \Modules\Admin\Models\Tour::where('category_tour_id', $id)->where('active', '1')->count();
                 }else{
-                    $cnt_tours = \Modules\Admin\Models\Tour::count();
+                    $cnt_tours = \Modules\Admin\Models\Tour::where('active', '1')->count();
                 }
                 ?>
                 Мероприятия @if(Route::currentRouteName() != 'site.catalog.search') ({{ $cnt_tours }}) @endif

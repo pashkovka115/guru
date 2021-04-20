@@ -16,7 +16,11 @@ class TourController extends Controller
 
     public function show($id)
     {
-        $tour = Tour::with(['variants', 'leaders'])->where('id', $id)->firstOrFail();
+        $tour = Tour::with(['variants', 'leaders'])
+            ->where('id', $id)
+            ->where('active', '1')
+            ->firstOrFail();
+
         $tour->views++;
         if (is_admin()){
             $tour->new = '0';

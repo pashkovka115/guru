@@ -44,7 +44,9 @@ class TourRatingController extends Controller
                 }
                 $tour_rating = $nums_arr / $cnt;
 
-                $tour = Tour::where('id', $request->input('tour_id'))->firstOrFail();
+                $tour = Tour::where('id', $request->input('tour_id'))
+                    ->where('active', '1')
+                    ->firstOrFail();
                 $tour->update(['rating' => $tour_rating]);
             }
 
