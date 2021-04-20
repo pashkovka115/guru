@@ -42,6 +42,21 @@ class ReviewController extends Controller
             'rating' => (int)$request->input('rating')
         ]);
 
+        // пересчитываем рейтинг тура
+        $ratings = TourRating::where('tour_id', $request->input('tour_id'))->get('rating');
+
+        if ($ratings){
+            $cnt = $ratings->count();
+            $nums_arr = 0;
+            foreach ($ratings as $rating){
+                $nums_arr += $rating->rating;
+            }
+            $tour_rating = $nums_arr / $cnt;
+
+            $tour = Tour::where('id', $request->input('tour_id'))->firstOrFail();
+            $tour->update(['rating' => $tour_rating]);
+        }
+
         return redirect()->back();
     }
 

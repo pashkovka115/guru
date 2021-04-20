@@ -22,21 +22,12 @@
             <form action="{{ route('site.cabinet.review.update', ['review' => $comment->id]) }}" method="post">
                 @csrf
                 @method('PUT')
+                <input type="hidden" name="tour_id" value="{{ $comment->tour->id }}">
                 <div class="form-reviews-block">
                     <span>Оценка:</span>
                     <div class="star-rating">
                         <div class="star-rating__wrap">
                             <?= get_rating_template_for_form($comment->rating); ?>
-                            {{--<input class="star-rating__input" id="star-rating-5" type="radio" name="rating" value="5">
-                            <label class="star-rating__ico fa fa-star-o" for="star-rating-5" title="5 out of 5 stars"></label>
-                            <input class="star-rating__input" id="star-rating-4" type="radio" name="rating" value="4">
-                            <label class="star-rating__ico fa fa-star-o" for="star-rating-4" title="4 out of 5 stars"></label>
-                            <input class="star-rating__input" id="star-rating-3" type="radio" name="rating" value="3">
-                            <label class="star-rating__ico fa fa-star-o" for="star-rating-3" title="3 out of 5 stars"></label>
-                            <input class="star-rating__input" id="star-rating-2" type="radio" name="rating" value="2">
-                            <label class="star-rating__ico fa fa-star-o" for="star-rating-2" title="2 out of 5 stars"></label>
-                            <input class="star-rating__input" id="star-rating-1" type="radio" name="rating" value="1">
-                            <label class="star-rating__ico fa fa-star-o" for="star-rating-1" title="1 out of 5 stars"></label>--}}
                         </div>
                     </div>
                 </div>
