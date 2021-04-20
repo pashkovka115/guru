@@ -153,7 +153,7 @@
                 </div>
             </div>
             <div class="row">
-                @foreach($popular_country as $tour)
+                @foreach($popular_tours as $tour)
                 <div class="col-lg-4 col-md-6">
                     <a href="{{ route('site.catalog.category.name', ['id' => $tour->category_tour_id]) }}" class="elem__tour">
                         <?php
@@ -162,16 +162,9 @@
                         @isset($gal[0])
                         <img src="{{ $gal[0] }}" alt="" class="img-fluid">
                         @endisset
-                        <p class="title__tour">
-                            @if ($tour->country)
-                                {{ $tour->country }}
-                            @elseif($tour->title)
-                                {{ $tour->title }}
-                            @endif
-                        </p>
+                        <p class="title__tour">{{ $tour->title }}</p>
                     </a>
                 </div>
-                    @if($loop->iteration == 6) @break @endif
                 @endforeach
 
             </div>
