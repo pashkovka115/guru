@@ -43,7 +43,7 @@
                                     <div class="rating-autor">
                                         <div class="rating">
                                             @if($user->profile)
-                                                {!! get_rating_template($user->profile->raiting, false) !!}
+                                                {!! get_rating_template($full_raiting, false) !!}
                                             @endif
                                             @if($comments->count() > 0)
                                                 <a href="#reviews"
@@ -202,6 +202,7 @@
                             </div>
                         </div>
                     @endif
+{{--                    @if($user->profile and $user->profile->raiting > 0 or $comments->count() > 0)--}}
                     @if($user->profile and $user->profile->raiting > 0 or $comments->count() > 0)
                         <div class="event-details-accordion" id="reviews">
                             <div class="event-accordion accordion-reviews">
@@ -212,9 +213,16 @@
                                             <div class="rating-accordion">
                                                 <div class="rating">
 
-                                                    {!! get_rating_template($user->profile->raiting, false) !!}
-                                                    <span class="review-text">Средний рейтинг {{ $user->profile->raiting }} из 5.0</span>
+                                                    {!! get_rating_template($full_raiting, false) !!}
+                                                    <span class="review-text">Средний рейтинг {{ $full_raiting }} из 5.0</span>
                                                 </div>
+                                            </div>
+                                            <div class="rating-feedback">
+                                                @auth
+                                                    <a class="btn-review" data-src="#form-reviews" data-fancybox="" href="">Добавить отзыв</a>
+                                                @else
+                                                    <div class="review-aut">Чтобы оставить отзыв <a href="{{ route('login') }}">авторизуйтесь</a>.</div>
+                                                @endauth
                                             </div>
                                         </div>
                                     @endif
@@ -262,6 +270,37 @@
             </div>
         </div>
     </div>
+
+    @auth
+        <div class="fancybox-content" id="form-reviews" style="display: none;">
+            <div class="form-title">Оставить отзыв</div>
+            <form action="{{ route('site.author.add_comment', ['id' => $user->id]) }}" autocomplete="off" method="post">
+                @csrf
+                <div class="form-reviews-block">
+                    <span>Оценка:</span>
+                    <div class="star-rating">
+                        <div class="star-rating__wrap">
+                            <input class="star-rating__input" id="star-rating-5" type="radio" name="rating" value="5">
+                            <label class="star-rating__ico fa fa-star-o" for="star-rating-5" title="5 out of 5 stars"></label>
+                            <input class="star-rating__input" id="star-rating-4" type="radio" name="rating" value="4">
+                            <label class="star-rating__ico fa fa-star-o" for="star-rating-4" title="4 out of 5 stars"></label>
+                            <input class="star-rating__input" id="star-rating-3" type="radio" name="rating" value="3">
+                            <label class="star-rating__ico fa fa-star-o" for="star-rating-3" title="3 out of 5 stars"></label>
+                            <input class="star-rating__input" id="star-rating-2" type="radio" name="rating" value="2">
+                            <label class="star-rating__ico fa fa-star-o" for="star-rating-2" title="2 out of 5 stars"></label>
+                            <input class="star-rating__input" id="star-rating-1" type="radio" name="rating" value="1">
+                            <label class="star-rating__ico fa fa-star-o" for="star-rating-1" title="1 out of 5 stars"></label>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                <div class="form-reviews-block"><span>Заголовок отзыва:</span><input type="text" name="title"></div>
+                <div class="form-reviews-block"><span>Текст отзыва:</span><textarea name="comment" id=""></textarea></div>
+                <div class="form-reviews-block"><button type="submit">Добавить отзыв</button></div>
+            </form>
+        </div>
+    @endauth
+
 @endsection
 @section('popap_form')
     <div class="fancybox-content" id="form-autor" style="display: none;">

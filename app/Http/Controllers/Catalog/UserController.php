@@ -24,10 +24,10 @@ class UserController extends Controller
             ->whereIn('id', array_keys($leaders_ids->keyBy('leader_id')->toArray()))
             ->paginate();
 
-        if ($request->ajax()){
+        if ($request->ajax()) {
             return view('pages.catalog.users.ajax_index', ['leaders' => $leaders]);
-        }else{
-            return view('pages.catalog.users.index', ['leaders' => $leaders, 'title'=>'Ведущие мероприятий']);
+        } else {
+            return view('pages.catalog.users.index', ['leaders' => $leaders, 'title' => 'Ведущие мероприятий']);
         }
     }
 
@@ -46,10 +46,10 @@ class UserController extends Controller
             ->whereIn('id', array_keys($organizers_ids->keyBy('organizer_id')->toArray()))
             ->paginate();
 
-        if ($request->ajax()){
+        if ($request->ajax()) {
             return view('pages.catalog.users.ajax_index', ['leaders' => $leaders]);
-        }else{
-            return view('pages.catalog.users.index', ['leaders' => $leaders, 'title'=>'Ведущие мероприятий']);
+        } else {
+            return view('pages.catalog.users.index', ['leaders' => $leaders, 'title' => 'Ведущие мероприятий']);
         }
     }
 
@@ -59,11 +59,39 @@ class UserController extends Controller
         $user = User::with(['tours_with_category', 'profile'])->where('id', $id)->firstOrFail();
         $comments = UserComment::with('user')->where('author_id', $id)->get();
 
+        $all_raiting = 0;
+        foreach ($comments as $comment) {
+            $all_raiting += $comment->rating;
+        }
+        if ($comments->count() > 0) {
+            $full_raiting = $all_raiting / $comments->count();
+        } else {
+            $full_raiting = 0;
+        }
 
         return view('pages.catalog.users.show', [
             'user' => $user,
-            'comments'=>$comments,
-            'title'=>'Профиль пользователя'
+            'comments' => $comments,
+            'title' => 'Профиль пользователя',
+            'full_raiting' => $full_raiting
         ]);
+    }
+
+
+    public function addCommentToAuthor(Request $request, $id)
+    {
+//        dd($request->all());
+        $data = $request->validate([
+            'title' => 'required|string',
+            'comment' => 'required|string',
+            'rating' => 'required|string',
+            'user_id' => 'required|numeric',
+        ]);
+
+        $data['author_id'] = $id;
+
+        UserComment::create($data);
+
+        return back();
     }
 }
