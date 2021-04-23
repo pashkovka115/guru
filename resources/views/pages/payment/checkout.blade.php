@@ -87,7 +87,11 @@
                         }
 ?>
                         <div class="payment__form-payment">
-                            <form action="https://unitpay.ru/pay/349301-48c77/card">
+                            <form action="{{ route('customer.paid') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="order_id" value="{{ $order->id }}">
+
+                        {{--    <form action="https://unitpay.ru/pay/349301-48c77/card">
                                 <input type="hidden" name="account" value="{{ $order->id }}">
                                 <input type="hidden" name="sum" value="{{ $order->deposit }}">
                                 <input type="hidden" name="currency" value="RUB">
@@ -101,11 +105,11 @@
                                     $order->payment_desc,
                                     $order->deposit,
                                     env('UNITPAY_SECRET_KEY')
-                                ); ?>">
+                                ); ?>"> --}}
 
                                 <input id="payning_btn" class="btn-booking" type="submit" value="Забронировать">
                             </form>
-{{--                            <button id="payning_btn" type="submit" class="btn-booking">Забронировать</button>--}}
+
                         </div>
                     </div>
                 </div>

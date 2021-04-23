@@ -152,15 +152,17 @@ class PayController extends Controller
     // paid
     public function handler_from_pay_system(Request $request)
     {
-        $order = Order::where('id', $request->input('invoiceId'))->firstOrFail();
-        $order->status = 'paid';
+//        dd($request->all());
+        $order = Order::where('id', $request->input('order_id'))->firstOrFail();
+//        dd($order);
+       /* $order->status = 'paid';
         $order->deposit = $request->input('amount');
         $order->currency = $request->input('currency');
         $order->payment_desc = $request->input('description');
         $accountId = explode('___', $request->input('accountId'));
         $order->customer_email = $accountId[0];
         $order->customer_phone = $accountId[1];
-        $order->update();
+        $order->update();*/
 
         $json = json_encode([
             'request' => $request->toArray(),
@@ -171,6 +173,7 @@ class PayController extends Controller
         try {
 
             Mail::to($user->email)->locale('ru')->send(new OrderMail($order));
+            Mail::to(env('MAIL_FROM_ADDRESS'))->locale('ru')->send(new OrderMail($order));
 
         }catch (\Swift_TransportException $exception){
             return redirect()->back()->withErrors('Неполадки сети. Позже попробуйте ещё раз.');
@@ -179,7 +182,8 @@ class PayController extends Controller
         }
 
 
-        return $json;
+//        return $json;
+        return redirect()->route('site.cabinet.purchases.index');
     }
 }
 
