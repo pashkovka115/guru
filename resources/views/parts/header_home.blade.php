@@ -76,8 +76,8 @@
                                 <div class="search-category__title">
                                     Популярные мероприятия
                                 </div>
-                                @foreach($popular_country as $tour)
-                                    <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country ?? $tour->title ?? '' }}</a>
+                                @foreach($popular_tours_for_menu as $tour)
+                                    <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->title }}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -152,8 +152,8 @@
                                 <div class="search-category__title">
                                     Популярные мероприятия
                                 </div>
-                                @foreach($popular_country as $tour)
-                                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country ?? $tour->title ?? '' }}</a>
+                                @foreach($popular_tours_for_menu as $tour)
+                                <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->title }}</a>
                                 @endforeach
                             </div>
                         </div>

@@ -67,7 +67,7 @@
                                 <div class="customer-block">
                                     <p class="customer-to-pay"><span>Итого к оплате:</span> {{ number_format($order->deposit, 0, ',', ' ') }} RUB
                                     </p>
-                                    <p class="customer-description">Далее Вам нужно будет выслано письмо о бронировании и с вами свяжется менеджер, для обсуждения способа оплаты!</p>
+                                    <p class="customer-description">Далее Вам будет выслано письмо о бронировании и с вами свяжется менеджер, для обсуждения способа оплаты!</p>
                                 </div>
                             </div>
                         </div>

@@ -49,6 +49,13 @@ class AppServiceProvider extends ServiceProvider
                     ->get(['id', 'title', 'category_tour_id', 'country', 'gallery', 'views'])
                 ?? null);
 
+            \View::share('popular_tours_for_menu', \DB::table('tours')
+                    ->where('active', '1')
+                    ->orderByDesc('views')
+                    ->limit(15)
+                    ->get(['id', 'title', 'views'])
+                ?? null);
+
             $tours = \DB::table('tours')->orderByDesc('views')->limit(10)->get();
             \View::share('popular_tour', $tours);
 

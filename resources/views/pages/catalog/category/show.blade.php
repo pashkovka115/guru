@@ -165,7 +165,22 @@
                                             </ul>
                                             <div class="rating-event">
                                                 <div class="rating">
-                                                    {!! get_rating_template($tour->rating) !!}
+                                                    <?php
+                                                    if ($tour->comments->count() > 0){
+                                                        $all_raiting = 0;
+                                                        foreach ($tour->comments as $comment) {
+                                                            $all_raiting += $comment->rating;
+                                                        }
+                                                        if ($tour->comments->count() > 0) {
+                                                            $full_raiting = $all_raiting / $tour->comments->count();
+                                                        } else {
+                                                            $full_raiting = 0;
+                                                        }
+                                                    } else {
+                                                        $full_raiting = 0;
+                                                    }
+                                                    ?>
+                                                    {!! get_rating_template($full_raiting) !!}
                                                     @if($tour->comments->count() > 0)
                                                         <span class="review-count">&nbsp;({{ $tour->comments->count() }} {{ Lang::choice('Отзыв|Отзыва|Отзывов', $tour->comments->count()) }})</span>
                                                     @endif

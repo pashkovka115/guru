@@ -77,7 +77,7 @@
                         <div class="event-dateils_block">
                             <div class="rating-tour">
                                 <div class="rating">
-                                    {!! get_rating_template($tour->rating) !!}
+                                    {!! get_rating_template($full_raiting) !!}
                                     @if($comments->count() > 0)
                                     <a href="#reviews" class="review-count scroll-to">Отзывов - <span>{{ $comments->count() }}</span></a>
                                     @endif
@@ -369,9 +369,9 @@
                                 <div class="rating-accordion-block">
                                     <div class="rating-accordion">
                                         <div class="rating">
-                                            {!! get_rating_template($tour->rating, false) !!}
-                                            @if($tour->rating > 0)
-                                            <span class="review-text">Средний рейтинг {{ $tour->rating }} из 5.0</span>
+                                            {!! get_rating_template($full_raiting, false) !!}
+                                            @if($full_raiting > 0)
+                                            <span class="review-text">Средний рейтинг {{ $full_raiting }} из 5.0</span>
                                             @endif
                                         </div>
                                     </div>

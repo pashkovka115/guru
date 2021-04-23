@@ -73,9 +73,9 @@
                                     <li class="menu__sub_title">
                                         <span>Мероприятия</span>
                                     </li>
-                                    @foreach($popular_country as $tour)
+                                    @foreach($popular_tours_for_menu as $tour)
                                     <li>
-                                        <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->country }}</a>
+                                        <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}">{{ $tour->title }}</a>
                                     </li>
                                     @endforeach
 
