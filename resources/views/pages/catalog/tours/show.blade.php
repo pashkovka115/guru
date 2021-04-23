@@ -129,7 +129,9 @@
                         <div class="event_list__autor">
                             @foreach($tour->leaders as $leader)
                                 <a href="{{ route('site.author.show', ['id' => $leader->id]) }}" target="_blank" title="{{ $leader->name }}">
+                                    @if($leader->profile)
                                 <img src="{{ json_decode($leader->profile->avatar)[0] ?? '' }}" alt="фото автора" class="img-fluid">
+                                    @endif
                                 <span>{{ $leader->name }}</span>
                             </a>
                             @endforeach

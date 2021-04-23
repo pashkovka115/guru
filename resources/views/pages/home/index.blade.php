@@ -155,7 +155,7 @@
             <div class="row">
                 @foreach($popular_tours as $tour)
                 <div class="col-lg-4 col-md-6">
-                    <a href="{{ route('site.catalog.category.name', ['id' => $tour->category_tour_id]) }}" class="elem__tour">
+                    <a href="{{ route('site.catalog.tour.show', ['event' => $tour->id]) }}" class="elem__tour">
                         <?php
                         $gal = json_decode($tour->gallery) ?? [];
                         ?>
