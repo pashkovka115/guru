@@ -9,7 +9,7 @@ use Modules\Admin\Models\Tour;
 use Modules\Admin\Models\TourLeader;
 use Modules\Admin\Models\TourRating;
 use Modules\Admin\Models\UserComment;
-use Modules\Admin\Models\UserTour;
+
 
 class UserController extends Controller
 {
@@ -18,11 +18,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $leaders_ids = \DB::table('tour_leader')
-            ->selectRaw('leader_id')->distinct()->get();
-        $leaders = User::with(['profile', 'tours_with_category', 'comments'])
-            ->whereIn('id', array_keys($leaders_ids->keyBy('leader_id')->toArray()))
-            ->paginate();
+        $leaders = User::with(['profile', 'tours_with_category', 'comments'])->
+        whereHas('profile', function ($query){
+            $query->where('type_user', 'leader');
+        })->paginate();
 
         if ($request->ajax()) {
             return view('pages.catalog.users.ajax_index', ['leaders' => $leaders]);
@@ -40,11 +39,16 @@ class UserController extends Controller
      */
     public function organizer(Request $request)
     {
-        $organizers_ids = \DB::table('organizer_leader')
+        /*$organizers_ids = \DB::table('organizer_leader')
             ->selectRaw('organizer_id')->distinct()->get();
         $leaders = User::with(['profile', 'tours_with_category', 'comments'])
             ->whereIn('id', array_keys($organizers_ids->keyBy('organizer_id')->toArray()))
-            ->paginate();
+            ->paginate();*/
+
+        $leaders = User::with(['profile', 'tours_with_category', 'comments'])->
+        whereHas('profile', function ($query){
+            $query->where('type_user', 'organizer');
+        })->paginate();
 
         if ($request->ajax()) {
             return view('pages.catalog.users.ajax_index', ['leaders' => $leaders]);

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Schema;
@@ -54,13 +55,13 @@ class AppServiceProvider extends ServiceProvider
             $cat_ids = array_keys($tours->keyBy('category_tour_id')->toArray());
             \View::share('popular_cats', \DB::table('category_tours')->whereIn('id', $cat_ids)->limit(10)->get(['id', 'title']) ?? null);
 
-            $items1 = \DB::table('tour_leader')->selectRaw('leader_id')->distinct()->get();
-            \View::share('cnt_leaders', $items1->count());
+            \View::share('cnt_leaders', User::whereHas('profile', function ($query){
+                $query->where('type_user', 'leader');
+            })->count());
 
-            $items2 = \DB::table('organizer_leader')->selectRaw('organizer_id')->distinct()->get();
-            \View::share('cnt_organizers', $items2->count());
-
-//            \View::share('cnt_tours', Tour::count());
+            \View::share('cnt_organizers', User::whereHas('profile', function ($query){
+                $query->where('type_user', 'organizer');
+            })->count());
 
             \View::composer(['parts.filter_panel', 'parts.footer'], function ($view){
                 $view->with([
