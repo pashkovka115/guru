@@ -152,7 +152,7 @@
                     @if($tour->communication or $tour->drinking_water or $tour->first_aid)
                     <div class="event-details-accordion">
                         <div class="event-accordion accordion-security">
-                            <div class="accordion-btn">Безопастность:</div>
+                            <div class="accordion-btn">Безопасность:</div>
                             <div class="panel article">
                                 <ul class="list-security">
                                     <li>@if($tour->first_aid != '' and $tour->first_aid != null) {{ $tour->first_aid }} @endif</li>

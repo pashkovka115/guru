@@ -47,15 +47,15 @@
                             </div>
                         </div>
                         <div class="payment__order-details">
+                            @php
+                            $pass = session()->get('password_pay', false);
+                            @endphp
+                            @if($pass)
                             <p class="payment__subtitle">Регистрация профиля</p>
                             <p class="customer-description">
-                                @php
-                                $pass = session()->get('password_pay', false);
-                                @endphp
-                                @if($pass)
                                 <span class="payment__alert">Внимание!</span> Ваш профиль был зарегистрирован на сайте, временный пароль был отправлен на email указанный в форме бронирования.
-                                @endif
                             </p>
+                            @endif
                             <p class="payment__number">Оплата</p>
                             <div class="payment__customer-data">
                                 <div class="customer-block">
@@ -67,7 +67,7 @@
                                 <div class="customer-block">
                                     <p class="customer-to-pay"><span>Итого к оплате:</span> {{ number_format($order->deposit, 0, ',', ' ') }} RUB
                                     </p>
-                                    {{--                                    <p class="customer-description">Далее Вам нужно выбрать способ оплаты и нажать кнопку — <span>"Оплатить"</span></p>--}}
+                                    <p class="customer-description">Далее Вам нужно будет выслано письмо о бронировании и с вами свяжется менеджер, для обсуждения способа оплаты!</p>
                                 </div>
                             </div>
                         </div>
@@ -103,9 +103,9 @@
                                     env('UNITPAY_SECRET_KEY')
                                 ); ?>">
 
-                                <input id="payning_btn" class="btn-booking" type="submit" value="Оплатить картой">
+                                <input id="payning_btn" class="btn-booking" type="submit" value="Забронировать">
                             </form>
-{{--                            <button id="payning_btn" type="submit" class="btn-booking">Оплатить картой</button>--}}
+{{--                            <button id="payning_btn" type="submit" class="btn-booking">Забронировать</button>--}}
                         </div>
                     </div>
                 </div>

@@ -71,7 +71,7 @@
                             <div class="megamenu">
                                 <ul class="menu__sub">
                                     <li class="menu__sub_title">
-                                        <span>Страны</span>
+                                        <span>Мероприятия</span>
                                     </li>
                                     @foreach($popular_country as $tour)
                                     <li>
