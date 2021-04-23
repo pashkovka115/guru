@@ -33,7 +33,7 @@ class TourTableSeeder extends Seeder
                 'good' => ($i % 2 == 0) ? '1' : '0',
                 'recommended' => ($i < 10) ? '1' : '0',
 //                'price_base' => random_int(100, 600000),
-                'rating' => random_int(0, 5),
+                'rating' => 0,
                 'title' => implode(' ', $faker->words()),
                 'gallery' => json_encode([
                     asset('assets/site/images/home_bg.jpg'),
